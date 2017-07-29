@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width = device-width initial-scale=1.0">
+	<title>New User Signup</title>
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="libs/bootstrap3.3.7/css/bootstrap.min.css">
+   	<script type="text/javascript" src="js/main.js"></script>
+	<script type="text/javascript" src="js/jquery-3.2.0.js"></script>
+	<script type="text/javascript" src="libs/bootstrap3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+	
+<style>
+	.navbar{
+		background-color: #4A90E2 !important;
+		border:none !important;
+		text-align: right;
+		width: 100% !important;
+	}
+</style>
+
+   <nav class="navbar navbar-default" role="navigation">
+      <div class="container">
+         <div class="navbar-header">
+            <button class="navbar-toggle" type="button" data-toggle= "collapse" data-target="#nav-links">
+               <span class="icon-bar"></span>
+               <span class="icon-bar"></span>
+               <span class="icon-bar"></span>
+            </button>
+
+            <a href="" class="navbar-brand"><img src="images/hb-logo2.png" alt=""></a>
+         </div>
+
+         <div class="collapse navbar-collapse" id="nav-links">
+            <ul class="nav navbar-nav navbar-right">
+               <li><a href="index.html">Home</a></li>
+               <li><a href="login.html">Login</a></li>
+               <li><a href="more.html">More</a></li>
+            </ul>
+         </div>
+
+      </div>
+   </nav>
+
+
+<div class="container">
+	<div class="row">
+		<div class="col-sm-6 col-xs-12 col-sm-offset-3">
+			<div class="form-header">
+				<div class="item signup">
+					<h1>Signup</h1>
+				</div>
+
+
+				<div class="item signup-side-text">
+					<p>Already registered? <a href="login.html">Sign in</a></hp>
+				</div>
+			</div>
+
+			<div class="sigup-bg">
+				<form action="#" class="signup-form center-block">
+					<div class="row">
+						<div class="form-group col-sm-6">
+							<label for="Firstname">Firstname <span>*</span></label>
+							<input type="text" class="form-control input-lg" id="firstname">
+						</div>
+
+						<div class="form-group col-sm-6">
+							<label for="lastname">Lastname <span>*</span></label>
+							<input type="text" class="form-control input-lg" id="lastname">
+						</div>
+
+
+						<div class="form-group col-sm-12">
+							<label for="email">Email <span>*</span></label>
+							<input type="email" class="form-control input-lg" id="email">
+						</div>
+
+						<div class="form-group col-sm-12">
+							<label for="password">Password <span>*</span></label>
+							<input type="password" class="form-control input-lg" id="password">
+						</div>
+
+						<div class="form-group col-sm-12">
+							<label for="confirmPassword">Confirm Password <span>*</span></label>
+							<input type="password" class="form-control input-lg" id="confirmPassword">
+						</div>
+						<div class="form-group col-sm-12">
+							<button type="button" class="btn btn-primary btn-submit center-block">SIGN UP</button>
+						</div>
+
+						<div class="form-group col-sm-12 google-signup">
+							<div class="small-g">
+								G
+							</div>
+							<button type="button" class="btn btn-primary btn-submit center-block">Google signup</button>	
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+	
+</body>
+</html>

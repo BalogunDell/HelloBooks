@@ -1,0 +1,288 @@
+
+html{
+	margin: 0;
+	height: 100%;
+}
+
+
+.converall {
+	background: url('../images/newbg.png');
+	background-size: cover;
+	min-height: 100%;
+	background-repeat: no-repeat;
+	position: relative;
+}
+
+
+.navbar{
+	background-color: transparent !important;
+	border: none !important;
+}
+
+.navbar-default{
+	height: auto;
+	border:none !important;
+	padding: 0;
+	margin: 0;
+}
+
+.navbar-header{
+	border:none !important;
+}
+
+.navbar-nav{
+	border:none !important;
+	line-height: 100px;
+	border:none;
+}
+
+.nav li{
+	height: auto;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	text-align: center;
+}
+
+
+.nav li a{
+	color: white !important ; 
+	/*height: 100px*/;
+	width: 100px;
+}
+
+.nav li a:hover{
+	color: #017eb7 !important ; 
+	background-color: #fff !important;
+	border-radius: 30px;
+	-webkit-transition: background-color 0.5s;
+}
+
+.navbar-brand img{
+	margin-top: -10px;
+	margin-left: 6%;
+	max-height: 60px;
+	max-width: auto;
+}
+
+
+
+.content-area {
+	padding-bottom: 30px;
+	padding-top: 30px;
+	height: auto;
+	width: 80%;
+	margin-top: 8%;
+	text-align: center;
+}
+
+.content-area h1{
+	color: white;
+	font-family: sans-serif; 
+	font-size: 80px;
+}
+
+.content-area p{
+	margin-top: 5%; 
+	color: white;
+}
+
+.content-area button{
+	margin-top: 5%; 
+	background: #017eb7;
+	padding-bottom: 3%;
+	padding-top: 3%;
+	margin-left: 2%;
+	margin-right: 2%;
+	min-width: 40%;
+	background: #017eb7;
+	-webkit-transition: background 1s;
+	-o-webkit-transition: background 0.5s;
+	-ms-webkit-transition: background 0.5s;
+}
+
+
+.content-area button:hover{
+	background: rgba(0,0,0,0.6);
+}
+
+
+/*******************************************************/
+/****Content Area Media Queries for phones and tabs*****/
+/*******************************************************/
+
+@media screen and (min-width: 80px) and (max-width: 170px){
+	.content-area{
+		margin-top: 35%;
+	}
+
+	.content-area h1{
+		font-size: 30px
+	}
+
+}
+
+
+@media screen and (min-width: 170px) and (max-width: 400px){
+	.content-area{
+		margin-top: 37%;
+	}
+
+	.content-area h1{
+		font-size: 30px
+	}
+
+	.content-area p{
+		width: 100%;
+	}
+
+}
+
+
+@media screen and (min-width: 401px) and (max-width: 600px){
+	.content-area{
+		margin-top: 35%;
+	}
+
+	.content-area h1{
+		font-size: 50px
+	}
+
+	.content-area p{
+		width: 100%;
+	}
+}
+
+
+@media screen and (min-width: 601px) and (max-width: 800px){
+	.content-area{
+		margin-top: 25%;
+	}
+
+	.content-area p{
+		font-size: 150%;
+	}
+
+	.content-area h1{
+		font-size: 80px;
+	}
+
+	.content-area button {
+		height: 100%;
+		width: auto;
+	}
+
+}
+
+@media only screen and (min-width: 801px) and (max-width: 1100px){
+	.content-area {
+		margin-top: 35%;
+	}
+
+	.content-area p{
+		font-size: 30px;
+		width: 100%;
+	}
+
+	.content-area h1{
+		font-size: 80px;
+	}
+
+	.content-area button {
+		height: 100%;
+		width: auto;
+	}
+
+}
+
+
+@media only screen and (min-width: 1200px) and (max-width: 1400px){
+	.content-area {
+		margin-top: 0%;
+	}
+
+	.content-area p{
+		font-size: 30px;
+		width: 100%;
+	}
+
+	.content-area h1{
+		font-size: 80px;
+	}
+}
+
+
+
+/*SIGNUP AREA*/
+.sigup-bg{
+	background: #F9F9F9;
+	padding-bottom: 30px;
+	padding-top: 30px;
+}
+
+.google-signup{
+	background: #E8E8E8 !important;
+	border-radius:5px;
+	/*width: 100%;*/
+	padding-top: 15px;
+	padding-bottom: 15px;
+	position: relative;
+}
+
+.google-signup button{
+	background: #F40000;
+}
+
+.small-g{
+	background: #B00101;
+	width: 20%;
+	min-height: 34px;
+	position: absolute;
+	text-align: center;
+	border-radius: 5px;
+	color: white;
+	padding-top: 1.5%;
+
+}
+
+
+
+.form-header{
+	/*background: black;*/
+	width: auto;
+	margin: 3%;
+	padding: 0;
+	padding-bottom: 5px;
+	padding-top: 5px;
+}
+
+.form-header .signup{
+	vertical-align: middle;
+	display: inline-block;
+}
+
+.form-header .signup-side-text{
+	padding-top: 30px;
+	padding-bottom: 30px;
+	display: inline-block;
+	float: right;
+}
+
+.form-group span{
+	color: red;
+}
+
+.signup-form{
+	width: 70%;
+}
+
+
+.btn-submit{
+	background: #4A90E2; !important;
+	width: 100%;
+	border-radius: 5px;
+}
+
+
+
+
+/*SIGNUP AREA ENDS*/
