@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <meta charset="utf-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width = device-width initial-scale=1.0">
+   <title>New User Signup</title>
+   <link rel="stylesheet" href="css/style.css">
+   <link rel="stylesheet" href="css/font-awesome/css/font-awesome.css">
+   <link rel="stylesheet" href="libs/bootstrap3.3.7/css/bootstrap.min.css">
+      <script type="text/javascript" src="js/main.js"></script>
+   <script type="text/javascript" src="js/jquery-3.2.0.js"></script>
+   <script type="text/javascript" src="libs/bootstrap3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+   
+<style>
+   .navbar{
+      background-color: #0F488A !important;
+      border:none !important;
+      text-align: right;
+      width: 100% !important;
+   }
+
+   .nav li a:hover{
+  color: #017eb7 !important ; 
+  }
+</style>
+
+   <nav class="navbar navbar-default" role="navigation">
+      <div class="container">
+         <div class="navbar-header">
+            <button class="navbar-toggle" type="button" data-toggle= "collapse" data-target="#nav-links">
+               <span class="icon-bar"></span>
+               <span class="icon-bar"></span>
+               <span class="icon-bar"></span>
+            </button>
+
+            <a href="" class="navbar-brand"><img src="images/hb-logo2.png" alt=""></a>
+         </div>
+
+         <div class="collapse navbar-collapse" id="nav-links">
+            <!--Notification starts -->
+            <div class="notification">
+              <div class="dropdown notify-icon">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                  <i class="fa fa-envelope"></i>
+                  <div class="notification-number">
+                    <svg>
+                        <circle cx="5" cy="7" r="7" fill="red"></circle>
+                        <text x="7" y="11" text-anchor="middle" fill="white">3</text>
+                    </svg>
+                  </div>
+                  <ul class="dropdown-menu">
+                        <li><a href="books.html">Learn Angular 2 is now available</a></li>
+                        <li><a href="books.html">You have pending book returns </a></li>
+                        <li><a href="books.html">New book uploaded</a></li>
+                     </ul>
+                </a>
+              </div>
+              <div class="user-holder">
+                <div class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <img src="images/icon.png" alt=""><span class="caret"></span>
+                    <ul class="dropdown-menu dropdown-menu-left">
+                        <li><a href="profile.html">My profile</a></li>
+                        <li><a href="history.html">Borrow History</a></li>
+                        <li><a href="books.html">Books</a></li>
+                        <li class="divider"></li>
+                        <li><a href="login.html" class="btn btn-danger btn-sm logout">Logout</a></li>
+                     </ul>
+                 </a>
+                </div>
+              </div>
+            </div>
+            <!-- Notification ends -->
+         </div>
+      </div>
+   </nav>
+
+  
+  <div class="container">
+    <div class="row" style="margin: 0 auto">
+        <div class="col-xs-12">
+        <div class="item">
+          <h1>
+            Book Details
+          </h1>
+        </div>
+        </div>
+      <!-- holds book image -->
+        <div class="col-sm-3 book-detail-image">
+          <img src="images/books/book1.png" alt="">
+        </div>  
+      <!-- end of column for holding book image -->
+
+      <!-- holds book image -->
+        <div class="col-sm-9 book-detail-txt-holder">
+            <div>
+              <h3>Learn Angular 2</h3>
+            </div>
+
+            <div class="row" style="border-bottom:1px solid black">
+              <div class="col-sm-6">
+                <table class="summary-table">
+                  <tr>
+                    <td>Author</td>
+                    <td>Pablo Deelman</td>
+                  </tr>
+
+                  <tr>
+                    <td>Publisher</td>
+                    <td>Packt</td>
+                  </tr>
+
+                  <tr>
+                    <td>Year</td>
+                    <td>2017</td>
+                  </tr>
+
+                  <tr>
+                    <td>Pages</td>
+                    <td>180</td>
+                  </tr>
+                </table>
+              </div>
+
+              <div class="col-sm-6">
+                  <div class="surcharge">
+                    <h5>Surcharge</h5>
+                    <h6>#300 per day</h6>
+                  </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-xs-12" style="margin-top:10px; border-bottom:1px solid black; padding-bottom:10px; padding-top:10px;">
+                <p>Type someJust beyond the Gilded Age, in the mist-covered streets of New York, the deadly Spanish influenza ripples through the city. But with so many victims in her close circle, young socialite Allene questions if the flu is really to blame. All appear to have been poisoned—and every death was accompanied by a mysterious note.thing</p>
+              </div> 
+            </div>
+
+            <div class="row">
+              <div class="col-xs-12" style="margin-top:10px";>
+                  <div class="row">
+                    <div class="col-sm-4" style="margin-top:10px";>
+                      <p>Expected Return Date</p>
+                    </div>
+
+                    <div class="col-sm-8" style="margin-top:10px";>
+                      <p>21st July 2017</p>
+                    </div>
+                  </div>
+
+
+                  <div class="row">
+                    <div class="col-sm-4" style="margin-top:10px";>
+                      <button type="button" class="btn btn-success">BORROW</button>
+                    </div>
+
+                    <div class="col-sm-8" style="margin-top:10px";>
+                      <p>**success message here**</p>
+                    </div>
+                  </div>
+              </div> 
+            </div>
+
+        </div>
+
+      <!-- end of column for holding book image -->
+    </div>
+  </div>
+
+
+
+</body>
+</html>

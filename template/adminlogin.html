@@ -20,15 +20,9 @@
 		text-align: right;
 		width: 100% !important;
 	}
-
-	.navbar-brand img{
-		max-height: 60px;
-		margin-top: -19px;
-	}
 </style>
 
-   <div class="container-fluid">
-   <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+   <nav class="navbar navbar-default" role="navigation">
       <div class="container">
          <div class="navbar-header">
             <button class="navbar-toggle" type="button" data-toggle= "collapse" data-target="#nav-links">
@@ -37,35 +31,32 @@
                <span class="icon-bar"></span>
             </button>
 
-            <a href="" class="navbar-brand"><img src="images/hb-logo2.png" class="img-responsive" alt=""></a>
+            <a href="" class="navbar-brand"><img src="images/hb-logo2.png" alt=""></a>
          </div>
 
          <div class="collapse navbar-collapse" id="nav-links">
             <ul class="nav navbar-nav navbar-right">
                <li><a href="index.html">Home</a></li>
                <li><a href="login.html">Login</a></li>
-               <li><a href="register.html">Register</a></li>
+               <li><a href="more.html">More</a></li>
+            </ul>
          </div>
+
       </div>
    </nav>
-</div>
+
 
 <div class="container">
 	<div class="row">
 		<div class="col-xs-12">
 			<div class="form-header">
 				<div class="item signup">
-					<h1>Signin</h1>
-				</div>
-
-
-				<div class="item signup-side-text">
-					<p>Already registered? <a href="register.html">Signup</a></hp>
+					<h1>ADMIN</h1>
 				</div>
 			</div>
 
 			<div class="sigup-bg">
-				<form action="#" class="signup-form center-block">
+				<form action="admindashboard.html" class="signup-form center-block">
 					<div class="row">
 
 						<div class="form-group col-sm-12">
@@ -81,6 +72,7 @@
 						<div class="form-group col-sm-12">
 							<a href="#" id="forgot-password" data-toggle="modal" data-target="#forgotpassword">Forgot Password</a>
 						</div>
+					
 
 
 						<!-- forgot password modal -->
@@ -89,18 +81,12 @@
 									<div class="modal-content">
 										<div class="modal-header">
 											<h1>Reset Password</h1>
-											<p>Please your email</p>
 										</div>
 
 										<div class="modal-body">
-												<div class="form-group col-sm-12">
-													<label for="email">Email <span>*</span></label>
-													<input type="email" class="form-control input-sm" id="email" required>
-												</div>
-
-												<div class="form-group col-sm-12">
-													<a href="success.html" type="button" class="btn btn-primary btn-recover center-block">Recover password</a>
-												</div>
+												
+												<h5>Contact support for password reset</h5>
+												
 										</div>
 
 										<div class="modal-footer">
@@ -114,29 +100,25 @@
 						<!-- forgot password modal ends-->
 
 						<div class="form-group col-sm-12">
-							<a href="books.html" type="button" class="btn btn-primary btn-submit center-block">SIGN IN</a>
+							<a href="admindashboard.html" type="button" class="btn btn-primary btn-submit center-block">SIGN IN</a>
 						</div>
 
 						
 					</div>
 				</form>
-
-				<div class="form-group col-sm-12 google-signup">
-					<div class="small-g">
-						G
-					</div>
-					<button type="button" class="btn btn-submit center-block">Google signin</button>	
-				</div>
 			</div>
 		</div>
 	</div>
 </div>
 
 
-	<!-- FOOTER -->
+
+<!-- FOOTER -->
     <div class="footer">
-        <p>All rights Resereced, Andela Bootcamp 25, 2017</p>
+        <p>All rights Resereced</p>
+        <p>Andela Bootcamp 25, 2017</p>
     </div>
+
 	
 </body>
 </html>

@@ -1,25 +1,30 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width = device-width initial-scale=1.0">
-	<title>New User Signup</title>
-	<link rel="stylesheet" href="css/style.css">
-	<link rel="stylesheet" href="libs/bootstrap3.3.7/css/bootstrap.min.css">
-   	<script type="text/javascript" src="js/main.js"></script>
-	<script type="text/javascript" src="js/jquery-3.2.0.js"></script>
-	<script type="text/javascript" src="libs/bootstrap3.3.7/js/bootstrap.min.js"></script>
+   <meta charset="utf-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width = device-width initial-scale=1.0">
+   <title>New User Signup</title>
+   <link rel="stylesheet" href="css/style.css">
+   <link rel="stylesheet" href="libs/bootstrap3.3.7/css/bootstrap.min.css">
+   <link rel="stylesheet" href="css/font-awesome/css/font-awesome.css">
+      <script type="text/javascript" src="js/main.js"></script>
+   <script type="text/javascript" src="js/jquery-3.2.0.js"></script>
+   <script type="text/javascript" src="libs/bootstrap3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
-	
+   
 <style>
-	.navbar{
-		background-color: #4A90E2 !important;
-		border:none !important;
-		text-align: right;
-		width: 100% !important;
-	}
+   .navbar{
+      background-color: #0F488A !important;
+      border:none !important;
+      text-align: right;
+      width: 100% !important;
+   }
+
+   .nav li a:hover{
+  color: #017eb7 !important ; 
+  }
 </style>
 
    <nav class="navbar navbar-default" role="navigation">
@@ -35,18 +40,212 @@
          </div>
 
          <div class="collapse navbar-collapse" id="nav-links">
-            <ul class="nav navbar-nav navbar-right">
-               <li><a href="index.html">Home</a></li>
-               <li><a href="login.html">Login</a></li>
-               <li><a href="more.html">More</a></li>
-            </ul>
+            <!--Notification starts -->
+            <div class="notification">
+              <div class="dropdown notify-icon">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                  <i class="fa fa-envelope"></i>
+                  <div class="notification-number">
+                    <svg>
+                        <circle cx="5" cy="7" r="7" fill="red"></circle>
+                        <text x="7" y="11" text-anchor="middle" fill="white">3</text>
+                    </svg>
+                  </div>
+                  <ul class="dropdown-menu">
+                        <li><a href="books.html">Learn Angular 2 is now available</a></li>
+                        <li><a href="books.html">You have pending book returns </a></li>
+                        <li><a href="books.html">New book uploaded</a></li>
+                     </ul>
+                </a>
+              </div>
+              <div class="user-holder">
+                <div class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <img src="images/icon.png" alt=""><span class="caret"></span>
+                    <ul class="dropdown-menu dropdown-menu-left">
+                        <li><a href="profile.html">My profile</a></li>
+                        <li><a href="history.html">Borrow History</a></li>
+                        <li><a href="books.html">Books</a></li>
+                        <li class="divider"></li>
+                        <li><a href="login.html" class="btn btn-danger btn-sm logout">Logout</a></li>
+                     </ul>
+                 </a>
+                </div>
+              </div>
+            </div>
+            <!-- Notification ends -->
          </div>
-
       </div>
    </nav>
 
 
 
-	
+
+<!-- SECTION FOR BOOKS  -->
+<!-- ****************** -->
+
+
+   <div class="container books">
+      <div class="row">
+         <div class="col-xs-12 books-holder-title">
+            <h1>Books</h1>
+         </div>
+      </div>
+
+      <div class="row books-holder">
+         <div class="col-xs-12 col-sm-3">
+            <div class="book-holder-prot">
+               <div class="item img-holder" align="center">
+                  <img src="images/books/book1.png" alt="">
+                     <div class="img-overlay">
+                        <p>Learn Angular 2 by <strong>Abbey Balogun</strong></p>
+                     </div>
+               </div>
+               <div class="dets">
+   
+               <a href="bookdetails.html"><button type="button" class="btn btn-success">DETAILS</button></a>
+               <p>2 Available</p>
+               
+
+               </div>
+            </div>
+         </div>
+
+         <div class="col-xs-12 col-sm-3">
+            <div class="book-holder-prot">
+               <div class="item img-holder" align="center">
+                  <img src="images/books/book5.jpg" alt="">
+                     <div class="img-overlay">
+                        <p>Learn Angular 2 by <strong>Abbey Balogun</strong></p>
+                     </div>
+               </div>
+               <div class="dets">
+   
+               <button type="button" class="btn btn-success">DETAILS</button>
+               <p>2 Available</p>
+               
+               </div>
+            </div>
+         </div>
+
+         <div class="col-xs-12 col-sm-3">
+            <div class="book-holder-prot">
+               <div class="item img-holder" align="center">
+                  <img src="images/books/book22.jpg" alt="">
+                     <div class="img-overlay">
+                        <p>Learn Angular 2 by <strong>Abbey Balogun</strong></p>
+                     </div>
+               </div>
+               <div class="dets">
+   
+               <button type="button" class="btn btn-success">DETAILS</button>
+               <p>2 Available</p>
+               
+
+               </div>
+            </div>
+         </div>
+
+         <div class="col-xs-12 col-sm-3">
+            <div class="book-holder-prot">
+               <div class="item img-holder" align="center">
+                     <div class="img-overlay">
+                        <p>Learn Angular 2 by <strong>Abbey Balogun</strong></p>
+                     </div>
+                     <img src="images/books/book4.jpg" alt="">
+               </div>
+               <div class="dets">
+   
+               <button type="button" class="btn btn-success">DETAILS</button>
+               <p>2 Available</p>
+               
+
+               </div>
+            </div>
+         </div>
+
+
+         <!-- COPIED -->
+
+      <div class="row books-holder">
+         <div class="col-xs-12 col-sm-3">
+            <div class="book-holder-prot">
+               <div class="item img-holder" align="center">
+                  <img src="images/books/book1.png" alt="">
+                     <div class="img-overlay">
+                        <p>Learn Angular 2 by <strong>Abbey Balogun</strong></p>
+                     </div>
+               </div>
+               <div class="dets">
+   
+               <button type="button" class="btn btn-success">DETAILS</button>
+               <p>2 Available</p>
+               
+
+               </div>
+            </div>
+         </div>
+
+         <div class="col-xs-12 col-sm-3">
+            <div class="book-holder-prot">
+               <div class="item img-holder" align="center">
+                  <img src="images/books/book2.png" alt="">
+                     <div class="img-overlay">
+                        <p>Learn Angular 2 by <strong>Abbey Balogun</strong></p>
+                     </div>
+               </div>
+               <div class="dets">
+   
+               <button type="button" class="btn btn-success">DETAILS</button>
+               <p>2 Available</p>
+               
+
+               </div>
+            </div>
+         </div>
+
+         <div class="col-xs-12 col-sm-3">
+            <div class="book-holder-prot">
+               <div class="item img-holder" align="center">
+                  <img src="images/books/book22.jpg" alt="">
+                     <div class="img-overlay">
+                        <p>Learn Angular 2 by <strong>Abbey Balogun</strong></p>
+                     </div>
+               </div>
+               <div class="dets">
+   
+               <button type="button" class="btn btn-success">DETAILS</button>
+               <p>2 Available</p>
+               
+
+               </div>
+            </div>
+         </div>
+
+         <div class="col-xs-12 col-sm-3">
+            <div class="book-holder-prot">
+               <div class="item img-holder" align="center">
+                  <img src="images/books/book22.jpg" alt="">
+                     <div class="img-overlay">
+                        <p>Learn Angular 2 by <strong>Abbey Balogun</strong></p>
+                     </div>
+               </div>
+               <div class="dets">
+   
+               <button type="button" class="btn btn-success">DETAILS</button>
+               <p>2 Available</p>
+               
+
+               </div>
+            </div>
+         </div>
+
+         <!-- PASTED -->
+
+      </div>      
+   </div>
+
+
+   
 </body>
 </html>

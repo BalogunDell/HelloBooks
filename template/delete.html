@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <meta charset="utf-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width = device-width initial-scale=1.0">
+   <title>New User Signup</title>
+   <link rel="stylesheet" href="css/style.css">
+   <link rel="stylesheet" href="css/font-awesome/css/font-awesome.css">
+   <link rel="stylesheet" href="libs/bootstrap3.3.7/css/bootstrap.min.css">
+      <script type="text/javascript" src="js/main.js"></script>
+   <script type="text/javascript" src="js/jquery-3.2.0.js"></script>
+   <script type="text/javascript" src="libs/bootstrap3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+   
+<style>
+   .navbar{
+      background-color: #0F488A !important;
+      border:none !important;
+      text-align: right;
+      width: 100% !important;
+   }
+
+   .nav li a:hover{
+  color: #017eb7 !important ; 
+  }
+</style>
+
+   <nav class="navbar navbar-default" role="navigation">
+      <div class="container">
+         <div class="navbar-header">
+            <button class="navbar-toggle" type="button" data-toggle= "collapse" data-target="#nav-links">
+               <span class="icon-bar"></span>
+               <span class="icon-bar"></span>
+               <span class="icon-bar"></span>
+            </button>
+
+            <a href="" class="navbar-brand"><img src="images/hb-logo2.png" alt=""></a>
+         </div>
+
+         <div class="collapse navbar-collapse" id="nav-links">
+            <!--Notification starts -->
+            <div class="notification">
+              <div class="dropdown notify-icon">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                  <i class="fa fa-envelope"></i>
+                  <div class="notification-number">
+                    <svg>
+                        <circle cx="5" cy="7" r="7" fill="red"></circle>
+                        <text x="7" y="11" text-anchor="middle" fill="white">3</text>
+                    </svg>
+                  </div>
+                  <ul class="dropdown-menu">
+                        <li><a href="books.html">Learn Angular 2 is now available</a></li>
+                        <li><a href="books.html">You have pending book returns </a></li>
+                        <li><a href="books.html">New book uploaded</a></li>
+                     </ul>
+                </a>
+              </div>
+              <div class="user-holder">
+                <div class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <img src="images/icon.png" alt=""><span class="caret"></span>
+                    <ul class="dropdown-menu dropdown-menu-left">
+                        <li><a href="create.html">Create Book</a></li>
+                        <li><a href="modify.html">Modify Book</a></li>
+                        <li><a href="delete.html">Delete Book</a></li>
+                        <li class="divider"></li>
+                        <li><a href="adminlogin.html" class="btn btn-danger btn-sm logout">Logout</a></li>
+                     </ul>
+                 </a>
+                </div>
+              </div>
+            </div>
+            <!-- Notification ends -->
+         </div>
+      </div>
+   </nav>
+
+
+<!-- SECTION FOR BOOKS  -->
+<!-- ****************** -->
+
+
+  <div class="container profile" style="padding-bottom:50px">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="history-header">
+          <h3>DELETE BOOK</h3>
+        </div>
+      </div>
+    </div>
+
+    <div class="container list-books">
+      <div class="table-responsive">          
+        <table class="table table-hover">
+          <thead style="background-color:#0F488A; color:white">
+            <tr>
+              <th>#</th>
+              <th>Book Cover</th>
+              <th>Book Title</th>
+              <th>Author</th>
+              <th>Date Borrowed</th>
+              <th>Expected Return Date</th>
+              <th>Days Left</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td><img src="images/books/book2.png" alt=""></td>
+              <td>Practical Business Anal...</td>
+              <td>Abbey Delight</td>
+              <td>21st-July-2017</td>
+              <td>26th-July-2017</td>
+              <td>0</td>
+              <td><button class="btn btn-danger">Delete</button> </td>
+              <!-- <td><button class="btn btn-primary">Read</button> | <button class="btn btn-primary">Return</button> </td> -->
+            </tr>
+
+          <!-- ROW 2 -->
+            <tr>
+              <td>2</td>
+              <td><img src="images/books/book5.jpg" alt=""></td>
+              <td>Act like a success...</td>
+              <td>Steve Harvey</td>
+              <td>30st-July-2017</td>
+              <td>4th-August-2017</td>
+              <td>3</td>
+              <td><button class="btn btn-danger">Delete</button> </td>
+            </tr>
+
+            <!-- row 3 -->
+            <tr class="danger">
+              <td>3</td>
+              <td><img src="images/books/book1.png" alt=""></td>
+              <td>Learn Angular 2</td>
+              <td>Jeremy Hondara</td>
+              <td>20th-June-2017</td>
+              <td>24th-June-2017</td>
+              <td>-3</td>
+              <td><button class="btn btn-danger">Delete</button> </td>
+            </tr>
+          </tbody>
+        </table>
+  </div>
+</div>
+    </div>
+
+  </div><!-- Closes profile -->
+    
+    <!-- FOOTER -->
+    <div class="footer">
+        <p>All rights Resereced, Andela Bootcamp 25, 2017</p>
+    </div>
+
+</body>
+</html>
