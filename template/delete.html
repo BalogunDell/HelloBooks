@@ -16,7 +16,7 @@
    
 <style>
    .navbar{
-      background-color: #4A90E2 !important;
+      background-color: #0F488A !important;
       border:none !important;
       text-align: right;
       width: 100% !important;
@@ -36,7 +36,7 @@
                <span class="icon-bar"></span>
             </button>
 
-            <a href="index.html" class="navbar-brand"><img src="images/hb-logo2.png" alt=""></a>
+            <a href="" class="navbar-brand"><img src="images/hb-logo2.png" alt=""></a>
          </div>
 
          <div class="collapse navbar-collapse" id="nav-links">
@@ -62,13 +62,12 @@
                 <div class="dropdown">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                     <img src="images/icon.png" alt=""><span class="caret"></span>
-                    <ul class="dropdown-menu">
-                        <li class="dropdown-header">User's Name/Email</li>
-                        <li><a href="profile.html">My profile</a></li>
-                        <li><a href="history.html">Borrow History</a></li>
-                        <li><a href="books.html">Books</a></li>
+                    <ul class="dropdown-menu dropdown-menu-left">
+                        <li><a href="create.html">Create Book</a></li>
+                        <li><a href="modify.html">Modify Book</a></li>
+                        <li><a href="delete.html">Delete Book</a></li>
                         <li class="divider"></li>
-                        <li><a href="login.html" class="btn btn-danger btn-sm logout">Logout</a></li>
+                        <li><a href="adminlogin.html" class="btn btn-danger btn-sm logout">Logout</a></li>
                      </ul>
                  </a>
                 </div>
@@ -84,57 +83,78 @@
 <!-- ****************** -->
 
 
-  <div class="container profile">
+  <div class="container profile" style="padding-bottom:50px">
     <div class="row">
       <div class="col-xs-12">
-        <div class="profile-header">
-          <h3>MY PROFILE</h3>
+        <div class="history-header">
+          <h3>DELETE BOOK</h3>
         </div>
       </div>
     </div>
 
-      <!-- Holds the profile details -->
-    <div class="row">
-      <div class="col-xs-12">
-        <div class="profile-details">
-          <div class="details">
+    <div class="container list-books">
+      <div class="table-responsive">          
+        <table class="table table-hover">
+          <thead style="background-color:#0F488A; color:white">
+            <tr>
+              <th>#</th>
+              <th>Book Cover</th>
+              <th>Book Title</th>
+              <th>Author</th>
+              <th>Date Borrowed</th>
+              <th>Expected Return Date</th>
+              <th>Days Left</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td><img src="images/books/book2.png" alt=""></td>
+              <td>Practical Business Anal...</td>
+              <td>Abbey Delight</td>
+              <td>21st-July-2017</td>
+              <td>26th-July-2017</td>
+              <td>0</td>
+              <td><button class="btn btn-danger">Delete</button> </td>
+              <!-- <td><button class="btn btn-primary">Read</button> | <button class="btn btn-primary">Return</button> </td> -->
+            </tr>
 
-              <div class="profile-image-holder">
-                <img src="images/abbey.jpg" class="img-circle img-resposive" alt="">
-              </div>
-            <!-- name -->
-              <div>
-                <h4>Abbey Delight</h4>
-                <p>Joined: 11h August, 2017 | delighteddell@gmail.com</p>
-                <p>Member level: Bronze (Contribute books to upgrage)</p>
-                <a href="">Change Password</a>
-              </div>
+          <!-- ROW 2 -->
+            <tr>
+              <td>2</td>
+              <td><img src="images/books/book5.jpg" alt=""></td>
+              <td>Act like a success...</td>
+              <td>Steve Harvey</td>
+              <td>30st-July-2017</td>
+              <td>4th-August-2017</td>
+              <td>3</td>
+              <td><button class="btn btn-danger">Delete</button> </td>
+            </tr>
 
-              <div class="change-password">
-                <form action="">
-                  <div class="form-group col-sm-12">
-                    <input type="text" placeholder="Current password" id="currentPassword" class="form-control input-sm">
-                  </div>
-
-                  <div class="form-group col-sm-12">
-                    <input type="text" placeholder="New Password" id="cnewPassword" class="form-control input-sm">
-                  </div>
-
-                  <div class="form-group col-sm-12">
-                    <input type="text" placeholder="Confirm new password" id="confirmNewPassword" class="form-control input-sm">
-                  </div>
-
-                  <div class="form-group col-sm-12">
-                    <button type="button" class="btn btn-sm">SAVE</button>
-                  </div>
-                </form> 
-              </div>
-          </div>
-        </div>
-      </div>
+            <!-- row 3 -->
+            <tr class="danger">
+              <td>3</td>
+              <td><img src="images/books/book1.png" alt=""></td>
+              <td>Learn Angular 2</td>
+              <td>Jeremy Hondara</td>
+              <td>20th-June-2017</td>
+              <td>24th-June-2017</td>
+              <td>-3</td>
+              <td><button class="btn btn-danger">Delete</button> </td>
+            </tr>
+          </tbody>
+        </table>
+  </div>
+</div>
     </div>
-  </div>    
 
+  </div><!-- Closes profile -->
+    
+    <!-- FOOTER -->
+    <div class="footer">
+        <p>All rights Resereced, Andela Bootcamp 25, 2017</p>
+    </div>
 
 </body>
 </html>

@@ -16,7 +16,7 @@
    
 <style>
    .navbar{
-      background-color: #4A90E2 !important;
+      background-color: #0F488A !important;
       border:none !important;
       text-align: right;
       width: 100% !important;
@@ -36,7 +36,7 @@
                <span class="icon-bar"></span>
             </button>
 
-            <a href="index.html" class="navbar-brand"><img src="images/hb-logo2.png" alt=""></a>
+            <a href="" class="navbar-brand"><img src="images/hb-logo2.png" alt=""></a>
          </div>
 
          <div class="collapse navbar-collapse" id="nav-links">
@@ -62,8 +62,7 @@
                 <div class="dropdown">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                     <img src="images/icon.png" alt=""><span class="caret"></span>
-                    <ul class="dropdown-menu">
-                        <li class="dropdown-header">User's Name/Email</li>
+                    <ul class="dropdown-menu dropdown-menu-left">
                         <li><a href="profile.html">My profile</a></li>
                         <li><a href="history.html">Borrow History</a></li>
                         <li><a href="books.html">Books</a></li>
@@ -79,61 +78,98 @@
       </div>
    </nav>
 
-
-<!-- SECTION FOR BOOKS  -->
-<!-- ****************** -->
-
-
-  <div class="container profile">
-    <div class="row">
-      <div class="col-xs-12">
-        <div class="profile-header">
-          <h3>MY PROFILE</h3>
+  
+  <div class="container">
+    <div class="row" style="margin: 0 auto">
+        <div class="col-xs-12">
+        <div class="item">
+          <h1>
+            Book Details
+          </h1>
         </div>
-      </div>
-    </div>
-
-      <!-- Holds the profile details -->
-    <div class="row">
-      <div class="col-xs-12">
-        <div class="profile-details">
-          <div class="details">
-
-              <div class="profile-image-holder">
-                <img src="images/abbey.jpg" class="img-circle img-resposive" alt="">
-              </div>
-            <!-- name -->
-              <div>
-                <h4>Abbey Delight</h4>
-                <p>Joined: 11h August, 2017 | delighteddell@gmail.com</p>
-                <p>Member level: Bronze (Contribute books to upgrage)</p>
-                <a href="">Change Password</a>
-              </div>
-
-              <div class="change-password">
-                <form action="">
-                  <div class="form-group col-sm-12">
-                    <input type="text" placeholder="Current password" id="currentPassword" class="form-control input-sm">
-                  </div>
-
-                  <div class="form-group col-sm-12">
-                    <input type="text" placeholder="New Password" id="cnewPassword" class="form-control input-sm">
-                  </div>
-
-                  <div class="form-group col-sm-12">
-                    <input type="text" placeholder="Confirm new password" id="confirmNewPassword" class="form-control input-sm">
-                  </div>
-
-                  <div class="form-group col-sm-12">
-                    <button type="button" class="btn btn-sm">SAVE</button>
-                  </div>
-                </form> 
-              </div>
-          </div>
         </div>
-      </div>
+      <!-- holds book image -->
+        <div class="col-sm-3 book-detail-image">
+          <img src="images/books/book1.png" alt="">
+        </div>  
+      <!-- end of column for holding book image -->
+
+      <!-- holds book image -->
+        <div class="col-sm-9 book-detail-txt-holder">
+            <div>
+              <h3>Learn Angular 2</h3>
+            </div>
+
+            <div class="row" style="border-bottom:1px solid black">
+              <div class="col-sm-6">
+                <table class="summary-table">
+                  <tr>
+                    <td>Author</td>
+                    <td>Pablo Deelman</td>
+                  </tr>
+
+                  <tr>
+                    <td>Publisher</td>
+                    <td>Packt</td>
+                  </tr>
+
+                  <tr>
+                    <td>Year</td>
+                    <td>2017</td>
+                  </tr>
+
+                  <tr>
+                    <td>Pages</td>
+                    <td>180</td>
+                  </tr>
+                </table>
+              </div>
+
+              <div class="col-sm-6">
+                  <div class="surcharge">
+                    <h5>Surcharge</h5>
+                    <h6>#300 per day</h6>
+                  </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-xs-12" style="margin-top:10px; border-bottom:1px solid black; padding-bottom:10px; padding-top:10px;">
+                <p>Type someJust beyond the Gilded Age, in the mist-covered streets of New York, the deadly Spanish influenza ripples through the city. But with so many victims in her close circle, young socialite Allene questions if the flu is really to blame. All appear to have been poisoned—and every death was accompanied by a mysterious note.thing</p>
+              </div> 
+            </div>
+
+            <div class="row">
+              <div class="col-xs-12" style="margin-top:10px";>
+                  <div class="row">
+                    <div class="col-sm-4" style="margin-top:10px";>
+                      <p>Expected Return Date</p>
+                    </div>
+
+                    <div class="col-sm-8" style="margin-top:10px";>
+                      <p>21st July 2017</p>
+                    </div>
+                  </div>
+
+
+                  <div class="row">
+                    <div class="col-sm-4" style="margin-top:10px";>
+                      <button type="button" class="btn btn-success">BORROW</button>
+                    </div>
+
+                    <div class="col-sm-8" style="margin-top:10px";>
+                      <p>**success message here**</p>
+                    </div>
+                  </div>
+              </div> 
+            </div>
+
+        </div>
+
+      <!-- end of column for holding book image -->
     </div>
-  </div>    
+  </div>
+
 
 
 </body>
