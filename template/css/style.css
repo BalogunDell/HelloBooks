@@ -1,9 +1,13 @@
-
+ !important
 html{
 	margin: 0;
 	height: 100%;
 }
 
+h1{
+	margin: 0;
+	padding: 0;
+}
 
 .converall {
 	background: url('../images/newbg.png');
@@ -48,6 +52,7 @@ html{
 	color: white !important ; 
 	/*height: 100px*/;
 	width: 100px;
+	height: 100%;
 }
 
 .nav li a:hover{
@@ -64,6 +69,35 @@ html{
 	max-width: auto;
 }
 
+
+.dropdown img{
+	max-height: 30px;
+	max-width: auto;
+}
+
+.dropdown-menu a:hover{
+	background: #0F488A;
+}
+
+.dropdown-menu li a {
+	color: black !important;
+	text-align:center;
+}
+
+
+.dropdown-menu li .logout{
+	width: 100%;
+	color: white !important;
+	background: red;
+	max-height: 50px;
+}
+
+
+.dropdown-menu li .logout:hover{
+	background: red !important;
+	border-radius: 0px !important;
+	color: white !important;
+}
 
 
 .content-area {
@@ -217,6 +251,13 @@ html{
 	background: #F9F9F9;
 	padding-bottom: 30px;
 	padding-top: 30px;
+	max-width: 360px;
+	margin:0 auto;
+}
+
+
+#forgot-password{
+	font-size: 12px;
 }
 
 .google-signup{
@@ -226,10 +267,18 @@ html{
 	padding-top: 15px;
 	padding-bottom: 15px;
 	position: relative;
+	color: white;
 }
 
+
+.google-signup button:hover{
+	background: #F40000 !important;
+	color: white !important;
+}
+
+
 .google-signup button{
-	background: #F40000;
+	background: #F40000 !important;
 }
 
 .small-g{
@@ -247,12 +296,11 @@ html{
 
 
 .form-header{
-	/*background: black;*/
-	width: auto;
-	margin: 3%;
+	margin: 0 auto;
 	padding: 0;
 	padding-bottom: 5px;
 	padding-top: 5px;
+	max-width: 360px;
 }
 
 .form-header .signup{
@@ -277,12 +325,324 @@ html{
 
 
 .btn-submit{
-	background: #4A90E2; !important;
+	background: #4A90E2 !important;
 	width: 100%;
 	border-radius: 5px;
+	border:none !important;
+}
+
+
+/*SIGNUP AREA ENDS*/
+
+.books{
+	margin: auto !important;
+}
+
+/*Styles books page*/
+.books-holder-title h1{
+	font-size: 40px;
+	padding: 0;
+	margin:20px;
+}
+
+.search-filter{
+	margin: 20px;
+}
+
+.books-holder{
+	/*height: 350px;*/
+	margin: 0 auto;
+}
+
+.book-holder-prot{
+	max-height: 327px;
+	max-width: 222px;
+	border-radius: 5px;
+	padding-bottom: 15px;
+	box-shadow: 0 2px 4px 0 rgba(0,0,0,0.09);
+	margin: auto;
+	
+}
+
+.book-holder-prot .img-holder{
+	max-height: 250px;
+	max-width: 200px;
+	margin: 0 auto;
+	margin-top: 7px;
+	height:250px;
+	position: relative;
+}
+
+.book-holder-prot img{
+	max-height: 250px;
+	max-width: 200px;
+	margin: 0 auto;
+	margin-top: 7px;
+	min-height: 25px;
+	min-width: auto;
+}
+
+.book-holder-prot .img-overlay{
+	max-height: 91.2px;
+	max-width: 200px;
+	position: absolute;
+	right:0;
+	left: 0;
+	bottom: -7px;
+	overflow: hidden;
+	height: 0%; 
+	-webkit-transition: height 0.5s;
+	background: #0F488A;;
+	color: white;
+	display: flex;
+	align-items:center;
+	justify-content:center;
 }
 
 
 
+.book-holder-prot:hover .img-overlay{
+	height: 100%;
+}
 
-/*SIGNUP AREA ENDS*/
+.book-holder-prot:hover{
+	box-shadow: 0 2px 21px 0 rgba(0,0,0,0.19);
+}
+
+.book-holder-prot .dets{
+	max-height: 70px;
+	max-width:200px;
+	margin:15px auto;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+
+.book-holder-prot .dets p{
+	margin: auto;
+	text-align: center;	
+}
+
+/*Styles books page*/
+
+
+
+
+
+/*Styles user profile page*/
+.profile{
+	/*background: black;*/
+}
+
+
+.notification{
+	float: right;
+	margin-top:15px;
+	max-width: 200px;
+	width: 200px;
+	display: flex;
+	align-items:center;
+	justify-content:space-between;
+}
+
+.notify-icon{
+	position: relative;
+	max-height: auto;
+	max-width: auto;
+	font-size: 20px;
+	color: white;
+}
+
+.fa-envelope {
+	color: white !important;
+}
+
+.notification-number{
+	position: absolute;
+	/*background: red;*/
+	left:10px;
+	margin-left: 20px;
+	color: red;
+	top: 1px;
+	margin:0 auto;
+	font-size: 10px;
+}
+
+.user-holder img{
+	max-height: 30px;
+	max-width: auto;
+}
+
+
+.profile-header{
+	margin: 0 auto;
+	padding: 0;
+	padding-bottom: 50px;
+	padding-top: 5px;
+	background: white;
+	text-align: center;
+	font-size: 15px;
+}
+
+
+.profile-image-holder{
+	max-width:155px;
+	margin: 0 auto;
+	top: -55px;
+	left: 0;
+	right: 0;
+	position: absolute;
+
+}
+
+.profile-image-holder img{
+	box-shadow: 0 6px 12px 0 rgba(0,0,0,0.08);
+	max-height: 100px;
+	max-width: 100px;
+}
+
+.profile-details{
+	max-width: 580px;
+	height: 400px;
+	margin: auto;
+	box-shadow: 0 6px 12px 0 rgba(0,0,0,0.08) !important;
+	border-radius: 5px;
+	padding-top: 40px;
+	position: relative;
+	margin-top: 10px;
+	
+}
+
+.details{
+	max-width: 394px;
+	margin: auto;
+	margin-top: 20px;
+	text-align: center;
+}
+
+.change-password{
+	max-width: 260px;
+	background: white;
+	margin:auto;
+	margin-top: 30px;
+}
+
+.change-password button{
+	background: #7ED321;
+	border-radius: 3px;
+	max-width: 100px;
+	max-height: 30px;
+	margin-top: 20px;
+}
+
+/*ends user profile page*/
+
+
+
+/*History page style*/
+
+
+.history-header{
+	margin: 0 auto;
+	padding: 0;
+	padding-bottom: 10px;
+	padding-top: 5px;
+	background: white;
+	text-align: center;
+	font-size: 15px;
+}
+
+
+.summary_img-holder{
+	height:auto;
+}
+
+
+
+.summary_img-holder th{
+	height: 20px !important;
+}
+
+.list-books{
+	margin-top: 30px;
+}
+
+.table>tbody>tr>td{
+
+	vertical-align: middle;
+}
+
+table td img{
+	height: 60px;
+	width:50px;
+}
+
+.summary-table{
+	padding-bottom: 20px;
+}
+
+.summary-table th{
+	padding-bottom: 10px;
+	color: #41546D;
+}
+
+.summary-table td{
+	padding-right: 30px;
+	padding-bottom: 10px;
+	color: #41546D;
+}
+
+
+.summary-header{
+	color: #0F488A;
+}
+
+.summary-list{
+	padding-bottom: 10px;
+	padding-bottom: 10px;
+}
+/*History page style ends*/
+
+.filter-table{
+	margin-top: 20px;
+}
+
+.filter-table select{
+	padding-left: 0;
+}
+
+.filter-table .item, .cats{
+	padding-left: 0;
+}
+
+
+
+/*CREATE BOOK STYLE:ADMIN*/
+
+.create-book{
+	/*background: red;*/
+	margin:0 auto;
+	max-width: 400px;
+
+}
+
+
+.create-form{
+	max-width: 300px;
+	margin: 0 auto;
+}
+
+/*FOOTER*/
+
+.footer{
+	max-height: 200px;
+	background: #0F488A;
+	position: fixed;
+	bottom: 0;
+	padding-top: 15px;
+	padding-bottom: 10px;
+	width: 100%;
+	color: white;
+	text-align: center;
+}

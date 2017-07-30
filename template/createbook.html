@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <meta charset="utf-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width = device-width initial-scale=1.0">
+   <title>New User Signup</title>
+   <link rel="stylesheet" href="css/style.css">
+   <link rel="stylesheet" href="css/font-awesome/css/font-awesome.css">
+   <link rel="stylesheet" href="libs/bootstrap3.3.7/css/bootstrap.min.css">
+      <script type="text/javascript" src="js/main.js"></script>
+   <script type="text/javascript" src="js/jquery-3.2.0.js"></script>
+   <script type="text/javascript" src="libs/bootstrap3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+   
+<style>
+   .navbar{
+      background-color: #0F488A !important;
+      border:none !important;
+      text-align: right;
+      width: 100% !important;
+   }
+
+   .nav li a:hover{
+  color: #017eb7 !important ; 
+  }
+</style>
+
+   <nav class="navbar navbar-default" role="navigation">
+      <div class="container">
+         <div class="navbar-header">
+            <button class="navbar-toggle" type="button" data-toggle= "collapse" data-target="#nav-links">
+               <span class="icon-bar"></span>
+               <span class="icon-bar"></span>
+               <span class="icon-bar"></span>
+            </button>
+
+            <a href="" class="navbar-brand"><img src="images/hb-logo2.png" alt=""></a>
+         </div>
+
+         <div class="collapse navbar-collapse" id="nav-links">
+            <!--Notification starts -->
+            <div class="notification">
+              <div class="dropdown notify-icon">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                  <i class="fa fa-envelope"></i>
+                  <div class="notification-number">
+                    <svg>
+                        <circle cx="5" cy="7" r="7" fill="red"></circle>
+                        <text x="7" y="11" text-anchor="middle" fill="white">3</text>
+                    </svg>
+                  </div>
+                  <ul class="dropdown-menu">
+                        <li><a href="books.html">Learn Angular 2 is now available</a></li>
+                        <li><a href="books.html">You have pending book returns </a></li>
+                        <li><a href="books.html">New book uploaded</a></li>
+                     </ul>
+                </a>
+              </div>
+              <div class="user-holder">
+                <div class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <img src="images/icon.png" alt=""><span class="caret"></span>
+                    <ul class="dropdown-menu dropdown-menu-left">
+                        <li><a href="profile.html">My profile</a></li>
+                        <li><a href="history.html">Borrow History</a></li>
+                        <li><a href="books.html">Books</a></li>
+                        <li class="divider"></li>
+                        <li><a href="login.html" class="btn btn-danger btn-sm logout">Logout</a></li>
+                     </ul>
+                 </a>
+                </div>
+              </div>
+            </div>
+            <!-- Notification ends -->
+         </div>
+      </div>
+   </nav>
+
+
+<!-- SECTION FOR BOOKS  -->
+<!-- ****************** -->
+
+
+  <div class="container profile">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="history-header">
+          <h3>CREATE BOOK</h3>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="create-book">
+          <form action="" class="create-form">
+            <div class="form-group">
+              <label for="Book Title">Book Title <span>*</span></label>
+              <input type="text" class="form-control input-sm" required>
+            </div>
+
+            <div class="form-group">
+              <label for="Category">Category <span>*</span></label>
+              <select name="category" class="form-control input-sm" id="cat" required>
+                <option value="...">...</option>
+                <option value="Science fiction">Science fiction</option>
+                <option value="Drama">Drama</option>
+                <option value="Action and Adventure">Action and Adventure</option>
+                <option value="Romance">Romance</option>
+                <option value="Self help">Self help</option>
+                <option value="Health">Health</option>
+                <option value="Religion, Spirituality & New Ag
+">Religion, Spirituality & New Ag
+</option>
+                <option value="Poetry">Poetry</option>
+                <option value="Encyclopedias">Encyclopedias</option>
+                <option value="Dictionaries">Dictionaries</option>
+                <option value="Comics">Comics</option>
+                <option value="Art">Art</option>
+                <option value="Technology">Technology</option>
+                <option value="Programming">Programming</option>
+              </select>
+            </div>
+
+            <div class="form-group ">
+              <label for="Author">Author <span>*</span></label>
+              <input type="text" class="form-control input-sm" required>
+            </div>
+
+
+            <div class="form-group ">
+              <label for="Publisher">Publisher <span>*</span> </label>
+              <input type="text" class="form-control input-sm" required>
+            </div>
+
+             <div class="form-group">
+              <label for="Year">Year<span>*</span></label>
+              <input type="number" class="form-control input-sm"  required>
+            </div>
+
+            
+            <div class="form-group">
+              <label for="Pages">Pages <span>*</span></label>
+              <input type="number" class="form-control input-sm" required>
+            </div>
+
+            <div class="form-group">
+              <label for="Quantity">Quantity<span>*</span></label>
+              <input type="number" class="form-control input-sm"  required>
+            </div>
+            
+           
+            
+              <div class="checkbox col-sm-6">
+                <label>
+                  <input type="checkbox">Publish
+                </label>
+            </div>            
+            
+
+            <div class="form-group col-sm-6" style="float:right">
+              <button type="button" class="btn btn-sm">SAVE</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+            
+
+          </form>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- Closes profile -->
+    
+    <!-- FOOTER -->
+    <div class="footer">
+        <p>All rights Resereced, Andela Bootcamp 25, 2017</p>
+    </div>
+
+</body>
+</html>
