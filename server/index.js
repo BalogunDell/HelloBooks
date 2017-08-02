@@ -1,12 +1,22 @@
-const express = require('express');
-const router = require('./routes/api-routes.js');
+import express from 'express';
+import bodyParser from 'body-parser';
+import morgan from 'morgan';
+import router from './routes/api-routes';
 
+require('dotenv').config();
+
+const port = process.env.PORT || 3000;
 const app = express();
-
-const port = 3000 || process.env.port;
-
+app.use(morgan('dev'));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 app.use('/api', router);
-app.listen(port, () => {
-  console.log(`app started at ${port}`);
+
+app.listen(port, (err) => {
+  /* eslint-disable no-console */
+  if (err) console.log(err);
+  console.log('started');
 });
+
+export default app;
