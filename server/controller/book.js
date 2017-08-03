@@ -8,10 +8,10 @@ const bookModel = model.books;
  * @classdesc creates a Book classs
  */
 class Book {
-  /* 
-   * @param {Object} req 
-   * @param {Object} res 
-   * @return null 
+  /*
+   * @param {Object} req
+   * @param {Object} res
+   * @return null
    */
   static addBook(req, res) {
     bookModel.create(req.body).then(() => {
