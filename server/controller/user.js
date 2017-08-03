@@ -3,7 +3,8 @@ import model from '../models';
 const userModel = model.users;
 
 /**
- *@desc handles everything about user signup and signin
+ * @class User
+ *@desc creates a class User
  */
 class User {
   /* 

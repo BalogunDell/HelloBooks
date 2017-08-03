@@ -1,11 +1,12 @@
-const Book = (sequelize, DataTypes) => {
-  const Books = sequelize.define('Books', {
+const book = (sequelize, DataTypes) => {
+  const books = sequelize.define('books', {
     isbn: {
-      title: DataTypes.STRING,
-      allowNull: false
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true
     },
     pages: {
-      type: DataTypes.NUMBER,
+      type: DataTypes.INTEGER,
       allowNull: false
     },
     author: {
@@ -13,7 +14,7 @@ const Book = (sequelize, DataTypes) => {
       allowNull: false
     },
     year: {
-      type: DataTypes.NUMBER,
+      type: DataTypes.INTEGER,
       allowNull: false
     },
     title: {
@@ -24,7 +25,10 @@ const Book = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false
     },
-    image: DataTypes.STRING
+    image: {
+      type: DataTypes.STRING,
+      allowNull: true
+    }
   }, {
     classMethods: {
       associate() {
@@ -32,6 +36,6 @@ const Book = (sequelize, DataTypes) => {
       }
     }
   });
-  return Books;
+  return books;
 };
-export default Book;
+export default book;

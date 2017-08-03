@@ -1,5 +1,6 @@
 import express from 'express';
 import userController from '../controller/user';
+import bookController from '../controller/book';
 
 const Router = express.Router();
 
@@ -16,12 +17,8 @@ Router.post('/users/signin', (req, res) => {
 });
 
 Router.route('/books')
-  .get((req, res) => {
-    res.send('get books works');
-  })
-  .post((req, res) => {
-    res.send('post books works');
-  });
+  .get(bookController.addBook)
+  .post(bookController.addBook);
 
 Router.route('/users/:userId/books')
   .post((req, res) => {
