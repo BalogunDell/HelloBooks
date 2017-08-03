@@ -3,13 +3,14 @@ import model from '../models';
 const userModel = model.users;
 
 /**
- *@desc handles everything about user signup and signin
+ * @class User
+ *@desc creates a class User
  */
 class User {
-  /* 
-   * @param {Object} req 
-   * @param {Object} res 
-   * @return null 
+  /*
+   * @param {Object} req
+   * @param {Object} res
+   * @return null
    */
   static signup(req, res) {
     userModel.create(req.body).then(() => {
