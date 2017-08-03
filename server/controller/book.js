@@ -22,7 +22,7 @@ class Book {
         res.status(400).json({ message: 'One or more fields are empty' });
         // check if a duplicate request was made.
       } else if (error.name === 'SequelizeUniqueConstraintError') {
-        res.status(400).json({ message: 'Two books cannot have the same ISBN number' });
+        res.status(409).json({ message: 'Two books cannot have the same ISBN number' });
       } else {
         res.send(error);
       }

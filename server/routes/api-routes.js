@@ -1,6 +1,7 @@
 import express from 'express';
 import userController from '../controller/user';
 import bookController from '../controller/book';
+import Auth from '../middleware/auth';
 
 const Router = express.Router();
 
@@ -12,18 +13,14 @@ Router.get('/user', (req, res) => {
 // User Routes
 Router.post('/users/signup', userController.signup);
 
-Router.post('/users/signin', (req, res) => {
-  res.send(req.body);
-});
+Router.post('/users/signin', Auth.signin);
 
 Router.route('/books')
   .get(bookController.addBook)
   .post(bookController.addBook);
 
 Router.route('/users/:userId/books')
-  .post((req, res) => {
-    res.send('borrow books works');
-  })
+  .post(userController.Books)
   .get((req, res) => {
     if (req.query.returned === 'false') {
       return res.send(['book1', 'book2']);

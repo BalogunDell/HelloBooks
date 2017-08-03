@@ -4,7 +4,7 @@ const userModel = model.users;
 
 /**
  * @class User
- *@desc creates a class User
+ *@classdesc creates a class User
  */
 class User {
   /*
@@ -23,7 +23,14 @@ class User {
       }
     });
   }
+  /**
+   *
+   * @param {object} req 
+   * @param {object} res 
+   */
+  static Books(req, res) {
+    res.send(req.params);
+  }
 }
-
 
 export default User;
