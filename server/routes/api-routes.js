@@ -1,16 +1,15 @@
 import express from 'express';
+import userController from '../controller/user';
 
 const Router = express.Router();
 
 // Api home
-Router.get('/', (req, res) => {
+Router.get('/user', (req, res) => {
   res.status(200).send('Welcome to library api');
 });
 
 // User Routes
-Router.post('/users/signup', (req, res) => {
-  res.send(req.body);
-});
+Router.post('/users/signup', userController.signup);
 
 Router.post('/users/signin', (req, res) => {
   res.send(req.body);
