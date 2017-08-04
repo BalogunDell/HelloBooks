@@ -6,7 +6,7 @@ import Auth from '../middleware/auth';
 const Router = express.Router();
 
 // Api home
-Router.get('/user', (req, res) => {
+Router.get('/', (req, res) => {
   res.status(200).send('Welcome to library api');
 });
 
@@ -16,11 +16,15 @@ Router.post('/users/signup', userController.signup);
 Router.post('/users/signin', Auth.signin);
 
 Router.route('/books')
-  .get(bookController.addBook)
+  .get(bookController.getBook)
   .post(bookController.addBook);
 
+Router.put('/books/:id', bookController.modifyBook);
+
 Router.route('/users/:userId/books')
-  .post(userController.Books)
+  .post((req, res) => {
+    res.send('borrow books works');
+  })
   .get((req, res) => {
     if (req.query.returned === 'false') {
       return res.send(['book1', 'book2']);
@@ -39,5 +43,14 @@ Router.route('/users/:userId/books')
 Router.put('/books/:bookId', (req, res) => {
   res.send(req.body);
 });
+
+//redirect every other address
+Router.route('*')
+  .post((req, res) => {
+    res.send('This is an invalid route');
+  })
+  .get((req, res) => {
+    res.send('This is an invalid route, does not exist');
+  });
 
 export default Router;

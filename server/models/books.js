@@ -35,7 +35,7 @@ const book = (sequelize, DataTypes) => {
     },
     image: {
       type: DataTypes.STRING,
-      allowNull: true
+      allowNull: false
     }
   }, {
     classMethods: {
