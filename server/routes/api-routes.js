@@ -16,11 +16,15 @@ Router.post('/users/signup', userController.signup);
 Router.post('/users/signin', Auth.signin);
 
 Router.route('/books')
-  .get(bookController.addBook)
+  .get(bookController.getBook)
   .post(bookController.addBook);
 
+Router.put('/books/:id', bookController.modifyBook);
+
 Router.route('/users/:userId/books')
-  .post(userController.Books)
+  .post((req, res) => {
+    res.send('borrow books works');
+  })
   .get((req, res) => {
     if (req.query.returned === 'false') {
       return res.send(['book1', 'book2']);

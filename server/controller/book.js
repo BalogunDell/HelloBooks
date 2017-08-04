@@ -8,10 +8,10 @@ const bookModel = model.books;
  * @classdesc creates a Book classs
  */
 class Book {
-  /*
-   * @param {Object} req
-   * @param {Object} res
-   * @return null
+  /**
+   * @param {object} req 
+   * @param {object} res
+   * @returns {void}
    */
   static addBook(req, res) {
     bookModel.create(req.body).then(() => {
@@ -26,6 +26,28 @@ class Book {
       } else {
         res.send(error);
       }
+    });
+  }
+  /**
+   * @param {object} req 
+   * @param {object} res
+   * @returns { object } resposnse
+   */
+  static getBook(req, res) {
+    bookModel.findAll().then((response) => {
+      res.send(response);
+    }).catch((error) => {
+      res.send(404).json({ message: error.message });
+    });
+  }
+  /**
+ * @param {object} req 
+ * @param {object} res
+ * @returns { object } resposnse
+ */
+  static modifyBook(req, res) {
+    bookModel.findOne({ where: { id: req.params.id } }).then((response) => {
+      res.send(response);
     });
   }
 }

@@ -7,29 +7,23 @@ const userModel = model.users;
  *@classdesc creates a class User
  */
 class User {
-  /*
-   * @param {Object} req
-   * @param {Object} res
-   * @return null
+  /**
+   * @param { 0bject } req 
+   * @param { object } res
+   * @returns { void }
    */
   static signup(req, res) {
     userModel.create(req.body).then(() => {
-      res.status(201).json({ message: 'User created' });
+      res.status(200).json({ message: 'User created' });
     }).catch((error) => {
       if (error.name === 'SequelizeValidationError') {
         res.status(400).json({ message: 'One or more fields are empty' });
+      } else if (error.name === 'SequelizeUniqueConstraintError') {
+        res.status(409).json({ message: 'A user with the email exists' });
       } else {
         res.json(error);
       }
     });
-  }
-  /**
-   *
-   * @param {object} req 
-   * @param {object} res 
-   */
-  static Books(req, res) {
-    res.send(req.params);
   }
 }
 
