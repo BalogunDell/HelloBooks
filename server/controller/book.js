@@ -15,7 +15,7 @@ class Book {
    */
   static addBook(req, res) {
     bookModel.create(req.body).then(() => {
-      res.send(200).json({ message: 'Book created' });
+      res.send(201).json({ message: 'Book created' });
     }).catch((error) => {
       // check if all fields are supplied.
       if (error.name === 'SequelizeValidationError') {
@@ -48,6 +48,8 @@ class Book {
   static modifyBook(req, res) {
     bookModel.findOne({ where: { id: req.params.id } }).then((response) => {
       res.send(response);
+    }).catch((error) => {
+      res.send(404).json({ message: error.body });
     });
   }
 }

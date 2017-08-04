@@ -8,7 +8,7 @@ const userModel = model.users;
  */
 class User {
   /**
-   * @param { 0bject } req 
+   * @param { object } req 
    * @param { object } res
    * @returns { void }
    */
