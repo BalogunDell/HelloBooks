@@ -1,5 +1,7 @@
+import bcrypt from 'bcrypt';
+
 const user = (sequelize, DataTypes) => {
-  const users = sequelize.define('users', {
+  const usersModel = sequelize.define('users', {
     firstname: {
       type: DataTypes.STRING,
       allowNull: false
@@ -28,9 +30,16 @@ const user = (sequelize, DataTypes) => {
       associate() {
         // associations can be defined here
       }
+    },
+    hooks: {
+      beforeCreate: (users) => {
+        const hashP = bcrypt.hashSync(users.password, 10);
+        users.password = hashP;
+        return users;
+      },
     }
   });
-  return users;
+  return usersModel;
 };
 
 export default user;

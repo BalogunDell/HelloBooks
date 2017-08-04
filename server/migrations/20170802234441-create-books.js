@@ -33,6 +33,14 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
+      quantity: {
+        type: Sequelize.INTEGER,
+        allowNull: false
+      },
+      category: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
       image: {
         type: Sequelize.STRING
       },
@@ -47,6 +55,6 @@ module.exports = {
     });
   },
   down(queryInterface) {
-    return queryInterface.dropTable('Books');
+    return queryInterface.dropTable('books');
   }
 };
