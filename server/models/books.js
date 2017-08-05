@@ -39,8 +39,12 @@ const book = (sequelize, DataTypes) => {
     }
   }, {
     classMethods: {
-      associate() {
+      associate(model) {
         // associations can be defined here
+        books.belongTo(model.borrowedbooks, {
+          foreignKey: 'bookid',
+          as: 'borrwedbooks'
+        });
       }
     }
   });

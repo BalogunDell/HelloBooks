@@ -27,8 +27,12 @@ const user = (sequelize, DataTypes) => {
     image: DataTypes.STRING
   }, {
     classMethods: {
-      associate() {
+      associate(model) {
         // associations can be defined here
+        usersModel.belongTo(model.borrowedbooks, {
+          foreignKey: 'userid',
+          as: 'users'
+        });
       }
     },
     hooks: {

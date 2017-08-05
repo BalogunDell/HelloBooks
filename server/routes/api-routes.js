@@ -22,9 +22,7 @@ Router.route('/books')
 Router.put('/books/:id', bookController.modifyBook);
 
 Router.route('/users/:userId/books')
-  .post((req, res) => {
-    res.send('borrow books works');
-  })
+  .post(userController.borrowbook)
   .get((req, res) => {
     if (req.query.returned === 'false') {
       return res.send(['book1', 'book2']);
@@ -44,7 +42,7 @@ Router.put('/books/:bookId', (req, res) => {
   res.send(req.body);
 });
 
-//redirect every other address
+// redirect every other address
 Router.route('*')
   .post((req, res) => {
     res.send('This is an invalid route');

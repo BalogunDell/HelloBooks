@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken';
 import model from '../models';
 
 require('dotenv').config();
+
 const userModel = model.users;
 
 const secret = process.env.SECRET;

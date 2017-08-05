@@ -1,6 +1,7 @@
 import model from '../models';
 
 const userModel = model.users;
+const borrowedBookModel = model.borrowedbooks;
 
 /**
  * @class User
@@ -23,6 +24,19 @@ class User {
       } else {
         res.json(error);
       }
+    });
+  }
+
+  /**
+   * @param { object } req 
+   * @param { object } res
+   * @returns { void }
+   */
+  static borrowbook(req, res) {
+    borrowedBookModel.create(req.body).then(() => {
+      res.status(200).json({ message: 'Book added' });
+    }).catch((error) => {
+      res.send(error.message);
     });
   }
 }
