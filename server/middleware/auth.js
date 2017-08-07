@@ -21,11 +21,15 @@ class Authentication {
    */
   static verifyAdmin(req, res) {
     // console.log(req.headers.authorization);
-    const decoded = jwt.verify(req.headers.authorization, secret);
-    if (decoded.membership !== 'admin') {
-      console.log('you cannot access this route');
+    if (!req.headers.authorization) {
+      res.status(401).json({ message: 'Unauthorized - Access Denied' });
     } else {
-      console.log('welcome');
+      const decoded = jwt.verify(req.headers.authorization, secret);
+      if (decoded.role === 'user') {
+        res.status(401).json({ message: 'Unauthorized - Access Denied' });
+      } else {
+        next();
+      }
     }
   }
 

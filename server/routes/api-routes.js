@@ -22,8 +22,9 @@ Router.route('/books')
   .get(bookController.getBook)
   .post(bookController.addBook);
 
-Router.put('/books/:id', bookController.modifyBook);
+Router.put('/books/:id', Auth.verifyAdmin, bookController.modifyBook);
 
+// Routes allow user borrow book, check for books not returned and return book
 Router.route('/users/:userId/books')
   .post(Auth.verifyUser, userController.borrowbook)
   .get(Auth.verifyUser, userController.booksNotReturned)
