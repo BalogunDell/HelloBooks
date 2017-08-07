@@ -15,6 +15,9 @@ Router.post('/users/signup', userController.signup);
 
 Router.post('/users/signin', Auth.signin);
 
+// get all users
+Router.get('/users/', userController.getAllUsers);
+
 Router.route('/books')
   .get(bookController.getBook)
   .post(bookController.addBook);
@@ -22,13 +25,8 @@ Router.route('/books')
 Router.put('/books/:id', bookController.modifyBook);
 
 Router.route('/users/:userId/books')
-  .post(userController.borrowbook)
-  .get((req, res) => {
-    if (req.query.returned === 'false') {
-      return res.send(['book1', 'book2']);
-    }
-    res.send(['book1', 'book2', 'book3']);
-  })
+  .post(Auth.verifyUser, userController.borrowbook)
+  .get(Auth.verifyUser, userController.booksNotReturned)
   .put((req, res) => {
     res.send('return books works');
   });
