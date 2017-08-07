@@ -24,6 +24,12 @@ const user = (sequelize, DataTypes) => {
       allowNull: false,
       defaultValue: 'Bronze'
     },
+
+    role: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      defaultValue: 'user'
+    },
     image: DataTypes.STRING
   }, {
     classMethods: {

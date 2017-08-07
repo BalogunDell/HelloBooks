@@ -13,7 +13,7 @@ Router.get('/', (req, res) => {
 // User Routes
 Router.post('/users/signup', userController.signup);
 
-Router.post('/users/signin', Auth.signin);
+Router.post('/users/signin', userController.signin);
 
 // get all users
 Router.get('/users/', userController.getAllUsers);
