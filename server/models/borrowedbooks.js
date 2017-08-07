@@ -1,5 +1,21 @@
 const borrowedbook = (sequelize, DataTypes) => {
   const borrowedbooks = sequelize.define('borrowedbooks', {
+
+    userid: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'users',
+        key: 'id'
+      }
+    },
+
+    bookid: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'books',
+        key: 'id'
+      }
+    },
     dateborrowed: {
       type: DataTypes.DATE,
       allowNull: false
@@ -19,8 +35,6 @@ const borrowedbook = (sequelize, DataTypes) => {
   }, {
     classMethods: {
       associate: (models) => {
-        // associations can be defined here
-        // borrowedbook.hasMany(borrowedbook);
         borrowedbooks.belongTo(models.users, { foreignKey: 'userid', as: 'user' });
         borrowedbooks.belongTo(models.books, { foreignKey: 'bookid', as: 'book' });
       }

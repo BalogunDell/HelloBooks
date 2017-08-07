@@ -36,6 +36,33 @@ class User {
     borrowedBookModel.create(req.body).then(() => {
       res.status(200).json({ message: 'Book added' });
     }).catch((error) => {
+      res.status(400).json({ message: error.message });
+    });
+  }
+
+  /**
+   * @param { object } req 
+   * @param { object } res
+   * @returns { void }
+   */
+  static booksNotReturned(req, res) {
+    const returnStatus = req.query.returned;
+    borrowedBookModel.findOne({ where: { returnstatus: returnStatus } }).then((response) => {
+      res.status(200).json(response);
+    }).catch((error) => {
+      res.send(404).json({ message: error });
+    });
+  }
+
+  /**
+   * @param { object } req 
+   * @param { object } res
+   * @returns { void }
+   */
+  static getAllUsers(req, res) {
+    borrowedBookModel.findAll().then((response) => {
+      res.status(200).json(response);
+    }).catch((error) => {
       res.send(error.message);
     });
   }

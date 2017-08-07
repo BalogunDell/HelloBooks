@@ -1,5 +1,4 @@
 import model from '../models';
-
 const bookModel = model.books;
 
 
@@ -14,8 +13,8 @@ class Book {
    * @returns {void}
    */
   static addBook(req, res) {
-    bookModel.create(req.body).then(() => {
-      res.send(201).json({ message: 'Book created' });
+    bookModel.create(req.body).then((book) => {
+      res.status(201).json({ message: 'Book created', data: book });
     }).catch((error) => {
       // check if all fields are supplied.
       if (error.name === 'SequelizeValidationError') {
