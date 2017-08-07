@@ -40,11 +40,11 @@ class User {
     userModel.findOne({ where: { email: req.body.email } })
       .then((user) => {
         if (user && bcrypt.compareSync(req.body.password, user.dataValues.password)) {
-          console.log(bcrypt.compareSync(req.body.password, user.dataValues.password));
           const token = jwt.sign({
             id: user.dataValues.id,
             email: user.dataValues.email,
-            membership: user.dataValues.membership
+            membership: user.dataValues.membership,
+            role: user.dataValues.role
           }, secret, { expiresIn: '24h' });
 
           const response = {
@@ -84,6 +84,23 @@ class User {
     }).catch((error) => {
       res.send(404).json({ message: error });
     });
+  }
+  /**
+   * @param { object } req 
+   * @param { object } res
+   * @returns { object }
+   */
+  static Returnbook(req, res) {
+    borrowedBookModel.update({ approvedreturn: true }, { where: { userid: req.body.userid, bookid: req.body.bookid } })
+      .then((book) => {
+        if (book) {
+          res.status(200).json({ message: 'Return awaiting confirmation' });
+        } else {
+          res.status(401).json({ message: 'Book already approved' });
+        }
+      }).catch((error) => {
+        res.send(404).json({ message: error });
+      });
   }
 
   /**

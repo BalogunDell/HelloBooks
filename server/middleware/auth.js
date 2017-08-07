@@ -35,7 +35,6 @@ class Authentication {
    * @returns { object } --- return object
    */
   static verifyUser(req, res, next) {
-    console.log(req.headers.authorization);
     const decoded = jwt.verify(req.headers.authorization, secret);
     userModel.findOne({ where: { email: decoded.email, id: decoded.id } }).then((user) => {
       if (user) {

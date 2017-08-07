@@ -27,9 +27,7 @@ Router.put('/books/:id', bookController.modifyBook);
 Router.route('/users/:userId/books')
   .post(Auth.verifyUser, userController.borrowbook)
   .get(Auth.verifyUser, userController.booksNotReturned)
-  .put((req, res) => {
-    res.send('return books works');
-  });
+  .put(Auth.verifyUser, userController.Returnbook);
 
 // Router.get('/users/:userId/books?returned=false', (req, res) => {
 //   res.send(req.params);
