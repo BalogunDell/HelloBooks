@@ -39,18 +39,22 @@ class Authentication {
    * @returns { object } --- return object
    */
   static verifyUser(req, res, next) {
-    const decoded = jwt.verify(req.headers.authorization, secret);
-    userModel.findOne({ where: { email: decoded.email, id: decoded.id } }).then((user) => {
-      if (user) {
-        req.body.userid = user.id;
-        next();
-      } else {
-        res.status(401).json({ message: 'User does not exist' });
-      }
-    }).catch((error) => {
-      console.log(error);
+    if (!req.headers.authorization) {
       res.status(401).json({ message: 'Invalid/expired token' });
-    });
+    } else {
+      const decoded = jwt.verify(req.headers.authorization, secret);
+      userModel.findOne({ where: { email: decoded.email, id: decoded.id } }).then((user) => {
+        if (user) {
+          req.body.userid = user.id;
+          next();
+        } else {
+          res.status(401).json({ message: 'User does not exist' });
+        }
+      }).catch((error) => {
+        console.log(error);
+        res.status(401).json({ message: 'Invalid/expired token' });
+      });
+    }
   }
 }
 

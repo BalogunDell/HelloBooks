@@ -7,7 +7,7 @@ const Router = express.Router();
 
 // Api home
 Router.get('/', (req, res) => {
-  res.status(200).send('Welcome to library api');
+  res.status(200).json({ message: 'Welcome to library api' });
 });
 
 // User Routes
