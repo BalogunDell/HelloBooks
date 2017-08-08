@@ -60,13 +60,14 @@ class User {
       .catch(err => res.send(err));
   }
   /**
-   * @param { object } req 
+   * @param { object } req
    * @param { object } res
    * @returns { void }
    */
   static borrowbook(req, res) {
     const decoded = jwt.verify(req.headers.authorization, secret);
-    borrowedBookModel.findAndCountAll({ where: { userid: decoded.id, approvedreturn: false } }).then((response) => {
+    borrowedBookModel.findAndCountAll({ where: { userid: decoded.id,
+      approvedreturn: false } }).then((response) => {
       // Check if user is silver and has 5 books that are yet to be returned
       if (decoded.membership === 'Silver' && response.count === 5) {
         console.log('You can not borrow any book again');
@@ -105,10 +106,11 @@ class User {
   /**
    * @param { object } req 
    * @param { object } res
-   * @returns { object }
+   * @returns { object } returns object
    */
   static Returnbook(req, res) {
-    borrowedBookModel.update({ approvedreturn: true }, { where: { userid: req.body.userid, bookid: req.body.bookid } })
+    borrowedBookModel.update({ approvedreturn: true },
+      { where: { userid: req.body.userid, bookid: req.body.bookid } })
       .then((book) => {
         if (book) {
           res.status(200).json({ message: 'Return awaiting confirmation' });
@@ -137,7 +139,7 @@ class User {
    * 
    * @param {object} req -Request object 
    * @param {object} res - Response object
-   * @returns { object}
+   * @returns { object} - returns an object
    */
   static borrowBookHelper(req, res) {
     // check books table if the quantity of (this) book is not 0
@@ -158,7 +160,8 @@ class User {
                 // Once book is created in borrowed books table
                 // update quantity in the books table
                 //
-                bookModel.update({ quantity: bookObject.quantity - 1 }, { where: { id: req.body.bookid } }).then(() => {
+                bookModel.update({ quantity: bookObject.quantity - 1 },
+                  { where: { id: req.body.bookid } }).then(() => {
                   res.status(201).json({ message: 'You have borrowed a book' });
                 });
               }
