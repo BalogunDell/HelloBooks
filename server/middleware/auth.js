@@ -5,7 +5,6 @@ import model from '../models';
 require('dotenv').config();
 
 const userModel = model.users;
-const borrowedBookModel = model.borrowedbooks;
 
 const secret = process.env.SECRET;
 
@@ -20,7 +19,6 @@ class Authentication {
    * @returns { object } response
    */
   static verifyAdmin(req, res) {
-    // console.log(req.headers.authorization);
     if (!req.headers.authorization) {
       res.status(401).json({ message: 'Unauthorized - Access Denied' });
     } else {
@@ -50,8 +48,7 @@ class Authentication {
         } else {
           res.status(401).json({ message: 'User does not exist' });
         }
-      }).catch((error) => {
-        console.log(error);
+      }).catch(() => {
         res.status(401).json({ message: 'Invalid/expired token' });
       });
     }
