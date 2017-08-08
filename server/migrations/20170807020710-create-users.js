@@ -29,6 +29,11 @@ module.exports = {
         type: Sequelize.STRING,
         defaultValue: 'Bronze'
       },
+      role: {
+        type: Sequelize.STRING,
+        defaultValue: 'user'
+      },
+
       image: {
         type: Sequelize.STRING
       },

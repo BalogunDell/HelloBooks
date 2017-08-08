@@ -7,13 +7,13 @@ const Router = express.Router();
 
 // Api home
 Router.get('/', (req, res) => {
-  res.status(200).send('Welcome to library api');
+  res.status(200).json({ message: 'Welcome to library api' });
 });
 
 // User Routes
 Router.post('/users/signup', userController.signup);
 
-Router.post('/users/signin', Auth.signin);
+Router.post('/users/signin', userController.signin);
 
 // get all users
 Router.get('/users/', userController.getAllUsers);
@@ -22,14 +22,13 @@ Router.route('/books')
   .get(bookController.getBook)
   .post(bookController.addBook);
 
-Router.put('/books/:id', bookController.modifyBook);
+Router.put('/books/:id', Auth.verifyAdmin, bookController.modifyBook);
 
+// Routes allow user borrow book, check for books not returned and return book
 Router.route('/users/:userId/books')
   .post(Auth.verifyUser, userController.borrowbook)
   .get(Auth.verifyUser, userController.booksNotReturned)
-  .put((req, res) => {
-    res.send('return books works');
-  });
+  .put(Auth.verifyUser, userController.Returnbook);
 
 // Router.get('/users/:userId/books?returned=false', (req, res) => {
 //   res.send(req.params);
