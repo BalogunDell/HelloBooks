@@ -1,6 +1,7 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import model from '../models';
+import helper from '../middleware/helper';
 
 require('dotenv').config();
 
@@ -59,36 +60,6 @@ class User {
       })
       .catch(err => res.send(err));
   }
-  /**
-   * @param { object } req
-   * @param { object } res
-   * @returns { void }
-   */
-  static borrowbook(req, res) {
-    const decoded = jwt.verify(req.headers.authorization, secret);
-    borrowedBookModel.findAndCountAll({ where: { userid: decoded.id,
-      approvedreturn: false } }).then((response) => {
-      // Check if user is silver and has 5 books that are yet to be returned
-      if (decoded.membership === 'Silver' && response.count === 5) {
-        console.log('You can not borrow any book again');
-      } else {
-        this.borrowBookHelper(req, res);
-      }
-
-      // Check if user is Bronze and has 1 books that is yet to be returned
-      if (decoded.membership === 'Bronze' && response.count === 1) {
-        console.log('You can not borrow any book again');
-      } else {
-        this.borrowBookHelper(req, res);
-      }
-      // Check if user is Gold and has 1 books that is yet to be returned
-      if (decoded.membership === 'Gold' && response.count === 8) {
-        console.log('You can not borrow any book again');
-      } else {
-        // borrowBookHelper(req, res);
-      }
-    });
-  }
 
   /**
    * @param { object } req 
@@ -97,23 +68,42 @@ class User {
    */
   static booksNotReturned(req, res) {
     const returnStatus = req.query.returned;
-    borrowedBookModel.findOne({ where: { returnstatus: returnStatus } }).then((response) => {
+    borrowedBookModel.findAll({ where: { returnstatus: returnStatus } }).then((response) => {
       res.status(200).json(response);
     }).catch((error) => {
       res.send(404).json({ message: error });
     });
   }
+
+  /**
+   * @param { object } req 
+   * @param { object } res
+   * @returns { void }
+   */
+  static booksReturned(req, res) {
+    const returnStatus = req.query.returned;
+    borrowedBookModel.findAll({ where: { returnstatus: returnStatus } }).then((response) => {
+      if (response.length === 0) {
+        res.status(200).json({ message: 'You have not returned any book' });
+      } else {
+        res.status(200).json(response);
+      }
+    }).catch((error) => {
+      res.send(404).json({ message: error });
+    });
+  }
+
   /**
    * @param { object } req 
    * @param { object } res
    * @returns { object } returns object
    */
-  static Returnbook(req, res) {
+  static returnBook(req, res) {
     borrowedBookModel.update({ approvedreturn: true },
       { where: { userid: req.body.userid, bookid: req.body.bookid } })
       .then((book) => {
         if (book) {
-          res.status(200).json({ message: 'Return awaiting confirmation' });
+          res.status(200).json({ message: 'Book has been returned' });
         } else {
           res.status(401).json({ message: 'Book already approved' });
         }
@@ -134,49 +124,5 @@ class User {
       res.send(error.message);
     });
   }
-
-  /**
-   * 
-   * @param {object} req -Request object 
-   * @param {object} res - Response object
-   * @returns { object} - returns an object
-   */
-  static borrowBookHelper(req, res) {
-    // check books table if the quantity of (this) book is not 0
-    bookModel.findOne({ where: { id: req.body.bookid } }).then((bookObject) => {
-      if (bookObject.quantity !== 0) {
-        //
-        // If book is available in books table, 
-        // check if user has already borrowed this book
-        //
-        borrowedBookModel.findOne({ where: { bookid: req.body.bookid } }).then((response) => {
-          if (response == null) {
-            //
-            // If no, create book and set the expected return date to 5 days from borrow date
-            //
-            borrowedBookModel.create(req.body).then((bookSaved) => {
-              if (bookSaved) {
-                //
-                // Once book is created in borrowed books table
-                // update quantity in the books table
-                //
-                bookModel.update({ quantity: bookObject.quantity - 1 },
-                  { where: { id: req.body.bookid } }).then(() => {
-                  res.status(201).json({ message: 'You have borrowed a book' });
-                });
-              }
-            });
-          } else {
-            // Show message if user has already borrowed the book
-            res.status(409).json({ message: 'You can not borrow the same book', res: response });
-          }
-        });
-      } else {
-        // Show message if quantity is 0 in the books table
-        res.status(404).json({ message: 'Book not available for borrow' });
-      }
-    });
-  }
 }
-
 export default User;

@@ -17,12 +17,14 @@ const borrowedbook = (sequelize, DataTypes) => {
       }
     },
     dateborrowed: {
-      type: DataTypes.DATE,
-      allowNull: false
+      type: DataTypes.DATEONLY,
+      allowNull: false,
+      defaultValue: Date.now()
     },
     expectedreturndate: {
-      type: DataTypes.DATE,
-      allowNull: false
+      type: DataTypes.DATEONLY,
+      allowNull: false,
+      defaultValue: Date.now()
     },
     returnstatus: {
       type: DataTypes.BOOLEAN,

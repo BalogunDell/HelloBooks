@@ -18,7 +18,7 @@ class Authentication {
    * @param { object} res 
    * @returns { object } response
    */
-  static verifyAdmin(req, res) {
+  static verifyAdmin(req, res, next) {
     if (!req.headers.authorization) {
       res.status(401).json({ message: 'Unauthorized - Access Denied' });
     } else {
@@ -43,7 +43,8 @@ class Authentication {
       const decoded = jwt.verify(req.headers.authorization, secret);
       userModel.findOne({ where: { email: decoded.email, id: decoded.id } }).then((user) => {
         if (user) {
-          req.body.userid = user.id;
+          req.userid = decoded.id;
+          req.membership = decoded.membership;
           next();
         } else {
           res.status(401).json({ message: 'User does not exist' });

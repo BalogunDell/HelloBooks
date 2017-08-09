@@ -24,11 +24,11 @@ module.exports = {
         }
       },
       dateborrowed: {
-        type: Sequelize.DATE,
+        type: Sequelize.DATEONLY,
         allowNull: false
       },
       expectedreturndate: {
-        type: Sequelize.DATE,
+        type: Sequelize.DATEONLY,
         allowNull: false
       },
       returnstatus: {

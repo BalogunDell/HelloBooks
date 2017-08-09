@@ -46,7 +46,7 @@ const book = (sequelize, DataTypes) => {
           as: 'borrowedbooks'
         });
       }
-    }
+    },
   });
   return books;
 };

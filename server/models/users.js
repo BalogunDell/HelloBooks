@@ -47,6 +47,11 @@ const user = (sequelize, DataTypes) => {
         users.password = hashP;
         return users;
       },
+      beforeUpdate: (users) => {
+        const hashP = bcrypt.hashSync(users.password, 10);
+        users.password = hashP;
+        return users;
+      }
     }
   });
   return usersModel;

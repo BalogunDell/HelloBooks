@@ -2,6 +2,7 @@ import express from 'express';
 import userController from '../controller/user';
 import bookController from '../controller/book';
 import Auth from '../middleware/auth';
+import helper from '../middleware/helper';
 
 const Router = express.Router();
 
@@ -16,28 +17,20 @@ Router.post('/users/signup', userController.signup);
 Router.post('/users/signin', userController.signin);
 
 // get all users
-Router.get('/users/', userController.getAllUsers);
+//Router.get('/users/', userController.verifyAdmin, userController.getAllUsers);
 
 Router.route('/books')
   .get(bookController.getBook)
-  .post(bookController.addBook);
+  .post(Auth.verifyAdmin, bookController.addBook);
 
 Router.put('/books/:id', Auth.verifyAdmin, bookController.modifyBook);
 
 // Routes allow user borrow book, check for books not returned and return book
 Router.route('/users/:userId/books')
-  .post(Auth.verifyUser, userController.borrowbook)
+  .post(Auth.verifyUser, helper.checkBook, helper.verify, bookController.borrowbook)
   .get(Auth.verifyUser, userController.booksNotReturned)
-  .put(Auth.verifyUser, userController.Returnbook);
-
-// Router.get('/users/:userId/books?returned=false', (req, res) => {
-//   res.send(req.params);
-// });
-
-// Admin modify new book
-Router.put('/books/:bookId', (req, res) => {
-  res.send(req.body);
-});
+  .get(Auth.verifyUser, userController.booksReturned)
+  .put(Auth.verifyUser, userController.returnBook);
 
 // redirect every other address
 Router.route('*')
