@@ -1,5 +1,10 @@
-const borrowedbook = (sequelize, DataTypes) => {
-  const borrowedbooks = sequelize.define('borrowedbooks', {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var borrowedbook = function borrowedbook(sequelize, DataTypes) {
+  var borrowedbooks = sequelize.define('borrowedbooks', {
 
     userid: {
       type: DataTypes.INTEGER,
@@ -35,16 +40,16 @@ const borrowedbook = (sequelize, DataTypes) => {
       type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: false
-    },
+    }
   }, {
     classMethods: {
-      associate: (models) => {
+      associate: function associate(models) {
         borrowedbooks.belongTo(models.users, { foreignKey: 'userid', as: 'user' });
         borrowedbooks.belongTo(models.books, { foreignKey: 'bookid', as: 'book' });
       }
-    },
+    }
   });
   return borrowedbooks;
 };
 
-export default borrowedbook;
+exports.default = borrowedbook;

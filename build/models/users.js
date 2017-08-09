@@ -1,7 +1,17 @@
-import bcrypt from 'bcrypt';
+'use strict';
 
-const user = (sequelize, DataTypes) => {
-  const usersModel = sequelize.define('users', {
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _bcrypt = require('bcrypt');
+
+var _bcrypt2 = _interopRequireDefault(_bcrypt);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var user = function user(sequelize, DataTypes) {
+  var usersModel = sequelize.define('users', {
     firstname: {
       type: DataTypes.STRING,
       allowNull: false
@@ -33,7 +43,7 @@ const user = (sequelize, DataTypes) => {
     image: DataTypes.STRING
   }, {
     classMethods: {
-      associate(model) {
+      associate: function associate(model) {
         // associations can be defined here
         usersModel.belongTo(model.borrowedbooks, {
           foreignKey: 'userid',
@@ -42,13 +52,13 @@ const user = (sequelize, DataTypes) => {
       }
     },
     hooks: {
-      beforeCreate: (users) => {
-        const hashP = bcrypt.hashSync(users.password, 10);
+      beforeCreate: function beforeCreate(users) {
+        var hashP = _bcrypt2.default.hashSync(users.password, 10);
         users.password = hashP;
         return users;
       },
-      beforeUpdate: (users) => {
-        const hashP = bcrypt.hashSync(users.password, 10);
+      beforeUpdate: function beforeUpdate(users) {
+        var hashP = _bcrypt2.default.hashSync(users.password, 10);
         users.password = hashP;
         return users;
       }
@@ -57,4 +67,4 @@ const user = (sequelize, DataTypes) => {
   return usersModel;
 };
 
-export default user;
+exports.default = user;

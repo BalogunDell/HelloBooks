@@ -1,5 +1,10 @@
-const book = (sequelize, DataTypes) => {
-  const books = sequelize.define('books', {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var book = function book(sequelize, DataTypes) {
+  var books = sequelize.define('books', {
     isbn: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -39,15 +44,15 @@ const book = (sequelize, DataTypes) => {
     }
   }, {
     classMethods: {
-      associate(model) {
+      associate: function associate(model) {
         // associations can be defined here
         books.belongTo(model.borrowedbooks, {
           foreignKey: 'bookid',
           as: 'borrowedbooks'
         });
       }
-    },
+    }
   });
   return books;
 };
-export default book;
+exports.default = book;
