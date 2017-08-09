@@ -66,13 +66,37 @@ class User {
    * @param { object } res
    * @returns { void }
    */
-  static booksNotReturned(req, res) {
+  static getUserBooks(req, res) {
     const returnStatus = req.query.returned;
-    borrowedBookModel.findAll({ where: { returnstatus: returnStatus } }).then((response) => {
-      res.status(200).json(response);
-    }).catch((error) => {
-      res.send(404).json({ message: error });
-    });
+    const query = {};
+
+    if (returnStatus === undefined) {
+      query.where = {
+        userid: req.userid
+      };
+    } else if (returnStatus === 'false') {
+      query.where = {
+        $and: [
+          { userid: req.userid },
+          { returnstatus: false }
+        ]
+      };
+    } else {
+      query.where = {
+        $and: [
+          { userid: req.userid },
+          { returnstatus: true }
+        ]
+      };
+    }
+
+    borrowedBookModel.findAll(query)
+      .then((response) => {
+        // res.send(response);
+        res.status(200).json(response);
+      }).catch((error) => {
+        res.status(404).json({ message: error });
+      });
   }
 
   /**

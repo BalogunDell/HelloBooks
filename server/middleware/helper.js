@@ -1,17 +1,17 @@
-import model from '../models';
-import util from '../utils/limits.json';
 import moment from 'moment';
+import model from '../models';
+import util from '../utils/limits';
 
 const borrowedBookModel = model.borrowedbooks;
 const userModel = model.users;
 const bookModel = model.books;
 
 /**
-   * 
-   * @param {object} req -Request object 
-* @param {object} res - Response object
-* @returns { object} - returns an object
-*/
+ * 
+ * @param {object} req -Request object 
+ * @param {object} res - Response object
+ * @returns { object} - returns an object
+ */
 class Helper {
 /** 
  * @param { object } req 
@@ -48,22 +48,19 @@ class Helper {
   static verify(req, res, next) {
     const query = {
       where: {
-        $and: {
-          bookid: req.body.bookid,
-          userid: req.body.userid,
-          returnstatus: false
-        }
+        $and: [
+          { userid: req.userid },
+          { returnstatus: false }
+        ]
       }
     };
 
     borrowedBookModel.findAndCountAll(query)
       .then((response) => {
         if (response.count < util[req.membership.toLowerCase()].limit
-          && !response.rows.find(book => book.id === req.body.bookId)) {
+          && !response.rows.find(book => book.dataValues.id === req.body.bookId)) {
           req.body = Helper.composeRequest(req);
-          var myres = response.rows.find(book => book.id === req.body.bookId);
-          console.log(myres);
-          // next();
+          next();
         } else {
           res.status(501).send({ msg: 'You have either exhausted your book limit or you still have this book with you' });
         }

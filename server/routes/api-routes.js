@@ -28,8 +28,7 @@ Router.put('/books/:id', Auth.verifyAdmin, bookController.modifyBook);
 // Routes allow user borrow book, check for books not returned and return book
 Router.route('/users/:userId/books')
   .post(Auth.verifyUser, helper.checkBook, helper.verify, bookController.borrowbook)
-  .get(Auth.verifyUser, userController.booksNotReturned)
-  .get(Auth.verifyUser, userController.booksReturned)
+  .get(Auth.verifyUser, userController.getUserBooks)
   .put(Auth.verifyUser, userController.returnBook);
 
 // redirect every other address

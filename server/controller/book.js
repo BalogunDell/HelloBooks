@@ -84,7 +84,7 @@ class Book {
   static borrowbook(req, res) {
     borrowedBooks.create(req.body)
       .then((response) => {
-        res.status(201).json({ message: 'Book Added', data: response })
+        res.status(201).json({ message: 'Book Added', data: response });
       })
       .catch((error) => {
         res.status(401).json({ message: error });
