@@ -40,7 +40,7 @@ describe('Homepage', () => {
     .post('/api/users/signup')
     .set('Accept', 'Application/json')
     .send(mockdata.user1)
-    .expect(200, done) 
+    .expect(201, done) 
     });
 
     // test for success with valid data for admin
@@ -49,7 +49,7 @@ describe('Homepage', () => {
     .post('/api/users/signup')
     .set('Accept', 'Application/json')
     .send(mockdata.adminData)
-    .expect(200, done) 
+    .expect(201, done) 
     });
 
  });
@@ -63,8 +63,8 @@ describe('Homepage', () => {
     .set('Accept', 'Application/json')
     .send(mockdata.user1Login)
     .end((error, res) =>{
-      userToken = res.body.data.token;
-    done();
+      userToken = JSON.parse(res.text).response.data.token;
+    done()
       }); 
     });
 
@@ -75,7 +75,7 @@ describe('Homepage', () => {
     .set('Accept', 'Application/json')
     .send(mockdata.adminLogin)
     .end((error, res) =>{
-      adminToken = res.body.data.token;
+      adminToken = JSON.parse(res.text).response.data.token;
     done();
       }); 
     });
