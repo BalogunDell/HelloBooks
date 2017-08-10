@@ -18,7 +18,7 @@ let adminToken;
  * @return 200 succes
  */
 
-describe('Homepage', () => {
+ describe('Homepage', () => {
   it('Should return welcome to libary api', (done) => {
     request
       .get('/api')
@@ -32,7 +32,7 @@ describe('Homepage', () => {
  * @return 200 succes
  */
 
- describe('User signup', (done) => {
+describe('User signup', (done) => {
 
   // test for success with valid data for user
   it('should be able to signup - User', (done) => {
@@ -53,11 +53,10 @@ describe('Homepage', () => {
     });
 
  });
-
- describe('User signin', (done) => {
+describe('User signin', (done) => {
 
   // test for user sign in
-  it('Should be able to sign it and get a token - User', (done) => {
+  it('Should be able to sign in and get a token - User', (done) => {
     request
     .post('/api/users/signin')
     .set('Accept', 'Application/json')
@@ -65,10 +64,53 @@ describe('Homepage', () => {
     .end((error, res) =>{
       userToken = JSON.parse(res.text).response.data.token;
     done()
+    }); 
+});
+
+
+
+describe('User signin', (done) => {
+
+  // test for user sign in
+  it('should not allow login with invalid email', (done) => {
+    request
+    .post('/api/users/signin')
+    .set('Accept', 'Application/json')
+    .send(mockdata.invalidadmin)
+      .end((error, res) => {
+          expect({ message: 'Invalid email or password'});
+          expect(401, done);
+          done();
       }); 
     });
 
-    // test for admin sign in
+  // test for user sign in
+  it('should not allow login with invalid email', (done) => {
+    request
+    .post('/api/users/signin')
+    .set('Accept', 'Application/json')
+    .send(mockdata.invaliduser)
+      .end((error, res) => {
+          expect({ message: 'Invalid email or password'});
+          expect(401, done);
+          done();
+      }); 
+    });
+
+});
+
+describe('Wrong User Credentials', (done) => {
+
+  it('Should not be able to sign in - User', (done) => {
+    request
+    .post('/api/users/signin')
+    .set('Accept', 'Application/json')
+    .set('authorization', '')
+    .expect(404, done);
+      }); 
+    });
+
+  
   it('Should be able to sign it and get a token - Admin', (done) => {
     request
     .post('/api/users/signin')
@@ -80,6 +122,7 @@ describe('Homepage', () => {
       }); 
     });
  });
+
 
 
 describe('Unathorized User' , () => {
@@ -94,7 +137,8 @@ describe('Unathorized User' , () => {
         done();
     });
    });
- }); 
+ });
+
 describe('Upload books' , () => {
  it('Should be able to upload books', (done) => {
     request
@@ -104,6 +148,7 @@ describe('Upload books' , () => {
     .expect(201, done);
    });
 });
+
 describe('Get books - Admin' , () => {
  it('Should be able to get books without signing in', (done) => {
     request
@@ -113,6 +158,7 @@ describe('Get books - Admin' , () => {
     .expect(200, done);
    });
 });
+
 describe('Modify books - Admin' , () => {
  it('Should be able to modify books', (done) => {
     request
@@ -123,6 +169,7 @@ describe('Modify books - Admin' , () => {
     .expect(200, done);
    });
 });
+
 describe('Get books - User' , () => {
  it('Should be able to get books without signing in', (done) => {
     request
@@ -132,6 +179,7 @@ describe('Get books - User' , () => {
     .expect(200, done);
    });
 });
+
 describe('Get books - User' , () => {
  it('Should be able to get books after signing in', (done) => {
     request
@@ -142,6 +190,7 @@ describe('Get books - User' , () => {
     .expect(200, done);
    });
 });
+
 describe('Borrow Books' , () => {
  it('Should allow users borrow books', (done) => {
     request
@@ -152,6 +201,7 @@ describe('Borrow Books' , () => {
     .expect(201, done);
    });
 });
+
 describe('Unauthorized Access' , () => {
  it('Should not allow users without token to borrow books', (done) => {
     request
@@ -162,6 +212,7 @@ describe('Unauthorized Access' , () => {
     .expect(401, done);
    });
 });
+
 describe('Return Books' , () => {
  it('Should allow users return books', (done) => {
     request
@@ -172,6 +223,7 @@ describe('Return Books' , () => {
     .expect(200, done);
    });
 });
+
 describe('Unauthorized Access' , () => {
  it('Should not allow users without token to return books', (done) => {
     request
@@ -182,6 +234,49 @@ describe('Unauthorized Access' , () => {
     .expect(401, done);
    });
 });
+
+
+describe('Borrow book' , () => {
+ it('Should not allow users to borrow book when the body is malformatted', (done) => {
+    request
+    .put('/api/users/:id/books')
+    .set('Authorization', userToken)
+    .send(mockdata.failborrowBook)
+    .expect('Content-Type', /json/)
+    .expect(400, done());
+   });
+});
+
+describe('Validate book details' , () => {
+ it('Should Validate book details before create', (done) => {
+    request
+    .post('/api/users/:id/books')
+    .set('Authorization', adminToken)
+    .send(mockdata.invalidBookdata)
+    .expect('Content-Type', /json/)
+    .expect(400, done());
+   });
+
+   it('Should Validate book details before create', (done) => {
+    request
+    .post('/api/books')
+    .set('Authorization', adminToken)
+    .send(mockdata.invalidBookdata2)
+    .expect('Content-Type', /json/)
+    .expect(400, done());
+   });
+
+  it('Should Validate book details before create', (done) => {
+    request
+    .post('/api/books')
+    .set('Authorization', adminToken)
+    .send(mockdata.invalidBookdata3)
+    .expect('Content-Type', /json/)
+    .expect(400, done());
+   });
+});
+
+
 
 
 

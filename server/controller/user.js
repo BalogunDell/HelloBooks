@@ -48,6 +48,8 @@ class User {
             data: { token }
           };
           res.status(200).json({ response });
+        } else if (!req.body.email || !req.body.password) {
+          res.status(404).json({ message: 'Email and password is required' });
         } else {
           res.status(404).json({ message: 'Invalid email or password' });
         }

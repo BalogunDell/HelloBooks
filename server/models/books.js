@@ -8,6 +8,10 @@ const book = (sequelize, DataTypes) => {
         notEmpty: {
           args: true,
           msg: 'Isbn cannot be empty'
+        },
+        len: {
+          args: [6 - 9],
+          msg: 'Isbn should be 6 and 9 digits'
         }
       }
     },
