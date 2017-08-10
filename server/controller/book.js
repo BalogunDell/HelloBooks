@@ -23,7 +23,7 @@ class Book {
         res.status(400).json({ message: 'One or more fields are empty' });
         // check if a duplicate request was made.
       } else if (error.name === 'SequelizeUniqueConstraintError') {
-        res.status(409).json({ message: 'Two books cannot have the same ISBN number' });
+        res.status(409).json({ message: 'A book with is ISBN already exists' });
       } else {
         res.send(error);
       }
@@ -37,6 +37,7 @@ class Book {
    * @returns {void}
    */
   static deleteBook(req, res) {
+    console.log(req.body);
     bookModel.destroy({ where: { id: req.body.id } }).then((book) => {
       res.status(200).json({ message: 'Book deleted', data: book });
     }).catch((error) => {

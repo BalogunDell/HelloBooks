@@ -1,7 +1,11 @@
 import moment from 'moment';
+import jwt from 'jsonwebtoken';
 import model from '../models';
 import util from '../utils/limits';
 
+require('dotenv').config();
+
+const secret = process.env.SECRET;
 const borrowedBookModel = model.borrowedbooks;
 const userModel = model.users;
 const bookModel = model.books;
@@ -59,7 +63,7 @@ class Helper {
     borrowedBookModel.findAndCountAll(query)
       .then((response) => {
         if (response.count < util[req.membership.toLowerCase()].limit
-          && !response.rows.find(book => book.dataValues.bookid === req.body.bookid)) {
+          && !response.rows.find(book => book.dataValues.id === req.body.bookid)) {
           req.body = Helper.composeRequest(req);
           next();
         } else {
@@ -81,6 +85,17 @@ class Helper {
       expectedreturndate: moment().add(util[req.membership.toLowerCase()].limit, 'days').format('YYYY-MM-DD')
     };
     return body;
+  }
+  
+  static generateToken(user) {
+    const token = jwt.sign({
+      id: user.id,
+      email: user.email,
+      membership: user.membership,
+      role: user.role
+    }, secret, { expiresIn: '24h' });
+
+    return token;
   }
 }
 

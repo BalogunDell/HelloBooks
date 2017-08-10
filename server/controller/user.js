@@ -1,5 +1,4 @@
 import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
 import model from '../models';
 import helper from '../middleware/helper';
 
@@ -7,9 +6,7 @@ require('dotenv').config();
 
 const userModel = model.users;
 const borrowedBookModel = model.borrowedbooks;
-const bookModel = model.books;
 
-const secret = process.env.SECRET;
 /**
  * @class User
  *@classdesc creates a class User
@@ -21,17 +18,20 @@ class User {
    * @returns { void }
    */
   static signup(req, res) {
-    userModel.create(req.body).then(() => {
-      res.status(200).json({ message: 'User created' });
-    }).catch((error) => {
-      if (error.name === 'SequelizeValidationError') {
-        res.status(400).json({ message: 'One or more fields are empty' });
-      } else if (error.name === 'SequelizeUniqueConstraintError') {
-        res.status(409).json({ message: 'A user with the email exists' });
-      } else {
-        res.json(error);
-      }
-    });
+    userModel.create(req.body)
+      .then((user) => {
+        const token = helper.generateToken(user.dataValues);
+        res.status(201).json({ message: 'User created', data: user, token });
+      })
+      .catch((error) => {
+        if (error.name === 'SequelizeValidationError') {
+          res.status(400).json({ message: error.errors[0].message });
+        } else if (error.name === 'SequelizeUniqueConstraintError') {
+          res.status(409).json({ message: 'A user with the email exists' });
+        } else {
+          res.json(error);
+        }
+      });
   }
   /**
    * @param { object } req 
@@ -42,20 +42,14 @@ class User {
     userModel.findOne({ where: { email: req.body.email } })
       .then((user) => {
         if (user && bcrypt.compareSync(req.body.password, user.dataValues.password)) {
-          const token = jwt.sign({
-            id: user.dataValues.id,
-            email: user.dataValues.email,
-            membership: user.dataValues.membership,
-            role: user.dataValues.role
-          }, secret, { expiresIn: '24h' });
-
+          const token = helper.generateToken(user.dataValues);
           const response = {
             message: 'signed in',
             data: { token }
           };
-          res.status(201).send(response);
+          res.status(200).send(response);
         } else {
-          res.status(404).send({ message: 'user does not exist' });
+          res.status(404).send({ message: 'Invalid email or password' });
         }
       })
       .catch(err => res.send(err));
