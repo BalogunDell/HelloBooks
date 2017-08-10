@@ -3,6 +3,7 @@ const borrowedbook = (sequelize, DataTypes) => {
 
     userid: {
       type: DataTypes.INTEGER,
+      onDelete: 'CASCADE',
       references: {
         model: 'users',
         key: 'id'
@@ -11,6 +12,7 @@ const borrowedbook = (sequelize, DataTypes) => {
 
     bookid: {
       type: DataTypes.INTEGER,
+      onDelete: 'CASCADE',
       references: {
         model: 'books',
         key: 'id'

@@ -72,19 +72,19 @@ class User {
 
     if (returnStatus === undefined) {
       query.where = {
-        userid: req.userid
+        userid: req.body.userid
       };
     } else if (returnStatus === 'false') {
       query.where = {
         $and: [
-          { userid: req.userid },
+          { userid: req.body.userid },
           { returnstatus: false }
         ]
       };
     } else {
       query.where = {
         $and: [
-          { userid: req.userid },
+          { userid: req.body.userid },
           { returnstatus: true }
         ]
       };
@@ -115,25 +115,6 @@ class User {
     }).catch((error) => {
       res.send(404).json({ message: error });
     });
-  }
-
-  /**
-   * @param { object } req 
-   * @param { object } res
-   * @returns { object } returns object
-   */
-  static returnBook(req, res) {
-    borrowedBookModel.update({ approvedreturn: true },
-      { where: { userid: req.body.userid, bookid: req.body.bookid } })
-      .then((book) => {
-        if (book) {
-          res.status(200).json({ message: 'Book has been returned' });
-        } else {
-          res.status(401).json({ message: 'Book already approved' });
-        }
-      }).catch((error) => {
-        res.send(404).json({ message: error });
-      });
   }
 
   /**
