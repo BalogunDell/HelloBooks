@@ -4,11 +4,16 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "babel-node node_modules/mocha/bin/_mocha -- tests/*.test.js",
+    "test": "cross-env NODE_ENV=test babel-node node_modules/babel-istanbul/lib/cli.js cover node_modules/mocha/bin/_mocha -- ./server/tests/*.test.js",
     "lint": "eslint ./server/**/*.js --fix",
     "start:dev": "nodemon ./server/index.js --exec babel-node --presets es2015,stage-2",
     "build": "babel ./server --out-dir build",
-    "start": "node build/index.js"
+    "start": "node build/index.js",
+    "migrate": "sequelize db:migrate",
+    "seed": "sequelize db:seed:all",
+    "migrate:dev": "npm run migrate && npm run seed",
+    "migrate:test": "sequelize db:migrate --env test",
+    "seed:test": "sequelize db:seed:all --env test"
   },
   "dependencies": {
     "babel-cli": "^6.24.1",
@@ -16,6 +21,7 @@
     "body-parser": "^1.17.2",
     "dotenv": "^4.0.0",
     "express": "^4.15.3",
+    "faker": "^4.1.0",
     "jsonwebtoken": "^7.4.1",
     "moment": "^2.18.1",
     "morgan": "^1.8.2",
@@ -35,6 +41,7 @@
     "chai": "^4.1.0",
     "codeclimate-test-reporter": "^0.5.0",
     "coveralls": "^2.13.1",
+    "cross-env": "^5.0.5",
     "eslint": "^4.3.0",
     "eslint-config-airbnb-base": "^11.3.1",
     "eslint-plugin-import": "^2.7.0",

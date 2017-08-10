@@ -8,7 +8,7 @@ import mockdata from '../server/utils/mockdata';
 import jwt from 'jsonwebtoken';
 require('dotenv').config();
 
-const testApp = supertest(app);
+const request = supertest(app);
 const secret = process.env.SECRET;
 let userToken;
 let adminToken;
@@ -20,10 +20,10 @@ let adminToken;
 
 describe('Homepage', () => {
   it('Should return welcome to libary api', (done) => {
-    testApp
-    .get('/api')
-    .set('Accept', 'Application/json')
-    .expect(200, done);
+    request
+      .get('/api')
+      .set('Accept', 'Application/json')
+      .expect(200, done);
   });
 });
 
@@ -36,7 +36,7 @@ describe('Homepage', () => {
 
   // test for success with valid data for user
   it('should be able to signup - User', (done) => {
-    testApp
+    request
     .post('/api/users/signup')
     .set('Accept', 'Application/json')
     .send(mockdata.user1)
@@ -45,7 +45,7 @@ describe('Homepage', () => {
 
     // test for success with valid data for admin
   it('Should be able to signup - Admin', (done) => {
-    testApp
+    request
     .post('/api/users/signup')
     .set('Accept', 'Application/json')
     .send(mockdata.adminData)
@@ -58,7 +58,7 @@ describe('Homepage', () => {
 
   // test for user sign in
   it('Should be able to sign it and get a token - User', (done) => {
-    testApp
+    request
     .post('/api/users/signin')
     .set('Accept', 'Application/json')
     .send(mockdata.user1Login)
@@ -70,7 +70,7 @@ describe('Homepage', () => {
 
     // test for admin sign in
   it('Should be able to sign it and get a token - Admin', (done) => {
-    testApp
+    request
     .post('/api/users/signin')
     .set('Accept', 'Application/json')
     .send(mockdata.adminLogin)
@@ -84,7 +84,7 @@ describe('Homepage', () => {
 
 describe('Unathorized User' , () => {
  it('Should not be able to access this page', (done) => {
-    testApp
+    request
     .post('/api/books')
     .set('Authorization', userToken)
     .send(mockdata.bookdata)
@@ -97,7 +97,7 @@ describe('Unathorized User' , () => {
  }); 
 describe('Upload books' , () => {
  it('Should be able to upload books', (done) => {
-    testApp
+    request
     .post('/api/books')
     .set('Authorization', adminToken)
     .send(mockdata.bookdata)
@@ -106,7 +106,7 @@ describe('Upload books' , () => {
 });
 describe('Get books - Admin' , () => {
  it('Should be able to get books without signing in', (done) => {
-    testApp
+    request
     .get('/api/books')
     .set('Authorization', adminToken)
     .expect('Content-Type', /json/)
@@ -115,7 +115,7 @@ describe('Get books - Admin' , () => {
 });
 describe('Modify books - Admin' , () => {
  it('Should be able to modify books', (done) => {
-    testApp
+    request
     .put('/api/books/1')
     .set('Authorization', adminToken)
     .send(mockdata.modifyBookData)
@@ -125,7 +125,7 @@ describe('Modify books - Admin' , () => {
 });
 describe('Get books - User' , () => {
  it('Should be able to get books without signing in', (done) => {
-    testApp
+    request
     .get('/api/books')
     .set('Authorization', userToken)
     .expect('Content-Type', /json/)
@@ -134,7 +134,7 @@ describe('Get books - User' , () => {
 });
 describe('Get books - User' , () => {
  it('Should be able to get books after signing in', (done) => {
-    testApp
+    request
     .get('/api/users/:id/books')
     .set('Authorization', userToken)
     .send(mockdata.userID)
@@ -144,7 +144,7 @@ describe('Get books - User' , () => {
 });
 describe('Borrow Books' , () => {
  it('Should allow users borrow books', (done) => {
-    testApp
+    request
     .post('/api/users/:id/books')
     .set('Authorization', userToken)
     .send(mockdata.borrowBook)
@@ -154,7 +154,7 @@ describe('Borrow Books' , () => {
 });
 describe('Unauthorized Access' , () => {
  it('Should not allow users without token to borrow books', (done) => {
-    testApp
+    request
     .post('/api/users/:id/books')
     .set('Authorization', '')
     .send(mockdata.borrowBook)
@@ -164,7 +164,7 @@ describe('Unauthorized Access' , () => {
 });
 describe('Return Books' , () => {
  it('Should allow users return books', (done) => {
-    testApp
+    request
     .put('/api/users/:id/books')
     .set('Authorization', userToken)
     .send(mockdata.borrowBook)
@@ -174,7 +174,7 @@ describe('Return Books' , () => {
 });
 describe('Unauthorized Access' , () => {
  it('Should not allow users without token to return books', (done) => {
-    testApp
+    request
     .put('/api/users/:id/books')
     .set('Authorization', '')
     .send(mockdata.borrowBook)
@@ -182,7 +182,8 @@ describe('Unauthorized Access' , () => {
     .expect(401, done);
    });
 });
-// delete book should bere
+
+
 
 
 
