@@ -47,9 +47,9 @@ class User {
             message: 'signed in',
             data: { token }
           };
-          res.status(200).send(response);
+          res.status(200).json({ response });
         } else {
-          res.status(404).send({ message: 'Invalid email or password' });
+          res.status(404).json({ message: 'Invalid email or password' });
         }
       })
       .catch(err => res.send(err));
