@@ -39,14 +39,13 @@ Router.post('/users/signup', _user2.default.signup);
 Router.post('/users/signin', _user2.default.signin);
 
 // get all users
-//Router.get('/users/', userController.verifyAdmin, userController.getAllUsers);
+// Router.get('/users/', userController.verifyAdmin, userController.getAllUsers);
 
-Router.route('/books').get(_book2.default.getBook).post(_auth2.default.verifyAdmin, _book2.default.addBook);
-
+Router.route('/books').get(_book2.default.getBook).post(_auth2.default.verifyAdmin, _book2.default.addBook).delete(_auth2.default.verifyAdmin, _book2.default.deleteBook);
 Router.put('/books/:id', _auth2.default.verifyAdmin, _book2.default.modifyBook);
 
 // Routes allow user borrow book, check for books not returned and return book
-Router.route('/users/:userId/books').post(_auth2.default.verifyUser, _helper2.default.checkBook, _helper2.default.verify, _book2.default.borrowbook).get(_auth2.default.verifyUser, _user2.default.getUserBooks).put(_auth2.default.verifyUser, _user2.default.returnBook);
+Router.route('/users/:userId/books').post(_auth2.default.verifyUser, _helper2.default.checkBook, _helper2.default.verify, _book2.default.borrowbook).get(_auth2.default.verifyUser, _user2.default.getUserBooks).put(_auth2.default.verifyUser, _book2.default.returnBook);
 
 // redirect every other address
 Router.route('*').post(function (req, res) {

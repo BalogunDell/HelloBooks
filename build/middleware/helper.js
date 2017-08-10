@@ -10,6 +10,10 @@ var _moment = require('moment');
 
 var _moment2 = _interopRequireDefault(_moment);
 
+var _jsonwebtoken = require('jsonwebtoken');
+
+var _jsonwebtoken2 = _interopRequireDefault(_jsonwebtoken);
+
 var _models = require('../models');
 
 var _models2 = _interopRequireDefault(_models);
@@ -22,6 +26,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+require('dotenv').config();
+
+var secret = process.env.SECRET;
 var borrowedBookModel = _models2.default.borrowedbooks;
 var userModel = _models2.default.users;
 var bookModel = _models2.default.books;
@@ -73,8 +80,10 @@ var Helper = function () {
 
     /** 
     * @param { object } req 
-    * @param { object } res 
+    * @param { object } res
+    * @param { object } next
     * @returns { object } books with count and rows
+    * 
     */
 
   }, {
@@ -82,13 +91,12 @@ var Helper = function () {
     value: function verify(req, res, next) {
       var query = {
         where: {
-          $and: [{ userid: req.userid }, { returnstatus: false }]
+          $and: [{ userid: req.body.userid }, { returnstatus: false }]
         }
       };
-
       borrowedBookModel.findAndCountAll(query).then(function (response) {
         if (response.count < _limits2.default[req.membership.toLowerCase()].limit && !response.rows.find(function (book) {
-          return book.dataValues.id === req.body.bookId;
+          return book.dataValues.id === req.body.bookid;
         })) {
           req.body = Helper.composeRequest(req);
           next();
@@ -97,15 +105,35 @@ var Helper = function () {
         }
       });
     }
+
+    /**
+     * 
+     * @param { object} req
+     * @returns { object } body
+     * 
+     */
+
   }, {
     key: 'composeRequest',
     value: function composeRequest(req) {
       var body = {
         bookid: req.body.bookid,
-        userid: req.userid,
+        userid: req.body.userid,
         expectedreturndate: (0, _moment2.default)().add(_limits2.default[req.membership.toLowerCase()].limit, 'days').format('YYYY-MM-DD')
       };
       return body;
+    }
+  }, {
+    key: 'generateToken',
+    value: function generateToken(user) {
+      var token = _jsonwebtoken2.default.sign({
+        id: user.id,
+        email: user.email,
+        membership: user.membership,
+        role: user.role
+      }, secret, { expiresIn: '24h' });
+
+      return token;
     }
   }]);
 

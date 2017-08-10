@@ -10,10 +10,6 @@ var _bcrypt = require('bcrypt');
 
 var _bcrypt2 = _interopRequireDefault(_bcrypt);
 
-var _jsonwebtoken = require('jsonwebtoken');
-
-var _jsonwebtoken2 = _interopRequireDefault(_jsonwebtoken);
-
 var _models = require('../models');
 
 var _models2 = _interopRequireDefault(_models);
@@ -30,9 +26,7 @@ require('dotenv').config();
 
 var userModel = _models2.default.users;
 var borrowedBookModel = _models2.default.borrowedbooks;
-var bookModel = _models2.default.books;
 
-var secret = process.env.SECRET;
 /**
  * @class User
  *@classdesc creates a class User
@@ -52,11 +46,12 @@ var User = function () {
      * @returns { void }
      */
     value: function signup(req, res) {
-      userModel.create(req.body).then(function () {
-        res.status(200).json({ message: 'User created' });
+      userModel.create(req.body).then(function (user) {
+        var token = _helper2.default.generateToken(user.dataValues);
+        res.status(201).json({ message: 'User created', data: user, token: token });
       }).catch(function (error) {
         if (error.name === 'SequelizeValidationError') {
-          res.status(400).json({ message: 'One or more fields are empty' });
+          res.status(400).json({ message: error.errors[0].message });
         } else if (error.name === 'SequelizeUniqueConstraintError') {
           res.status(409).json({ message: 'A user with the email exists' });
         } else {
@@ -75,20 +70,14 @@ var User = function () {
     value: function signin(req, res) {
       userModel.findOne({ where: { email: req.body.email } }).then(function (user) {
         if (user && _bcrypt2.default.compareSync(req.body.password, user.dataValues.password)) {
-          var token = _jsonwebtoken2.default.sign({
-            id: user.dataValues.id,
-            email: user.dataValues.email,
-            membership: user.dataValues.membership,
-            role: user.dataValues.role
-          }, secret, { expiresIn: '24h' });
-
+          var token = _helper2.default.generateToken(user.dataValues);
           var response = {
             message: 'signed in',
             data: { token: token }
           };
-          res.status(201).send(response);
+          res.status(200).send(response);
         } else {
-          res.status(404).send({ message: 'user does not exist' });
+          res.status(404).send({ message: 'Invalid email or password' });
         }
       }).catch(function (err) {
         return res.send(err);
@@ -109,15 +98,15 @@ var User = function () {
 
       if (returnStatus === undefined) {
         query.where = {
-          userid: req.userid
+          userid: req.body.userid
         };
       } else if (returnStatus === 'false') {
         query.where = {
-          $and: [{ userid: req.userid }, { returnstatus: false }]
+          $and: [{ userid: req.body.userid }, { returnstatus: false }]
         };
       } else {
         query.where = {
-          $and: [{ userid: req.userid }, { returnstatus: true }]
+          $and: [{ userid: req.body.userid }, { returnstatus: true }]
         };
       }
 
@@ -144,26 +133,6 @@ var User = function () {
           res.status(200).json({ message: 'You have not returned any book' });
         } else {
           res.status(200).json(response);
-        }
-      }).catch(function (error) {
-        res.send(404).json({ message: error });
-      });
-    }
-
-    /**
-     * @param { object } req 
-     * @param { object } res
-     * @returns { object } returns object
-     */
-
-  }, {
-    key: 'returnBook',
-    value: function returnBook(req, res) {
-      borrowedBookModel.update({ approvedreturn: true }, { where: { userid: req.body.userid, bookid: req.body.bookid } }).then(function (book) {
-        if (book) {
-          res.status(200).json({ message: 'Book has been returned' });
-        } else {
-          res.status(401).json({ message: 'Book already approved' });
         }
       }).catch(function (error) {
         res.send(404).json({ message: error });
