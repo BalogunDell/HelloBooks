@@ -45,6 +45,7 @@ var Authentication = function () {
      * @param { object } req 
      * @param { object} res 
      * @returns { object } response
+     * @next() 
      */
     value: function verifyAdmin(req, res, next) {
       if (!req.headers.authorization) {
@@ -74,7 +75,7 @@ var Authentication = function () {
         var decoded = _jsonwebtoken2.default.verify(req.headers.authorization, secret);
         userModel.findOne({ where: { email: decoded.email, id: decoded.id } }).then(function (user) {
           if (user) {
-            req.userid = decoded.id;
+            req.body.userid = decoded.id;
             req.membership = decoded.membership;
             next();
           } else {

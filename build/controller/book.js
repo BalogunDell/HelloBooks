@@ -44,12 +44,30 @@ var Book = function () {
           res.status(400).json({ message: 'One or more fields are empty' });
           // check if a duplicate request was made.
         } else if (error.name === 'SequelizeUniqueConstraintError') {
-          res.status(409).json({ message: 'Two books cannot have the same ISBN number' });
+          res.status(409).json({ message: 'A book with is ISBN already exists' });
         } else {
           res.send(error);
         }
       });
     }
+
+    /**
+     * @param {object} req 
+     * @param {object} res
+     * @returns {void}
+     */
+
+  }, {
+    key: 'deleteBook',
+    value: function deleteBook(req, res) {
+      console.log(req.body);
+      bookModel.destroy({ where: { id: req.body.id } }).then(function (book) {
+        res.status(200).json({ message: 'Book deleted', data: book });
+      }).catch(function (error) {
+        res.status(500).json({ message: 'Book Cannot be deleted', data: error });
+      });
+    }
+
     /**
      * @param {object} req 
      * @param {object} res
@@ -112,12 +130,40 @@ var Book = function () {
     key: 'borrowbook',
     value: function borrowbook(req, res) {
       borrowedBooks.create(req.body).then(function (response) {
-        res.status(201).json({ message: 'Book Added', data: response });
+        bookModel.update({ quantity: req.book.dataValues.quantity - 1 }, { where: { id: response.dataValues.bookid } }).then(function () {
+          res.status(201).json({ message: 'Book Added',
+            returnDate: req.body.expectedreturndate });
+        }).catch(function () {
+          res.status(400).json({ message: 'Book not added' });
+        }).catch();
       }).catch(function (error) {
         res.status(401).json({ message: error });
       });
     } // end of method
 
+    /**
+     * @param { object } req 
+     * @param { object } res
+     * @returns { object } returns object
+     */
+
+  }, {
+    key: 'returnBook',
+    value: function returnBook(req, res) {
+      borrowedBooks.findOne({ where: {
+          userid: req.body.userid,
+          bookid: req.body.bookid,
+          returnstatus: false } }).then(function (response) {
+        if (response === null) {
+          res.status(404).json({
+            message: 'This book is not in your latest borrow history' });
+        } else {
+          borrowedBooks.update({ returnstatus: true }, { where: { id: response.dataValues.id } }).then(function () {
+            res.status(200).json({ message: 'Book has been returned' });
+          });
+        }
+      });
+    }
   }]);
 
   return Book;

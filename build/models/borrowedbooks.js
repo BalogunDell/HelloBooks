@@ -8,6 +8,7 @@ var borrowedbook = function borrowedbook(sequelize, DataTypes) {
 
     userid: {
       type: DataTypes.INTEGER,
+      onDelete: 'CASCADE',
       references: {
         model: 'users',
         key: 'id'
@@ -16,6 +17,7 @@ var borrowedbook = function borrowedbook(sequelize, DataTypes) {
 
     bookid: {
       type: DataTypes.INTEGER,
+      onDelete: 'CASCADE',
       references: {
         model: 'books',
         key: 'id'
