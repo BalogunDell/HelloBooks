@@ -18,7 +18,7 @@ The application leverages Node; Express for routing and sequelize for ORM.
 
 ## Endpoints
 
-###Users
+### Users
 - User Signup  - api/users/signup               |  - Registers a user
 - User Signin  - api/users/signin               | - Logs a user in
 - Get Book     - api/userid/books               | - allows a user to view all books
@@ -27,13 +27,13 @@ The application leverages Node; Express for routing and sequelize for ORM.
 - Borrow Book  - api/userid/books               | - allows a user to borrow books
 - Return Book  - api/userid/books               | - allows a user to return borrowed books
 
-###Admin
+### Admin
 - User Signin  - api/users/signin   | - Logs an admin in
 - Add  Book    - api/books          | - allows an admin to add a book
 - Modify Book  - api/books          | - allows an admin to modify a book
 - Delete Book  - api/books          | - allows an admin to delete book
 
-##VERBS
+## VERBS
 - GET
 - POST
 - PUT
@@ -46,9 +46,9 @@ The application leverages Node; Express for routing and sequelize for ORM.
 ```
 Request
 {
-	"firstname": "John",
+	"firstname": "mike",
 	"lastname": "doe",
-	"email": "John@gmail.com",
+	  "email": "bbb@gmail.com",,
 	"password": "password"
 }
 
@@ -67,6 +67,25 @@ Response
         "createdAt": "2017-08-10T15:35:37.000Z",
         "image": null
     },
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZW1haWwiOiJiYmJAZ21haWwuY29tIiwibWVtYmVyc2hpcCI6ImJyb256ZSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNTAyMzc5MzM3LCJleHAiOjE1MDI0NjU3Mzd9.FjK888IV26y22zW5Lyrjefgs9TeMM2n22GgV_CcW5H4"
+}
+
+```
+
+#### Sign in
+- Endpoint: **POST** `api/users/signin`
+- Authorization: Yes
+
+```
+Request
+{
+	  "email": "bbb@gmail.com",
+	"password": "password"
+}
+
+Response
+{
+    "message": "Signed in",
     "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZW1haWwiOiJiYmJAZ21haWwuY29tIiwibWVtYmVyc2hpcCI6ImJyb256ZSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNTAyMzc5MzM3LCJleHAiOjE1MDI0NjU3Mzd9.FjK888IV26y22zW5Lyrjefgs9TeMM2n22GgV_CcW5H4"
 }
 
