@@ -4,7 +4,7 @@ const mockData = {
   user1: {
     firstname: 'user1FirstName',
     lastname: 'user1LastName',
-    email: 'user1Email',
+    email: 'user1Email@gmail.com',
     password: 'user1password',
     role: 'user',
     membership: 'bronze'
@@ -13,26 +13,26 @@ const mockData = {
   adminData: {
     firstname: 'uadminFirstName',
     lastname: 'adminLastName',
-    email: 'adminEmail',
+    email: 'adminEmail@gmail.com',
     password: 'adminpassword',
     role: 'admin',
     membership: 'bronze'
   },
 
   invaliduser1Login: {
-    email: 'user1Email',
+    email: 'user1Email@gmail.com',
     password: 'user1password',
   },
 
   user1Login: {
-    email: 'user1Email',
+    email: 'user1Email@gmail.com',
     password: 'user1password',
   },
 
   user1ConflictData: {
     firstname: 'user1FirstName',
     lastname: 'user1LastName',
-    email: 'user1Email',
+    email: 'user1Email@gmail.com',
     password: 'user1password',
     role: 'user',
     membership: 'bronze'
@@ -41,7 +41,7 @@ const mockData = {
   user2: {
     firstname: 'user2FirstName',
     lastname: 'user2LastName',
-    email: 'user2Email',
+    email: 'user2Email@gmail.com',
     password: 'user2password',
     role: 'user',
     membership: 'silver'
@@ -50,14 +50,14 @@ const mockData = {
   user3: {
     firstname: 'user3FirstName',
     lastname: 'user3LastName',
-    email: 'user3Email',
+    email: 'user3Email@gmail.com',
     password: 'user3password',
     role: 'user',
     membership: 'gold'
   },
 
   adminLogin: {
-    email: 'adminEmail',
+    email: 'adminEmail@gmail.com',
     password: 'adminpassword'
   },
 
@@ -66,7 +66,7 @@ const mockData = {
   invalidUser1: {
     firstname: '',
     lastname: 'invaliduser1LastName',
-    email: 'invaliduser1Email',
+    email: 'invaliduser1Email@gmail.com',
     password: 'user1password',
     role: 'user',
     membership: 'bronze'
@@ -75,7 +75,7 @@ const mockData = {
   invaliduser2: {
     firstname: 'invaliduser2FirstName',
     lastname: 'invaliduser2LastName',
-    email: 'invaliduser2Email',
+    email: 'invaliduser2Email@gmail.com',
     password: 'invaliduser2password',
     role: 'user',
     membership: 'silver'
@@ -84,14 +84,14 @@ const mockData = {
   invaliduser3: {
     firstname: 'invaliduser3FirstName',
     lastname: 'invaliduser3LastName',
-    email: 'invalidUser3Email',
+    email: 'invalidUser3Email@gmail.com',
     password: 'invaliduser3password',
     role: 'user',
     membership: 'gold'
   },
 
   invalidadmin: {
-    email: 'invalidadminEmail',
+    email: 'invalidadminEmail@gmail.com',
     password: 'invalidAdminpassword',
     role: 'Admin',
   },
