@@ -42,23 +42,24 @@ class Helper {
 
   /** 
  * @param { object } req 
- * @param { object } res 
+ * @param { object } res
+ * @param { object } next
  * @returns { object } books with count and rows
+ * 
  */
   static verify(req, res, next) {
     const query = {
       where: {
         $and: [
-          { userid: req.userid },
+          { userid: req.body.userid },
           { returnstatus: false }
         ]
       }
     };
-
     borrowedBookModel.findAndCountAll(query)
       .then((response) => {
         if (response.count < util[req.membership.toLowerCase()].limit
-          && !response.rows.find(book => book.dataValues.id === req.body.bookId)) {
+          && !response.rows.find(book => book.dataValues.bookid === req.body.bookid)) {
           req.body = Helper.composeRequest(req);
           next();
         } else {
@@ -67,10 +68,16 @@ class Helper {
       });
   }
 
+  /**
+   * 
+   * @param { object} req
+   * @returns { object } body
+   * 
+   */
   static composeRequest(req) {
     const body = {
       bookid: req.body.bookid,
-      userid: req.userid,
+      userid: req.body.userid,
       expectedreturndate: moment().add(util[req.membership.toLowerCase()].limit, 'days').format('YYYY-MM-DD')
     };
     return body;

@@ -17,6 +17,7 @@ class Authentication {
    * @param { object } req 
    * @param { object} res 
    * @returns { object } response
+   * @next() 
    */
   static verifyAdmin(req, res, next) {
     if (!req.headers.authorization) {
@@ -31,6 +32,7 @@ class Authentication {
     }
   }
 
+
   /**
    * @param { object } req --- request object
    * @param { object} res  ---response object
@@ -43,7 +45,7 @@ class Authentication {
       const decoded = jwt.verify(req.headers.authorization, secret);
       userModel.findOne({ where: { email: decoded.email, id: decoded.id } }).then((user) => {
         if (user) {
-          req.userid = decoded.id;
+          req.body.userid = decoded.id;
           req.membership = decoded.membership;
           next();
         } else {

@@ -17,19 +17,19 @@ Router.post('/users/signup', userController.signup);
 Router.post('/users/signin', userController.signin);
 
 // get all users
-//Router.get('/users/', userController.verifyAdmin, userController.getAllUsers);
+// Router.get('/users/', userController.verifyAdmin, userController.getAllUsers);
 
 Router.route('/books')
   .get(bookController.getBook)
-  .post(Auth.verifyAdmin, bookController.addBook);
-
+  .post(Auth.verifyAdmin, bookController.addBook)
+  .delete(Auth.verifyAdmin, bookController.deleteBook);
 Router.put('/books/:id', Auth.verifyAdmin, bookController.modifyBook);
 
 // Routes allow user borrow book, check for books not returned and return book
 Router.route('/users/:userId/books')
   .post(Auth.verifyUser, helper.checkBook, helper.verify, bookController.borrowbook)
   .get(Auth.verifyUser, userController.getUserBooks)
-  .put(Auth.verifyUser, userController.returnBook);
+  .put(Auth.verifyUser, bookController.returnBook);
 
 // redirect every other address
 Router.route('*')

@@ -29,6 +29,21 @@ class Book {
       }
     });
   }
+
+
+  /**
+   * @param {object} req 
+   * @param {object} res
+   * @returns {void}
+   */
+  static deleteBook(req, res) {
+    bookModel.destroy({ where: { id: req.body.id } }).then((book) => {
+      res.status(200).json({ message: 'Book deleted', data: book });
+    }).catch((error) => {
+      res.status(500).json({ message: 'Book Cannot be deleted', data: error });
+    });
+  }
+
   /**
    * @param {object} req 
    * @param {object} res
@@ -84,12 +99,43 @@ class Book {
   static borrowbook(req, res) {
     borrowedBooks.create(req.body)
       .then((response) => {
-        res.status(201).json({ message: 'Book Added', data: response });
+        bookModel.update({ quantity: req.book.dataValues.quantity - 1 },
+          { where: { id: response.dataValues.bookid } })
+          .then(() => {
+            res.status(201).json({ message: 'Book Added',
+              returnDate: req.body.expectedreturndate });
+          }).catch(() => {
+            res.status(400).json({ message: 'Book not added' });
+          })
+          .catch();
       })
       .catch((error) => {
         res.status(401).json({ message: error });
       });
   }// end of method
+
+  /**
+   * @param { object } req 
+   * @param { object } res
+   * @returns { object } returns object
+   */
+  static returnBook(req, res) {
+    borrowedBooks.findOne({ where: {
+      userid: req.body.userid,
+      bookid: req.body.bookid,
+      returnstatus: false } })
+      .then((response) => {
+        if (response === null) {
+          res.status(404).json({
+            message: 'This book is not in your latest borrow history' });
+        } else {
+          borrowedBooks.update({ returnstatus: true },
+            { where: { id: response.dataValues.id } }).then(() => {
+            res.status(200).json({ message: 'Book has been returned' });
+          });
+        }
+      });
+  }
 }
 
 
