@@ -6,10 +6,6 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _bcrypt = require('bcrypt');
-
-var _bcrypt2 = _interopRequireDefault(_bcrypt);
-
 var _jsonwebtoken = require('jsonwebtoken');
 
 var _jsonwebtoken2 = _interopRequireDefault(_jsonwebtoken);
@@ -44,8 +40,8 @@ var Authentication = function () {
     /**
      * @param { object } req 
      * @param { object} res 
+     * @param { object } next
      * @returns { object } response
-     * @next() 
      */
     value: function verifyAdmin(req, res, next) {
       if (!req.headers.authorization) {

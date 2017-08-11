@@ -35,23 +35,25 @@ Router.get('/', function (req, res) {
 
 // User Routes
 Router.post('/users/signup', _user2.default.signup);
-
 Router.post('/users/signin', _user2.default.signin);
 
-// get all users
-// Router.get('/users/', userController.verifyAdmin, userController.getAllUsers);
+// get all users - Admin action
+Router.get('/users', _auth2.default.verifyAdmin, _user2.default.getAllUsers);
 
 Router.route('/books').get(_book2.default.getBook).post(_auth2.default.verifyAdmin, _book2.default.addBook).delete(_auth2.default.verifyAdmin, _book2.default.deleteBook);
 Router.put('/books/:id', _auth2.default.verifyAdmin, _book2.default.modifyBook);
 
 // Routes allow user borrow book, check for books not returned and return book
-Router.route('/users/:userId/books').post(_auth2.default.verifyUser, _helper2.default.checkBook, _helper2.default.verify, _book2.default.borrowbook).get(_auth2.default.verifyUser, _user2.default.getUserBooks).put(_auth2.default.verifyUser, _book2.default.returnBook);
+Router.route('/users/:userId/books').post(_auth2.default.verifyUser, _helper2.default.checkBook, _helper2.default.verify, _book2.default.borrowBook).get(_auth2.default.verifyUser, _user2.default.getUserBooks).put(_auth2.default.verifyUser, _book2.default.returnBook);
+
+// User profile page
+Router.get('/users/:userId/', _auth2.default.verifyUser, _user2.default.profilePage);
 
 // redirect every other address
 Router.route('*').post(function (req, res) {
   res.send('This is an invalid route');
 }).get(function (req, res) {
-  res.send('This is an invalid route, does not exist');
+  res.send('This is an invalid route');
 });
 
 exports.default = Router;

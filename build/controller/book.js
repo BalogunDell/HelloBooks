@@ -78,11 +78,12 @@ var Book = function () {
     key: 'getBook',
     value: function getBook(req, res) {
       bookModel.findAll().then(function (response) {
-        res.send(response);
+        res.json({ response: response });
       }).catch(function (error) {
         res.send(404).json({ message: error.message });
       });
     }
+
     /**
     * @param {object} req 
     * @param {object} res
@@ -107,7 +108,7 @@ var Book = function () {
       };
 
       bookModel.findOne(query).then(function (book) {
-        if (!book) return res.status(404).send({ msg: 'Book not found' });
+        if (!book) return res.status(404).json({ msg: 'Book not found' });
         book.update(bookData).then(function (updated) {
           if (updated) {
             res.status(200).json({ message: 'Book modified successfully', data: updated });
@@ -127,19 +128,21 @@ var Book = function () {
      */
 
   }, {
-    key: 'borrowbook',
-    value: function borrowbook(req, res) {
+    key: 'borrowBook',
+    value: function borrowBook(req, res) {
       borrowedBooks.create(req.body).then(function (response) {
-        bookModel.update({ quantity: req.book.dataValues.quantity - 1 }, { where: { id: response.dataValues.bookid } }).then(function () {
-          res.status(201).json({ message: 'Book Added',
-            returnDate: req.body.expectedreturndate });
-        }).catch(function () {
-          res.status(400).json({ message: 'Book not added' });
+        bookModel.update({ quantity: req.book.dataValues.quantity - 1 }, { where: { id: response.dataValues.bookid } }).then(function (updateRes) {
+          if (updateRes) {
+            res.status(201).json({ message: 'Book Added',
+              returnDate: req.body.expectedreturndate });
+          }
+        }).catch(function (error) {
+          res.status(400).json({ message: 'Book not added', errors: error });
         }).catch();
       }).catch(function (error) {
         res.status(401).json({ message: error });
       });
-    } // end of method
+    }
 
     /**
      * @param { object } req 
