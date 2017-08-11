@@ -81,7 +81,7 @@ class Book {
 
     bookModel.findOne(query)
       .then((book) => {
-        if (!book) return res.status(404).send({ msg: 'Book not found' });
+        if (!book) return res.status(404).json({ msg: 'Book not found' });
         book.update(bookData)
           .then((updated) => {
             if (updated) {
@@ -105,11 +105,14 @@ class Book {
       .then((response) => {
         bookModel.update({ quantity: req.book.dataValues.quantity - 1 },
           { where: { id: response.dataValues.bookid } })
-          .then(() => {
-            res.status(201).json({ message: 'Book Added',
-              returnDate: req.body.expectedreturndate });
-          }).catch(() => {
-            res.status(400).json({ message: 'Book not added' });
+          .then((updateRes) => {
+            if (updateRes) {
+              res.status(201).json({ message: 'Book Added',
+                returnDate: req.body.expectedreturndate });
+            }
+          })
+          .catch((error) => {
+            res.status(400).json({ message: 'Book not added', errors: error });
           })
           .catch();
       })
