@@ -39,8 +39,8 @@ class User {
 
 
   /**
-   * @param { object } req 
-   * @param { object} res 
+   * @param { object } req
+   * @param { object} res
    * @returns { object } response
    */
   static signin(req, res) {
@@ -64,7 +64,7 @@ class User {
 
 
   /**
-   * @param { object } req 
+   * @param { object } req
    * @param { object } res
    * @returns { void }
    */
@@ -101,7 +101,7 @@ class User {
   }
 
   /**
-   * @param { object } req 
+   * @param { object } req
    * @param { object } res
    * @returns { void }
    */
@@ -119,7 +119,7 @@ class User {
   }
 
   /**
-   * @param { object } req 
+   * @param { object } req
    * @param { object } res
    * @returns { object } response is an object of users
    */
@@ -137,7 +137,7 @@ class User {
   }
   /**
    * 
-   * @param { object } req 
+   * @param { object } req
    * @param { object } res
    * @returns { object } user detail
    */
