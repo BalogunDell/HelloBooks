@@ -1,12 +1,10 @@
 import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
 import model from '../models';
 import helper from '../middleware/helper';
 
 
 require('dotenv').config();
 
-const secret = process.env.SECRET;
 
 const userModel = model.users;
 const borrowedBookModel = model.borrowedbooks;
@@ -102,7 +100,6 @@ class User {
       });
   }
 
-
   /**
    * @param { object } req 
    * @param { object } res
@@ -138,15 +135,17 @@ class User {
         res.status(500).json({ response: error });
       });
   }
-
   /**
    * 
+   * @param { object } req 
+   * @param { object } res
+   * @returns { object } user detail
    */
   static profilePage(req, res) {
     if (!req.headers.Authorization) {
       res.status(401)
         .json({ message: 'Invalid/Expired token' });
-      console.log(req.headers.Authorization);
+      // other implementations
     }
   }
 }
