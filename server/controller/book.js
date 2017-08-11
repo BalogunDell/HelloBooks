@@ -52,11 +52,13 @@ class Book {
    */
   static getBook(req, res) {
     bookModel.findAll().then((response) => {
-      res.send(response);
+      res.json({ response });
     }).catch((error) => {
       res.send(404).json({ message: error.message });
     });
   }
+
+
   /**
  * @param {object} req 
  * @param {object} res
@@ -92,6 +94,7 @@ class Book {
       .catch(error => res.status(500).json({ msg: error }));
   }
 
+
   /**
    * @param { object } req
    * @param { object } res
@@ -113,7 +116,8 @@ class Book {
       .catch((error) => {
         res.status(401).json({ message: error });
       });
-  }// end of method
+  }
+
 
   /**
    * @param { object } req 
@@ -138,6 +142,5 @@ class Book {
       });
   }
 }
-
 
 export default Book;

@@ -11,13 +11,15 @@ Router.get('/', (req, res) => {
   res.status(200).json({ message: 'Welcome to library api' });
 });
 
+
 // User Routes
 Router.post('/users/signup', userController.signup);
-
 Router.post('/users/signin', userController.signin);
 
-// get all users
-// Router.get('/users/', userController.verifyAdmin, userController.getAllUsers);
+
+// get all users - Admin action
+Router.get('/users', Auth.verifyAdmin, userController.getAllUsers);
+
 
 Router.route('/books')
   .get(bookController.getBook)
@@ -37,7 +39,7 @@ Router.route('*')
     res.send('This is an invalid route');
   })
   .get((req, res) => {
-    res.send('This is an invalid route, does not exist');
+    res.send('This is an invalid route');
   });
 
 export default Router;
