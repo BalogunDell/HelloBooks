@@ -16,7 +16,7 @@ const borrowedBookModel = model.borrowedbooks;
  */
 class User {
   /**
-   * @param { object } req 
+   * @param { object } req
    * @param { object } res
    * @returns { void }
    */
