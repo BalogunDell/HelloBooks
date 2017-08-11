@@ -86,7 +86,12 @@ class Helper {
     };
     return body;
   }
-  
+
+  /**
+   * 
+   * @param { Object } user
+   * @returns { string } tokens
+   */
   static generateToken(user) {
     const token = jwt.sign({
       id: user.id,

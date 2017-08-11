@@ -15,6 +15,7 @@ class Authentication {
   /**
    * @param { object } req 
    * @param { object} res 
+   * @param { object } next
    * @returns { object } response
    */
   static verifyAdmin(req, res, next) {
@@ -29,7 +30,6 @@ class Authentication {
       }
     }
   }
-
 
   /**
    * @param { object } req --- request object

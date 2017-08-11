@@ -7,6 +7,7 @@ require('dotenv').config();
 const userModel = model.users;
 const borrowedBookModel = model.borrowedbooks;
 
+
 /**
  * @class User
  *@classdesc creates a class User
@@ -33,6 +34,8 @@ class User {
         }
       });
   }
+
+
   /**
    * @param { object } req 
    * @param { object} res 
@@ -56,6 +59,7 @@ class User {
       })
       .catch(err => res.send(err));
   }
+
 
   /**
    * @param { object } req 
@@ -95,6 +99,7 @@ class User {
       });
   }
 
+
   /**
    * @param { object } req 
    * @param { object } res
@@ -131,4 +136,5 @@ class User {
       });
   }
 }
+
 export default User;
