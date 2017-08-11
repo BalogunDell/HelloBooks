@@ -1,12 +1,10 @@
 import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
 import model from '../models';
 import helper from '../middleware/helper';
 
 
 require('dotenv').config();
 
-const secret = process.env.SECRET;
 
 const userModel = model.users;
 const borrowedBookModel = model.borrowedbooks;
@@ -18,7 +16,7 @@ const borrowedBookModel = model.borrowedbooks;
  */
 class User {
   /**
-   * @param { object } req 
+   * @param { object } req
    * @param { object } res
    * @returns { void }
    */
@@ -41,8 +39,8 @@ class User {
 
 
   /**
-   * @param { object } req 
-   * @param { object} res 
+   * @param { object } req
+   * @param { object} res
    * @returns { object } response
    */
   static signin(req, res) {
@@ -66,7 +64,7 @@ class User {
 
 
   /**
-   * @param { object } req 
+   * @param { object } req
    * @param { object } res
    * @returns { void }
    */
@@ -102,9 +100,8 @@ class User {
       });
   }
 
-
   /**
-   * @param { object } req 
+   * @param { object } req
    * @param { object } res
    * @returns { void }
    */
@@ -122,7 +119,7 @@ class User {
   }
 
   /**
-   * @param { object } req 
+   * @param { object } req
    * @param { object } res
    * @returns { object } response is an object of users
    */
@@ -138,15 +135,17 @@ class User {
         res.status(500).json({ response: error });
       });
   }
-
   /**
    * 
+   * @param { object } req
+   * @param { object } res
+   * @returns { object } user detail
    */
   static profilePage(req, res) {
     if (!req.headers.Authorization) {
       res.status(401)
         .json({ message: 'Invalid/Expired token' });
-      console.log(req.headers.Authorization);
+      // other implementations
     }
   }
 }
