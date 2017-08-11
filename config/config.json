@@ -8,11 +8,10 @@
   },
   "test": {
     "username": "postgres",
-    "password": "",
-    "database": "travis",
+    "password": "Abbey2433",
+    "database": "hellobooks_test",
     "host": "127.0.0.1",
-    "dialect": "postgres",
-    "logging": false
+    "dialect": "postgres"
   },
   "production": {
     "use_env_constiable": "DATABASE_URL"
