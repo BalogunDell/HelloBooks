@@ -93,7 +93,7 @@ class User {
     borrowedBookModel.findAll(query)
       .then((response) => {
         // res.send(response);
-        res.status(200).json(response);
+        res.status(200).json({ books: response });
       }).catch((error) => {
         res.status(404).json({ message: error });
       });
@@ -111,7 +111,7 @@ class User {
       if (response.length === 0) {
         res.status(200).json({ message: 'You have not returned any book' });
       } else {
-        res.status(200).json(response);
+        res.status(200).json({ returned: response });
       }
     }).catch((error) => {
       res.send(404).json({ message: error });

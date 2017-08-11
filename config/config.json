@@ -12,7 +12,7 @@
     "database": "travis",
     "host": "127.0.0.1",
     "dialect": "postgres",
-    "logging": false
+    "loggin": false
   },
   "production": {
     "use_env_constiable": "DATABASE_URL"
