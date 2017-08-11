@@ -41,7 +41,7 @@ var User = function () {
     key: 'signup',
 
     /**
-     * @param { object } req 
+     * @param { object } req
      * @param { object } res
      * @returns { void }
      */
@@ -59,9 +59,10 @@ var User = function () {
         }
       });
     }
+
     /**
-     * @param { object } req 
-     * @param { object} res 
+     * @param { object } req
+     * @param { object} res
      * @returns { object } response
      */
 
@@ -75,9 +76,11 @@ var User = function () {
             message: 'signed in',
             data: { token: token }
           };
-          res.status(200).send(response);
+          res.status(200).json({ response: response });
+        } else if (!req.body.email || !req.body.password) {
+          res.status(404).json({ message: 'Email and password is required' });
         } else {
-          res.status(404).send({ message: 'Invalid email or password' });
+          res.status(404).json({ message: 'Invalid email or password' });
         }
       }).catch(function (err) {
         return res.send(err);
@@ -85,7 +88,7 @@ var User = function () {
     }
 
     /**
-     * @param { object } req 
+     * @param { object } req
      * @param { object } res
      * @returns { void }
      */
@@ -111,15 +114,14 @@ var User = function () {
       }
 
       borrowedBookModel.findAll(query).then(function (response) {
-        // res.send(response);
-        res.status(200).json(response);
+        res.status(200).json({ books: response });
       }).catch(function (error) {
         res.status(404).json({ message: error });
       });
     }
 
     /**
-     * @param { object } req 
+     * @param { object } req
      * @param { object } res
      * @returns { void }
      */
@@ -132,27 +134,46 @@ var User = function () {
         if (response.length === 0) {
           res.status(200).json({ message: 'You have not returned any book' });
         } else {
-          res.status(200).json(response);
+          res.status(200).json({ returned: response });
         }
       }).catch(function (error) {
-        res.send(404).json({ message: error });
+        res.status(404).json({ message: error });
       });
     }
 
     /**
-     * @param { object } req 
+     * @param { object } req
      * @param { object } res
-     * @returns { void }
+     * @returns { object } response is an object of users
      */
 
   }, {
     key: 'getAllUsers',
     value: function getAllUsers(req, res) {
-      borrowedBookModel.findAll().then(function (response) {
-        res.status(200).json(response);
+      userModel.findAll().then(function (response) {
+        if (response) {
+          res.status(200).json({ users: response });
+        } else {
+          res.status(404).json({ response: 'Database is empty' });
+        }
       }).catch(function (error) {
-        res.send(error.message);
+        res.status(500).json({ response: error });
       });
+    }
+    /**
+     * 
+     * @param { object } req
+     * @param { object } res
+     * @returns { object } user detail
+     */
+
+  }, {
+    key: 'profilePage',
+    value: function profilePage(req, res) {
+      if (!req.headers.Authorization) {
+        res.status(401).json({ message: 'Invalid/Expired token' });
+        // other implementations
+      }
     }
   }]);
 

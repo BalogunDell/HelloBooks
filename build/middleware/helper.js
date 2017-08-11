@@ -123,6 +123,13 @@ var Helper = function () {
       };
       return body;
     }
+
+    /**
+     * 
+     * @param { Object } user
+     * @returns { string } tokens
+     */
+
   }, {
     key: 'generateToken',
     value: function generateToken(user) {

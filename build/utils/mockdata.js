@@ -9,7 +9,7 @@ var mockData = {
   user1: {
     firstname: 'user1FirstName',
     lastname: 'user1LastName',
-    email: 'user1Email',
+    email: 'user1Email@gmail.com',
     password: 'user1password',
     role: 'user',
     membership: 'bronze'
@@ -18,26 +18,26 @@ var mockData = {
   adminData: {
     firstname: 'uadminFirstName',
     lastname: 'adminLastName',
-    email: 'adminEmail',
+    email: 'adminEmail@gmail.com',
     password: 'adminpassword',
     role: 'admin',
     membership: 'bronze'
   },
 
   invaliduser1Login: {
-    email: 'user1Email',
+    email: 'user1Email@gmail.com',
     password: 'user1password'
   },
 
   user1Login: {
-    email: 'user1Email',
+    email: 'user1Email@gmail.com',
     password: 'user1password'
   },
 
   user1ConflictData: {
     firstname: 'user1FirstName',
     lastname: 'user1LastName',
-    email: 'user1Email',
+    email: 'user1Email@gmail.com',
     password: 'user1password',
     role: 'user',
     membership: 'bronze'
@@ -46,7 +46,7 @@ var mockData = {
   user2: {
     firstname: 'user2FirstName',
     lastname: 'user2LastName',
-    email: 'user2Email',
+    email: 'user2Email@gmail.com',
     password: 'user2password',
     role: 'user',
     membership: 'silver'
@@ -55,14 +55,14 @@ var mockData = {
   user3: {
     firstname: 'user3FirstName',
     lastname: 'user3LastName',
-    email: 'user3Email',
+    email: 'user3Email@gmail.com',
     password: 'user3password',
     role: 'user',
     membership: 'gold'
   },
 
   adminLogin: {
-    email: 'adminEmail',
+    email: 'adminEmail@gmail.com',
     password: 'adminpassword'
   },
 
@@ -70,7 +70,7 @@ var mockData = {
   invalidUser1: {
     firstname: '',
     lastname: 'invaliduser1LastName',
-    email: 'invaliduser1Email',
+    email: 'invaliduser1Email@gmail.com',
     password: 'user1password',
     role: 'user',
     membership: 'bronze'
@@ -79,7 +79,7 @@ var mockData = {
   invaliduser2: {
     firstname: 'invaliduser2FirstName',
     lastname: 'invaliduser2LastName',
-    email: 'invaliduser2Email',
+    email: 'invaliduser2Email@gmail.com',
     password: 'invaliduser2password',
     role: 'user',
     membership: 'silver'
@@ -88,16 +88,25 @@ var mockData = {
   invaliduser3: {
     firstname: 'invaliduser3FirstName',
     lastname: 'invaliduser3LastName',
-    email: 'invalidUser3Email',
+    email: 'invalidUser3Email@gmail.com',
     password: 'invaliduser3password',
     role: 'user',
     membership: 'gold'
   },
 
   invalidadmin: {
-    email: 'invalidadminEmail',
-    password: 'invalidAdminpassword',
-    role: 'Admin'
+    email: 'invalidadminEmailgmail.com',
+    password: 'invalidAdminpassword'
+  },
+
+  invaliduser: {
+    email: '',
+    password: ''
+  },
+
+  emptyCredence: {
+    email: '',
+    password: ''
   },
 
   bookdata: {
@@ -112,9 +121,62 @@ var mockData = {
     image: 'images/andela.jpg'
   },
 
+  invalidBookdata: {
+    isbn: '#7764',
+    title: '',
+    author: 'Nelson Brook',
+    pages: 123,
+    year: 1977,
+    description: 'the books does this and that',
+    quantity: 32,
+    category: 'Self Growth',
+    image: 'images/andela.jpg'
+  },
+
+  invalidBookdata2: {
+    isbn: '#7764',
+    title: 'Abbey owns',
+    author: 'Nelson Brook',
+    pages: '',
+    year: '',
+    description: 'the books does this and that',
+    quantity: 32,
+    category: 'Self Growth',
+    image: 'images/andela.jpg'
+  },
+
+  invalidBookdata3: {
+    isbn: '11164',
+    title: 'Abbey owns',
+    author: 'Nelson Brook',
+    pages: 123,
+    year: 1768,
+    description: '',
+    quantity: '',
+    category: 'Self Growth',
+    image: 'images/andela.jpg'
+  },
+
+  invalidBookdata4: {
+    isbn: '11164',
+    title: 'Abbey owns',
+    author: 'Nelson Brook',
+    pages: 123,
+    year: 1768,
+    description: 'The description of the book',
+    quantity: 100,
+    category: 'Self Growth',
+    image: 'images/andela.jpg'
+  },
+
   borrowBook: {
     userid: 1,
     bookid: 1
+  },
+
+  failborrowBook: {
+    userid: '',
+    bookid: ''
   },
 
   modifyBookData: {
