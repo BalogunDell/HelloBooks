@@ -142,13 +142,25 @@ const mockData = {
   },
 
   invalidBookdata3: {
-    isbn: '#7764',
+    isbn: '11164',
     title: 'Abbey owns',
     author: 'Nelson Brook',
     pages: 123,
-    year: 1977,
+    year: 1768,
     description: '',
     quantity: '',
+    category: 'Self Growth',
+    image: 'images/andela.jpg'
+  },
+
+  invalidBookdata4: {
+    isbn: '11164',
+    title: 'Abbey owns',
+    author: 'Nelson Brook',
+    pages: 123,
+    year: 1768,
+    description: 'The description of the book',
+    quantity: 100,
     category: 'Self Growth',
     image: 'images/andela.jpg'
   },

@@ -29,13 +29,17 @@ Router.put('/books/:id', Auth.verifyAdmin, bookController.modifyBook);
 
 // Routes allow user borrow book, check for books not returned and return book
 Router.route('/users/:userId/books')
-  .post(Auth.verifyUser, helper.checkBook, helper.verify, bookController.borrowbook)
+  .post(Auth.verifyUser, helper.checkBook, helper.verify, bookController.borrowBook)
   .get(Auth.verifyUser, userController.getUserBooks)
   .put(Auth.verifyUser, bookController.returnBook);
 
+ // User profile page
+Router.get('/users/:userId/', Auth.verifyUser, userController.profilePage);
+
+
 // redirect every other address
 Router.route('*')
-  .post((req, res) => {
+.post((req, res) => {
     res.send('This is an invalid route');
   })
   .get((req, res) => {

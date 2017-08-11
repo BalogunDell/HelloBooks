@@ -100,7 +100,7 @@ class Book {
    * @param { object } res
    * @returns { void }
    */
-  static borrowbook(req, res) {
+  static borrowBook(req, res) {
     borrowedBooks.create(req.body)
       .then((response) => {
         bookModel.update({ quantity: req.book.dataValues.quantity - 1 },
