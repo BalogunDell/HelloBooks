@@ -8,9 +8,10 @@ services:
 
 before_script:
   - npm install -g codeclimate-test-reporter
-  - psql -c 'drop database if exists hellobooks_test;' -U postgres
-  - psql -c 'create database hellobooks_test;' -U postgres
-  - NODE_ENV=test npm run migrate:test 
+  - npm install -g sequelize
+  - psql -c 'drop database if exists travis;' -U postgres
+  - psql -c 'create database travis;' -U postgres
+  - NODE_ENV=test npm run test:db 
 
 script:
   - npm test 
