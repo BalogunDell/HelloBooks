@@ -1,4 +1,3 @@
-import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import model from '../models';
 
@@ -17,7 +16,6 @@ class Authentication {
    * @param { object } req 
    * @param { object} res 
    * @returns { object } response
-   * @next() 
    */
   static verifyAdmin(req, res, next) {
     if (!req.headers.authorization) {

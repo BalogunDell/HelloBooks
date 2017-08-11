@@ -51,8 +51,9 @@ class Book {
    * @returns { object } resposnse
    */
   static getBook(req, res) {
+    console.log(req.params);
     bookModel.findAll().then((response) => {
-      res.send(response);
+      res.json({ response });
     }).catch((error) => {
       res.send(404).json({ message: error.message });
     });

@@ -116,14 +116,19 @@ class User {
   /**
    * @param { object } req 
    * @param { object } res
-   * @returns { void }
+   * @returns { object } response is an object of users
    */
   static getAllUsers(req, res) {
-    borrowedBookModel.findAll().then((response) => {
-      res.status(200).json(response);
-    }).catch((error) => {
-      res.send(error.message);
-    });
+    userModel.findAll()
+      .then((response) => {
+        if (response) {
+          res.status(200).json({ users: response });
+        } else {
+          res.status(404).json({ response: 'Database is empty' });
+        }
+      }).catch((error) => {
+        res.status(500).json({ response: error });
+      });
   }
 }
 export default User;
