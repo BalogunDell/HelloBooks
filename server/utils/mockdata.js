@@ -91,9 +91,18 @@ const mockData = {
   },
 
   invalidadmin: {
-    email: 'invalidadminEmail@gmail.com',
-    password: 'invalidAdminpassword',
-    role: 'Admin',
+    email: 'invalidadminEmailgmail.com',
+    password: 'invalidAdminpassword'
+  },
+
+  invaliduser: {
+    email: '',
+    password: ''
+  },
+
+  emptyCredence: {
+    email: '',
+    password: ''
   },
 
   bookdata: {
@@ -108,9 +117,50 @@ const mockData = {
     image: 'images/andela.jpg'
   },
 
+  invalidBookdata: {
+    isbn: '#7764',
+    title: '',
+    author: 'Nelson Brook',
+    pages: 123,
+    year: 1977,
+    description: 'the books does this and that',
+    quantity: 32,
+    category: 'Self Growth',
+    image: 'images/andela.jpg'
+  },
+
+  invalidBookdata2: {
+    isbn: '#7764',
+    title: 'Abbey owns',
+    author: 'Nelson Brook',
+    pages: '',
+    year: '',
+    description: 'the books does this and that',
+    quantity: 32,
+    category: 'Self Growth',
+    image: 'images/andela.jpg'
+  },
+
+  invalidBookdata3: {
+    isbn: '#7764',
+    title: 'Abbey owns',
+    author: 'Nelson Brook',
+    pages: 123,
+    year: 1977,
+    description: '',
+    quantity: '',
+    category: 'Self Growth',
+    image: 'images/andela.jpg'
+  },
+
   borrowBook: {
     userid: 1,
     bookid: 1
+  },
+
+  failborrowBook: {
+    userid: '',
+    bookid: ''
   },
 
   modifyBookData: {
