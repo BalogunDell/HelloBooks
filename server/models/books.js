@@ -26,7 +26,7 @@ const book = (sequelize, DataTypes) => {
         isNumeric: {
           args: true,
           msg: 'pages must be a number'
-        }
+        },
       }
     },
     author: {
@@ -40,6 +40,10 @@ const book = (sequelize, DataTypes) => {
         is: {
           args: /(\w)+/i,
           msg: 'author can only contain strings'
+        },
+        len: {
+          args: [3, 50],
+          msg: 'Author name should be more than 3 characters long'
         }
       }
     },
@@ -54,6 +58,10 @@ const book = (sequelize, DataTypes) => {
         isNumeric: {
           args: true,
           msg: 'year must be a number'
+        },
+        len: {
+          args: [4],
+          msg: 'year is invalid'
         }
       }
     },
