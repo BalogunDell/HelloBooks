@@ -63,11 +63,11 @@ class Helper {
     borrowedBookModel.findAndCountAll(query)
       .then((response) => {
         if (response.count < util[req.membership.toLowerCase()].limit
-          && !response.rows.find(book => book.dataValues.id === req.body.bookid)) {
+          && !response.rows.find(book => book.dataValues.bookid === req.body.bookid)) {
           req.body = Helper.composeRequest(req);
           next();
         } else {
-          res.status(501).send({ msg: 'You have either exhausted your book limit or you still have this book with you' });
+          res.status(501).json({ msg: 'You have either exhausted your book limit or you still have this book with you' });
         }
       });
   }
@@ -78,7 +78,8 @@ class Helper {
    * @returns { object } body
    * 
    */
-  static composeRequest(req) {
+  static composeRequest(req, res) {
+    if (!req.body.bookid) return res.status(400).json({ message: 'provide a book id' });
     const body = {
       bookid: req.body.bookid,
       userid: req.body.userid,
