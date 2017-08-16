@@ -13,7 +13,7 @@ before_script:
   - NODE_ENV=test npm run test:db
 
 script:
-  - npm test NODE_ENV=test 
+  - NODE_ENV=test npm test 
 
 after_success:
   - CODECLIMATE_REPO_TOKEN=$CODECLIMATE_REPO_TOKEN codeclimate-test-reporter < coverage/lcov.info
