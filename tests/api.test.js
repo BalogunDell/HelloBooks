@@ -39,7 +39,10 @@ describe('User signup', (done) => {
     .post('/api/users/signup')
     .set('Accept', 'Application/json')
     .send(mockdata.user1)
-    .expect(201, done) 
+    .end((error, res) => {
+        expect(res.status).to.equal(201); 
+        done();
+      });
     });
 
     // test for success with valid data for admin
@@ -48,7 +51,10 @@ describe('User signup', (done) => {
     .post('/api/users/signup')
     .set('Accept', 'Application/json')
     .send(mockdata.adminData)
-    .expect(201, done) 
+    .end((error, res) => {
+        expect(res.status).to.equal(201); 
+        done();
+      }); 
     });
 
  });
@@ -118,7 +124,7 @@ describe('Wrong User Credentials', (done) => {
     .end((error, res) =>{
       adminToken = res.body.response.data.token;
       console.log(res.body);
-      expect(200);
+      expect(res.status).to.equal(200);
     done();
       }); 
     });
