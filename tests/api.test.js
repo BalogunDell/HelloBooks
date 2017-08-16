@@ -117,7 +117,7 @@ describe('Wrong User Credentials', (done) => {
     .send(mockdata.adminLogin)
     .end((error, res) =>{
       adminToken = res.body.response.data.token;
-      console.log(res.body.response.data.token);
+      console.log(res.body);
       expect(200);
     done();
       }); 
