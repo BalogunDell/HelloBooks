@@ -2,9 +2,6 @@
 
 [![Build Status](https://travis-ci.org/BalogunDell/HelloBooks.svg?branch=develop)](https://travis-ci.org/BalogunDell/HelloBooks)
 
-[![Test Coverage](https://codeclimate.com/github/codeclimate/codeclimate/badges/coverage.svg)](https://codeclimate.com/github/Balogundell/HelloBooks/coverage)
-
-
 Hello-Books is a simple application that helps manage a library and its processes like stocking, tracking and renting books and it was built on Postgres, Express, and Node).
 
 ## Development
