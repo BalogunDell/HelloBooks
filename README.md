@@ -1,6 +1,6 @@
 # Hellobooks
 
-[![Build Status](https://travis-ci.org/BalogunDell/HelloBooks.svg?branch=master)](https://travis-ci.org/BalogunDell/HelloBooks)
+[![Build Status](https://travis-ci.org/BalogunDell/HelloBooks.svg?branch=develop)](https://travis-ci.org/BalogunDell/HelloBooks)
 
 [![Test Coverage](https://codeclimate.com/github/codeclimate/codeclimate/badges/coverage.svg)](https://codeclimate.com/github/Balogundell/HelloBooks/coverage)
 
