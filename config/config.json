@@ -8,8 +8,8 @@
   },
   "test": {
     "username": "postgres",
-    "password": "Abbey2433",
-    "database": "Hellobook_test",
+    "password": "",
+    "database": "travis",
     "host": "127.0.0.1",
     "dialect": "postgres"
   },
