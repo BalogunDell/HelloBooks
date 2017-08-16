@@ -1,7 +1,6 @@
 process.env.NODE_ENV = 'test'
 
 import { expect } from 'chai';
-import { should } from 'chai';
 import supertest from 'supertest';
 import app from '../server/index';
 import mockdata from '../server/utils/mockdata';
@@ -117,7 +116,9 @@ describe('Wrong User Credentials', (done) => {
     .set('Accept', 'Application/json')
     .send(mockdata.adminLogin)
     .end((error, res) =>{
-      adminToken = JSON.parse(res.text).response.data.token;
+      adminToken = res.body.response.data.token;
+      expect(adminToken).to.equal(res.body.response.data.token);
+      expect(200);
     done();
       }); 
     });
