@@ -61,7 +61,7 @@ describe('User signin', (done) => {
     .set('Accept', 'Application/json')
     .send(mockdata.user1Login)
     .end((error, res) =>{
-      userToken = JSON.parse(res.text).response.data.token;
+      userToken = res.body.response.data.token;
     done()
     }); 
 });
@@ -117,7 +117,7 @@ describe('Wrong User Credentials', (done) => {
     .send(mockdata.adminLogin)
     .end((error, res) =>{
       adminToken = res.body.response.data.token;
-      expect(adminToken).to.equal(res.body.response.data.token);
+      console.log(res.body.response.data.token);
       expect(200);
     done();
       }); 
