@@ -58,6 +58,27 @@ class Book {
     });
   }
 
+  /**
+   * @param { object } req 
+   * @param { object} res 
+   * @param { object } next
+   * @returns { object } response
+   */
+  static getBookById(req, res) {
+    const bookid = req.params.id;
+    bookModel.findById(bookid)
+      .then((book) => {
+        if (!book) {
+          res.status(404).json({ message: 'This books is not available in our database' });
+        } else {
+          res.status(201).json({ message: book });
+        }
+      })
+      .catch((error) => {
+        res.status(500).json({ message: error });
+      });
+  }
+
 
   /**
  * @param {object} req 
@@ -75,21 +96,27 @@ class Book {
       author: req.body.author,
       year: req.body.year,
       title: req.body.title,
+      category: req.body.category,
       description: req.body.description,
-      quantity: req.body.quantity
+      quantity: req.body.quantity,
+      image: req.body.image
     };
 
     bookModel.findOne(query)
       .then((book) => {
         if (!book) return res.status(404).json({ msg: 'Book not found' });
-        book.update(bookData)
-          .then((updated) => {
-            if (updated) {
-              res.status(200).json({ message: 'Book modified successfully', data: updated });
-            }
-          }).catch((error) => {
-            res.status(404).json({ message: error.body });
-          });
+        if (book.dataValues.isbn !== `#${req.body.isbn}`) {
+          res.status(405).json({ message: 'ISBN number cannot be modified' });
+        } else {
+          book.update(bookData)
+            .then((updated) => {
+              if (updated) {
+                res.status(200).json({ message: 'Book modified successfully', data: updated });
+              }
+            }).catch((error) => {
+              res.status(404).json({ message: error.body });
+            });
+        }
       })
       .catch(error => res.status(500).json({ msg: error }));
   }

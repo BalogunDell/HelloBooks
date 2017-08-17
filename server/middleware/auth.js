@@ -4,6 +4,7 @@ import model from '../models';
 require('dotenv').config();
 
 const userModel = model.users;
+const bookModel = model.books;
 
 const secret = process.env.SECRET;
 
