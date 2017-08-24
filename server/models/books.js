@@ -107,6 +107,10 @@ const book = (sequelize, DataTypes) => {
         }
       }
     },
+    categoryid: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
     category: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -142,6 +146,10 @@ const book = (sequelize, DataTypes) => {
         books.belongTo(model.borrowedbooks, {
           foreignKey: 'bookid',
           as: 'borrowedbooks'
+        });
+        books.belongTo(model.categories, {
+          foreignKey: 'categoryid',
+          as: 'categories'
         });
       }
     },

@@ -16,6 +16,9 @@ Router.get('/', (req, res) => {
 Router.post('/users/signup', userController.signup);
 Router.post('/users/signin', userController.signin);
 
+// user feedback route
+Router.post('/users/category', Auth.verifyAdmin, bookController.addCategory);
+
 
 // get all users - Admin action
 Router.get('/users', Auth.verifyAdmin, userController.getAllUsers);

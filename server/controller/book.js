@@ -2,6 +2,7 @@ import model from '../models';
 
 const bookModel = model.books;
 const borrowedBooks = model.borrowedbooks;
+const categoryModel = model.categories;
 
 
 /**
@@ -169,6 +170,24 @@ class Book {
             res.status(200).json({ message: 'Book has been returned' });
           });
         }
+      });
+  }
+
+  /**
+   * 
+   * @param { object } req
+   * @param { object } res
+   * @return { object }
+   */
+  static addCategory(req, res) {
+    categoryModel.create(req.body)
+      .then((category) => {
+        if (category) {
+          res.status(201).json({ message: 'Category created' });
+        }
+      })
+      .catch((error) => {
+        res.status(409).json({ message: error.errors[0].message });
       });
   }
 }
