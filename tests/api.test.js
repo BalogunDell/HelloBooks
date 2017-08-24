@@ -69,6 +69,7 @@ describe('User signin', (done) => {
     .end((error, res) =>{
       expect(res.status).to.equal(200);
       userToken = res.body.response.data.token;
+      console.log(res.body);
     done();
     }); 
 });

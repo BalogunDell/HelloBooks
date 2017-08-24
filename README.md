@@ -1,6 +1,5 @@
 # Hellobooks
 
-[![Build Status](https://travis-ci.org/BalogunDell/HelloBooks.svg?branch=develop)](https://travis-ci.org/BalogunDell/HelloBooks)
 
 Hello-Books is a simple application that helps manage a library and its processes like stocking, tracking and renting books and it was built on Postgres, Express, and Node).
 
