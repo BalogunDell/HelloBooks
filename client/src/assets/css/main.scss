@@ -1,0 +1,27 @@
+$font-stack:    Helvetica, sans-serif;
+$primary-color: white;
+$custom-color: #0F488A;
+@import '../../components/footer/footer.scss';
+@import '../../components/navbar/navbar.scss';
+@import '../../components/home/home.scss';
+@import '../../components/books/books.scss';
+@import '../../components/register/register.scss';
+
+
+html {
+  min-height: 100%;
+  position: relative;
+}
+
+
+.home-bg {
+  font: 100% $font-stack;
+  color: $primary-color;
+  padding: 0;
+  margin: 0,0,50px;
+  background-image: url('../images/newbg.png');
+  background-repeat: no-repeat;
+  background-position: top left;
+  background-size: cover;
+  height: 100vh;
+}
