@@ -1,0 +1,13 @@
+// *********************************//
+// style for registration and login
+// *********************************//
+
+.form-holder {
+  margin-top: 10%;
+}
+
+@media (max-width: 400px) {
+  .form-holder {
+  margin-top: 30%;
+}
+}
