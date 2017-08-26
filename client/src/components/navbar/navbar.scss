@@ -14,6 +14,14 @@ nav {
       background-color: white;;
       color: $custom-color
     }
+    .active {
+      background-color: white;;
+      color: $custom-color
+    }
+
+    #sideBarTrigger {
+      cursor: pointer;
+    }
   }
 
 }

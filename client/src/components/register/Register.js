@@ -1,6 +1,8 @@
 import React from 'react';
 import Navbar from '../navbar/Navbar';
 import Books from '../books/Books';
+import RegistrationForm from './Forms/RegistrationForm';
+import LoginForm from './Forms/LoginForm';
 
 /**
  * @class Register
@@ -13,11 +15,7 @@ class Register extends React.Component {
         {/* This div holds the navbar component  */}
         <div className="home-bg">
           <Navbar/>
-          <div className="row form-holder">
-              <div className="col s12 m6 offset-m3 center black">
-              Registration point
-            </div>
-          </div>
+            <RegistrationForm/> 
         </div>
       </div>
     );

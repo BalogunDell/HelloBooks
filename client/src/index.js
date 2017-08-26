@@ -14,6 +14,7 @@ import Footer from './components/footer/Footer';
 import Home from './components/home/Home';
 import Books from './components/books/Books';
 import Register from './components/register/Register'
+import Login from './components/register/Forms/LoginForm';
 
 class App extends React.Component {
   render() {
@@ -23,6 +24,7 @@ class App extends React.Component {
             <Switch>
               <Route path='/' exact component={Home}/>
               <Route path='/register' component={Register}/>
+              <Route path= '/login' component={Login}/>
               <Route path='/users' component={Books}/>
               <Route render= {() => {
                   return <p>Not found</p>
