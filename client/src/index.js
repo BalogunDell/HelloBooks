@@ -13,8 +13,8 @@ import Navbar from './components/navbar/Navbar';
 import Footer from './components/footer/Footer';
 import Home from './components/home/Home';
 import Books from './components/books/Books';
-import Register from './components/register/Register'
-import Login from './components/register/Forms/LoginForm';
+import Register from './components/useraccess/Register'
+import Login from './components/useraccess/Login';
 
 class App extends React.Component {
   render() {
