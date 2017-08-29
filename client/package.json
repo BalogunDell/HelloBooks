@@ -12,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.16.2",
     "jquery": "^3.2.1",
     "materialize-css": "^0.100.1",
     "react": "^15.6.1",

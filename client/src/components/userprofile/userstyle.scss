@@ -1,0 +1,42 @@
+
+#userprofile {
+  background: $custom-color;
+  .user-view-bg {
+    background: $custom-color
+  }
+
+  a {
+     color: white;
+  }
+
+  img {
+    margin: auto;
+  }
+
+  #dashboard {
+    text-align: center;
+  }
+}
+
+.content-display {
+    margin: auto;
+    width: 100%;
+    margin: auto;
+  }
+
+  .userDashboard {
+    // background-color: black;
+    margin-top: 3%;
+    display: flex;
+    -webkit-display: flex;
+    flex-direction: row;
+    -webkit-flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+
+    div {
+      max-width: 300px;
+      margin-bottom:3%;
+    }
+  }

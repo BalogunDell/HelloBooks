@@ -13,8 +13,10 @@ import Navbar from './components/navbar/Navbar';
 import Footer from './components/footer/Footer';
 import Home from './components/home/Home';
 import Books from './components/books/Books';
-import Register from './components/register/Register'
-import Login from './components/register/Forms/LoginForm';
+import Register from './components/useraccess/Register'
+import Login from './components/useraccess/Login';
+import User from './components/userprofile/User';
+import Allbooks from './components/Allbooks/Allbooks';
 
 class App extends React.Component {
   render() {
@@ -25,7 +27,8 @@ class App extends React.Component {
               <Route path='/' exact component={Home}/>
               <Route path='/register' component={Register}/>
               <Route path= '/login' component={Login}/>
-              <Route path='/users' component={Books}/>
+              <Route path='/user' component={User}>
+              </Route>
               <Route render= {() => {
                   return <p>Not found</p>
                 }}/>

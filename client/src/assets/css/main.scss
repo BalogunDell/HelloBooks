@@ -1,11 +1,12 @@
 $font-stack:    Helvetica, sans-serif;
-$primary-color: white;
+$primary-color: black;
 $custom-color: #0F488A;
 @import '../../components/footer/footer.scss';
 @import '../../components/navbar/navbar.scss';
 @import '../../components/home/home.scss';
 @import '../../components/books/books.scss';
-@import '../../components/register/register.scss';
+@import '../../components/useraccess/useraccess.scss';
+@import '../../components/userprofile/userstyle.scss';
 
 
 html {
