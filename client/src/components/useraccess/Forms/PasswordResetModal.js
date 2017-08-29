@@ -48,7 +48,7 @@ class PasswordResetModal extends React.Component {
 
             <div className="input-field">
               <input type="submit" className="btn waves-effect waves-ripple green" value="RESET"/>
-              <a href="" className="btn waves-effect modal-close modal-action">Cancel</a>
+              <div className="btn waves-effect modal-close modal-action">Cancel</div>
             </div>
           </form>
         </div> 

@@ -5,7 +5,4 @@ $(document).ready(function(){
   });
   $('.materialboxed').materialbox();
 
-  $('.modal').modal({
-    dismissible: false
-  }); 
 });
