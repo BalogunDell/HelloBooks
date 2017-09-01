@@ -1,10 +1,16 @@
+*img {
+	padding: 0;
+	margin: 0;
+}
+
 .books{
-	margin: auto !important;
+	margin: auto ;
 }
 
 .home-books{
-	margin-top: 4%;
+	margin-top: 2%;
 	padding-bottom: 5%;
+	margin: auto;
 
 
 }
@@ -21,17 +27,29 @@
 }
 
 .books-holder{
-	/*height: 350px;*/
-	margin: 0 auto;
-}
+	display: flex;
+	-webkit-display: flex;
+	flex-direction: row;
+	-webkit-flex-direction: row;
+	flex-wrap: wrap;
+	-webkit-flex-wrap: wrap;
+	// justify-content: space-between;
+	align-content: flex-start;
+	padding-bottom: 2%; 
+	// background-color: black;
 
-.book-holder-prot{
+	// div {
+	// //  flex-grow: 1;
+	// 	margin: 3%;
+	// }
+
+	.book-holder-prot{
 	max-height: 349px;
-	max-width: 242px;
+	max-width: 252px;
 	border-radius: 5px;
 	padding-bottom: 15px;
+	margin: 2%;
 	box-shadow: 0 2px 4px 0 rgba(0,0,0,0.09);
-	margin: auto;
 	
 }
 
@@ -42,7 +60,7 @@
 
 .book-holder-prot .img-holder{
 	max-height: 250px;
-	max-width: 220px;
+	max-width: 250px;
 	margin: 0 auto;
 	margin-top: 7px;
 	height:250px;
@@ -104,9 +122,5 @@
 .book-holder-prot .dets buton {
 	background-color: #0F488A;
 }
-
-.page-footer {
-	background-color: #0F488A;
-	text-align: center;
-	padding-bottom: 10px;
 }
+

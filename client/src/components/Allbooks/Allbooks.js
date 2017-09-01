@@ -6,88 +6,51 @@ import book1 from '../../assets/images/books/book1.png';
  * @classdesc returns the Books component
  */
 export default class Allbooks extends React.Component {
+  constructor(props) {
+    super(props);
+    
+  }
   render() {
     return(
-      <div className="home-books">
+      
+      <div>
+        {/* Row for header  */}
         <div className="row">
-         <div className="col s12 books-holder-title">
+          <div className="col s12 books-holder-title center">
             <h1>All Books</h1>
-         </div>
-      </div>
-        <div className="row books-holder">
-          <div className="col s12 m3">
-            <div className="book-holder-prot">
-              <div className="item book-title center">
-               <h6><strong>Learn Angular</strong></h6>
-              </div>
-              <div className="item img-holder center">
-               <img src= { book1 } alt="" className="materialboxed"/>
-                <div className="img-overlay">
-                  <p>Learn Angular 2 by <strong>Abbey Balogun</strong></p>
-                </div>
-              </div>
-              <div className="dets">
-               <a href="bookdetails.html"><button type="button" className="btn waves-effect waves-teal">Details</button></a>
-               <p>2 Available</p>
-              </div>
-            </div>
           </div>
-          {/* second book  */}
-          <div className="col s12 m3">
-            <div className="book-holder-prot">
-              <div className="item book-title center">
-               <h6><strong>Learn Angular</strong></h6>
-              </div>
-              <div className="item img-holder center">
-               <img src= { book1 } alt="" className="materialboxed" />
-                <div className="img-overlay">
-                  <p>Learn Angular 2 by <strong>Abbey Balogun</strong></p>
-                </div>
-              </div>
-              <div className="dets">
-               <a href="bookdetails.html"><button type="button" className="btn waves-effect waves-teal">Details</button></a>
-               <p>2 Available</p>
-              </div>
-            </div>
-          </div>
+        </div>
+      
+        {/* Row for books  */}
+        
+        <div className="row">
+          <div className="col s12 m12 l11 offset-l1">
+            <div className="books-holder center">
+              {this.props.books.map((book, id) => 
+                <div className="book-holder-prot" key= {book.id}>
+                  {/* Book title  */}
+                  <div className="item book-title center">
+                    <h6><strong>{book.title}</strong></h6>
+                  </div>
 
-          {/*third book  */}
-          <div className="col s12 m3">
-            <div className="book-holder-prot">
-              <div className="item book-title center">
-               <h6><strong>Learn Angular</strong></h6>
-              </div>
-              <div className="item img-holder center">
-               <img src= { book1 } alt="" className="materialboxed"/>
-                <div className="img-overlay">
-                  <p>Learn Angular 2 by <strong>Abbey Balogun</strong></p>
+                  {/* Book image  */}
+                  <div className="item img-holder center">
+                    <img src= {book.image } alt=""/>
+                    <div className="img-overlay">
+                      <p>{book.title} by <strong>{book.author}</strong></p>
+                    </div>
+                  </div>
+
+                  {/* Book details  */}
+                  <div className="dets">
+                    <a href="bookdetails.html"><button type="button" className="btn waves-effect waves-teal">Details</button></a>
+                    <p>qty: {book.quantity}</p>
+                  </div>
                 </div>
-              </div>
-              <div className="dets">
-               <a href="bookdetails.html"><button type="button" className="btn waves-effect waves-teal">Details</button></a>
-               <p>2 Available</p>
-              </div>
+              )}
             </div>
           </div>
-          {/* fourth book  */}
-          <div className="col s12 m3">
-            <div className="book-holder-prot">
-              <div className="item book-title center">
-               <h6><strong>Learn Angular</strong></h6>
-              </div>
-              <div className="item img-holder center">
-               <img src= { book1 } alt="" className="materialboxed"/>
-                <div className="img-overlay">
-                  <p>Learn Angular 2 by <strong>Abbey Balogun</strong></p>
-                </div>
-              </div>
-              <div className="dets">
-               <a href="bookdetails.html"><button type="button" className="btn waves-effect waves-teal">Details</button></a>
-               <p>2 Available</p>
-              </div>
-            </div>
-          </div>
-        </div> 
+        </div>
       </div>
     );
   }

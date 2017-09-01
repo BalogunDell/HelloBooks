@@ -2,8 +2,6 @@ import React from 'react';
 import toastr from 'toastr';
 import { Link } from 'react-router-dom';
 
-import ValidateInput from '../../../middleware/ValidateInput';
-
 /**
  * @class RgistrationForms
  * @classdesc returns the registration form
@@ -41,8 +39,8 @@ class RegistrationForm extends React.Component {
 
   render() {
     return(
-<div className="col row">
-  <div className="col s12 m6 offset-m3">
+<div className="row">
+  <div className="">
     <div className="form-holder">
 
     {/* form headers  */}

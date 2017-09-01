@@ -1,7 +1,7 @@
 import React from 'react';
 import Navbar from '../navbar/Navbar';
 import RegistrationForm from './Forms/RegistrationForm';
-
+import Background from '../Background/Background';
 
 /**
  * @class Register
@@ -12,11 +12,11 @@ class Register extends React.Component {
     return(
       <div>
         {/* This div holds the navbar component  */}
-        <div className="home-bg">
+        <Background>
           <Navbar/>
-            <RegistrationForm/> 
+          <RegistrationForm/>
+        </Background>
         </div>
-      </div>
     );
   }
 }

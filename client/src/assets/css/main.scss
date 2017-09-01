@@ -7,22 +7,11 @@ $custom-color: #0F488A;
 @import '../../components/books/books.scss';
 @import '../../components/useraccess/useraccess.scss';
 @import '../../components/userprofile/userstyle.scss';
+@import '../../components/Allbooks/Allbooks.scss';
 
 
-html {
-  min-height: 100%;
-  position: relative;
+html, body {
+height: 100%;
 }
 
 
-.home-bg {
-  font: 100% $font-stack;
-  color: $primary-color;
-  padding: 0;
-  margin: 0,0,50px;
-  background-image: url('../images/newbg.png');
-  background-repeat: no-repeat;
-  background-position: top left;
-  background-size: cover;
-  height: 100vh;
-}
