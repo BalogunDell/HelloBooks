@@ -8,18 +8,19 @@ require('dotenv').config();
 
 const port = process.env.PORT || 3000;
 const app = express();
+
+// Log every request to the console
 app.use(morgan('dev'));
 
-// Use Body Parser
+// Use Body Parser for incoming data request
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+// Use Header for Cross Origin Resource Sharing
+app.use(header.setHeaders);
 
 // Setup Routing
 app.use('/api', router);
-
-// Use Header for Cross Origin Resource Sharing
-app.use(header.setHeaders);
 
 // Listen at this port
 app.listen(port, (err) => {
