@@ -6,6 +6,7 @@ import { Redirect, Link } from 'react-router-dom';
 
 import Allbooks from '../Allbooks/Allbooks';
 import UserDashboard from './Dashboard';
+import UserHistory from './History';
 import book1 from '../../assets/images/books/book1.png';
 import book2 from '../../assets/images/books/book2.jpg';
 import book3 from '../../assets/images/books/book3.jpg';
@@ -23,6 +24,9 @@ class User extends React.Component {
       isLoggedIn:false,
       redirect:false
     }
+
+    this.readBtn = <button className="btn waves-effect">Read</button>
+    this.returnBtn = <button className="btn waves-effect">Ready to return</button>
 
     // Mock data for book on
     this.books = [
@@ -46,7 +50,12 @@ class User extends React.Component {
         title: 'Biblical Life',
         quantity: 1,
         author: 'Uncle Jay',
-        image: book3
+        image: book3,
+        dateBorrowed: '16-12-2017',
+        expectedReturnDate: '19-12-2017',
+        returnStatus: false,
+        borowed: true,
+        status: this.readBtn
       },
 
      {
@@ -54,7 +63,12 @@ class User extends React.Component {
         title: 'Sex for men',
         quantity: 3,
         author: 'Emmanuel Akpan',
-        image: book4 
+        image: book4,
+        dateBorrowed: '6-1-2017',
+        expectedReturnDate: '1-1-2017',
+        returnStatus: false,
+        borowed: true,
+        status: this.returnBtn
       },
 
       {
@@ -62,7 +76,11 @@ class User extends React.Component {
         title: 'Success in business',
         quantity: 60,
         author: 'Stone Brianch',
-        image: book5
+        image: book5,
+        dateBorrowed: '05-2-2017',
+        expectedReturnDate: '08-2-2017',
+        returnStatus: false,
+        status: this.readBtn
       },
 
       {
@@ -70,14 +88,24 @@ class User extends React.Component {
         title: 'who stole my cheese?',
         quantity: 25,
         author: 'Brian tracy',
-        image: book6
+        image: book6,
+        dateBorrowed: '15-4-2001',
+        expectedReturnDate: '20-9-2001',
+        returnStatus: true,
+        borowed: true,
+        status: 'returned'
       },
       {
         id: 7,
         title: 'A friend of God',
         quantity: 250,
         author: 'Andela tracy',
-        image: book1
+        image: book1,
+        dateBorrowed: '12-4-1767',
+        expectedReturnDate: '17-4-1767',
+        returnStatus: true,
+        borowed: true,
+        status: `${this.readBtn} | ${this.returnBtn}`
       },
 
       {
@@ -85,42 +113,38 @@ class User extends React.Component {
         title: 'who stole my cheese?',
         quantity: 125,
         author: 'Brian tracy',
-        image: book5
+        image: book5,
+        dateBorrowed: '01-4-2067',
+        expectedReturnDate: '17-4-2067',
+        returnStatus: false,
+        borowed: true,
+        status: 'returned'
       }
     ]
 
   }
-
-   Authenticate() {
-    const token = localStorage.getItem('token');
-    if(token === null) {
-      this.setState({redirect: true});
-    }
-  }
-
-  componentDidMount() {
-    this.Authenticate();
-  }
+  
+  // componentDidMount(){
+    
+  // }
 
   render() {
-    if(this.state.redirect) {
-      <Redirect to="/login"/>
-    }
-    else {
 
-    }
+    console.log(this.props.params)
     return (
       <div className="container">
         {this.element}
         <div className="row">
           <div className="col s12 m1">
-            <UserNav/>
+            {/* Pass the curret location to the usernav  */}
+           <UserNav currentLoc={this.props}/> 
           </div>
           
           <div className="col s12 m11 l12 offset-l1">
             <div className="content-display">
               {/* <UserDashboard/> */}
-               <Allbooks books = {this.books}/> 
+                {/* <Allbooks books = {this.books}/>  */}
+                <UserHistory borrowedBooks = {this.books}/> 
             </div>
           </div>
         </div>

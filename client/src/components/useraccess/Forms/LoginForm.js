@@ -15,7 +15,7 @@ class LoginForm extends React.Component {
     this.state = {
       username: props.initialUsername,
       password: '',
-      status: props.authenticate
+      redirectUser: props.authenticate
     }
 
   }

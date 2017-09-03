@@ -1,3 +1,7 @@
+ #sidenav-overlay {
+   background-color: rgba(0,0,0,0.0)
+    }
+
 img {
   max-height: 75px;
   max-width: auto;
@@ -28,6 +32,7 @@ nav {
 
 #side_menu {
   background:rgba(0,0, 0, 0.85%);
+  
   li {
     margin:5% 0 0 0;
     a {

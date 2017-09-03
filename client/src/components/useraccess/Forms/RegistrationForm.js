@@ -22,19 +22,14 @@ class RegistrationForm extends React.Component {
   }
 
     handleInput(event) {
-      const target = event.target;
-      const value = target.value;
-      const name = target.name;
-
-      this.setState({
-      [name]: value
-      });
+      this.setState({[event.target.name]: event.target.value})
     }
 
 
     handleSubmit(event) {
-      console.log(this.state);
       event.preventDefault();
+      //expect this function UserReqReq as props
+      this.props.UserRegReq(this.state);
     }
 
   render() {
@@ -106,6 +101,10 @@ class RegistrationForm extends React.Component {
     );
   }
 
+}
+
+RegistrationForm.propTypes = {
+  UserRegReq: React.PropTypes.func.isRequired
 }
 
 export default RegistrationForm;
