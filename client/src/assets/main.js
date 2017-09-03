@@ -1,8 +1,9 @@
 
 $(document).ready(function(){
-  $('.button-collapse').sideNav({
-    width: 200
+  $('.button-collapse').off('click').sideNav({
+    closeOnclick:true
   });
-  $('.materialboxed').materialbox();
-
 });
+
+
+

@@ -2,8 +2,6 @@ import React from 'react';
 import toastr from 'toastr';
 import { Link } from 'react-router-dom';
 
-import ValidateInput from '../../../middleware/ValidateInput';
-
 /**
  * @class RgistrationForms
  * @classdesc returns the registration form
@@ -24,25 +22,20 @@ class RegistrationForm extends React.Component {
   }
 
     handleInput(event) {
-      const target = event.target;
-      const value = target.value;
-      const name = target.name;
-
-      this.setState({
-      [name]: value
-      });
+      this.setState({[event.target.name]: event.target.value})
     }
 
 
     handleSubmit(event) {
-      console.log(this.state);
       event.preventDefault();
+      //expect this function UserReqReq as props
+      this.props.UserRegReq(this.state);
     }
 
   render() {
     return(
-<div className="col row">
-  <div className="col s12 m6 offset-m3">
+<div className="row">
+  <div className="">
     <div className="form-holder">
 
     {/* form headers  */}
@@ -108,6 +101,10 @@ class RegistrationForm extends React.Component {
     );
   }
 
+}
+
+RegistrationForm.propTypes = {
+  UserRegReq: React.PropTypes.func.isRequired
 }
 
 export default RegistrationForm;

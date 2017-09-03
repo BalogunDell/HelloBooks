@@ -21,7 +21,9 @@
     "react-redux": "^5.0.6",
     "react-router-dom": "^4.2.0",
     "redux": "^3.7.2",
-    "toastr": "^2.1.2"
+    "redux-thunk": "^2.2.0",
+    "toastr": "^2.1.2",
+    "validator": "^8.1.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
