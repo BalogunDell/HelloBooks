@@ -5,6 +5,7 @@ import axios from 'axios';
  * @returns { object} promise
  */
 export function UserRegReq(userObject) {
-  return dispatch => axios.post('/users', userObject);
+  const url = 'https://hellobooksapp.herokuapp.com/api/';
+  return dispatch => axios.post(url, userObject);
 }
 
