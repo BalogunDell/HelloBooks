@@ -19,7 +19,7 @@ app.use(bodyParser.json());
 app.use('/api', router);
 
 // Use Header for Cross Origin Resource Sharing
-app.use(header);
+app.use(header.setHeaders);
 
 // Listen at this port
 app.listen(port, (err) => {
