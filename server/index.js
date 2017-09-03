@@ -2,7 +2,6 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import morgan from 'morgan';
 import router from './routes/api-routes';
-import header from './middleware/header';
 
 require('dotenv').config();
 
@@ -17,7 +16,12 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 // Use Header for Cross Origin Resource Sharing
-app.use(header.setHeaders);
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, HEAD, DELETE, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'X-PINGOTHER, Authorization, Origin, X-Requested-With, Content-Type, Accept');
+  next();
+});
 
 // Setup Routing
 app.use('/api', router);
