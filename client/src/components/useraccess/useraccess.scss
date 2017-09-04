@@ -6,10 +6,8 @@
       }
 
 .form-holder {
-  // max-width: 400px;
   height: auto;
   margin: auto;
-  // margin-top: 5%;
 
   .form-header {
     display: flex;
@@ -46,13 +44,18 @@
   .user-form {
     background: #F9F9F9;
     margin: auto;
-    padding-bottom: 30px;
     padding-top: 30px;
     padding-right: 20px;
     padding-left: 20px;
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
-    
+
+    *.row {
+      margin-bottom: 0px;
+    }
+    .btn {
+      background-color: $custom-color
+    }
     
     label {
       span {
@@ -80,9 +83,3 @@
     width: 50%;
   }
 }
-
-// @media (max-width: 400px) {
-//   .form-holder {
-//   margin-top: 30%;
-// }
-// }

@@ -2,10 +2,12 @@ import axios from 'axios';
 /**
  * 
  * @param {object} userObject
- * @returns { object} promise
+ * @returns { promise } 
  */
 export function UserRegReq(userObject) {
-  const url = 'https://hellobooksapp.herokuapp.com/api/';
-  return dispatch => axios.post(url, userObject);
+  const url = 'https://hellobooksapp.herokuapp.com/api/users/signup';
+  return dispatch => {
+    return axios.post(url, userObject);
+  }
 }
 
