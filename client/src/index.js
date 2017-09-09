@@ -3,8 +3,7 @@ import { render } from 'react-dom';
 import 'jquery';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import { createStore, applyMiddleware } from 'redux'; 
-import thunk from 'redux-thunk'
+import configStore from './store/configStore';
 
 import './assets/materialize/css/materialize.min.css'
 import './assets/materialize/js/materialize.min.js'
@@ -21,19 +20,14 @@ import User from './components/userprofile/User';
 import Dashboard from './components/userprofile/Dashboard';
 import UserHistory from './components/userprofile/History';
 
-//Create a store
-const store = createStore(
-  // takes three args, reducer, inital state and a middleware
-  (state = {}) => state, applyMiddleware(thunk)
-);
 
+// Create an instance of the configStore 
+ const store = configStore();
 class App extends React.Component {
-  //  Create redux store 
     
   render() {
     return (
-      <div>
-         <Provider store = {store}> 
+      <div> 
           <BrowserRouter>
             <Switch>
               <Route path='/' exact component={Main}/>
@@ -50,12 +44,15 @@ class App extends React.Component {
                   return <p>Not found</p>
                 }}/>
             </Switch>
-          </BrowserRouter>
-         </Provider> 
+          </BrowserRouter> 
           <Footer/>  
       </div>
     );
   }
 }
 
-render(<App/>, document.getElementById('root'));
+render(
+  <Provider store = {store}>
+    <App/>
+  </Provider>, document.getElementById('root')
+);

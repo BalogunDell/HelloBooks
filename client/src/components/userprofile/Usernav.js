@@ -47,7 +47,7 @@ render(){
         <li><Link to='/login' className="red-text" onClick={this.handleLogout}><i className="material-icons red-text">logout</i>Logout</Link></li>
       </ul>
 
-      <a href="#!" data-activates="userprofile" className="button-collapse">Menu</a>
+      <a href="#!" data-activates="userprofile" className="button-collapse"><i className="material-icons">menu</i></a>
     </div>
   );
 }

@@ -19,9 +19,9 @@ class History extends React.Component {
       
         {/* Row for books  */}
         
-        <div className="row">
+        <div className="row borrowHistory">
           <div className="col s12 m12 l11 offset-l1">
-            <table className="responsive-table centered">
+            <table className="responsive-table centered highlight">
               <thead>
                 <tr>
                   <th>Book image</th>
@@ -35,7 +35,7 @@ class History extends React.Component {
               <tbody>
                 {this.props.borrowedBooks.map((borrowedBook, id) =>
                 <tr key={borrowedBook.id}>
-                  <td>{borrowedBook.image}</td>
+                  <td><img src={borrowedBook.image} alt="Book cover"/></td>
                   <td>{borrowedBook.title}</td>
                   <td>{borrowedBook.author}</td>
                   <td>{borrowedBook.dateBorrowed}</td>

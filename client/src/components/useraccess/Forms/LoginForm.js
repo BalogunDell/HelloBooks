@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import 'jquery';
 import Proptypes from 'prop-types';
-
 import PasswordResetModal from './PasswordResetModal';
 
 /**
@@ -10,17 +9,20 @@ import PasswordResetModal from './PasswordResetModal';
  * @classdesc returns login form
  */
 class LoginForm extends React.Component {
-  constructor(props) {
+   constructor(props) {
     super(props);
     this.state = {
-      username: props.initialUsername,
+      username: '',
       password: '',
-      redirectUser: props.authenticate
+      redirectUser: false
     }
 
-  }
-  // modal method
-  showModal() {
+    this.handleInput = this.handleInput.bind(this)
+    this.handleLogin = this.handleLogin.bind(this)
+}
+
+
+ showModal() {
     console.log($('.forgotPass'));
     $('#modal-link').modal('open');
   }
@@ -38,6 +40,11 @@ class LoginForm extends React.Component {
     this.setState({ [name]: value });
   }
 
+  handleLogin(event) {
+    event.preventDefault();
+    this.props.userLogin(this.state);
+  }
+
   render() {
     return(
 <div className="user-login-form">
@@ -51,17 +58,16 @@ class LoginForm extends React.Component {
           <p>Not registered? <Link to="/register">Signup</Link></p>
         </div>
       </div>
-      <p>{this.state.status}</p>
     {/* form header ends  */}
       <div>
-        <form className="user-form" onSubmit={this.props.loginHandler.bind(this)}>
+        <form className="user-form" onSubmit={this.handleLogin}>
           {/* Username input  */}
           <div className="row">
             <div className="input-field s12">
               <label>Username <span>*</span></label>
               <input type="text" id="username" name="username" 
               value={this.state.username} 
-              onChange={(event) => this.handleInput(event)} />
+              onChange={this.handleInput} />
             </div>
           </div>
           
@@ -70,7 +76,12 @@ class LoginForm extends React.Component {
           <div className="row">
             <div className="input-field s12">
               <label htmlFor="Password">Password<span>*</span></label>
-              <input type="password" id="password" name="password"/>
+              <input 
+              type="password" 
+              id="password" 
+              name="password"
+              value={this.state.password}
+              onChange={this.handleInput}/>
             </div>  
               <span className="button forgotPass modal-trigger" onClick={this.showModal}>Forgot password</span> 
           </div>
@@ -94,9 +105,7 @@ class LoginForm extends React.Component {
 }
 
 LoginForm.propTypes = {
-  loginHandler:React.PropTypes.func,
-  inputHandler:React.PropTypes.func,
-  initialUsername:React.PropTypes.string
+ userLogin: React.PropTypes.func.isRequired
 }
 
 export default LoginForm;
