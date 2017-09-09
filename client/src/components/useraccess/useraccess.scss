@@ -83,3 +83,16 @@
     width: 50%;
   }
 }
+
+.borrowHistory {
+
+  thead {
+    background-color: $custom-color;
+    color: white;
+  }
+
+  img {
+    height: 60px;
+    width: 50px
+  }
+}

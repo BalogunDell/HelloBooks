@@ -1,14 +1,23 @@
+import toastr from 'toastr';
 
 $(document).ready(function(){
   $('.button-collapse').off('click').sideNav({
-    closeOnclick:true
+    closeOnclick:true,
+    menuWidth: 250,
+    // edge: 'left'
   });
 
-  // validate input
+  // // validate input
   // const firstname = document.getElementById('firstname');
-  // firstname.onblur = (event) => {
-  //   alert(firstname.value);
+  // firstname.onblur = () => {
+  //   if(firstname.value.length <= 3) {
+  //     alert('Firstname must be more than 3 characters');
+  //   } else if(/(\d+)/gi.test(firstname.value)) {
+  //     alert('Firstname cannot contain numbers');
+  //   }
   // }
+
+  toastr.options.closeButton = true;
 });
 
 
