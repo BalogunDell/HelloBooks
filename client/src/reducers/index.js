@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux';
-import registerUser from './RegisterReducer';
+import newUserDataState from './RegisterReducer';
 import loginUser from './LoginReducer';
 
 const rootReducer = combineReducers({
-  registerUser,
+  newUserDataState,
   loginUser
 });
 

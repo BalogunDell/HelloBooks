@@ -57,6 +57,7 @@
       background-color: $custom-color
     }
     
+
     label {
       span {
         color: red;
@@ -74,7 +75,16 @@
       .forgotPass:hover {
         text-decoration: underline;
         }
+
+      .error-holder {
+        color: red;
+        padding-bottom: 5px;
+        padding-top: 5px;
+        margin-bottom: 10px;
+
+      }
   }
+      
 }
 
 .passwordModal {

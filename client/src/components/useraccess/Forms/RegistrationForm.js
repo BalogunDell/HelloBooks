@@ -2,76 +2,16 @@ import React from 'react';
 import toastr from 'toastr';
 import { Link, Redirect } from 'react-router-dom';
 
-/**
- * @class RgistrationForms
- * @classdesc returns the registration form
- */
-class RegistrationForm extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      firstname: "",
-      lastname: "",
-      username: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
-      error: '',
-      processingRequest: false,
-      btnDisable: false,
-      redirectUser: false,
-      connectionStatus: false
-    };
-
-    this.handleInput = this.handleInput.bind(this);
-    this. handleSubmit = this.handleSubmit.bind(this);
-  }
-
-    handleInput(event) {
-      this.setState({[event.target.name]: event.target.value})
-    }
 
 
-    handleSubmit(event) {
-      event.preventDefault();
-      this.props.userRegistration(this.state);
 
-    }
+const RegistrationForm  = ({ userData, handleSubmit, handleUserInput, error }) => {
 
-  render() {
-      //  Assign spinner to a variable for display in return
-    let Spinner = <div className="center">
-           <div className="preloader-wrapper small active">
-              <div className="spinner-layer spinner-green-only">
-                <div className="circle-clipper left">
-                  <div className="circle"></div>
-                </div>
-                <div className="circle-clipper right">
-                  <div className="circle"></div>
-                </div>
-              </div>
-            </div><br/>
-            <span className="center">Creating your account...</span>
-          </div>
-          
-          // condition to show spinner
-    let showSpinner = this.state.processingRequest ? Spinner : '';
-
-     //  define connection error message
-    let connectionStatusMessage =  'You are offline, please connect your device to the internet';
-
-          // condition to show connection message
-    let showConnectionMessage = this.state.connectionStatus ? connectionStatusMessage: ''
-
-
-    return(
-  <div className="row">
+  return ( 
+    <div className="row">
     {/*Check if redirect user in the state is not false, if true, redirect user   */}
-    {this.state.redirectUser ? <Redirect to ="/user"/>: 
     <div className="">
       <div className="form-holder">
-
       {/* form headers  */}
         <div className="form-header">
           <h2>Signup</h2>
@@ -79,27 +19,27 @@ class RegistrationForm extends React.Component {
             <p>Already registered?<Link to="/login"> Signin</Link></p>
           </div>
         </div>
-
       {/* form header ends  */}
         <div>
-          <form onSubmit={this.handleSubmit} className="user-form">
-
+          <form onSubmit={handleSubmit} className="user-form">
             {/* Firstname input */}
             <div className="row">
               <div className="input-field col s6">
                 <input 
-                    type="text" 
-                    required 
-                    id="firstname" 
-                    name="firstname"
-                    className="validate"
-                    minLength="4"
-                    value= {this.state.firstname} 
-                    onChange={this.handleInput}
+                  type="text" 
+                  required 
+                  id="firstname" 
+                  name="firstname"
+                  className="validate"
+                  minLength="4"
+                  value= {userData.firstname}
+                  onChange= {handleUserInput}
                 />
                 <label data-error="Invalid input">Firstname
                   <span>*</span>
                 </label>
+                
+                
                 {/* <p>{this.error}</p> */}
               </div>
 
@@ -109,11 +49,11 @@ class RegistrationForm extends React.Component {
                   <span>*</span>
                 </label>
                 <input 
-                    type="text" 
-                    id="lastname" 
-                    name="lastname" 
-                    value= {this.state.lastname} 
-                    onChange={this.handleInput}
+                  type="text" 
+                  id="lastname" 
+                  name="lastname" 
+                  value= {userData.lastname} 
+                  onChange= {handleUserInput}
                 />
               </div>
             </div>
@@ -125,11 +65,11 @@ class RegistrationForm extends React.Component {
                     <span>*</span>
                 </label>
                 <input 
-                    type="text" 
-                    id="username" 
-                    name="username" 
-                    value= {this.state.username} 
-                    onChange={this.handleInput}
+                  type="text" 
+                  id="username" 
+                  name="username" 
+                  value= {userData.username}
+                  onChange= {handleUserInput}
                 />
               </div>
             </div>
@@ -138,17 +78,17 @@ class RegistrationForm extends React.Component {
             <div className="row">
               <div className="input-field col s12">
                 <input 
-                    type="email" 
-                    id="email" 
-                    name="email" 
-                    className="validate" 
-                    value = {this.state.email} 
-                    onChange={this.handleInput}
+                  type="email" 
+                  id="email" 
+                  name="email" 
+                  className="validate" 
+                  value = {userData.email}
+                  onChange= {handleUserInput}
                 />
                 <label 
-                    htmlFor="email" 
-                    data-error="Invalid email" 
-                    data-success="">Email
+                  htmlFor="email" 
+                  data-error="Invalid email" 
+                  data-success="">Email
                     <span>*</span>
                 </label>
               </div>  
@@ -162,11 +102,11 @@ class RegistrationForm extends React.Component {
                     <span>*</span>
                 </label>
                 <input
-                    type="password" 
-                    id="password" 
-                    name="password" 
-                    value= {this.state.password} 
-                    onChange={this.handleInput}
+                  type="password" 
+                  id="password" 
+                  name="password" 
+                  value= {userData.password}
+                  onChange= {handleUserInput}
                 />
               </div> 
 
@@ -177,17 +117,20 @@ class RegistrationForm extends React.Component {
                     <span>*</span>
                 </label>
                 <input 
-                    type="password" 
-                    id="confirmPassword" 
-                    name="confirmPassword" 
-                    value={this.state.confirmPassword} 
-                    onChange={this.handleInput}
+                  type="password" 
+                  id="confirmPassword" 
+                  name="confirmPassword" 
+                  value={userData.confirmPassword}
+                  onChange= {handleUserInput}
                 />
               </div>  
             </div> 
 
-            {/* Preloader here */}
-              {showSpinner}
+            <div className="row center error-holder">
+              <div className="col s12">
+                <h6>{error}</h6>
+              </div>
+            </div>
             
             {/* Signup button  */}
             <div className="row">
@@ -196,14 +139,8 @@ class RegistrationForm extends React.Component {
                 type="submit" 
                 className="btn waves-effect waves-teal" 
                 id="regBtn" 
-                value="Create Account"
-                disabled={this.state.btnDisable} 
-                disabled={this.state.processingRequest}/>
+                value="Create Account"/>
               </div>
-            </div>
-
-            <div>
-              <p>{showConnectionMessage}</p> 
             </div>
 
           </form>
@@ -215,14 +152,14 @@ class RegistrationForm extends React.Component {
         </div>
       </div>
     </div>
-  } 
   </div>
-      );
-    }
+  );
 }
-
 RegistrationForm.propTypes = {
-  userRegistration: React.PropTypes.func.isRequired
+userData:React.PropTypes.object.isRequired,
+// value: React.PropTypes.string.isRequired,
+// handleUserInput: React.PropTypes.func.isRequired,
+// errors: React.PropTypes.string.isRequired
 } 
 
 
