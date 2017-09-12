@@ -1,41 +1,103 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
+import { Link, Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+
 import Navbar from '../navbar/Navbar';
 import RegistrationForm from './Forms/RegistrationForm';
 import Background from '../Background/Background';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import * as RegisterActions from '../../Actions/RegisterAction';
+import * as UserAcessActions from '../../Actions/userAccessAction';
+
+
+
 /**
  * @class Register
  * @classdesc returns the component for user signup
  */
 class Register extends React.Component {
+  constructor(props, context) {
+    super(props, context);
+    this.state = {
+      userData: Object.assign({}, this.props.initialUserData),
+      redirect: false,
+      error: ''
+    }
+
+    this.handleUserInput = this.handleUserInput.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  //  Handle user input
+  handleUserInput(event) {
+    // get name of the target element
+      const name = event.target.name; 
+
+    // copy key in userData and assign to supllied data
+      let suppliedData = Object.assign({}, this.state.userData);
+
+    // set each key of the supllied value
+      suppliedData[name] = event.target.value
+    
+    // update userData state to the supllied data 
+      return this.setState({userData: suppliedData})
+    }
+
+
+    // Handle Registration Button
+
+    handleSubmit(event) {
+      event.preventDefault()
+      this.props.saveNewUser(this.state.userData).then(() =>{
+          this.setState({redirect:true})
+      }).catch(errors =>{
+        // this.setState({errors: errors.response.data.message});
+        this.setState({error: errors.response.data.message})
+        console.log(this.props.redirect)
+       
+      })
+    }
   
+
   render() {
-    const { userRegistration } = this.props;
-    return(
+    return( 
+      this.state.redirect ? <Redirect to="/user"/> : 
       <div>
         {/* This div holds the navbar component  */}
         <Background>
           <Navbar/>
-          <RegistrationForm userRegistration = { userRegistration }/>
+          <RegistrationForm 
+            userData = { this.state.userData }
+            error = {this.state.error}
+            handleUserInput =  {this.handleUserInput}
+            handleSubmit = {this.handleSubmit}
+          />
         </Background>
         </div>
     );
   }
 }
 
+
+//  Define the mapStateToProps function for connect
 function mapStateToProps(state, ownProps) {
+  let initialUserData = { username: '', firstname: '', lastname: '', email: '', password: '', confirmPassword: ''}
   return {
-    registerUser: state.registerUser
+    initialUserData: initialUserData,
+    redirect: state.userAccess.isAuthenticated,
+    location: ownProps
   }
 }
 
+
+//  Define the mapDispatchToProps function for connect
 function mapDispatchToProps(dispatch) {
   return {
-    userRegistration: userRegObject => dispatch(RegisterActions.userRegistration(userRegObject))
-    // actions: bindActionCreators(RegisterActions, dispatch)
+    saveNewUser: userRegObject => dispatch(UserAcessActions.saveNewUser(userRegObject))
   }
 }
+
+
+Register.propTypes = {
+  saveNewUser: React.PropTypes.func.isRequired
+};
 
 export default connect(mapStateToProps,mapDispatchToProps)(Register);

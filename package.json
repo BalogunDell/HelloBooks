@@ -20,6 +20,7 @@
     "babel-cli": "^6.24.1",
     "bcrypt": "^1.0.2",
     "body-parser": "^1.17.2",
+    "cors": "^2.8.4",
     "dotenv": "^4.0.0",
     "express": "^4.15.3",
     "faker": "^4.1.0",
@@ -30,8 +31,7 @@
     "pg": "^7.0.2",
     "pg-hstore": "^2.3.2",
     "sequelize": "^4.4.2",
-    "supertest": "^3.0.0",
-    "cors": "^2.8.4"
+    "supertest": "^3.0.0"
   },
   "devDependencies": {
     "babel-istanbul": "^0.12.2",

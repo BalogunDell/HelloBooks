@@ -3,6 +3,7 @@ import { axios } from 'axios';
 import Details from './Details';
 import UserNav from './Usernav';
 import { Redirect, Link } from 'react-router-dom';
+import { connect } from 'react-redux'
 
 import Allbooks from '../Allbooks/Allbooks';
 import UserDashboard from './Dashboard';
@@ -21,7 +22,7 @@ class User extends React.Component {
     super(prop);
 
     this.state = {
-      isLoggedIn:false,
+      isLoggedIn:this.props.isAuthenticated,
       redirect:false
     }
 
@@ -129,15 +130,14 @@ class User extends React.Component {
   // }
 
   render() {
-
-    console.log(this.props.params)
     return (
+      this.props.isAuthenticated !== true ? <Redirect to="/login"/> :  
       <div className="container">
         {this.element}
         <div className="row">
           <div className="col s12 m1">
             {/* Pass the curret location to the usernav  */}
-           <UserNav currentLoc={this.props}/> 
+           <UserNav isLoggedIn ={this.state.isLoggedIn}/> 
           </div>
           
           <div className="col s12 m11 l12 offset-l1">
@@ -153,4 +153,10 @@ class User extends React.Component {
   }
 }
 
-export default User;
+function mapStateToProps(state, ownProps) {
+  return {
+    isAuthenticated: state.userAccess.isAuthenticated
+  }
+}
+
+export default connect(mapStateToProps,null)(User);
