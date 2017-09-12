@@ -157,9 +157,9 @@ const RegistrationForm  = ({ userData, handleSubmit, handleUserInput, error }) =
 }
 RegistrationForm.propTypes = {
 userData:React.PropTypes.object.isRequired,
-// value: React.PropTypes.string.isRequired,
-// handleUserInput: React.PropTypes.func.isRequired,
-// errors: React.PropTypes.string.isRequired
+handleSubmit: React.PropTypes.func.isRequired,
+handleUserInput: React.PropTypes.func.isRequired,
+error: React.PropTypes.string.isRequired
 } 
 
 

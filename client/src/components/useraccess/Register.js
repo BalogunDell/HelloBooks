@@ -1,12 +1,11 @@
 import React, {PropTypes} from 'react';
+import { Link, Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+
 import Navbar from '../navbar/Navbar';
 import RegistrationForm from './Forms/RegistrationForm';
 import Background from '../Background/Background';
-import * as RegisterActions from '../../Actions/RegisterAction';
-import { Link, Redirect } from 'react-router-dom';
-
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import * as UserAcessActions from '../../Actions/userAccessAction';
 
 
 
@@ -48,9 +47,11 @@ class Register extends React.Component {
     handleSubmit(event) {
       event.preventDefault()
       this.props.saveNewUser(this.state.userData).then(() =>{
+          this.setState({redirect:true})
       }).catch(errors =>{
         // this.setState({errors: errors.response.data.message});
         this.setState({error: errors.response.data.message})
+        console.log(this.props.redirect)
        
       })
     }
@@ -58,7 +59,7 @@ class Register extends React.Component {
 
   render() {
     return( 
-      // this.props.redirect ? <Redirect to="/user"/> : 
+      this.state.redirect ? <Redirect to="/user"/> : 
       <div>
         {/* This div holds the navbar component  */}
         <Background>
@@ -75,13 +76,14 @@ class Register extends React.Component {
   }
 }
 
+
 //  Define the mapStateToProps function for connect
 function mapStateToProps(state, ownProps) {
   let initialUserData = { username: '', firstname: '', lastname: '', email: '', password: '', confirmPassword: ''}
   return {
     initialUserData: initialUserData,
-    redirect: state.newUserDataState.redirect,
-    errors: state.newUserDataState.errors
+    redirect: state.userAccess.isAuthenticated,
+    location: ownProps
   }
 }
 
@@ -89,7 +91,7 @@ function mapStateToProps(state, ownProps) {
 //  Define the mapDispatchToProps function for connect
 function mapDispatchToProps(dispatch) {
   return {
-    saveNewUser: userRegObject => dispatch(RegisterActions.saveNewUser(userRegObject))
+    saveNewUser: userRegObject => dispatch(UserAcessActions.saveNewUser(userRegObject))
   }
 }
 

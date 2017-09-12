@@ -3,6 +3,7 @@ import { axios } from 'axios';
 import Details from './Details';
 import UserNav from './Usernav';
 import { Redirect, Link } from 'react-router-dom';
+import { connect } from 'react-redux'
 
 import Allbooks from '../Allbooks/Allbooks';
 import UserDashboard from './Dashboard';
@@ -129,9 +130,8 @@ class User extends React.Component {
   // }
 
   render() {
-
-    console.log(this.props.params)
     return (
+      this.props.isAuthenticated !== true ? <Redirect to="/login"/> :  
       <div className="container">
         {this.element}
         <div className="row">
@@ -153,4 +153,10 @@ class User extends React.Component {
   }
 }
 
-export default User;
+function mapStateToProps(state, ownProps) {
+  return {
+    isAuthenticated: state.userAccess.isAuthenticated
+  }
+}
+
+export default connect(mapStateToProps,null)(User);

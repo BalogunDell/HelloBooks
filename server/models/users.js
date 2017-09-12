@@ -8,11 +8,11 @@ const user = (sequelize, DataTypes) => {
       validate: {
         notEmpty: {
           args: true,
-          msg: 'firstname cannot be empty'
+          msg: 'Firstname cannot be empty'
         },
         is: {
           args: /(\D+)/,
-          msg: 'firstname can only contain strings'
+          msg: 'Firstname can only contain strings'
         },
         len: {
           args: [3, 100],
@@ -26,15 +26,15 @@ const user = (sequelize, DataTypes) => {
       validate: {
         notEmpty: {
           args: true,
-          msg: 'lastname cannot be empty'
+          msg: 'Lastname cannot be empty'
         },
         is: {
           args: /(\w)/i,
-          msg: 'lastname can only contain strings'
+          msg: 'Lastname can only contain strings'
         },
         len: {
           args: [3, 100],
-          msg: 'Firstname should be longer than two characters'
+          msg: 'Lastname should be longer than two characters'
         }
       }
     },
@@ -45,7 +45,7 @@ const user = (sequelize, DataTypes) => {
       validate: {
         notEmpty: {
           args: true,
-          msg: 'email cannot be empty'
+          msg: 'Email cannot be empty'
         },
         isEmail: {
           args: true,
@@ -59,11 +59,11 @@ const user = (sequelize, DataTypes) => {
       validate: {
         notEmpty: {
           args: true,
-          msg: 'password cannot be empty'
+          msg: 'Password cannot be empty'
         },
         len: {
           args: [6, 30],
-          msg: 'Password should be 6 t0 30 characters long'
+          msg: 'Password should be 6 to 30 characters long'
         }
       }
     },
