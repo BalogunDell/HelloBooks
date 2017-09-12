@@ -1,5 +1,6 @@
 import React from 'react';
 import { NavLink , Link, Redirect} from 'react-router-dom';
+import { connect } from 'react-redux';
 import profileImage from '../../assets/images/abbey.jpg';
 import backgroundImage from '../../assets/images/paperbg.jpg';
 
@@ -8,19 +9,10 @@ import backgroundImage from '../../assets/images/paperbg.jpg';
 
 
 class UserNav extends React.Component {
-  constructor(props) {
-    super(props);
 
-    this.handleLogout = this.handleLogout.bind(this);
-
-    // console.log(this.props.currentLoc.match.url)
-  }
-  
-  handleLogout() {
-    localStorage.clear();
-    <Redirect to="/login"/>
-  }
 render(){
+
+  console.log(this.props)
   return(
     <div>
       <redirect/>
@@ -53,4 +45,10 @@ render(){
 }
 }
 
-export default UserNav;
+function mapStateToProps(state) {
+  return {
+  isAuthenticated: state.userAccess.userData
+  }
+}
+
+export default connect(mapStateToProps, null)(UserNav);

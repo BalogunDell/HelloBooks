@@ -22,7 +22,7 @@ class User extends React.Component {
     super(prop);
 
     this.state = {
-      isLoggedIn:false,
+      isLoggedIn:this.props.isAuthenticated,
       redirect:false
     }
 
@@ -137,7 +137,7 @@ class User extends React.Component {
         <div className="row">
           <div className="col s12 m1">
             {/* Pass the curret location to the usernav  */}
-           <UserNav currentLoc={this.props}/> 
+           <UserNav isLoggedIn ={this.state.isLoggedIn}/> 
           </div>
           
           <div className="col s12 m11 l12 offset-l1">
