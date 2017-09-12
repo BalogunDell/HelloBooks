@@ -50,7 +50,7 @@ class User {
           const token = helper.generateToken(user.dataValues);
           const response = {
             message: 'signed in',
-            data: { token }
+            data: { token, userID: user.id, userRole: user.role, image: user.image }
           };
           res.status(200).json({ response });
         } else if (!req.body.email || !req.body.password) {
