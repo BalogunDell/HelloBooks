@@ -22,7 +22,7 @@ class User extends React.Component {
     super(prop);
 
     this.state = {
-      isLoggedIn:this.props.isAuthenticated,
+      isAuthenticated:this.props.isAuthenticated,
       redirect:false
     }
 
@@ -130,6 +130,7 @@ class User extends React.Component {
   // }
 
   render() {
+    console.log(this.props.userData)
     return (
       this.props.isAuthenticated !== true ? <Redirect to="/login"/> :  
       <div className="container">
@@ -137,7 +138,7 @@ class User extends React.Component {
         <div className="row">
           <div className="col s12 m1">
             {/* Pass the curret location to the usernav  */}
-           <UserNav isLoggedIn ={this.state.isLoggedIn}/> 
+           <UserNav/> 
           </div>
           
           <div className="col s12 m11 l12 offset-l1">
@@ -155,7 +156,8 @@ class User extends React.Component {
 
 function mapStateToProps(state, ownProps) {
   return {
-    isAuthenticated: state.userAccess.isAuthenticated
+    isAuthenticated: state.userAccess.isAuthenticated,
+    userData: state.userAccess.userData
   }
 }
 

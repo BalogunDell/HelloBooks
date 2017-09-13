@@ -12,7 +12,6 @@ class UserNav extends React.Component {
 
 render(){
 
-  console.log(this.props)
   return(
     <div>
       <redirect/>
@@ -45,10 +44,5 @@ render(){
 }
 }
 
-function mapStateToProps(state) {
-  return {
-  isAuthenticated: state.userAccess.userData
-  }
-}
 
-export default connect(mapStateToProps, null)(UserNav);
+export default UserNav;
