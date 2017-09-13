@@ -43,6 +43,8 @@ export function userLogin(loginData){
       
       if(checkStorage) {
         localStorage.setItem('Access-Token', response.data.response.data.token);
+        const userData = response.data.response.data.userID
+        console.log(userData)
         dispatch(userLoginSuccess(response.data))
       } else  {
         console.log('no storage found')

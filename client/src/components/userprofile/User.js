@@ -130,7 +130,7 @@ class User extends React.Component {
   // }
 
   render() {
-    console.log(this.props.userData)
+    console.log(this.props.books)
     return (
       this.props.isAuthenticated !== true ? <Redirect to="/login"/> :  
       <div className="container">
@@ -157,7 +157,8 @@ class User extends React.Component {
 function mapStateToProps(state, ownProps) {
   return {
     isAuthenticated: state.userAccess.isAuthenticated,
-    userData: state.userAccess.userData
+    userData: state.userAccess.userData,
+    books: state.books
   }
 }
 

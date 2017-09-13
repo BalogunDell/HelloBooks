@@ -19,10 +19,13 @@ import Footer from './components/footer/Footer';
 import User from './components/userprofile/User';
 import Dashboard from './components/userprofile/Dashboard';
 import UserHistory from './components/userprofile/History';
+import { loadAllbooks } from './Actions/booksAction';
 
 
 // Create an instance of the configStore 
  const store = configStore();
+ store.dispatch(loadAllbooks());
+
 class App extends React.Component {
     
   render() {
