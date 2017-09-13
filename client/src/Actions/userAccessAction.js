@@ -23,7 +23,7 @@ export function saveNewUser(userSignupData) {
     return axios.post('http://localhost:3000/api/users/signup', userSignupData)
     .then(response => {
       localStorage.setItem('Access-Token', response.data.token)
-      dispatch(userSignupSuccessAction(response.data))
+      dispatch(userSignupSuccessAction(response.data.response))
     })
     .catch((errors) => {
       // dispatch(userSignupFailureAction(errors.response.data.message))
