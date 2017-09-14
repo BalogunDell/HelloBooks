@@ -1,6 +1,7 @@
 import * as types from './actionTypes';
 import axios from 'axios';
 
+
 // user signup action creator
 export function userSignupSuccessAction(userSignupData) {
   return {
@@ -23,7 +24,7 @@ export function saveNewUser(userSignupData) {
     return axios.post('http://localhost:3000/api/users/signup', userSignupData)
     .then(response => {
       localStorage.setItem('Access-Token', response.data.token)
-      dispatch(userSignupSuccessAction(response.data.response))
+      dispatch(userSignupSuccessAction(response.data))
     })
     .catch((errors) => {
       // dispatch(userSignupFailureAction(errors.response.data.message))
@@ -43,9 +44,8 @@ export function userLogin(loginData){
       
       if(checkStorage) {
         localStorage.setItem('Access-Token', response.data.response.data.token);
-        const userData = response.data.response.data.userID
-        console.log(userData)
-        dispatch(userLoginSuccess(response.data))
+        dispatch(userLoginSuccess(response.data.response.data))
+        // console.log(response.data.response.data.userRole)
       } else  {
         console.log('no storage found')
       }

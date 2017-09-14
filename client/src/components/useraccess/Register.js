@@ -50,14 +50,14 @@ class Register extends React.Component {
           this.setState({redirect:true})
       }).catch(errors =>{
         // this.setState({errors: errors.response.data.message});
-        this.setState({error: errors.response.data.message})
-        console.log(this.props.redirect)
-       
+        this.setState({error: errors.response.data})
+        // console.log(this.props.redirect)
       })
     }
   
 
   render() {
+    console.log(typeof(this.props.userType))
     return( 
       this.state.redirect ? <Redirect to="/user"/> : 
       <div>
@@ -80,10 +80,11 @@ class Register extends React.Component {
 //  Define the mapStateToProps function for connect
 function mapStateToProps(state, ownProps) {
   let initialUserData = { username: '', firstname: '', lastname: '', email: '', password: '', confirmPassword: ''}
+  const user = state.userAccess.data
   return {
     initialUserData: initialUserData,
     redirect: state.userAccess.isAuthenticated,
-    location: ownProps
+    userType: user
   }
 }
 

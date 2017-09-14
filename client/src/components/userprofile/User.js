@@ -5,6 +5,7 @@ import UserNav from './Usernav';
 import { Redirect, Link } from 'react-router-dom';
 import { connect } from 'react-redux'
 
+
 import Allbooks from '../Allbooks/Allbooks';
 import UserDashboard from './Dashboard';
 import UserHistory from './History';
@@ -23,7 +24,8 @@ class User extends React.Component {
 
     this.state = {
       isAuthenticated:this.props.isAuthenticated,
-      redirect:false
+      redirect:false,
+      userData: this.props.userData
     }
 
     this.readBtn = <button className="btn waves-effect">Read</button>
@@ -130,7 +132,7 @@ class User extends React.Component {
   // }
 
   render() {
-    console.log(this.props.books)
+    console.log(this.props.userData)
     return (
       this.props.isAuthenticated !== true ? <Redirect to="/login"/> :  
       <div className="container">
@@ -158,7 +160,8 @@ function mapStateToProps(state, ownProps) {
   return {
     isAuthenticated: state.userAccess.isAuthenticated,
     userData: state.userAccess.userData,
-    books: state.books
+    books: state.books,
+    ownProps: ownProps
   }
 }
 
