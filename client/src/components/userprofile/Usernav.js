@@ -29,7 +29,7 @@ render(){
         {/* <li className="divider"></li> */}
         <li id="dashboard"><div className="black white-text">A HEADER TEXT HERE</div></li>
         {/* <li className="divider"></li> */}
-        <li><NavLink className="active" to='user'>Dashboard <i className="material-icons white-text">dashboard</i></NavLink></li>
+        <li><NavLink className="active" to='user/dashboard'>Dashboard <i className="material-icons white-text">dashboard</i></NavLink></li>
        <li><NavLink className="active" to='history'>History<i className="material-icons white-text">history</i></NavLink></li>
         <li><NavLink className="active" to='/users/:id/books'>Books in Library <i className="material-icons white-text">library_books</i></NavLink></li>
         <li><NavLink className="active" to='/users/:id/borrowedbooks'>Borrowed Books <i className="material-icons white-text">book</i></NavLink></li>

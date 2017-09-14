@@ -19,10 +19,13 @@ import Footer from './components/footer/Footer';
 import User from './components/userprofile/User';
 import Dashboard from './components/userprofile/Dashboard';
 import UserHistory from './components/userprofile/History';
+import { loadAllbooks } from './Actions/booksAction';
 
 
 // Create an instance of the configStore 
  const store = configStore();
+ store.dispatch(loadAllbooks());
+
 class App extends React.Component {
     
   render() {
@@ -34,12 +37,12 @@ class App extends React.Component {
               <Route path='/register' component={Register}/>
               <Route path= '/login' component={Login}/>
               <Route path='/user' render={props => <User {...props}/>}/>
-              {/* <Route path="/dashboard" component={Dashboard}/>
-              <Route path="/history" component={UserHistory}/>
+               <Route path="user/:name" component={User}/>
+              {/* <Route path="/history" component={UserHistory}/>
               <Route path="/allbooks" component={Dashboard}/>
               <Route path="/notifications" component={Dashboard}/>
               <Route path="/borrowdbooks" component={Dashboard}/>
-              <Route path="/bookdetails" component={Dashboard}/> */}
+              <Route path="/bookdetails" component={Dashboard}/> */} */}
               <Route render= {() => {
                   return <p>Not found</p>
                 }}/>

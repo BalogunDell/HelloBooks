@@ -58,6 +58,7 @@ const config = {
       },
     ]
   },
+
   plugins: [
     new extractWebpackPlugin('style.css'),
     new webpack.ProvidePlugin({
