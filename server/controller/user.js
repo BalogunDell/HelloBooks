@@ -24,7 +24,15 @@ class User {
     userModel.create(req.body)
       .then((user) => {
         const token = helper.generateToken(user.dataValues);
-        res.status(201).json({ message: 'User created', data: user, token });
+        res.status(201).json({ responseData: {
+          message: 'User created', 
+          userFirstname: user.firstname, 
+          userID: user.id, 
+          userRole: user.role, 
+          image: user.image,
+          token
+        }
+        });
       })
       .catch((error) => {
         if (error.name === 'SequelizeValidationError') {
@@ -48,11 +56,14 @@ class User {
       .then((user) => {
         if (user && bcrypt.compareSync(req.body.password, user.dataValues.password)) {
           const token = helper.generateToken(user.dataValues);
-          const response = {
-            message: 'signed in',
-            data: { token, userID: user.id, userRole: user.role, image: user.image }
-          };
-          res.status(200).json({ response });
+          const responseData = { 
+            message: 'signed in', 
+            token, 
+            userFirstname: user.firstname, 
+            userID: user.id, 
+            userRole: user.role, 
+            image: user.image };
+          res.status(200).json({ responseData });
         } else if (!req.body.email || !req.body.password) {
           res.status(404).json({ message: 'Email and password is required' });
         } else {
