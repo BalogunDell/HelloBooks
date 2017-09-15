@@ -1,35 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 
-class Userdashboard extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      libaryBooks: {
-        title: 'Books in the library',
-        availablebooks: 140,
-        message: 'Have you read a book today? Borrow from the library now'
-      },
-      borrowedBooks: {
-        count: 1,
-        lastbook: {
-          booktitle:'Learn Angular 2',
-          dateborrowed: '2nd-sept-2017',
-          expectedReturnDate: '5th-sept 2017'
-        }
-      },
-      unreturnedBooks: {
-
-      },
-      
-      notifications: {
-
-      }
-    }
-  }
-
-  render() {
+const Userdashboard = () => {
     return(
       <div>
         <div className="row">
@@ -37,8 +9,8 @@ class Userdashboard extends React.Component {
             <div>
               <div className="card blue-grey">
                 <div className="card-content white-text">
-                  <p>{this.state.libaryBooks.message}</p><br/>
-                  <span className="card-title"> We have {this.state.libaryBooks.availablebooks} {this.state.libaryBooks.title} yet unborrowed</span>
+                  <p></p><br/>
+                  <span className="card-title"> We have yet unborrowed</span>
                 </div>
                 <div className="card-action black">
                   <Link to='/user/:id/avaiablebooks'>View all</Link>
@@ -51,13 +23,13 @@ class Userdashboard extends React.Component {
             <div>
               <div className="card grey darken-1">
                 <div className="card-content white-text">
-                  <span className="card-title">Total number of books borrowed: {this.state.borrowedBooks.count}</span>
+                  <span className="card-title">Total number of books borrowed</span>
                  
                     <ul>
                       <li>Last borrowed book</li>
-                      <li>Title: {this.state.borrowedBooks.lastbook.booktitle}</li>
-                      <li>Borrowed on: {this.state.borrowedBooks.lastbook.dateborrowed}</li>
-                      <li>To be returned on: {this.state.borrowedBooks.lastbook.expectedReturnDate}</li>
+                      <li>Title: </li>
+                      <li>Borrowed on:</li>
+                      <li>To be returned on:</li>
                     </ul>
                 </div>
                 <div className="card-action black white-text">
@@ -72,6 +44,5 @@ class Userdashboard extends React.Component {
       </div>
     );
   }
-}
 
 export default Userdashboard;
