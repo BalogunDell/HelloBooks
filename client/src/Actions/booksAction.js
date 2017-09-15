@@ -13,7 +13,7 @@ export function getAllBooks(books) {
 export function loadAllbooks() {
   return (dispatch) => {
     return axios.get('http://localhost:3000/api/books').then( response => {
-      dispatch(getAllBooks(response.data.books));
+      dispatch(getAllBooks(response.books));
     }).catch(error => {
       console.log(error)
     })

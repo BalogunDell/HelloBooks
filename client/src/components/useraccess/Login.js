@@ -20,7 +20,7 @@ class Login extends React.Component {
 
     this.state =  {
       userData: Object.assign({}, this.props.initialUserData),
-      error: '',
+      loginError: '',
       isAuthenticated: false,
       isLoading: false,
 
@@ -59,10 +59,10 @@ class Login extends React.Component {
     event.preventDefault();
     this.setState({isLoading: true})
     this.props.userLogin(this.state.userData).then(() => {
-      this.setState({isLoading: false, isAuthenticated: true})
+    this.setState({isLoading: false, isAuthenticated: true})
     })
     .catch(error => {
-      this.setState({isLoading:false, error: error.response.data.message})
+      this.setState({isLoading:false, loginError: error.response.data.message})
     })
   }
   
@@ -86,7 +86,7 @@ class Login extends React.Component {
             userData = {this.state.userData}
             handleLoginInput = {this.handleLoginInput}
             loginHandler = {this.loginHandler}
-            error = {this.state.error}
+            error = {this.state.loginError}
             isLoading = {this.state.isLoading}/>
           </Background>
       </div>
@@ -106,7 +106,7 @@ class Login extends React.Component {
 function mapStateToProps(state, ownProps){
     let initialUserData = { email:'' , password:'' }
   return {
-    initialUserData: initialUserData,
+    initialUserData: initialUserData
 
   }
 }

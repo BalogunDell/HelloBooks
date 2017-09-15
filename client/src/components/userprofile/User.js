@@ -127,12 +127,15 @@ class User extends React.Component {
 
   }
   
-  // componentDidMount(){
-    
-  // }
+  componentWillMount(){
+    const userDetails = JSON.parse(localStorage.getItem('Access-Token'));
+    // const userType = userDetails[2]
+    // const id = userDetails[1]
+
+    userDetails[2] === 'user' ? alert('user') : alert('admin') 
+  }
 
   render() {
-    console.log(this.props.userData)
     return (
       this.props.isAuthenticated !== true ? <Redirect to="/login"/> :  
       <div className="container">
@@ -159,9 +162,7 @@ class User extends React.Component {
 function mapStateToProps(state, ownProps) {
   return {
     isAuthenticated: state.userAccess.isAuthenticated,
-    userData: state.userAccess.userData,
-    books: state.books,
-    ownProps: ownProps
+    books: state.books
   }
 }
 

@@ -23,8 +23,8 @@ export function saveNewUser(userSignupData) {
   return function (dispatch) {
     return axios.post('http://localhost:3000/api/users/signup', userSignupData)
     .then(response => {
-      localStorage.setItem('Access-Token', response.data.token)
-      dispatch(userSignupSuccessAction(response.data))
+      localStorage.setItem('Access-Token', response.data.responseData.token)
+      dispatch(userSignupSuccessAction(response.data.responseData))
     })
     .catch((errors) => {
       // dispatch(userSignupFailureAction(errors.response.data.message))
@@ -41,20 +41,19 @@ export function userLogin(loginData){
   return dispatch => {
     return axios.post('http://localhost:3000/api/users/signin', loginData)
     .then(response => {
-      
       if(checkStorage) {
-        localStorage.setItem('Access-Token', response.data.response.data.token);
-        dispatch(userLoginSuccess(response.data.response.data))
-        // console.log(response.data.response.data.userRole)
+        const userDetails = [];
+        userDetails.push(response.data.responseData.token, response.data.responseData.userID, response.data.responseData.userRole)
+        localStorage.setItem('Access-Token', JSON.stringify(userDetails));
+        dispatch(userLoginSuccess(response.data.responseData))
+
       } else  {
         console.log('no storage found')
       }
-      
     })
     .catch(error => {
-      throw (error);
+      throw (error)
     })
-
   }
 }
 
