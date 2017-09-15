@@ -47,17 +47,15 @@ class Register extends React.Component {
     handleSubmit(event) {
       event.preventDefault()
       this.props.saveNewUser(this.state.userData).then(() =>{
-          this.setState({redirect:true})
+          this.setState({redirect:this.props.authStatus})
       }).catch(errors =>{
-        // this.setState({errors: errors.response.data.message});
-        this.setState({error: errors.response.data})
-        // console.log(this.props.redirect)
+        this.setState({error: errors.response.data.message})
       })
     }
   
 
   render() {
-    console.log(typeof(this.props.userType))
+    console.log(this.props.userType)
     return( 
       this.state.redirect ? <Redirect to="/user"/> : 
       <div>
@@ -80,11 +78,10 @@ class Register extends React.Component {
 //  Define the mapStateToProps function for connect
 function mapStateToProps(state, ownProps) {
   let initialUserData = { username: '', firstname: '', lastname: '', email: '', password: '', confirmPassword: ''}
-  const user = state.userAccess.data
   return {
     initialUserData: initialUserData,
-    redirect: state.userAccess.isAuthenticated,
-    userType: user
+    authStatus: state.userAccess.isAuthenticated,
+    userType: state.userAccess.userData
   }
 }
 
