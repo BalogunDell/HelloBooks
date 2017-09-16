@@ -1,6 +1,4 @@
 import React from 'react';
-
-import book1 from '../../assets/images/books/book1.png';
 /**
  * @class Books
  * @classdesc returns the Books component

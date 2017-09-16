@@ -11,7 +11,7 @@ import Allbooks from '../Allbooks/Allbooks';
 import UserDashboard from './Dashboard';
 import UserHistory from './History';
 import * as userNavLinks from './userNavLinks';
-import book1 from '../../assets/images/books/book1.jpg'
+import book1 from '../../assets/images/books/book1.jpg';
 import book2 from '../../assets/images/books/book2.jpg';
 import book3 from '../../assets/images/books/book3.jpg';
 import book4 from '../../assets/images/books/book4.jpg';
@@ -65,7 +65,7 @@ class User extends React.Component {
           <div className="col s12 m11 l12 offset-l1">
             <div className="content-display">
                <Route path="/user/dashboard" render={() => <UserDashboard/>}/>
-               <Route path="/user/books" render={() => <Allbooks books = {this.books}/>}/>
+                <Route path="/user/books" render={() => <Allbooks books = {this.books}/>}/> 
                {/* <Route path="/user/history" render ={()=> <UserHistory/>}/> */}
                <Route render= {() => {
                   return <p>Not found</p>

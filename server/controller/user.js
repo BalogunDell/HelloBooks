@@ -103,9 +103,15 @@ class User {
       };
     }
 
+    console.log(req.body.userid)
     borrowedBookModel.findAll(query)
       .then((response) => {
-        res.status(200).json({ books: response });
+        // res.send(response)
+        if(response.length < 1) {
+        res.status(200).json({ message: 'You have no books yet' });
+        } else {
+          res.status(200).json({ books: response });
+        }
       }).catch((error) => {
         res.status(404).json({ message: error });
       });
@@ -153,10 +159,14 @@ class User {
    * @returns { object } user detail
    */
   static profilePage(req, res) {
-    if (!req.headers.Authorization) {
+    if (!req.headers.authorization) {
       res.status(401)
         .json({ message: 'Invalid/Expired token' });
       // other implementations
+    } else {
+      userModel.findById(req.body.userid).then(user => {
+        res.send(user)
+      })
     }
   }
 }

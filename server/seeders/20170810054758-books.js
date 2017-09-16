@@ -11,7 +11,7 @@ module.exports = {
         quantity: 6,
         category: 'programming',
         categoryid: 1,
-        image: 'images/andela.jpg',
+        image: 'book1.jpg',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -25,7 +25,7 @@ module.exports = {
         quantity: 3,
         category: 'programming',
         categoryid: 2,
-        image: 'images/andela.jpg',
+        image: 'book2.jpg',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -39,7 +39,7 @@ module.exports = {
         quantity: 32,
         category: 'business',
         categoryid: 3,
-        image: 'images/andela.jpg',
+        image: 'book3.jpg',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -53,7 +53,7 @@ module.exports = {
         quantity: 15,
         category: 'health',
         categoryid: 4,
-        image: 'images/andela.jpg',
+        image: 'book4.jpg',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -67,7 +67,7 @@ module.exports = {
         quantity: 5,
         category: 'social',
         categoryid: 5,
-        image: 'images/andela.jpg',
+        image: 'book5.jpg',
         createdAt: new Date(),
         updatedAt: new Date()
       },
