@@ -7,8 +7,8 @@ export default function getAllBooks(state = {}, action) {
         ...state, 
         books: action.books
       }
-    
+      
     default:
-    return state
+      return state
   }
 }

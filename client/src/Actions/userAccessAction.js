@@ -1,4 +1,5 @@
 import * as types from './actionTypes';
+import * as apiRoutes from '../utils/apiEndPoints';
 import axios from 'axios';
 
 
@@ -21,10 +22,19 @@ export function userLoginSuccess(loginData) {
 // Create thunk for signup
 export function saveNewUser(userSignupData) {
   return function (dispatch) {
-    return axios.post('http://localhost:3000/api/users/signup', userSignupData)
+    return axios.post(apiRoutes.signup, userSignupData)
     .then(response => {
-      localStorage.setItem('Access-Token', response.data.responseData.token)
-      dispatch(userSignupSuccessAction(response.data.responseData))
+      //  check if device supports localstorage
+      if(checkStorage) {
+        const userDetails = [];
+        // Push details into the array
+        userDetails.push(response.data.responseData.token, response.data.responseData.userID, response.data.responseData.userRole)
+        localStorage.setItem('Access-Token', JSON.stringify(userDetails));
+        dispatch(userSignupSuccessAction(response.data.responseData))
+
+      } else  {
+        console.log('no storage found')
+      }
     })
     .catch((errors) => {
       // dispatch(userSignupFailureAction(errors.response.data.message))
@@ -39,7 +49,7 @@ export function saveNewUser(userSignupData) {
 
 export function userLogin(loginData){
   return dispatch => {
-    return axios.post('http://localhost:3000/api/users/signin', loginData)
+    return axios.post(apiRoutes.signin, loginData)
     .then(response => {
       if(checkStorage) {
         const userDetails = [];
