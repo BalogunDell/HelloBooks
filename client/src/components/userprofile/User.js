@@ -27,7 +27,9 @@ class User extends React.Component {
       redirect: false,
       userData: this.props.userData,
       dataReady: false,
-      books: []
+      books: [],
+      borrowErrorMessage: '',
+      disableBtn: false
     }
 
     this.readBtn = <button className="btn waves-effect">Read</button>
@@ -40,11 +42,14 @@ class User extends React.Component {
     // Set user id and type
     this.userID = '';
     this.userType='';
-  
 
-    // Bind logout, book details method to this
+    // set boolean to detect whether book is can be borrowed or not 
+
+    // Bind logout, book details, bookborrow method to this
     this.handleLogout = this.handleLogout.bind(this)
     this.getBookId = this.getBookId.bind(this)
+    this.handleBorrowAction = this.handleBorrowAction.bind(this)
+    this.resetBacktoLibBtn = this.resetBacktoLibBtn.bind(this)
   }
 
 
@@ -60,6 +65,24 @@ class User extends React.Component {
     this.setState({books:fetchedBook[0]})
   }
 
+
+  handleBorrowAction() {
+    this.props.borrowBook({bookid:this.state.books.id})
+    .then(() => {
+      this.setState({disableBtn:true})
+    })
+    .catch(error =>{
+      if(error.response.status == 501) {
+       this.setState({borrowErrorMessage: error.response.data.msg})
+       this.setState({disableBtn:true})
+      }
+    })
+  }
+
+  resetBacktoLibBtn(){
+    this.setState({disableBtn:false, borrowErrorMessage: ''})
+  }
+
 // *********************************************************//
 // PERFORM ALL NECESSARY OPERATIONS BEFORE COMPONENT MOUNTS //
 // ********************************************************//
@@ -71,13 +94,13 @@ class User extends React.Component {
     }
 
      // Get user profile before mount
-    this.props.userProfile(this.userID).then(()=>{
+    this.props.userProfile(this.userID).then(()=> {
       // Do some stuff
     })
       
     .catch(error =>{
       // Do some stuff is error
-      error.response.status === 401 ? console.log('not allowexd'): console.log(false)
+      error.response.status === 401 ? this.setState({isAuthenticated:false}): ''
     })
 
     // Set all values needed
@@ -99,7 +122,6 @@ class User extends React.Component {
      if(nextprops.userDetails.id) {
       this.setState({dataReady:true, profileData: nextprops.userDetails})
      }
-
      
   }
 
@@ -133,9 +155,13 @@ class User extends React.Component {
                      <Route path="/user/books" render={() => <Allbooks 
                      books = {this.props.retrievedBooks} 
                      path = {this.props.url}
-                     getBookId = {this.getBookId}/>}
-                     />  
-                    <Route path="/user/bookdetails" render={() => <BookDetails book={this.state.books}/>}/>
+                     getBookId = {this.getBookId}/>}/>  
+                    <Route path="/user/bookdetails" render={() => <BookDetails 
+                    book={this.state.books}
+                    handleBorrowAction = {this.handleBorrowAction}
+                    borrowErrorMessage = {this.state.borrowErrorMessage}
+                    disableBtn = {this.state.disableBtn}
+                    resetBacktoLibBtn= {this.resetBacktoLibBtn}/>}/>
                   {/* <Route path="/user/history" render ={()=> <UserHistory/>}/> */}
                 </div>
               </div>
@@ -162,7 +188,7 @@ function mapStateToProps(state, ownProps) {
 function mapDispatchToProps(dispatch) {
   return {
     userProfile: (userID) => dispatch(UserActions.fetchUserTrigger(userID)),
-    // showBookDetails: (bookId) => dispatch(bookActions.getBookId(bookId))
+    borrowBook: (bookDetails) => dispatch(bookActions.borrowBook(bookDetails))
   }
 }
 

@@ -1,6 +1,6 @@
 import * as types from '../Actions/actionTypes';
 
-export default function getAllBooks(state = {}, action) {
+const getAllBooks = (state = {}, action) => {
   switch(action.type) {
     case types.GET_ALL_BOOKS: 
       return {
@@ -8,7 +8,14 @@ export default function getAllBooks(state = {}, action) {
         books: action.books
       }
       
+      case types.BORROW_BOOK: 
+        return {
+          ...state, 
+          bookid: action.bookDetails
+        }
     default:
       return state
   }
 }
+
+export default getAllBooks;
