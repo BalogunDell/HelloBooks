@@ -45,12 +45,53 @@
     }
   }
 
-  .bookDetails {
-    // background-color: black;
-    margin-top: 3%;
+  .main-container {
+    // margin: auto;
+  }
+
+  img {
+      max-height: 300px;
+    }
+  
+  table {
+    // margin-left: -100px;
+    td, th {
+    padding: 5px 5px;
+  }
+
+  .btn, .btn:hover {
+    background-color: $custom-color
+  }
+}
+
+.successMessage {
+    margin-top: 5%;
     margin: auto;
+    // background:rgba(0, 0, 0, 0.2);
+    max-height: 300px;
+    max-width: 400px;
+    font-size: 20px;
+    padding: 20px;
+    color: green;
+    border-radius: 10px;
 
     img {
-      max-height: 300px;
+      max-height: 120px;
+    }
+  }
+
+  .failureMessage {
+    margin-top: 5%;
+    margin: auto;
+    // background:rgba(0, 0, 0, 0.2);
+    max-height: 300px;
+    max-width: 400px;
+    font-size: 20px;
+    padding: 20px;
+    color: red;
+    border-radius: 10px;
+
+    img {
+      max-height: 120px;
     }
   }
