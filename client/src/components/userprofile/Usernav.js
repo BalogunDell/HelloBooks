@@ -8,7 +8,7 @@ import logo from '../../assets/images/hb-logo.png';
 
 
 
-const UserNav = ({ navLinks, linkIcons, path }) => {
+const UserNav = ({ navLinks, linkIcons, path, userDetails, handleLogout }) => {
   return(
     <div>
 
@@ -40,16 +40,23 @@ const UserNav = ({ navLinks, linkIcons, path }) => {
             <div className="background user-view-bg">
             </div>
             <img src={profileImage} className="circle profilepix" alt=""/>
-            <span className="white-text username">Username: Username1</span>
-            <span className="white-text email">Email: delighteddell@gmail.com</span>
-            <span className="white-text email">Membership:</span>
+            <span className="white-text username">Username: 'username here'</span>
+            <span className="white-text email">Email: {userDetails.email}</span>
+            <span className="white-text email">Membership: {userDetails.membership}</span>
           </div>
         </li>
-        <li><Link to='/login' className="red-text"><i className="material-icons red-text">logout</i>Logout</Link></li>
+        <li><Link to='/login' className="red-text" onClick={handleLogout}><i className="material-icons red-text">logout</i>Logout</Link></li>
       </ul>
 
       <a href="#!" data-activates="userprofile" className="button-collapse"><i className="material-icons">menu</i></a>
     </div>
   );
+}
+
+UserNav.propTypes = {
+  navLinks:React.PropTypes.array.isRequired,
+  linkIcons:React.PropTypes.array.isRequired,
+  path:React.PropTypes.string.isRequired,
+  userDetails:React.PropTypes.object.isRequired
 }
 export default UserNav;
