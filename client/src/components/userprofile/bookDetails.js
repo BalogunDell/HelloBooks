@@ -11,7 +11,7 @@ const bookDetails = ({ book }) => {
         </div>
 
         <div className="row bookDetails">
-          <div className="col s12 m6 offset-m3 l9 offset-l3">
+          <div className="col s12 m6 offset-m5 l9 offset-l3">
             <img src= {`/images/books/${book.image}`} alt={book.title} className="responsive-img"/>
           </div>
 
