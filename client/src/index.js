@@ -27,7 +27,6 @@ import { loadAllbooks } from './Actions/booksAction';
 
 // Create an instance of the configStore 
  const store = configStore();
- store.dispatch(loadAllbooks());
 
 class App extends React.Component {
     

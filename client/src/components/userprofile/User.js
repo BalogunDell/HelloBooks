@@ -27,9 +27,7 @@ class User extends React.Component {
       redirect: false,
       userData: this.props.userData,
       dataReady: false,
-      books: [],
-      borrowErrorMessage: '',
-      disableBtn: false
+      book_id: 0
     }
 
     this.readBtn = <button className="btn waves-effect">Read</button>
@@ -43,13 +41,10 @@ class User extends React.Component {
     this.userID = '';
     this.userType='';
 
-    // set boolean to detect whether book is can be borrowed or not 
 
-    // Bind logout, book details, bookborrow method to this
+    // Bind logout, book details method to this
     this.handleLogout = this.handleLogout.bind(this)
     this.getBookId = this.getBookId.bind(this)
-    this.handleBorrowAction = this.handleBorrowAction.bind(this)
-    this.resetBacktoLibBtn = this.resetBacktoLibBtn.bind(this)
   }
 
 
@@ -61,26 +56,7 @@ class User extends React.Component {
   }
 
   getBookId(event) {
-    let fetchedBook = this.props.retrievedBooks.filter(book => book.id == event.target.value)
-    this.setState({books:fetchedBook[0]})
-  }
-
-
-  handleBorrowAction() {
-    this.props.borrowBook({bookid:this.state.books.id})
-    .then(() => {
-      this.setState({disableBtn:true})
-    })
-    .catch(error =>{
-      if(error.response.status == 501) {
-       this.setState({borrowErrorMessage: error.response.data.msg})
-       this.setState({disableBtn:true})
-      }
-    })
-  }
-
-  resetBacktoLibBtn(){
-    this.setState({disableBtn:false, borrowErrorMessage: ''})
+    this.state.book_id = event.target.value
   }
 
 // *********************************************************//
@@ -92,6 +68,9 @@ class User extends React.Component {
     if(localStorage.getItem('Access-Token') === null) {
       return this.setState({isAuthenticated: false})
     }
+
+    // Fetch all books
+    this.props.loadAllbooks()
 
      // Get user profile before mount
     this.props.userProfile(this.userID).then(()=> {
@@ -113,10 +92,6 @@ class User extends React.Component {
     this.linkIcons = this.userType === 'user' ? userNavLinks.userLinkIcons: userNavLinks.adminLinkIcons
 
   }
-
-//*************************************************************//
-//CHECK IF PROPS ARE READY FOR DISPLAY BEFORE THE PAPGE MOUNTS//
-//************************************************************//
 
   componentWillReceiveProps(nextprops) {
      if(nextprops.userDetails.id) {
@@ -156,13 +131,8 @@ class User extends React.Component {
                      books = {this.props.retrievedBooks} 
                      path = {this.props.url}
                      getBookId = {this.getBookId}/>}/>  
-                    <Route path="/user/bookdetails" render={() => <BookDetails 
-                    book={this.state.books}
-                    handleBorrowAction = {this.handleBorrowAction}
-                    borrowErrorMessage = {this.state.borrowErrorMessage}
-                    disableBtn = {this.state.disableBtn}
-                    resetBacktoLibBtn= {this.resetBacktoLibBtn}/>}/>
-                  {/* <Route path="/user/history" render ={()=> <UserHistory/>}/> */}
+                    <Route path="/user/bookdetails" render={() => <BookDetails book_id = {this.state.book_id}/>}/>
+                   <Route path="/user/history" render ={()=> <UserHistory userID = {this.userID}/>}/> 
                 </div>
               </div>
             </div>
@@ -188,7 +158,7 @@ function mapStateToProps(state, ownProps) {
 function mapDispatchToProps(dispatch) {
   return {
     userProfile: (userID) => dispatch(UserActions.fetchUserTrigger(userID)),
-    borrowBook: (bookDetails) => dispatch(bookActions.borrowBook(bookDetails))
+    loadAllbooks: () => dispatch(bookActions.loadAllbooks())
   }
 }
 
