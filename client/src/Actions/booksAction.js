@@ -72,16 +72,18 @@ export function userBooks(fetchedBooks) {
   }
 }
 
-export function getUserBooks(userid) {
+export function getUserBooks() {
   return dispatch => {
-    return axios.get(`${apiRoutes.userProfile}/${getUserDetails().userId}/books`, userid, {headers: {'Authorization': getUserDetails().savedToken}
-  })
-  .then(response => {
-    console.log(response)
-  })
-  .catch(error => {
-    throw (error)
-  })
+    return axios.get(`${apiRoutes.userProfile}/${getUserDetails().userId}/books`,  
+      {
+        headers: {'Authorization': getUserDetails().savedToken}
+      }
+      ).then(response => {
+        dispatch(userBooks(response.data.books))
+      })
+      .catch(error => {
+        throw (error)
+      })
   }
 }
 
