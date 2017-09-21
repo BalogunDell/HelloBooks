@@ -55,7 +55,6 @@ class Register extends React.Component {
   
 
   render() {
-    console.log(this.props.userType)
     return( 
       this.state.redirect ? <Redirect to="/user"/> : 
       <div>

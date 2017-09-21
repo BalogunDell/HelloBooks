@@ -1,13 +1,30 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
+import * as bookActions from '../../Actions/booksAction';
 /**
  * @class History
  * @classdesc returns the borrow history of the user
  */
 class History extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      userid: this.props.userID
+    }
+  }
+
+  componentWillMount() {
+    this.props.getUserBooks(this.state.userid).then(() => {
+
+    })
+    .catch(error => {
+      console.log(error)
+    })
+  }
 
   render() {
-
     return(
       <div>
         {/* Row for header  */}
@@ -33,7 +50,7 @@ class History extends React.Component {
               </thead>
                 {/* show all borrowed books  */}
               <tbody>
-                {this.props.borrowedBooks.map((borrowedBook, id) =>
+                {/* {this.props.borrowedBooks.map((borrowedBook, id) =>
                 <tr key={borrowedBook.id}>
                   <td><img src={borrowedBook.image} alt="Book cover"/></td>
                   <td>{borrowedBook.title}</td>
@@ -43,7 +60,7 @@ class History extends React.Component {
                     <button className="">Read</button> | <button className="">Return</button>
                   </td>
                 </tr>
-                )}
+                )} */}
                  </tbody>
             </table>
           </div>
@@ -53,4 +70,16 @@ class History extends React.Component {
   }
 }
 
-export default History;
+
+function mapStateToProps(state, ownProps) {
+  return {
+    fetchedUserBooks: state
+  }
+}
+
+function mapDispatchToProps (dispatch) {
+  return {
+    getUserBooks: (userid) => dispatch(bookActions.getUserBooks(userid))
+  }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(History);

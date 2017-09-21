@@ -13,6 +13,11 @@ const getAllBooks = (state = {}, action) => {
           ...state, 
           bookid: action.bookDetails
         }
+
+      case types.FETCTH_USER_BOOKS: 
+        return {
+          ...state, ...action.fetchedBooks
+        }
     default:
       return state
   }
