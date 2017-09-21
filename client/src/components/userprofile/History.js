@@ -11,13 +11,15 @@ class History extends React.Component {
     super(props);
 
     this.state = {
-      userid: this.props.userID
+      userid: this.props.userID,
+      loading: false
     }
   }
 
   componentWillMount() {
-    this.props.getUserBooks(this.state.userid).then(() => {
-
+    this.setState({loading: true})
+    this.props.getUserBooks().then(() => {
+      this.setState({loading:false})
     })
     .catch(error => {
       console.log(error)
@@ -25,6 +27,7 @@ class History extends React.Component {
   }
 
   render() {
+    console.log('this is the fectched books:', this.props.fetchedUserBooks)
     return(
       <div>
         {/* Row for header  */}
@@ -38,31 +41,35 @@ class History extends React.Component {
         
         <div className="row borrowHistory">
           <div className="col s12 m12 l11 offset-l1">
-            <table className="responsive-table centered highlight">
-              <thead>
-                <tr>
-                  <th>Book image</th>
-                  <th>Book title</th>
-                  <th>Author</th>
-                  <th>Date Borrowed</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-                {/* show all borrowed books  */}
-              <tbody>
-                {/* {this.props.borrowedBooks.map((borrowedBook, id) =>
-                <tr key={borrowedBook.id}>
-                  <td><img src={borrowedBook.image} alt="Book cover"/></td>
-                  <td>{borrowedBook.title}</td>
-                  <td>{borrowedBook.author}</td>
-                  <td>{borrowedBook.dateBorrowed}</td>
-                  <td>
-                    <button className="">Read</button> | <button className="">Return</button>
-                  </td>
-                </tr>
-                )} */}
-                 </tbody>
-            </table>
+            {this.state.loading 
+              ?
+                <h3>Loading books...</h3>
+              :
+              <table className="responsive-table centered highlight">
+                <thead>
+                  <tr>
+                    <th>Book image</th>
+                    <th>Book title</th>
+                    <th>Author</th>
+                    <th>Date Borrowed</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {this.props.fetchedUserBooks.map((book, id) =>
+                  <tr key={book.id}>
+                    <td><img src={book.image} alt="Book cover"/></td>
+                    <td>{book.title}</td>
+                    <td>{book.author}</td>
+                    <td>{book.dateBorrowed}</td>
+                    <td>
+                      <button className="">Read</button> | <button className="">Return</button>
+                    </td>
+                  </tr>
+                  )} 
+                  </tbody>
+              </table>
+            }
           </div>
         </div>
       </div>
@@ -73,7 +80,7 @@ class History extends React.Component {
 
 function mapStateToProps(state, ownProps) {
   return {
-    fetchedUserBooks: state
+    fetchedUserBooks: state.books.fetchedUserBooks
   }
 }
 

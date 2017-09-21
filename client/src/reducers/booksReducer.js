@@ -16,7 +16,8 @@ const getAllBooks = (state = {}, action) => {
 
       case types.FETCTH_USER_BOOKS: 
         return {
-          ...state, ...action.fetchedBooks
+          ...state, 
+          fetchedUserBooks: action.fetchedBooks
         }
     default:
       return state

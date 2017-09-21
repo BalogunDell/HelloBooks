@@ -103,7 +103,6 @@ class User {
       };
     }
 
-    console.log(req.body.userid)
     borrowedBookModel.findAll(query)
       .then((response) => {
         // res.send(response)
