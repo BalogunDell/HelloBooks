@@ -38,14 +38,12 @@ const borrowedbook = (sequelize, DataTypes) => {
       allowNull: false,
       defaultValue: false
     },
-  }, {
-    classMethods: {
-      associate: (models) => {
-        borrowedbooks.hasMany(models.users, { foreignKey: 'userid', as: 'user' });
-        borrowedbooks.hasMany(models.books, { foreignKey: 'bookid', as: 'book' });
-      }
-    },
   });
+
+  borrowedbooks.associate = (models) => {
+    borrowedbooks.belongsTo(models.users, { foreignKey: 'userid'});
+    borrowedbooks.belongsTo(models.books, { foreignKey: 'bookid'});
+  }
   return borrowedbooks;
 };
 
