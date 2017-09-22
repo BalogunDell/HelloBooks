@@ -8,6 +8,7 @@ require('dotenv').config();
 
 const userModel = model.users;
 const borrowedBookModel = model.borrowedbooks;
+const booksModel = model.books;
 
 
 /**
@@ -91,7 +92,7 @@ class User {
       query.where = {
         $and: [
           { userid: req.body.userid },
-          { returnstatus: false }
+          { returnstatus: false },
         ]
       };
     } else {
@@ -103,9 +104,8 @@ class User {
       };
     }
 
-    borrowedBookModel.findAll(query)
+    borrowedBookModel.findAll({query, include: [{ model: booksModel }] })
       .then((response) => {
-        // res.send(response)
         if(response.length < 1) {
         res.status(200).json({ message: 'You have no books yet' });
         } else {

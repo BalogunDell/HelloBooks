@@ -140,19 +140,6 @@ const book = (sequelize, DataTypes) => {
       }
     }
   }, {
-    classMethods: {
-      associate(model) {
-        // associations can be defined here
-        books.belongTo(model.borrowedbooks, {
-          foreignKey: 'bookid',
-          as: 'borrowedbooks'
-        });
-        books.belongTo(model.categories, {
-          foreignKey: 'categoryid',
-          as: 'categories'
-        });
-      }
-    },
     hooks: {
       beforeCreate: (bookInstance) => {
         bookInstance.isbn = `#${bookInstance.isbn}`;
@@ -160,6 +147,16 @@ const book = (sequelize, DataTypes) => {
       },
     }
   });
+
+  books.associate = (model) => {
+    books.hasMany(model.borrowedbooks, {
+      foreignKey: 'bookid',
+    });
+    books.belongsTo(model.categories, {
+      foreignKey: 'categoryid',
+      as: 'categories'
+    });
+}
   return books;
 };
 export default book;

@@ -85,9 +85,8 @@ const user = (sequelize, DataTypes) => {
     classMethods: {
       associate(model) {
         // associations can be defined here
-        usersModel.belongTo(model.borrowedbooks, {
-          foreignKey: 'userid',
-          as: 'users'
+        usersModel.hasMany(model.borrowedbooks, {
+          foreignKey: 'userid'
         });
       }
     },
