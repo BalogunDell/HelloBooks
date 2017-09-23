@@ -95,3 +95,20 @@
       max-height: 120px;
     }
   }
+
+  .filter-table {
+    background-color: black;
+    margin-bottom: 4%;
+    select {
+      background-color: black;
+      width: 500px;
+    }
+  }
+
+  table {
+    .btn {
+        max-width: 70%;
+        text-transform: uppercase;   
+    }
+  }
+  

@@ -1,23 +1,15 @@
-import toastr from 'toastr';
+import '../assets/materialize/js/materialize.min';
 
 $(document).ready(function(){
-  $('.button-collapse').off('click').sideNav({
+   $('.button-collapse').off('click').sideNav({
     closeOnclick:true,
-    menuWidth: 250,
+    menuWidth: 280,
     // edge: 'left'
   });
+  
+  // Initialize materialize select
+  $('select').material_select();
 
-  // // validate input
-  // const firstname = document.getElementById('firstname');
-  // firstname.onblur = () => {
-  //   if(firstname.value.length <= 3) {
-  //     alert('Firstname must be more than 3 characters');
-  //   } else if(/(\d+)/gi.test(firstname.value)) {
-  //     alert('Firstname cannot contain numbers');
-  //   }
-  // }
-
-  toastr.options.closeButton = true;
 });
 
 

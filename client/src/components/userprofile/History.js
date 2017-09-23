@@ -14,6 +14,18 @@ class History extends React.Component {
       userid: this.props.userID,
       loading: false
     }
+
+    //  Set different buttons for return book and borrow again
+    this.actionBtn = <button className="btn btn-small waves-effect waves-teal orange" onClick={this.handleReturn}>Return Book</button>
+    this.borrowAgainBtn = <button className="btn waves-effect waves-teal green" value='hello' onClick={this.handleReturn}>Borrow Again</button>
+
+
+    //  Bind methods for onclick of the buttons
+    this.handleReturn = this.handleReturn.bind(this)
+  }
+
+  handleReturn(event) {
+    console.log(event.target.value)
   }
 
   componentWillMount() {
@@ -27,7 +39,7 @@ class History extends React.Component {
   }
 
   render() {
-    console.log('this is the fectched books:', this.props.fetchedUserBooks)
+    console.log(this.props.fetchedUserBooks)
     return(
       <div>
         {/* Row for header  */}
@@ -39,32 +51,45 @@ class History extends React.Component {
       
         {/* Row for books  */}
         
+        <div className="row">
+          <div className="input-field col s12 m12 l11 offset-l1 filter-table">
+            <select>
+              <option value="All books">All books</option>
+              <option value="Returned books">Returned books</option>
+              <option value="Books Awaiting return confirmation">Books Awaiting return confirmation</option>
+              <option value="Pending Returns">Pending returns</option> 
+            </select>
+            <label>Filter table</label>
+          </div>
+        </div>
+        
         <div className="row borrowHistory">
           <div className="col s12 m12 l11 offset-l1">
             {this.state.loading 
               ?
                 <h3>Loading books...</h3>
               :
-              <table className="responsive-table centered highlight">
+              <table className="highlight centered">
                 <thead>
                   <tr>
                     <th>Book image</th>
                     <th>Book title</th>
                     <th>Author</th>
                     <th>Date Borrowed</th>
+                    <th>Expected Return Date</th>
                     <th>Action</th>
+
                   </tr>
                 </thead>
                 <tbody>
                   {this.props.fetchedUserBooks.map((book, id) =>
                   <tr key={book.id}>
-                    <td><img src={book.image} alt="Book cover"/></td>
-                    <td>{book.title}</td>
-                    <td>{book.author}</td>
-                    <td>{book.dateBorrowed}</td>
-                    <td>
-                      <button className="">Read</button> | <button className="">Return</button>
-                    </td>
+                    <td><img src={`/images/books/${book.book.image}`} alt="Book cover"/></td>
+                    <td>{book.book.title}</td>
+                    <td>{book.book.author}</td>
+                    <td>{book.dateborrowed}</td>
+                    <td>{book.expectedreturndate}</td>
+                    <td>{book.returnstatus ? this.borrowAgainBtn : this.actionBtn}</td>
                   </tr>
                   )} 
                   </tbody>

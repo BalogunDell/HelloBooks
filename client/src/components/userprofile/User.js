@@ -12,6 +12,8 @@ import Allbooks from './Allbooks/Allbooks';
 import UserDashboard from './Dashboard';
 import UserHistory from './History';
 import BookDetails from './bookDetails';
+import Borrowedbooks from './Borrowedbooks';
+import Profile from './profile';
 import * as userNavLinks from './userNavLinks';
 import * as UserActions from '../../Actions/userProfileAction';
 import * as bookActions from '../../Actions/booksAction';
@@ -79,7 +81,7 @@ class User extends React.Component {
       
     .catch(error =>{
       // Do some stuff is error
-      error.response.status === 401 ? this.setState({isAuthenticated:false}): ''
+      error.response.status === 401 || 500 ? this.setState({isAuthenticated:false}): console.log('me')
     })
 
     // Set all values needed
@@ -126,13 +128,15 @@ class User extends React.Component {
               <div className="col s12 m11 l12 offset-l1">
                 <div className="content-display">
                     {/* <h4>Welcome to Hello books</h4> */}
-                   <Route path="/user/dashboard" render={() => <UserDashboard/>}/> 
-                     <Route path="/user/books" render={() => <Allbooks 
+                    <Route path="/user/dashboard" render={() => <UserDashboard/>}/> 
+                    <Route path="/user/profile" render={() => <Profile/>}/>
+                    <Route path="/user/books" render={() => <Allbooks 
                      books = {this.props.retrievedBooks} 
                      path = {this.props.url}
                      getBookId = {this.getBookId}/>}/>  
                     <Route path="/user/bookdetails" render={() => <BookDetails book_id = {this.state.book_id}/>}/>
-                   <Route path="/user/history" render ={()=> <UserHistory userID = {this.userID}/>}/> 
+                    <Route path="/user/history" render ={()=> <UserHistory userID = {this.userID}/>}/> 
+                    <Route path="/user/borrowedbooks" render={() => <Borrowedbooks userID ={this.userID}/> }/>
                 </div>
               </div>
             </div>
