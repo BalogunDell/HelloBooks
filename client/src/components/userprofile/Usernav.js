@@ -27,7 +27,7 @@ const UserNav = ({ navLinks, linkIcons, path, userDetails, handleLogout }) => {
         <li id="dashboard"><div className="black white-text">A HEADER TEXT HERE</div></li>
         {/* <li className="divider"></li> */}
         <li><NavLink className="active" to={`${path}/dashboard`}>{navLinks[0]}<i className="material-icons white-text">{linkIcons[0]}</i></NavLink></li>
-       <li><NavLink className="active" to={`${path}/books`}>{navLinks[1]}<i className="material-icons white-text">{linkIcons[1]}</i></NavLink></li>
+       <li><NavLink className="active" to={`${path}/profile`}>{navLinks[1]}<i className="material-icons white-text">{linkIcons[1]}</i></NavLink></li>
         <li><NavLink className="active" to={`${path}/history`}>{navLinks[2]}<i className="material-icons white-text">{linkIcons[2]}</i></NavLink></li>
         <li><NavLink className="active" to={`${path}/borrowedbooks`}>{navLinks[3]}<i className="material-icons white-text">{linkIcons[3]}</i></NavLink></li>
         <li><NavLink className="active" to={`${path}/unreturnedbooks`}>{navLinks[4]}<i className="material-icons white-text">{linkIcons[4]}</i></NavLink></li>
