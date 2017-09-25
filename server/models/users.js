@@ -41,7 +41,9 @@ const user = (sequelize, DataTypes) => {
     email: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true,
+      unique: {
+        args: true,
+        msg: "A user with this email exists"},
       validate: {
         notEmpty: {
           args: true,
@@ -50,6 +52,24 @@ const user = (sequelize, DataTypes) => {
         isEmail: {
           args: true,
           msg: 'Field must contain a valid email address'
+        }
+      }
+    },
+    username: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: {
+        args: true,
+        msg: "Username taken, use another"
+      },
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: 'Username cannot be empty'
+        },
+        is: {
+          args: /(\D+)(\d+)/gi,
+          msg: 'Username must start with letter(s) and end with digit(s)'
         }
       }
     },

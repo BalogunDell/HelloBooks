@@ -27,7 +27,7 @@ class User {
         const token = helper.generateToken(user.dataValues);
         res.status(201).json({ responseData: {
           message: 'User created', 
-          userFirstname: user.firstname, 
+          username: user.username, 
           userID: user.id, 
           userRole: user.role, 
           image: user.image,
@@ -36,13 +36,7 @@ class User {
         });
       })
       .catch((error) => {
-        if (error.name === 'SequelizeValidationError') {
-          res.status(400).json({ message: error.errors[0].message });
-        } else if (error.name === 'SequelizeUniqueConstraintError') {
-          res.status(409).json({ message: 'A user with the email exists' });
-        } else {
-          res.json(error);
-        }
+        res.status(501).json({message: error.errors[0].message})
       });
   }
 
@@ -53,22 +47,22 @@ class User {
    * @returns { object } response
    */
   static signin(req, res) {
-    userModel.findOne({ where: { email: req.body.email } })
+    userModel.findOne({ where: { username: req.body.username } })
       .then((user) => {
         if (user && bcrypt.compareSync(req.body.password, user.dataValues.password)) {
           const token = helper.generateToken(user.dataValues);
           const responseData = { 
             message: 'signed in', 
             token, 
-            userFirstname: user.firstname, 
+            username: user.username, 
             userID: user.id, 
             userRole: user.role, 
             image: user.image };
           res.status(200).json({ responseData });
-        } else if (!req.body.email || !req.body.password) {
-          res.status(404).json({ message: 'Email and password is required' });
+        } else if (!req.body.username || !req.body.password) {
+          res.status(404).json({ message: 'Username and password is required' });
         } else {
-          res.status(404).json({ message: 'Invalid email or password' });
+          res.status(404).json({ message: 'Invalid username or password' });
         }
       })
       .catch(err => res.send(err));
@@ -174,7 +168,7 @@ class User {
         res.status(201).json({data: response[1]})
     })
     .catch(error => {
-      res.status(500).json({error})
+      res.status(501).json({message: error.errors[0].message})
     })
   }
 }
