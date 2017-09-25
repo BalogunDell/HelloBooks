@@ -29,3 +29,29 @@ export function failureMessage(message) {
   </div>
   )
 }
+
+export function membershipIconCreator(membershipLevel) {
+  switch(membershipLevel.toLowerCase()) {
+    case 'silver':
+      return (
+        <span>
+          <i className="material-icons green-text">star</i>
+          <i className="material-icons silver">star</i>
+        </span>
+      )
+    case 'bronze':
+      return (
+        <i className="material-icons black">star</i>
+      )
+    case 'gold': 
+      return (
+        <span>
+          <i className="material-icons yellow-text">star</i>
+          <i className="material-icons yellow-text">star</i>
+          <i className="material-icons yellow-text">star</i>
+        </span>
+      )
+    default: 
+      return 'Not a member'
+  }
+}

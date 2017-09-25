@@ -1,3 +1,4 @@
+import 'jquery'
 import '../assets/materialize/js/materialize.min';
 
 $(document).ready(function(){
@@ -9,6 +10,8 @@ $(document).ready(function(){
   
   // Initialize materialize select
   $('select').material_select();
+
+  // Show image overlay when profile image is hovered on
 
 });
 
