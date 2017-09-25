@@ -168,6 +168,15 @@ class User {
       })
     }
   }
+
+  static editProfile(req, res) {
+    userModel.update(req.body, {where: {id: req.body.userid}, individualHooks:true}).then(response => {
+        res.status(201).json({data: response[1]})
+    })
+    .catch(error => {
+      res.status(500).json({error})
+    })
+  }
 }
 
 export default User;

@@ -39,7 +39,9 @@ Router.route('/users/:userId/books')
   .put(Auth.verifyUser, bookController.returnBook);
 
 // User profile page
-Router.get('/users/:userId/', Auth.verifyUser, userController.profilePage);
+Router.route('/users/:userId/')
+.get(Auth.verifyUser, userController.profilePage)
+.put(Auth.verifyUser, userController.editProfile);
 
 
 // redirect every other address
