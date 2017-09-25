@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import $ from 'jquery';
 
 import * as bookActions from '../../Actions/booksAction';
 /**
@@ -12,7 +13,8 @@ class History extends React.Component {
 
     this.state = {
       userid: this.props.userID,
-      loading: false
+      loading: false,
+      selectedValue: ''
     }
 
     //  Set different buttons for return book and borrow again
@@ -22,9 +24,15 @@ class History extends React.Component {
 
     //  Bind methods for onclick of the buttons
     this.handleReturn = this.handleReturn.bind(this)
+    this.handleSelectChange = this.handleSelectChange.bind(this)
+
   }
 
   handleReturn(event) {
+    console.log(event.target.value)
+  }
+
+  handleSelectChange(event) {
     console.log(event.target.value)
   }
 
@@ -32,14 +40,21 @@ class History extends React.Component {
     this.setState({loading: true})
     this.props.getUserBooks().then(() => {
       this.setState({loading:false})
+
     })
     .catch(error => {
       console.log(error)
     })
   }
 
+  componentDidMount() {
+    $(document).ready(function()  {
+      $('select').material_select();
+  
+    });
+  }
+
   render() {
-    console.log(this.props.fetchedUserBooks)
     return(
       <div>
         {/* Row for header  */}
@@ -52,14 +67,14 @@ class History extends React.Component {
         {/* Row for books  */}
         
         <div className="row">
-          <div className="input-field col s12 m12 l11 offset-l1 filter-table">
-            <select>
-              <option value="All books">All books</option>
+          <div className="input-field col s12 m12 l3 offset-l1 filter-table">
+            <select value={this.state.selectedValue} onChange={this.handleSelectChange}>
+              <option value="">...</option> 
               <option value="Returned books">Returned books</option>
               <option value="Books Awaiting return confirmation">Books Awaiting return confirmation</option>
               <option value="Pending Returns">Pending returns</option> 
             </select>
-            <label>Filter table</label>
+            <label>Filter history table</label>
           </div>
         </div>
         

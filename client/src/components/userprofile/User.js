@@ -1,6 +1,8 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
 import { axios } from 'axios';
+import $ from 'jquery';
+
 import Details from './Details';
 import UserNav from './Usernav';
 import { Redirect, Link } from 'react-router-dom';
@@ -100,6 +102,15 @@ class User extends React.Component {
       this.setState({dataReady:true, profileData: nextprops.userDetails})
      }
      
+  }
+
+  componentDidMount() {
+  $(document).ready(function(){
+   $('.button-collapse').off('click').sideNav({
+    closeOnclick:true,
+    menuWidth: 280,
+    });
+  });
   }
 
 

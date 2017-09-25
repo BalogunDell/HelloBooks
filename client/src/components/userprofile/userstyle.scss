@@ -3,6 +3,10 @@
   padding: 0;
 }
 
+.toggle-nav {
+  cursor: pointer
+}
+
 #userprofile {
   background: $custom-color;
   .user-view-bg {
@@ -97,12 +101,8 @@
   }
 
   .filter-table {
-    background-color: black;
     margin-bottom: 4%;
-    select {
-      background-color: black;
-      width: 500px;
-    }
+    height:5px;
   }
 
   table {
@@ -111,4 +111,79 @@
         text-transform: uppercase;   
     }
   }
-  
+
+  .profile {
+    margin-top:10%;
+
+    .btn {
+      width: 55%;
+    }
+    
+    .profile-holder {
+      max-width: 580px;
+      height: 430px;
+      margin: auto;
+      box-shadow: 0 6px 12px 0 rgba(0,0,0,0.08) !important;
+      border-radius: 5px;
+      padding-top: 40px;
+      position: relative;
+      margin-top: 10px;
+    }
+
+    .details {
+    max-width: 394px;
+    margin: auto;
+    margin-top: 20px;
+    text-align: center;
+
+    .profile-image-holder {
+      max-width: 100px;
+      margin: 0 auto;
+      top: -55px;
+      left: 0;
+      right: 0;
+      position: absolute;
+
+      .change-image-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-color: rgba(0, 0, 0, 0.6);
+        width: 100px;
+        height: 100px;
+        text-align: center;
+        word-wrap: break-word;
+        color: white;
+        display: none;
+
+        i {
+          margin-top: 30%;
+        }
+
+        h6 {
+          padding: 0;
+          margin: 0;
+          font-size: 13px;
+        }
+      }
+    }
+    .change-password {
+      max-width: 300px;
+      background: white;
+      margin: auto;
+      margin-top: 30px;
+
+      form {
+        input {
+          width: 80%;
+          height: 30px;
+          margin: 0;
+        }
+
+        .btn {
+          width: 40%;
+        }
+      }
+    }
+  }
+}
