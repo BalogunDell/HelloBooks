@@ -113,21 +113,24 @@
   }
 
   .profile {
-    margin-top:10%;
+    margin-top:6%;
 
     .btn {
-      width: 55%;
+      width:60%;
+      font-size: 12px;
     }
     
     .profile-holder {
       max-width: 580px;
-      height: 430px;
       margin: auto;
       box-shadow: 0 6px 12px 0 rgba(0,0,0,0.08) !important;
       border-radius: 5px;
       padding-top: 40px;
       position: relative;
       margin-top: 10px;
+      padding-bottom: 50px;
+      transition: height 2s;
+      -webkit-transition: height 2s;
     }
 
     .details {
@@ -167,21 +170,26 @@
         }
       }
     }
+
+    table {
+     margin: auto;
+    }
     .change-password {
       max-width: 300px;
-      background: white;
       margin: auto;
       margin-top: 30px;
+
 
       form {
         input {
           width: 80%;
-          height: 30px;
+          height: 20px;
           margin: 0;
         }
 
         .btn {
-          width: 40%;
+          width: 100%;
+          // height: 50%;
         }
       }
     }

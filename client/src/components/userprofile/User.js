@@ -38,8 +38,9 @@ class User extends React.Component {
     this.returnBtn = <button className="btn waves-effect">Ready to return</button>
 
     // Set inital value for navigation links and icons 
-    this.navLinks = []
-    this.linkIcons = []
+    this.navLinks = [];
+    this.linkIcons = [];
+    this.linkTexts = [];
 
     // Set user id and type
     this.userID = '';
@@ -94,6 +95,7 @@ class User extends React.Component {
     // Assign link values based on usertype
     this.navLinks = this.userType === 'user' ?  userNavLinks.userLinks: userNavLinks.adminLinks
     this.linkIcons = this.userType === 'user' ? userNavLinks.userLinkIcons: userNavLinks.adminLinkIcons
+    this.linkTexts = this.userType === 'user' ? userNavLinks.userLinkText: userNavLinks.adminLinkText
 
   }
 
@@ -130,6 +132,7 @@ class User extends React.Component {
               <UserNav 
               navLinks = { this.navLinks }
               linkIcons = {this.linkIcons}
+              linkTexts = {this.linkTexts}
               path = {this.props.url}
               userDetails = {this.props.userDetails}
               handleLogout = {this.handleLogout}

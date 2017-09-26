@@ -1,7 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 import { membershipIconCreator } from './messages';
+import * as profileEditConst from './profileEditElements';
 
 class Profile extends React.Component {
   constructor(props) {
@@ -9,7 +11,13 @@ class Profile extends React.Component {
 
     this.state = {
       userData: this.props.userProfile,
-      editPassStatus:false,
+      viewProfile:false,
+      editBtn: false,
+      editPass: false,
+      editFirstname: false,
+      editLastname:false,
+      editUsername: false,
+      editEmail: false,
       newPassData: {
         currentPassword: '',
         newPassword: '',
@@ -19,19 +27,34 @@ class Profile extends React.Component {
 
     this.showChangePassForm = this.showChangePassForm.bind(this)
     this.hideChangePassForm = this.hideChangePassForm.bind(this)
+    this.EditProfileHandler = this.EditProfileHandler.bind(this)
+    this.editPassword = this.editPassword.bind(this)
   }
 
+  editPassword() {
+    this.setState({editPass: true, editBtn:true})
+  }
   showChangePassForm() {
-    return this.setState({editPassStatus:true})
+    return this.setState({viewProfile:true})
   } 
   
   hideChangePassForm(event) {
-    this.setState({editPassStatus:false})
+    this.setState({viewProfile:false})
     event.target.value = ''
   }
 
+
+  EditProfileHandler(){
+    console.log('hello')
+  }
+
+  componentDidMount() {
+    $(document).ready(()=> {
+      $('.modal').modal();
+    })
+  }
+
   render() {
-    console.log(this.state.userData)
     return (
       <div className="center profile">
         <div className="profile-holder">
@@ -53,38 +76,65 @@ class Profile extends React.Component {
               <h4>{`${this.state.userData.firstname} ${this.state.userData.lastname}`}</h4>
               <p>Joined: {this.state.userData.createdAt} | {this.state.userData.email}</p>
               <p>Member level: {membershipIconCreator(this.state.userData.membership)}</p>
-              {!this.state.editPassStatus
-              ?
-              <button className="btn waves-teal waves-effect" onClick={this.showChangePassForm}>Change Password</button>
-              :
-              ''
-              }
+              <div className="row">
+                <div className="col s12 l12">
+                  {!this.state.viewProfile
+                  ?
+                  <button className="btn waves-teal waves-effect" onClick={this.showChangePassForm}>View Full Profile</button>
+                  :
+                  ''
+                  }
+                </div>
+              </div>
             </div>
 
             {/* Form for profile update  */}
-            {this.state.editPassStatus 
+            {this.state.viewProfile 
             ?
-            <div className="change-password">
-              <form action="">
-                <div className="input-field col-s12 m12 l6">
-                  <input type="text" placeholder="Current password" id="currentPassword" className="validate"/>
-                </div>
+            <div>
+              <table>
+                <thead>
+                  <tr>
+                    <td><b>Profile Details</b></td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Firstname:</td>
+                    <td>{this.state.userData.firstname} </td>
+                  </tr>
 
-                <div className="input-field col-s12 m12 l6">
-                  <input type="text" placeholder="New Password" id="cnewPassword" className="form-control input-sm"/>
-                </div>
+                  <tr>
+                    <td>Lastname:</td>
+                    <td> {this.state.userData.lastname} </td>
+                  </tr>
 
-                <div className="input-field col-s12 m12 l6">
-                  <input type="text" placeholder="Confirm new password" id="confirmNewPassword" className="form-control input-sm"/>
-                </div>
+                  <tr>
+                    <td>Email:</td>
+                    <td> {this.state.userData.email} </td>
+                  </tr>
 
-                <div className="input-field col-s12 m12 l6">
-                  <button type="button" className="btn waves-effect waves-teal">SAVE</button>
-                  <button type="button" className="btn waves-effect waves-teal red" onClick={this.hideChangePassForm}>CANCEL</button>
-                </div>
-              </form> 
+                  <tr>
+                    <td>Username:</td>
+                    <td> {this.state.userData.username} </td>
+                  </tr>
+
+                  <tr>
+                    <td>Password:</td>
+                    <td> ***<i className="material-icons" onClick={this.editPassword}>edit</i></td>
+                  </tr>
+                </tbody>
+              </table>
+              <button className="btn waves-ripple waves-effect modal-trigger" disabled={this.state.editBtn}>EDIT</button>
             </div>
             :
+            ''
+            }
+
+            {this.state.editPass 
+            ?
+            <profileEditConst.editPasswordEle/>
+            : 
             ''
             }
           </div>

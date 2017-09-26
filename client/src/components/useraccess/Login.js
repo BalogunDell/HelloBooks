@@ -104,7 +104,7 @@ class Login extends React.Component {
 // DEFINE CONNECT PARAMETERS: **THEY ARE BOTH FUNCTIONS**//
 // ******************************************************//
 function mapStateToProps(state, ownProps){
-    let initialUserData = { email:'' , password:'' }
+    let initialUserData = { username:'' , password:'' }
   return {
     initialUserData: initialUserData
 

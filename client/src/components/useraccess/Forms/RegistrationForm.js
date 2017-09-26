@@ -38,9 +38,6 @@ const RegistrationForm  = ({ userData, handleSubmit, handleUserInput, error }) =
                 <label data-error="Invalid input">Firstname
                   <span>*</span>
                 </label>
-                
-                
-                {/* <p>{this.error}</p> */}
               </div>
 
               {/* Last name input  */}
@@ -51,6 +48,8 @@ const RegistrationForm  = ({ userData, handleSubmit, handleUserInput, error }) =
                 <input 
                   type="text" 
                   id="lastname" 
+                  required
+                  minLength="4"
                   name="lastname" 
                   value= {userData.lastname} 
                   onChange= {handleUserInput}
@@ -68,6 +67,8 @@ const RegistrationForm  = ({ userData, handleSubmit, handleUserInput, error }) =
                   type="text" 
                   id="username" 
                   name="username" 
+                  required
+                  minLength="4"
                   value= {userData.username}
                   onChange= {handleUserInput}
                 />
