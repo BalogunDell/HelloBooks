@@ -40,7 +40,7 @@ const UserNav = ({ navLinks, linkIcons, path, userDetails, handleLogout }) => {
             <div className="background user-view-bg">
             </div>
             <img src={profileImage} className="circle profilepix" alt=""/>
-            <span className="white-text username">Username: 'username here'</span>
+            <span className="white-text username">Username: {userDetails.username}</span>
             <span className="white-text email">Email: {userDetails.email}</span>
             <span className="white-text email">Membership: {userDetails.membership}</span>
           </div>

@@ -38,14 +38,14 @@ const LoginForm = ({ userData, handleLoginInput, loginHandler, error, isLoading 
                   <div className="row">
                     <div className="input-field s12">
                       <input 
-                      type="email" 
-                      id="email" 
-                      name="email"
-                      value = {userData.email}
+                      type="text" 
+                      id="username" 
+                      name="username"
+                      value = {userData.username}
                       onChange={handleLoginInput}
                       className="validate"
                       />
-                      <label data-error="Invalid Email" data-success="">Email <span>*</span></label>
+                      <label data-error={error} data-success="">Username <span>*</span></label>
                     </div>
                   </div>
                   
