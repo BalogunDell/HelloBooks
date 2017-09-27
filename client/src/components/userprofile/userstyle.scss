@@ -195,3 +195,49 @@
     }
   }
 }
+
+.admindashboard {
+  margin-bottom: 100px;
+
+  .bookslist {
+    table {
+      max-width: 100%;
+    }
+    th {
+      background-color: $custom-color;
+      color:white;
+    }
+
+    td {
+      button {
+        background-color: transparent;
+        border: none;
+      }
+    }
+
+    img {
+      max-height: 50px;
+      max-width: 50px;
+    }
+
+    i {
+      cursor: pointer;
+    }
+  }
+
+  table {
+    max-width: 450px;
+  }
+
+  .selectFilter {
+    margin-top: 6%;
+    max-width: 250px;
+
+    label {
+      font-size:18px;
+      font-weight: bold;
+      color: black
+    }
+  }
+
+}

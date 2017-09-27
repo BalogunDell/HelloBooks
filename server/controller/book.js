@@ -38,9 +38,8 @@ class Book {
    * @returns {void}
    */
   static deleteBook(req, res) {
-    console.log(req.body);
-    bookModel.destroy({ where: { id: req.body.id } }).then((book) => {
-      res.status(200).json({ message: 'Book deleted', data: book });
+    bookModel.destroy({ where: { id: req.body.id } }).then(() => {
+      res.status(200).json({ message: 'Book deleted' });
     }).catch((error) => {
       res.status(500).json({ message: 'Book Cannot be deleted', data: error });
     });
