@@ -26,11 +26,11 @@ Router.get('/users', Auth.verifyAdmin, userController.getAllUsers);
 
 Router.route('/books')
   .get(bookController.getBook)
-  .post(Auth.verifyAdmin, bookController.addBook)
-  .delete(Auth.verifyAdmin, bookController.deleteBook);
+  .post(Auth.verifyAdmin, bookController.addBook);
 Router.route('/books/:id')
   .put(Auth.verifyAdmin, bookController.modifyBook)
-  .get(Auth.verifyAdmin, bookController.getBookById);
+  .get(Auth.verifyAdmin, bookController.getBookById)
+  .delete(Auth.verifyAdmin, bookController.deleteBook);
 
 // Routes allow user borrow book, check for books not returned and return book
 Router.route('/users/:userId/books')
@@ -40,8 +40,8 @@ Router.route('/users/:userId/books')
 
 // User profile page
 Router.route('/users/:userId/')
-.get(Auth.verifyUser, userController.profilePage)
-.put(Auth.verifyUser, userController.editProfile);
+  .get(Auth.verifyUser, userController.profilePage)
+  .put(Auth.verifyUser, userController.editProfile);
 
 
 // redirect every other address
