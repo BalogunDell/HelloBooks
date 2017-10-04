@@ -115,8 +115,7 @@ const createBookForm = ({ loader, loaderText, error, success, createBookHandler,
 
             </div>
           </div>
-
-
+          
           <div className="row">
             <div className="input-field">
               <input type="submit" className="submitBtn waves-effect waves-teal green" />

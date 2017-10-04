@@ -3,8 +3,6 @@ import { connect } from 'react-redux';
 
 import * as bookActions from '../../../Actions/booksAction';
 import * as categoryActions from '../../../Actions/categoryAction';
-
-
 import CreateBookForm from '../adminSubComponents/createBookForm';
 
 class CreateBook extends React.Component {
@@ -21,8 +19,7 @@ class CreateBook extends React.Component {
       loader: false
       }
 
-      this.loaderText = <h6 className="green-text">Creating book...</h6>
-
+    this.loaderText = <h6 className="green-text">Creating book...</h6>
     this.handleInput = this.handleInput.bind(this);
     this.createBookHandler = this.createBookHandler.bind(this);
     this.imageUploadHandler = this.imageUploadHandler.bind(this);
