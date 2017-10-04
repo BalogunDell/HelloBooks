@@ -24,9 +24,9 @@ class Book {
         res.status(400).json({ message: 'One or more fields are empty' });
         // check if a duplicate request was made.
       } else if (error.name === 'SequelizeUniqueConstraintError') {
-        res.status(409).json({ message: 'A book with is ISBN already exists' });
+        res.status(409).json({ message: 'A book with this ISBN already exists' });
       } else {
-        res.send(error);
+        res.status(501).json({ error });
       }
     });
   }

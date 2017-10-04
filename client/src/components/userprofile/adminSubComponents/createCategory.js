@@ -10,6 +10,8 @@ class CreateCategoryModal extends React.Component {
     this.state = {
       newCategory: '',
       newCategoryError: '',
+      newCategoryErrorStatus: false,
+      newCategorySuccessStatus: false,
       newCategorySuccess: '',
       loader: false,
       disableSubmit: false
@@ -32,12 +34,18 @@ class CreateCategoryModal extends React.Component {
       this.setState({loader:false, 
         newCategoryError: '', 
         disableSubmit: false, 
+        newCategoryErrorStatus: false,
+        newCategorySuccessStatus:true,
         newCategorySuccess: 'Category has been created'})
     })
     .catch(error => {
-      this.setState({loader:false, 
+      console.log(error)
+      this.setState({
+        loader:false, 
         newCategoryError: error.response.data.message, 
-        disableSubmit: false});
+        disableSubmit: false,
+        newCategorySuccessStatus: false,
+        newCategoryErrorStatus: true });
     });
   }
 
@@ -63,9 +71,25 @@ class CreateCategoryModal extends React.Component {
       
                   <div className="row">
                     <div className="center">
+                      
                       { this.state.loader ? this.loaderText : null }
-                      <div className="red-text"> {this.state.newCategoryError}</div>
-                      <div className="green-text">{this.state.newCategorySuccess}</div>
+                      
+                      {/* Check if error status is true, render error message */}
+                      { this.state.newCategoryErrorStatus
+                      ?
+                        <div className="red-text"> {this.state.newCategoryError}</div>
+                      :
+                        null
+                      }
+
+                      {/* Check if success status is true, render success message */}
+                      {this.state.newCategorySuccessStatus
+                      ?
+                        <div className="green-text">{this.state.newCategorySuccess}</div>
+                      :
+                      null
+                      }
+                      
                     </div>
                   </div>
 

@@ -99,7 +99,7 @@ class bookDetails extends React.Component {
 
                     <tr>
                       <td>Catergory</td>
-                       <td>{this.state.book.category}</td> 
+                       <td>{this.state.book.category.category}</td> 
                     </tr>
 
                     <tr>
