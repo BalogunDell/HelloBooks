@@ -103,10 +103,10 @@ export function createBook(bookData) {
   return dispatch => {
     return axios.post(`${apiRoutes.books}` , bookData, { headers: {'Authorization': getUserDetails().savedToken}})
     .then(response => {
-      console.log(response);
+      dispatch(createBookAction(response.data.message));
     })
     .catch(error=> {
-      console.log(error)
+      throw (error);
     })
   }
 }
