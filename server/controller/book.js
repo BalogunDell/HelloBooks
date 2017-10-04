@@ -51,10 +51,10 @@ class Book {
    * @returns { object } resposnse
    */
   static getBook(req, res) {
-    bookModel.findAll().then((response) => {
+    bookModel.findAll({ include: { model: categoryModel } }).then((response) => {
       res.status(200).json({ books: response });
     }).catch((error) => {
-      res.send(404).json({ message: error.message });
+      res.status(404).json({ message: error.message });
     });
   }
 
@@ -189,6 +189,67 @@ class Book {
         res.status(409).json({ message: error.errors[0].message });
       });
   }
+
+  /**
+   * 
+   * @param { object } req
+   * @param { object } res
+   * @return { object }
+   */
+  static getCategories(req, res) {
+    categoryModel.findAll()
+      .then((categories) => {
+        if (categories) {
+          res.status(200).json({ categories });
+        }
+      })
+      .catch((error) => {
+        res.status(409).json({ message: error.errors[0].message });
+      });
+  }
+
+  /**
+   * 
+   * @param { object } req
+   * @param { object } res
+   * @return { object } 
+   */
+  static deleteCategory(req, res) {
+    categoryModel.findById(req.body.id)
+      .then((response) => {
+        if (response) {
+          categoryModel.destroy({ where: { id: req.body.id } }).then(() => {
+            res.status(201).json({ message: 'Category deleted' });
+          })
+            .catch((error) => {
+              res.status(501).json({ error: error.errors[0].mess });
+            });
+        } else {
+          res.status(404).json({ message: 'Category does not exist' });
+        }
+      })
+      .catch((error) => {
+        res.status(501).json({ error: error.errors[0].message });
+      });
+  }
+
+  /**
+   * 
+   * @param { object } req
+   * @param { object } res
+   * @return { object } 
+   */
+  // static editCategory(req, res) {
+  //   categoryModel.update({ category: req.body.category { where: { id: req.body.id } } })
+  //     .then((response) => {
+  //       if (response) {
+  //         res.status(200).json({ message: 'Category deleted' });
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       res.status(409).json({ message: error.errors[0].message });
+  //     });
+  // }
 }
 
 export default Book;

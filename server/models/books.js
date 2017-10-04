@@ -111,20 +111,6 @@ const book = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false
     },
-    category: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notEmpty: {
-          args: true,
-          msg: 'category cannot be empty'
-        },
-        is: {
-          args: /(\w)/i,
-          msg: 'category only contain strings'
-        }
-      }
-    },
     image: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -153,10 +139,9 @@ const book = (sequelize, DataTypes) => {
       foreignKey: 'bookid',
     });
     books.belongsTo(model.categories, {
-      foreignKey: 'categoryid',
-      as: 'categories'
+      foreignKey: 'categoryid'
     });
-}
+  };
   return books;
 };
 export default book;

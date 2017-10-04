@@ -18,6 +18,8 @@ import Borrowedbooks from './Borrowedbooks';
 import Profile from './profile';
 
 import AdminDashboard from './admin/Dashboard';
+import CreateBook from './admin/createBook';
+
 import * as userNavLinks from './userNavLinks';
 import * as UserActions from '../../Actions/userProfileAction';
 import * as bookActions from '../../Actions/booksAction';
@@ -77,7 +79,7 @@ class User extends React.Component {
     }
 
     // Fetch all books
-    this.props.loadAllbooks()
+    this.props.loadAllbooks();
 
      // Get user profile before mount
     this.props.userProfile(this.userID).then(()=> {
@@ -159,11 +161,11 @@ class User extends React.Component {
                   <div className="content-display">
                     {/* <h4>Welcome to Hello books</h4> */}
                     <Route path="/user/dashboard" render={() => <AdminDashboard/>}/> 
-                    <Route path="/user/profile" render={() => <Profile/>}/>
                     <Route path="/user/books" render={() => <Allbooks 
                      books = {this.props.retrievedBooks} 
                      path = {this.props.url}
-                     getBookId = {this.getBookId}/>}/>  
+                     getBookId = {this.getBookId}/>}/>
+                    <Route path="/user/upload" render={() => <CreateBook/>}/> 
                     <Route path="/user/bookdetails" render={() => <BookDetails book_id = {this.state.book_id}/>}/>
                     <Route path="/user/history" render ={()=> <UserHistory userID = {this.userID}/>}/> 
                     <Route path="/user/borrowedbooks" render={() => <Borrowedbooks userID ={this.userID}/> }/>

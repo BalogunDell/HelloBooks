@@ -7,7 +7,6 @@ const getAllBooks = (state = {}, action) => {
         ...state, 
         books: action.books
       }
-      
       case types.BORROW_BOOK: 
         return {
           ...state, 
@@ -18,6 +17,10 @@ const getAllBooks = (state = {}, action) => {
         return {
           ...state, 
           fetchedUserBooks: action.fetchedBooks
+        }
+      case types.CREATE_BOOK: 
+        return {
+          ...state, createbook: action.bookData
         }
     default:
       return state
