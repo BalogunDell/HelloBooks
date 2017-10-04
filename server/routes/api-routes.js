@@ -16,8 +16,14 @@ Router.get('/', (req, res) => {
 Router.post('/users/signup', userController.signup);
 Router.post('/users/signin', userController.signin);
 
-// user feedback route
-Router.post('/users/category', Auth.verifyAdmin, bookController.addCategory);
+// Add and fetch categories
+Router.post('/newcategory', Auth.verifyAdmin, bookController.addCategory);
+Router.get('/categories', Auth.verifyAdmin, bookController.getCategories);
+
+// Delete and edit categories
+Router.route('/category')
+  .delete(Auth.verifyAdmin, bookController.deleteCategory);
+// .put(Auth.verifyAdmin, bookController.editCategory);
 
 
 // get all users - Admin action

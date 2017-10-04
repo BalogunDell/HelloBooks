@@ -241,3 +241,69 @@
   }
 
 }
+
+.createBookForm {
+  max-width: 580px;
+  margin: auto;
+  box-shadow: 0 6px 12px 0 rgba(0,0,0,0.08) !important;
+  border-radius: 5px;
+  padding-top: 40px;
+  margin-top: 10px;
+  padding-bottom: 50px;
+  transition: height 2s;
+  -webkit-transition: height 2s;
+
+  .create-book {
+    margin: 0 auto;
+    max-width: 400px;
+  }
+  .create-form {
+    max-width: 300px;
+    margin: 0 auto;
+  }
+
+  form {
+
+    *.row {
+      margin-bottom: 0;
+    }
+
+      label {
+        span {
+        color: red;
+      }
+    }
+  
+    #newCategory {
+      color: black;
+      font-size: 10px;
+      float: right;
+      cursor: pointer;
+      color: $custom-color
+    }
+
+     #newCategory:hover {
+      text-decoration: underline;
+    }
+
+    input {
+      height: 50px;
+    }
+    textarea {
+      padding: 0;
+    }
+    .btn {
+      max-width: 50%;
+      font-size: 13px;
+      span {
+        color:white;
+      }
+    }
+
+    .submitBtn {
+        width: 100%;
+        border: none;
+        color: white;
+    }
+  }
+}

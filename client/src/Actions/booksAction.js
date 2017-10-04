@@ -88,4 +88,25 @@ export function getUserBooks() {
 }
 
 
+// ********************************************************** //
+// **DEFINE ACTION CREATOR & MAKE API CALL FOR CREATE BOOKS** //
+// ********************************************************** //
 
+export function createBookAction(bookData) {
+  return {
+    type: types.CREATE_BOOK,
+    bookData
+  }
+} 
+
+export function createBook(bookData) {
+  return dispatch => {
+    return axios.post(`${apiRoutes.books}` , bookData, { headers: {'Authorization': getUserDetails().savedToken}})
+    .then(response => {
+      console.log(response);
+    })
+    .catch(error=> {
+      console.log(error)
+    })
+  }
+}

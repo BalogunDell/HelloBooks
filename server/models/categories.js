@@ -27,17 +27,13 @@ const categoriesModel = (sequelize, DataTypes) => {
         }
       }
     }
-  }, {
-    classMethods: {
-      associate: (model) => {
-        model.categories.hasMany(model.books, {
-          foreignKey: 'categoryid',
-          as: 'categories'
-        });
-      }
-    }
   });
+  categories.associate = (model) => {
+    categories.hasMany(model.books, {
+      foreignKey: 'categoryid'
+    });
+  };
+
   return categories;
 };
-
 export default categoriesModel;
