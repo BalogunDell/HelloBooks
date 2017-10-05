@@ -54,6 +54,7 @@ class bookDetails extends React.Component {
   }
 
   render() {
+    console.log(this.props.books);
     const processing = <h6 className="center">Processing Request...</h6>
     const successMessage = messages.successMessage('You have successfully borrowed this book')
     const failureMessage = messages.failureMessage(this.state.borrowError);

@@ -33,6 +33,7 @@ Router.get('/users', Auth.verifyAdmin, userController.getAllUsers);
 Router.route('/books')
   .get(bookController.getBook)
   .post(Auth.verifyAdmin, bookController.addBook);
+
 Router.route('/books/:id')
   .put(Auth.verifyAdmin, bookController.modifyBook)
   .get(Auth.verifyAdmin, bookController.getBookById)

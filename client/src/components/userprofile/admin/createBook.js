@@ -15,8 +15,13 @@ class CreateBook extends React.Component {
       imageHeight: 0,
       imageWidth: 0,
       error: '',
+      errorStatus: false,
       success: '',
-      loader: false
+      successStatus: false,
+      loader: false,
+      disableBtn: false,
+      showHiddinBtns: false,
+
       }
 
     this.loaderText = <h6 className="green-text">Creating book...</h6>
@@ -34,17 +39,33 @@ class CreateBook extends React.Component {
 
   createBookHandler(event) {
     event.preventDefault();
-    this.setState({loader:true});
+    this.setState({loader:true, disableBtn:true});
     if(this.state.imageHeight < 300 || this.state.imageWidth < 250) {
-      this.setState({loader: false, error: "Image is too small. Allowed dimension is 300 x 250 pixels."});
+      this.setState({
+        loader: false, 
+        error: "Image is too small. Allowed dimension is 300 x 250 pixels.",
+        errorStatus: true,
+        successStatus: false,
+        disableBtn:false });
     } else {
-      this.setState({loader:true});
+      this.setState({loader:true, disableBtn:true});
       this.props.createBook(this.state.bookData).then(() => {
-        this.setState({loader: false, success: "Book has been created."});
+        this.setState({loader: false,
+          successStatus:true,
+          disableBtn:true,
+          errorStatus:false,
+          showHiddinBtns:true,
+          success: "Book has been created."});
+          console.log(this.state.showHiddinBtns)
 
       })
       .catch(error => {
-        this.setState({loader: false, error: error.response.data.message});
+        this.setState({
+          loader: false,
+          successStatus:false,
+          errorStatus:true,
+          disableBtn:true,
+          error: error.response.data.message});
       })
     }
   }
@@ -96,7 +117,11 @@ class CreateBook extends React.Component {
               error= {this.state.error}
               success= {this.state.success}
               loader={this.state.loader}
-              loaderText= {this.loaderText}/>
+              loaderText= {this.loaderText}
+              successStatus ={this.state.successStatus}
+              errorStatus = {this.state.errorStatus}
+              showHiddinBtns={this.state.showHiddinBtns}
+              disableBtn= {this.disableBtn}/>
             </div>
         </div>
       </div>
