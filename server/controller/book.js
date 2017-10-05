@@ -1,3 +1,4 @@
+import fs from 'fs';
 import model from '../models';
 
 const bookModel = model.books;

@@ -1,5 +1,6 @@
 import moment from 'moment';
 import jwt from 'jsonwebtoken';
+import multer from 'multer';
 import model from '../models';
 import util from '../utils/limits';
 

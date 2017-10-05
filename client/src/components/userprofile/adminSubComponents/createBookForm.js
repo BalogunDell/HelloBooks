@@ -1,13 +1,13 @@
 import React from 'react';
-import map from 'lodash/map';
+import { Link } from 'react-router-dom';
 
 import CreateCategoryModal from './createCategory';
 
-const createBookForm = ({ loader, loaderText, error, success, createBookHandler, handleInput, initialData, createCategory, loadedCategories, imageUploadHandler }) => {
+const createBookForm = ({disableBtn, showHiddenBtns,loader, loaderText, error, successStatus, errorStatus, success, createBookHandler, handleInput, initialData, createCategory, loadedCategories, imageUploadHandler }) => {
 
   const selectOptions = loadedCategories.map((val, key) =>
     <option key={val.id} value={val.category}>{val.category}</option>);
-
+  
   return (
     <div className="createBookForm">
       <div>
@@ -95,8 +95,8 @@ const createBookForm = ({ loader, loaderText, error, success, createBookHandler,
           </div>
 
           <div className="row">
-            <div className="file-field input-field">
-              <div className="btn silver">
+            <div className="file-field input-field uploadImage">
+              <div className="btn">
                 <span><i className="material-icons">add_a_photo</i></span>
                 <input type="file" name="image" id="bookImage" accept=".jpg" onChange={imageUploadHandler} />
               </div>
@@ -110,15 +110,25 @@ const createBookForm = ({ loader, loaderText, error, success, createBookHandler,
           <div className="row">
             <div className="input-field center">
               { loader ? loaderText : null }
-              { error ? <h6 className="red-text">{error}</h6>: null }
-              { success ? <h6 className="green-text">{success}</h6>: null }
+              { errorStatus ? <h6 className="red-text">{error}</h6>: null }
+              { successStatus ? <h6 className="green-text">{success}</h6>: null }
 
             </div>
           </div>
           
           <div className="row">
             <div className="input-field">
-              <input type="submit" className="submitBtn waves-effect waves-teal green" />
+              { showHiddenBtns 
+               ? 
+                <div className="row hiddenBtns">
+                  <div className="input-field col s12 m6 l12">
+                    <Link to="/user/books"className="btn custom waves-effect waves-teal">View Books</Link>
+                  </div>
+                </div>
+                :
+                <input type="submit" className="submitBtn waves-effect waves-teal custom" 
+                disabled= {disableBtn}/>
+              }
             </div>
           </div>
         </form>
@@ -134,7 +144,9 @@ createBookHandler: React.PropTypes.func.isRequired,
 handleInput: React.PropTypes.func.isRequired,
 initialData: React.PropTypes.object.isRequired,
 loadedCategories: React.PropTypes.array.isRequired,
-imageUploadHandler: React.PropTypes.func.isRequired
+imageUploadHandler: React.PropTypes.func.isRequired,
+errorStatus: React.PropTypes.bool,
+successStatus: React.PropTypes.bool
 
 }
 
