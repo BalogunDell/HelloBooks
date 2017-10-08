@@ -85,6 +85,7 @@ const createBookForm = ({disableBtn, showHiddenBtns,loader, loaderText, error, s
 
             <div className="input-field col s12 m12 l6">
               <select name="categoryid" value={initialData.categoryid} onChange={handleInput}>
+                <option value="...">Select a category</option>
                 { loadedCategories.map((val, key) => {                  
                   return (<option key={val.id} value={val.id}>{val.category}</option>)
                 })

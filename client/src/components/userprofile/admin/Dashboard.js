@@ -13,6 +13,8 @@ class Dashboard extends React.Component {
 
     this.state = {
       selectDefaultValue: 'All books',
+      books: [],
+      bookCount: 0
     };
 
     this.handleBookEdit = this.handleBookEdit.bind(this);
@@ -29,14 +31,9 @@ class Dashboard extends React.Component {
   }
 
   componentDidMount() {
-    $(document).ready(()=> {
-      $('select').material_select();
-    });
-  }
-
-
-  componentWillMount() {
+    $('select').material_select();
     this.props.getAllBooks().then(()=> {
+      this.setState({books: this.props.allbooks, bookCount: this.props.allbooks.length});
     })
     .catch(error => {
       console.log(error)
@@ -46,10 +43,10 @@ class Dashboard extends React.Component {
   render() {
     return(
         <div className="admindashboard col s12 m12 l11 offset-l1">
-          <SummaryTable bookcount = {this.props.allbooks}/>  
+          <SummaryTable bookcount = {this.state.bookCount}/>  
           <SelectFilter handleSelectChange={this.handleSelectChange}
           selectDefaultValue = {this.state.selectDefaultValue}/>
-          <BooksList allbooks = {this.props.allbooks}
+          <BooksList allbooks = {this.state.books}
           handleBookDelete = {this.handleBookDelete}
           handleBookEdit = {this.handleBookEdit}
           />

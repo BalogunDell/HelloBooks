@@ -18,7 +18,7 @@ const summaryTable = ({bookcount}) => {
             <tbody>
               <tr>
                 <td>Total Books in Library</td>
-                <td>{bookcount.length}</td>
+                <td>{bookcount}</td>
               </tr>
 
               <tr>

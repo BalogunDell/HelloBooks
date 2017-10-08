@@ -20,14 +20,15 @@ const booksList = ({allbooks, handleBookDelete, handleBookEdit}) => {
            {allbooks.map((book, id) => 
             <tr key={book.id}>
               <td>{book.isbn}</td>
-              <td><img src={`/images/books/${book.image}`}/></td>
+              <td><img src={book.image}/></td>
               <td>{book.title}</td>
               <td>{book.author}</td>
-              <td>{book.category}</td>
+              <td>{book.category.category}</td>
               <td>{book.quantity}</td>
               <td>{book.pages}</td>
               <td><button value={book.id} onClick={handleBookEdit} className="material-icons green-text">edit</button>
               <button value={book.id} onClick={handleBookDelete} className="material-icons red-text">delete</button>
+              <button value={book.id} onClick={handleBookDelete} className="material-icons green-text">zoom_in</button>
               </td>
             </tr>
             )}

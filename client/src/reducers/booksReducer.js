@@ -16,11 +16,23 @@ const getAllBooks = (state = {}, action) => {
       case types.FETCTH_USER_BOOKS: 
         return {
           ...state, 
-          fetchedUserBooks: action.fetchedBooks
+          fetchedBooks: action.fetchedBooks
         }
-      case types.CREATE_BOOK: 
+      case types.CREATE_BOOK:
         return {
           ...state, createbook: action.bookData
+        }
+      case types.SAVE_IMAGE:
+        return {
+          ...state, ...action.image
+        }
+      case types.RETURN_BOOK:
+        return {
+          ...state, returnBookData: action.bookid
+        }
+      case types.GET_BOOK_ID:
+        return {
+          ...state, currentBookId: action.bookid
         }
     default:
       return state

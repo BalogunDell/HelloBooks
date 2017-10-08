@@ -10,7 +10,7 @@ module.exports = {
         description: 'the books does this and that',
         quantity: 6,
         categoryid: 1,
-        image: 'book1.jpg',
+        image: 'http://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book22_ase4mm.jpg',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -23,7 +23,7 @@ module.exports = {
         description: 'the books does this and that',
         quantity: 3,
         categoryid: 2,
-        image: 'book2.jpg',
+        image: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -36,7 +36,7 @@ module.exports = {
         description: 'the books does this and that',
         quantity: 32,
         categoryid: 3,
-        image: 'book3.jpg',
+        image: 'http://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book5_zyqyv1.jpg',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -49,7 +49,7 @@ module.exports = {
         description: 'the books does this and that',
         quantity: 15,
         categoryid: 4,
-        image: 'book4.jpg',
+        image: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book4_pfdh3s.jpg',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -62,14 +62,27 @@ module.exports = {
         description: 'the books does this and that',
         quantity: 5,
         categoryid: 5,
-        image: 'book5.jpg',
+        image: 'http://res.cloudinary.com/djvjxp2am/image/upload/v1507295977/book3_thj6nk.jpg',
         createdAt: new Date(),
         updatedAt: new Date()
       },
+      {
+        isbn: '#7769',
+        title: 'Angular Relationships',
+        author: 'Tom Cruise',
+        pages: 210,
+        year: 2009,
+        description: 'Learn angular 2 and all of its basics with this wonderful book by Tom Cruise. Move from novice to professional in no time.',
+        quantity: 5,
+        categoryid: 6,
+        image: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295977/book1_mjwwlq.jpg',
+        createdAt: new Date(),
+        updatedAt: new Date()
+      }
     ], { individualHooks: true });
   },
 
   down(queryInterface) {
-    return queryInterface.bulkDelete('users', null, {});
+    return queryInterface.bulkDelete('books', null, {});
   }
 };

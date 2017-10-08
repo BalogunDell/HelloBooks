@@ -166,9 +166,27 @@ class Book {
             message: 'This book is not in your latest borrow history' });
         } else {
           borrowedBooks.update({ returnstatus: true },
-            { where: { id: response.dataValues.id } }).then(() => {
-            res.status(200).json({ message: 'Book has been returned' });
-          });
+            { where: { id: response.dataValues.id } })
+            .then((feedback) => {
+              if (feedback) {
+                bookModel.findById(req.body.bookid)
+                  .then((foundBook) => {
+                    bookModel.update({ quantity: foundBook.dataValues.quantity + 1 },
+                      { where: { id: req.body.bookid } })
+                      .then((updated) => {
+                        if (updated) {
+                          res.status(201).json({ message: 'Book has been returned' });
+                        }
+                      })
+                      .catch((error) => {
+                        res.status(501).json({ error });
+                      });
+                  })
+                  .catch((error) => {
+                    res.status(501).json({ error });
+                  });
+              }
+            });
         }
       });
   }
@@ -177,7 +195,7 @@ class Book {
    * 
    * @param { object } req
    * @param { object } res
-   * @return { object }
+   * @return { object } object
    */
   static addCategory(req, res) {
     categoryModel.create(req.body)
@@ -195,7 +213,7 @@ class Book {
    * 
    * @param { object } req
    * @param { object } res
-   * @return { object }
+   * @return { object } object
    */
   static getCategories(req, res) {
     categoryModel.findAll()
@@ -213,7 +231,7 @@ class Book {
    * 
    * @param { object } req
    * @param { object } res
-   * @return { object } 
+   * @return { object } object
    */
   static deleteCategory(req, res) {
     categoryModel.findById(req.body.id)

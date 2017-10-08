@@ -12,7 +12,7 @@ class bookDetails extends React.Component {
     super(props);
 
     this.state = {
-      book_id: this.props.book_id,
+      book_id: this.props.currentBookId,
       books: this.props.books,
       book: [],
       dataReady: false,
@@ -35,7 +35,9 @@ class bookDetails extends React.Component {
       this.setState({
         borrowBookSuccess: true,
         borrowErrorStatus:false, 
-        processingRequest: false, 
+        processingRequest: false,
+        borrowError: '',
+        disableBtn: true,
         borrowBookSuccessMessage: this.props.borrowBookSuccess
       })
     })
@@ -53,8 +55,10 @@ class bookDetails extends React.Component {
     this.setState({book: filteredBook[0], dataReady:false})
   }
 
+
+
   render() {
-    console.log(this.props.books);
+    console.log(this.props.currentBookId)
     const processing = <h6 className="center">Processing Request...</h6>
     const successMessage = messages.successMessage('You have successfully borrowed this book')
     const failureMessage = messages.failureMessage(this.state.borrowError);
@@ -77,7 +81,7 @@ class bookDetails extends React.Component {
 
           <div className="row">
             <div className="col s12 m12 l6 offset-4 center">
-               <img src= {`/images/books/${this.state.book.image}`} alt={this.state.book.title} className="responsive-img"/>  
+               <img src= {this.state.book.image} alt={this.state.book.title} className="responsive-img"/>  
               {/* <ul><li>Helo</li></ul> */}
             </div>
 
@@ -141,13 +145,23 @@ class bookDetails extends React.Component {
                         <td><button className="btn waves-teal waves-effect" 
                         onClick={this.handleBorrow} disabled={this.state.disableBtn}>BORROW</button></td>
                       </tr>
-                      {!this.state.borrowErrorStatus 
-                      ? null 
-                      : 
-                        <tr>
+                      {this.state.borrowErrorStatus 
+                      ? <tr>
                           <td><button className="btn waves-teal waves-effect" 
                           ><Link to="/user/books">Back to library</Link></button></td>
+                        </tr> 
+                      :
+                      null 
+                      }
+                      
+                      {this.state.borrowSuccessStatus
+                        ?
+                        <tr>
+                          <td><button className="btn waves-teal waves-effect" 
+                          ><Link to="/user/history">View history</Link></button></td>
                         </tr>
+                        :
+                        null
                       }
                     </tbody>
                   </table>
@@ -167,7 +181,8 @@ class bookDetails extends React.Component {
 
 function mapStateToProps (state, ownProps) {
   return {
-    books: state.books.books
+    books: state.books.books,
+    currentBookId: state.books.currentBookId
 
   }
 }

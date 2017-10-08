@@ -35,7 +35,6 @@ class User extends React.Component {
       redirect: false,
       userData: this.props.userData,
       dataReady: false,
-      book_id: 0
     }
 
     this.readBtn = <button className="btn waves-effect">Read</button>
@@ -51,9 +50,8 @@ class User extends React.Component {
     this.userType='';
 
 
-    // Bind logout, book details method to this
+    // Bind logout method to this
     this.handleLogout = this.handleLogout.bind(this)
-    this.getBookId = this.getBookId.bind(this)
   }
 
 
@@ -64,9 +62,6 @@ class User extends React.Component {
     localStorage.clear();
   }
 
-  getBookId(event) {
-    this.state.book_id = event.target.value
-  }
 
 // *********************************************************//
 // PERFORM ALL NECESSARY OPERATIONS BEFORE COMPONENT MOUNTS //
@@ -78,8 +73,6 @@ class User extends React.Component {
       return this.setState({isAuthenticated: false})
     }
 
-    // Fetch all books
-    this.props.loadAllbooks();
 
      // Get user profile before mount
     this.props.userProfile(this.userID).then(()=> {
@@ -188,14 +181,12 @@ function mapStateToProps(state, ownProps) {
     isAuthenticated: state.userAccess.isAuthenticated,
     userDetails: state.userProfile,
     url: ownProps.match.path,
-    retrievedBooks: state.books.books,
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     userProfile: (userID) => dispatch(UserActions.fetchUserTrigger(userID)),
-    loadAllbooks: () => dispatch(bookActions.loadAllbooks())
   }
 }
 

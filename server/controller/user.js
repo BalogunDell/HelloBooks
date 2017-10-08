@@ -26,17 +26,17 @@ class User {
       .then((user) => {
         const token = helper.generateToken(user.dataValues);
         res.status(201).json({ responseData: {
-          message: 'User created', 
-          username: user.username, 
-          userID: user.id, 
-          userRole: user.role, 
+          message: 'User created',
+          username: user.username,
+          userID: user.id,
+          userRole: user.role,
           image: user.image,
           token
         }
         });
       })
       .catch((error) => {
-        res.status(501).json({message: error.errors[0].message})
+        res.status(501).json({ message: error.errors[0].message });
       });
   }
 
@@ -51,12 +51,12 @@ class User {
       .then((user) => {
         if (user && bcrypt.compareSync(req.body.password, user.dataValues.password)) {
           const token = helper.generateToken(user.dataValues);
-          const responseData = { 
-            message: 'signed in', 
-            token, 
-            username: user.username, 
-            userID: user.id, 
-            userRole: user.role, 
+          const responseData = {
+            message: 'signed in',
+            token,
+            username: user.username,
+            userID: user.id,
+            userRole: user.role,
             image: user.image };
           res.status(200).json({ responseData });
         } else if (!req.body.username || !req.body.password) {
@@ -75,10 +75,10 @@ class User {
    * @returns { void }
    */
   static getUserBooks(req, res) {
-    const returnStatus = req.query.returned;
+    const returnStatus = req.query;
     const query = {};
 
-    if (returnStatus === undefined) {
+    if (returnStatus === {}) {
       query.where = {
         userid: req.body.userid
       };
@@ -98,12 +98,12 @@ class User {
       };
     }
 
-    borrowedBookModel.findAll({query, include: [{ model: booksModel }] })
+    borrowedBookModel.findAll({ query, include: [{ model: booksModel }] })
       .then((response) => {
-        if(response.length < 1) {
-        res.status(200).json({ message: 'You have no books yet' });
+        if (response.length < 1) {
+          res.status(200).json({ message: 'You have no books yet' });
         } else {
-          res.status(200).json({ books: response });
+          res.status(200).json({ response });
         }
       }).catch((error) => {
         res.status(404).json({ message: error });
@@ -157,19 +157,25 @@ class User {
         .json({ message: 'Invalid/Expired token' });
       // other implementations
     } else {
-      userModel.findById(req.body.userid).then(user => {
-        res.send(user)
-      })
+      userModel.findById(req.body.userid).then((user) => {
+        res.send(user);
+      });
     }
   }
 
+  /**
+   * 
+   * @param { object } req
+   * @param { object } res
+   * @returns {object} object
+   */
   static editProfile(req, res) {
-    userModel.update(req.body, {where: {id: req.body.userid}, individualHooks:true}).then(response => {
-        res.status(201).json({data: response[1]})
+    userModel.update(req.body, { where: { id: req.body.userid }, individualHooks: true }).then((response) => {
+      res.status(201).json({ data: response[1] });
     })
-    .catch(error => {
-      res.status(501).json({message: error.errors[0].message})
-    })
+      .catch((error) => {
+        res.status(501).json({ message: error.errors[0].message });
+      });
   }
 }
 

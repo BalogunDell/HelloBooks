@@ -21,6 +21,7 @@ class CreateBook extends React.Component {
       loader: false,
       disableBtn: false,
       showHiddinBtns: false,
+      tempImageName: '',
 
       }
 
@@ -39,6 +40,7 @@ class CreateBook extends React.Component {
 
   createBookHandler(event) {
     event.preventDefault();
+
     this.setState({loader:true, disableBtn:true});
     if(this.state.imageHeight < 300 || this.state.imageWidth < 250) {
       this.setState({
@@ -47,26 +49,35 @@ class CreateBook extends React.Component {
         errorStatus: true,
         successStatus: false,
         disableBtn:false });
-    } else {
+      } 
+    else {
       this.setState({loader:true, disableBtn:true});
-      this.props.createBook(this.state.bookData).then(() => {
-        this.setState({loader: false,
-          successStatus:true,
-          disableBtn:true,
-          errorStatus:false,
-          showHiddinBtns:true,
-          success: "Book has been created."});
-          console.log(this.state.showHiddinBtns)
 
+        // save image to cloudinary
+      this.props.saveImageToCloudinary(this.state.tempImageName)
+      .then(() => {
+        this.setState({bookData: {...this.state.bookData, image: this.props.imageUrl}});
+        this.props.createBook(this.state.bookData).then(() => {
+          this.setState({loader: false,
+            successStatus:true,
+            disableBtn:true,
+            errorStatus:false,
+            showHiddinBtns:true,
+            success: "Book has been created."});
+  
+        })
+        .catch(error => {
+          this.setState({
+            loader: false,
+            successStatus:false,
+            errorStatus:true,
+            disableBtn:true,
+            error: error.response.data.message});
+        })
       })
       .catch(error => {
-        this.setState({
-          loader: false,
-          successStatus:false,
-          errorStatus:true,
-          disableBtn:true,
-          error: error.response.data.message});
-      })
+        console.log(error);
+      });
     }
   }
 
@@ -79,7 +90,7 @@ class CreateBook extends React.Component {
         const newUpload = new Image();
         newUpload.src = imageReader.result;
         newUpload.onload = () => {
-          this.setState({ bookData: {...this.state.bookData, image:imageInput.name}, 
+          this.setState({ tempImageName: imageInput, 
           imageHeight:newUpload.height,
           imageWidth: newUpload.width});
         }
@@ -101,6 +112,13 @@ class CreateBook extends React.Component {
   componentWillReceiveProps(nextProps) {
     if(nextProps.loadedCategories[0].id) {
       this.setState({loadedCategories: nextProps.loadedCategories})
+    }
+
+    if(nextProps.imageUrl) {
+      this.setState({bookData: {
+        ...this.state.bookData, image: nextProps.imageUrl
+      }
+    });
     }
   }
 
@@ -145,13 +163,15 @@ function mapStateToProps(state, ownProps) {
   return {
     initialData,
     loadedCategories: state.createCategory.categories,
+    imageUrl: state.books.secure_url
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     createBook: data => dispatch(bookActions.createBook(data)),
-    getCategories: () => dispatch(categoryActions.getCategories())
+    getCategories: () => dispatch(categoryActions.getCategories()),
+    saveImageToCloudinary: (image) => dispatch(bookActions.saveImageToCloudinary(image))
   }
 }
 
