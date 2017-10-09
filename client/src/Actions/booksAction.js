@@ -172,3 +172,36 @@ export function saveImageToCloudinary(image) {
     })
   }
 }
+
+// *********************************************** //
+// **DEFINE ACTION CREATOR FOR ADMIN EDIT BOOKS** //
+// ********************************************** //
+
+export function getAdminEditBookId(bookid) {
+  return {
+    type: types.EDIT_BOOK_ID,
+    bookid
+  }
+}
+
+export function modifyBookAction(bookData) {
+  return {
+    type: types.MoDIFY_BOOK,
+    bookData
+  }
+}
+
+export function modifyBook(bookData) {
+  const bookId = parseInt(bookData.id);
+  return dispatch => {
+    return axios.put(`${apiRoutes.books}/${bookId}`,
+      bookData,
+    { headers: {'Authorization': getUserDetails().savedToken}})
+    .then(response => {
+      console.log(response);
+    })
+    .catch(error => {
+      throw (error);
+    })
+  }
+}

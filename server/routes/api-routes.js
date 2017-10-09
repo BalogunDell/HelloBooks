@@ -29,7 +29,6 @@ Router.route('/category')
 // get all users - Admin action
 Router.get('/users', Auth.verifyAdmin, userController.getAllUsers);
 
-
 Router.route('/books')
   .get(bookController.getBook)
   .post(Auth.verifyAdmin, bookController.addBook);

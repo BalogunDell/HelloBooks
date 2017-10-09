@@ -19,6 +19,7 @@ import Profile from './profile';
 
 import AdminDashboard from './admin/Dashboard';
 import CreateBook from './admin/createBook';
+import EditBook from './adminSubComponents/editBook';
 
 import * as userNavLinks from './userNavLinks';
 import * as UserActions from '../../Actions/userProfileAction';
@@ -162,6 +163,7 @@ class User extends React.Component {
                     <Route path="/user/bookdetails" render={() => <BookDetails book_id = {this.state.book_id}/>}/>
                     <Route path="/user/history" render ={()=> <UserHistory userID = {this.userID}/>}/> 
                     <Route path="/user/borrowedbooks" render={() => <Borrowedbooks userID ={this.userID}/> }/>
+                    <Route path="/user/editbook" render={() => <EditBook/>}/>
                   </div>
                 }
               </div>

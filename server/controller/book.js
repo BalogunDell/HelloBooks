@@ -106,22 +106,17 @@ class Book {
     bookModel.findOne(query)
       .then((book) => {
         if (!book) return res.status(404).json({ msg: 'Book not found' });
-        if (book.dataValues.isbn !== `#${req.body.isbn}`) {
-          res.status(405).json({ message: 'ISBN number cannot be modified' });
-        } else {
-          book.update(bookData)
-            .then((updated) => {
-              if (updated) {
-                res.status(200).json({ message: 'Book modified successfully', data: updated });
-              }
-            }).catch((error) => {
-              res.status(404).json({ message: error.body });
-            });
-        }
-      })
-      .catch(error => res.status(500).json({ msg: error }));
+        book.update(bookData)
+          .then((updated) => {
+            if (updated) {
+              res.status(200).json({ message: 'Book modified successfully', data: updated });
+            }
+          }).catch((error) => {
+            res.status(404).json({ message: error.body });
+          })
+          .catch(error => res.status(500).json({ msg: error }));
+      });
   }
-
 
   /**
    * @param { object } req

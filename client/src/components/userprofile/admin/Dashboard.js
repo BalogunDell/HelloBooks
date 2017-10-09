@@ -17,18 +17,8 @@ class Dashboard extends React.Component {
       bookCount: 0
     };
 
-    this.handleBookEdit = this.handleBookEdit.bind(this);
-    this.handleBookDelete = this.handleBookDelete.bind(this);
   }
 
-
-  handleBookEdit(event) {
-    console.log(event.target.value)
-  }
-
-  handleBookDelete(event) {
-    alert(event.target.value)
-  }
 
   componentDidMount() {
     $('select').material_select();
@@ -46,10 +36,7 @@ class Dashboard extends React.Component {
           <SummaryTable bookcount = {this.state.bookCount}/>  
           <SelectFilter handleSelectChange={this.handleSelectChange}
           selectDefaultValue = {this.state.selectDefaultValue}/>
-          <BooksList allbooks = {this.state.books}
-          handleBookDelete = {this.handleBookDelete}
-          handleBookEdit = {this.handleBookEdit}
-          />
+          <BooksList/>
         </div>
     );
   }
@@ -63,7 +50,7 @@ function stateToProps(state, ownProps) {
 
 function dispatchToProps(dispatch) {
   return {
-    getAllBooks: () => dispatch(bookActions.loadAllbooks())
+    getAllBooks: () => dispatch(bookActions.loadAllbooks()),
   }
 } 
 

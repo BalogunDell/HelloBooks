@@ -34,6 +34,10 @@ const getAllBooks = (state = {}, action) => {
         return {
           ...state, currentBookId: action.bookid
         }
+      case types.EDIT_BOOK_ID:
+        return {
+          ...state, editBookID: action.bookid
+        }
     default:
       return state
   }
