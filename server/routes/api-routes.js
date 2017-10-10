@@ -35,6 +35,7 @@ Router.route('/books')
 
 Router.route('/books/:id')
   .put(Auth.verifyAdmin, bookController.modifyBook)
+  .post(Auth.verifyAdmin, bookController.enableBook)
   .get(Auth.verifyAdmin, bookController.getBookById)
   .delete(Auth.verifyAdmin, bookController.deleteBook);
 

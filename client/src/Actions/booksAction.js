@@ -205,3 +205,48 @@ export function modifyBook(bookData) {
     })
   }
 }
+
+// ************************************************ //
+// **DEFINE ACTION CREATOR FOR ADMIN DELETE BOOKS** //
+// *********************************************** //
+
+/**
+ * 
+ * 
+ * @export deleteBookAction method
+ * @param { integer } bookId 
+ * @returns { object } action type and bookid
+ */
+export function deleteBookAction (bookId) {
+  return {
+    type: types.DELETE_BOOK,
+    bookId
+  }
+}
+
+/**
+ * @export deleteBook method
+ * @param { integer } bookId 
+ * @returns { object } axios response
+ */
+export function deleteBook(bookId) {
+  return dispatch => {
+    return axios.delete(`${apiRoutes.books}/${bookId}`, { 
+      headers: {'Authorization': getUserDetails().savedToken}
+    })
+    .then(response => {
+      dispatch(deleteBookAction(response.data));
+      console.log(response);
+    })
+    .catch(error => {
+      throw (error);
+    })
+  }
+}
+
+//Test action
+function testAction() {
+  return {
+    type: types.TEST_ACTION
+  }
+}

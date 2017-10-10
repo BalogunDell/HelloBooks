@@ -85,6 +85,7 @@ class CreateBook extends React.Component {
     event.preventDefault();
     let imageInput = event.target.files[0];
     let imageReader = new FileReader();
+    console.log(imageInput);
     if(imageInput) {
       imageReader.onload = () => {
         const newUpload = new Image();

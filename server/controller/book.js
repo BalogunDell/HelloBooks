@@ -39,11 +39,55 @@ class Book {
    * @returns {void}
    */
   static deleteBook(req, res) {
-    bookModel.destroy({ where: { id: req.body.id } }).then(() => {
-      res.status(200).json({ message: 'Book deleted' });
-    }).catch((error) => {
-      res.status(500).json({ message: 'Book Cannot be deleted', data: error });
-    });
+    const bookId = parseInt((req.params.id), 10);
+    borrowedBooks.findOne({ where: { bookid: bookId, returnstatus: false } })
+      .then((response) => {
+        if (response !== null) {
+          res.status(501).json({ message: 'This book has been borrowed and cannot be deleted' });
+        } else {
+          bookModel.findOne({ where: { id: bookId, visibility: true } })
+            .then((reply) => {
+              if (reply === null) {
+                res.status(404).json({ message: 'Book not found in the database' });
+              } else if (reply.dataValues.visibility === true) {
+                bookModel.update({ visibility: false }, { where: { id: bookId } })
+                  .then(() => {
+                    res.status(201).json({ message: 'Book has been successfully deleted' });
+                  });
+              }
+            })
+            .catch((error) => {
+              res.status(501).json({ message: error });
+            });
+        }
+      }).catch((error) => {
+        res.status(501).json({ message: error });
+      });
+  }
+
+  /**
+   * 
+   * @param { object } req 
+   * @param { object } res 
+   * @returns { object } response
+   */
+  static enableBook(req, res) {
+    const bookId = parseInt(req.params.id, 10);
+    bookModel.findById(bookId)
+      .then((response) => {
+        if (response) {
+          bookModel.update({ visibility: true }, { where: { id: bookId } })
+            .then(() => {
+              res.status(201).json({ message: 'Book has been published' });
+            })
+            .catch((error) => {
+              res.status(501).json({ error });
+            });
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   /**

@@ -13,3 +13,5 @@ export const RETURN_BOOK = "RETURN_BOOK";
 export const GET_BOOK_ID = "GET_BOOK_ID";
 export const EDIT_BOOK_ID = "EDIT_BOOK_ID";
 export const MODIFY_BOOK = "MODIFY_BOOK";
+export const DELETE_BOOK = "DELETE_BOOK";
+export const TEST_ACTION ="TEST_ACTION";

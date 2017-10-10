@@ -111,6 +111,11 @@ const book = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false
     },
+    visibility: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false
+    },
     image: {
       type: DataTypes.STRING,
       allowNull: false,

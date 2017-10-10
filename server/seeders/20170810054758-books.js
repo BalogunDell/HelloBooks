@@ -10,6 +10,7 @@ module.exports = {
         description: 'the books does this and that',
         quantity: 6,
         categoryid: 1,
+        visibility: true,
         image: 'http://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book22_ase4mm.jpg',
         createdAt: new Date(),
         updatedAt: new Date()
@@ -23,6 +24,7 @@ module.exports = {
         description: 'the books does this and that',
         quantity: 3,
         categoryid: 2,
+        visibility: true,
         image: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
         createdAt: new Date(),
         updatedAt: new Date()
@@ -35,6 +37,7 @@ module.exports = {
         year: 2016,
         description: 'the books does this and that',
         quantity: 32,
+        visibility: true,
         categoryid: 3,
         image: 'http://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book5_zyqyv1.jpg',
         createdAt: new Date(),
@@ -49,6 +52,7 @@ module.exports = {
         description: 'the books does this and that',
         quantity: 15,
         categoryid: 4,
+        visibility: true,
         image: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book4_pfdh3s.jpg',
         createdAt: new Date(),
         updatedAt: new Date()
@@ -62,6 +66,7 @@ module.exports = {
         description: 'the books does this and that',
         quantity: 5,
         categoryid: 5,
+        visibility: true,
         image: 'http://res.cloudinary.com/djvjxp2am/image/upload/v1507295977/book3_thj6nk.jpg',
         createdAt: new Date(),
         updatedAt: new Date()
@@ -75,6 +80,7 @@ module.exports = {
         description: 'Learn angular 2 and all of its basics with this wonderful book by Tom Cruise. Move from novice to professional in no time.',
         quantity: 5,
         categoryid: 6,
+        visibility: true,
         image: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295977/book1_mjwwlq.jpg',
         createdAt: new Date(),
         updatedAt: new Date()

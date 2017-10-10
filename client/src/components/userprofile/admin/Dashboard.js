@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import $ from 'jquery';
 
 import SummaryTable from '../adminSubComponents/summaryTable';
-import SelectFilter from '../adminSubComponents/selectFilter';
 import BooksList from '../adminSubComponents/booksList';
 import * as bookActions from '../../../Actions/booksAction';
 
@@ -16,19 +15,9 @@ class Dashboard extends React.Component {
       books: [],
       bookCount: 0
     };
-
-  this.handleSelectChange = this.handleSelectChange.bind(this);
-
   }
-
-  handleSelectChange(event) {
-    console.log(event.target.value);
-  }
-
 
   componentDidMount() {
-    $('select').material_select();
-    $('select').change(e=>this.handleSelectChange(e));
     this.props.getAllBooks().then(()=> {
       this.setState({books: this.props.allbooks, bookCount: this.props.allbooks.length});
     })
@@ -40,9 +29,7 @@ class Dashboard extends React.Component {
   render() {
     return(
         <div className="admindashboard col s12 m12 l11 offset-l1">
-          <SummaryTable bookcount = {this.state.bookCount}/>  
-          <SelectFilter handleSelectChange={this.handleSelectChange}
-          selectDefaultValue = {this.state.selectDefaultValue}/>
+          <SummaryTable bookcount = {this.state.bookCount}/>
           <BooksList/>
         </div>
     );

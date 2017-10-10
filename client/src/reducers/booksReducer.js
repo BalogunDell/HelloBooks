@@ -42,6 +42,10 @@ const getAllBooks = (state = {}, action) => {
         return {
           ...state, modifiedBook: action.bookData
         }
+      case types.DELETE_BOOK: 
+        return {
+          ...state, deletedBook: action.bookId
+        }
     default:
       return state
   }

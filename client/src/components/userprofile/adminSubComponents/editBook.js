@@ -6,6 +6,7 @@ import { Redirect } from 'react-router-dom';
 import * as categoryActions from '../../../Actions/categoryAction';
 import * as bookActions from '../../../Actions/booksAction';
 import AddCategoryModal from './createCategory';
+import LoaderText from './loader';
 
 class editBookForm extends React.Component {
   constructor(props) {
@@ -121,17 +122,6 @@ class editBookForm extends React.Component {
 
   
     render() {
-      const loaderText = <div className="preloader-wrapper small active">
-      <div className="spinner-layer spinner-green-only">
-        <div className="circle-clipper left">
-          <div className="circle"></div>
-        </div><div className="gap-patch">
-          <div className="circle"></div>
-        </div><div className="circle-clipper right">
-          <div className="circle"></div>
-        </div>
-      </div>
-    </div>
 
     const success = <i>Book has been successfully updated<br/><br/>Redirecting to dashboard...</i>
 
@@ -252,7 +242,7 @@ class editBookForm extends React.Component {
 
                 <div className="row">
                   <div className="input-field center">
-                    { this.state.loader ? loaderText : null }
+                    { this.state.loader ? <LoaderText/> : null }
                     { this.state.errorStatus ? <h6 className="red-text">{this.state.error}</h6>: null }
                     { this.state.successStatus ? <h6 className="green-text">{success}</h6>: null }
                   </div>
