@@ -1,14 +1,14 @@
 import React from 'react';
 
-const selectFilter = ({selectDefaultValue}) => {
+const selectFilter = ({selectDefaultValue, handleSelectChange}) => {
   return(
     <div className=" row selectFilter">
           <label>Filter table</label>
-          <select>
-            <option value="ReturnedBooks">Returned Books</option>
-            <option value="ReturnedBooks">Books Awaiting Return Confirmation</option>
-            <option value="MostBorrowed">Most Borrowed Books</option>
-            <option value="PendingReturn">Pending Return</option>
+          <select onChange={handleSelectChange} value={selectDefaultValue}>
+            <option value="booksreturned">Books Returned</option>
+            <option value="mostborrowedbooks">Most Borrowed Books</option>
+            <option value="allbooks">All books</option>
+            <option value="pendingreturn">Pending Return</option>
           </select>
       </div>
   );

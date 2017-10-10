@@ -186,7 +186,7 @@ export function getAdminEditBookId(bookid) {
 
 export function modifyBookAction(bookData) {
   return {
-    type: types.MoDIFY_BOOK,
+    type: types.MODIFY_BOOK,
     bookData
   }
 }
@@ -198,7 +198,7 @@ export function modifyBook(bookData) {
       bookData,
     { headers: {'Authorization': getUserDetails().savedToken}})
     .then(response => {
-      console.log(response);
+      dispatch(modifyBookAction(response.data.data));
     })
     .catch(error => {
       throw (error);

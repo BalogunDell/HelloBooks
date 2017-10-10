@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 
 import * as categoryActions from '../../../Actions/categoryAction';
 import * as bookActions from '../../../Actions/booksAction';
@@ -17,6 +18,12 @@ class editBookForm extends React.Component {
       imageWidth: 0,
       tempImageName: '',
       loadedCategories: [],
+      loader: false,
+      error: '',
+      successStatus: false,
+      success: '',
+      redirect: false,
+      errorStatus: false
       
     }
 
@@ -40,14 +47,24 @@ class editBookForm extends React.Component {
 
   handleUpdate(event) {
     event.preventDefault();
+    this.setState({loader: true})
     this.props.saveImageToCloudinary(this.state.tempImageName)
     .then(() => {
-      
       this.setState({book: {...this.state.book, image: this.props.imageUrl}});
       this.props.modifyBook(this.state.book).then(() => {
-        console.log(this.state.book);
+        this.setState({loader: false,  
+          successStatus: true,
+          errorStatus: false})
+          setTimeout(()=>{
+            this.setState({redirect:true})
+          }, 1000)
         })
         .catch(error => {
+          this.setState({loader: false, 
+            errorStatus: true,
+            error: 'error',
+            successStatus: false,
+          redirect:false})
           console.log(error);
         })
     })
@@ -104,8 +121,24 @@ class editBookForm extends React.Component {
 
   
     render() {
+      const loaderText = <div className="preloader-wrapper small active">
+      <div className="spinner-layer spinner-green-only">
+        <div className="circle-clipper left">
+          <div className="circle"></div>
+        </div><div className="gap-patch">
+          <div className="circle"></div>
+        </div><div className="circle-clipper right">
+          <div className="circle"></div>
+        </div>
+      </div>
+    </div>
+
+    const success = <i>Book has been successfully updated<br/><br/>Redirecting to dashboard...</i>
+
+
       return (
       <div>
+        {this.state.redirect ? <Redirect to ="/user/dashboard"/> : 
           <div>
             <div className="container">
               <div className="col s12 m12 l6 offset-l3">
@@ -219,9 +252,9 @@ class editBookForm extends React.Component {
 
                 <div className="row">
                   <div className="input-field center">
-                    {/* { loader ? loaderText : null }
-                    { errorStatus ? <h6 className="red-text">{error}</h6>: null }
-                    { successStatus ? <h6 className="green-text">{success}</h6>: null } */}
+                    { this.state.loader ? loaderText : null }
+                    { this.state.errorStatus ? <h6 className="red-text">{this.state.error}</h6>: null }
+                    { this.state.successStatus ? <h6 className="green-text">{success}</h6>: null }
                   </div>
                 </div>
               
@@ -229,7 +262,7 @@ class editBookForm extends React.Component {
                   <div className="input-field">
                     <div className="row hiddenBtns">
                       <div className="input-field col s12 m6 l12">
-                      <input type="submit" className="submitBtn waves-effect waves-teal custom"/>                      
+                      <input type="submit"  value= "Update book"  className="btn submitBtn waves-effect waves-teal custom"/>                      
                       </div>
                     </div>
                   </div>
@@ -239,6 +272,7 @@ class editBookForm extends React.Component {
         </div>
         <AddCategoryModal/>
       </div>
+    }
     </div>
     );
   }

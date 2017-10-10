@@ -53,7 +53,7 @@ class booksList extends React.Component {
               <th>Book Title</th>
               <th>Author</th>
               <th>Category</th>
-              <th>Available Quantity</th>
+              <th>Quantity</th>
               <th>Pages</th>
               <th>Action</th>
             </tr>
@@ -77,13 +77,11 @@ class booksList extends React.Component {
               className="material-icons green-text">edit</button>
                 </Link>
               <button value={book.id} onClick={this.handleBookDelete} className="material-icons red-text">delete</button>
-              <button value={book.id} onClick={this.handleBookDelete} className="material-icons green-text">zoom_in</button>
               </td>
             </tr>
             )}
           </tbody>
         </table>
-        {/* <EditBookModal book = {this.state.filtered} dataReady={this.state.dataReady}/> */}
       </div>
       </div>
   );

@@ -12,4 +12,4 @@ export const SAVE_IMAGE = "SAVE_IMAGE";
 export const RETURN_BOOK = "RETURN_BOOK";
 export const GET_BOOK_ID = "GET_BOOK_ID";
 export const EDIT_BOOK_ID = "EDIT_BOOK_ID";
-export const MoDIFY_BOOK = "MODIFY_BOOK";
+export const MODIFY_BOOK = "MODIFY_BOOK";

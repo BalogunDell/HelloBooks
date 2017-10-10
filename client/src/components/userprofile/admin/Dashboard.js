@@ -17,11 +17,18 @@ class Dashboard extends React.Component {
       bookCount: 0
     };
 
+  this.handleSelectChange = this.handleSelectChange.bind(this);
+
+  }
+
+  handleSelectChange(event) {
+    console.log(event.target.value);
   }
 
 
   componentDidMount() {
     $('select').material_select();
+    $('select').change(e=>this.handleSelectChange(e));
     this.props.getAllBooks().then(()=> {
       this.setState({books: this.props.allbooks, bookCount: this.props.allbooks.length});
     })
