@@ -13,23 +13,19 @@ class Dashboard extends React.Component {
     this.state = {
       selectDefaultValue: 'All books',
       books: [],
-      bookCount: 0
+      borrowedbooksCount: {}
     };
+    
   }
 
   componentDidMount() {
-    this.props.getAllBooks().then(()=> {
-      this.setState({books: this.props.allbooks, bookCount: this.props.allbooks.length});
-    })
-    .catch(error => {
-      console.log(error)
-    })
+    this.props.getAllBooks();
   }
 
   render() {
     return(
         <div className="admindashboard col s12 m12 l11 offset-l1">
-          <SummaryTable bookcount = {this.state.bookCount}/>
+          <SummaryTable/>
           <BooksList/>
         </div>
     );

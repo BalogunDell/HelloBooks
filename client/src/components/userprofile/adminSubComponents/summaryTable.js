@@ -1,7 +1,48 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
-const summaryTable = ({bookcount}) => {
-  return(
+
+
+class summaryTable extends React.Component {
+  constructor(props){
+    super(props);
+    
+  this.state = {
+    books: [],
+    pendingReturnCount: 0,
+    booksReturnedCount: 0,
+    bookCount: 0,
+    borrowed: []
+  }
+  }
+
+  componentDidMount() {
+
+  }
+
+  componentWillReceiveProps(nextProps){
+    if(nextProps.allbooks) {
+      if(this.state.books !== nextProps.allbooks) {
+        this.setState({books: nextProps.allbooks});
+        let count = nextProps.allbooks.length;
+        this.setState({bookCount: count});
+      }
+    }
+
+    if(nextProps.borrowedBooks) {
+      if(this.state.borrowed !== nextProps.borrowedBooks) {
+        let returnedbookCount = nextProps.borrowedBooks.filter(book=>book.returnstatus === true);
+        let unreturnedbookCount = nextProps.borrowedBooks.filter(book=>book.returnstatus === false);
+        this.setState({
+          pendingReturnCount: unreturnedbookCount.length,
+          booksReturnedCount: returnedbookCount.length});
+      }
+    }
+  }
+
+
+  render() {
+    return(
       <div>
         <div className="row">
            <h4 className="center">ADMIN DASHBOARD</h4>
@@ -18,17 +59,17 @@ const summaryTable = ({bookcount}) => {
             <tbody>
               <tr>
                 <td>Total Books in Library</td>
-                <td>{bookcount}</td>
+                <td>{this.state.bookCount}</td>
               </tr>
 
               <tr>
                 <td>Books Returned</td>
-                <td>1</td>
+                <td>{this.state.booksReturnedCount}</td>
               </tr>
 
               <tr>
                 <td>Pending Return</td>
-                <td>1</td>
+                <td>{this.state.pendingReturnCount}</td>
               </tr>
 
               <tr>
@@ -38,7 +79,15 @@ const summaryTable = ({bookcount}) => {
             </tbody>
           </table>
         </div>
-    </div>
-  );
+      </div>
+    );
+  } 
 }
-export default summaryTable;
+
+const stateToProps = (state) => {
+  return {
+    allbooks: state.books.books,
+    borrowedBooks: state.books.allborrowedbooks
+  }
+}
+export default connect(stateToProps, null)(summaryTable);

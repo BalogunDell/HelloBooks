@@ -18,19 +18,23 @@ class editBookForm extends React.Component {
       imageHeight: 0,
       imageWidth: 0,
       tempImageName: '',
+      tempFileName: '',
+      tempFileSize: 0,
       loadedCategories: [],
       loader: false,
       error: '',
       successStatus: false,
       success: '',
       redirect: false,
-      errorStatus: false
+      errorStatus: false,
+      bookIndex : 0
       
     }
 
     this.handleEditInput = this.handleEditInput.bind(this);
     this.handleUpdate = this.handleUpdate.bind(this);
     this.imageUploadHandler = this.imageUploadHandler.bind(this);
+    this.fileUploadHandler = this.fileUploadHandler.bind(this);
   }
 
   handleEditInput(event) {
@@ -48,10 +52,12 @@ class editBookForm extends React.Component {
 
   handleUpdate(event) {
     event.preventDefault();
-    this.setState({loader: true})
-    this.props.saveImageToCloudinary(this.state.tempImageName)
-    .then(() => {
-      this.setState({book: {...this.state.book, image: this.props.imageUrl}});
+    this.setState({loader: true,
+      error: false,
+      successStatus:false,
+      errorStatus: false })
+    // Check if a new image and pdf was selected, if !, save default values
+    if((!this.state.tempImageName) && (!this.state.tempFileName)) {
       this.props.modifyBook(this.state.book).then(() => {
         this.setState({loader: false,  
           successStatus: true,
@@ -68,12 +74,141 @@ class editBookForm extends React.Component {
           redirect:false})
           console.log(error);
         })
-    })
+    // Check if a new image and and no pdf was selected, if !, save default values 
+    } else if((this.state.tempImageName) && (!this.state.tempFileName)) {
+        // Check image size
+        if(this.state.imageHeight < 300 || this.state.imageWidth < 250) {
+          this.setState({
+            loader: false, 
+            error: "Image is too small. Allowed dimension is 300 x 250 pixels.",
+            errorStatus: true,
+            successStatus: false,
+            disableBtn:false });
+          } else {
+            this.props.saveImageToCloudinary(this.state.tempImageName)
+            .then(() => {
+
+              this.props.modifyBook(this.state.book)
+
+              .then(() => {
+                this.setState({loader: false,  
+                  successStatus: true,
+                  errorStatus: false})
+                  setTimeout(()=>{
+                    this.setState({redirect:true})
+                  }, 1000);
+              })
+              .catch(error => {
+                console.log(error);
+              });
+            })
+            .catch(error => {
+              console.log(error);
+            })
+        }
+      } else if((!this.state.tempImageName) && (this.state.tempFileName)) {
+        // Check File size
+          if(this.state.tempFileSize > 10485760) {
+            this.setState({
+              loader: false, 
+              error: "File too large, Only 10MB or less is allowed.",
+              errorStatus: true,
+              successStatus: false,
+              disableBtn:false });
+            } else {
+              this.props.savePdfToCloudinary(this.state.tempFileName)
+              .then(() => {
+                this.props.modifyBook(this.state.book)                
+                .then(() => {
+                  this.setState({loader: false,  
+                    successStatus: true,
+                    errorStatus: false})
+                    setTimeout(()=>{
+                      this.setState({redirect:false})
+                    }, 1000);
+                })
+                .catch(error => {
+                  console.log(error);
+                });
+              })
+              .catch(error => {
+                console.log(error);
+              })
+            }
+      } else {
+        if(this.state.imageHeight < 300 || this.state.imageWidth < 250) {
+          this.setState({
+            loader: false, 
+            error: "Image is too small. Allowed dimension is 300 x 250 pixels.",
+            errorStatus: true,
+            successStatus: false,
+            disableBtn:false });
+          } else if(this.state.tempFileSize > 10485760) {
+            this.setState({
+              loader: false, 
+              error: "File too large, Only 10MB or less is allowed.",
+              errorStatus: true,
+              successStatus: false,
+              disableBtn:false });
+          } else {
+            this.setState({
+              loader: true, 
+              error: "",
+              errorStatus: false,
+              successStatus: false,
+              disableBtn:true });
+
+              // Save image to cloudinary
+            this.props.saveImageToCloudinary(this.state.tempImageName).then(()=> {
+              // Check if image url has been set before dispatching  save pdf action
+              if(this.state.book.image) {
+                this.props.savePdfToCloudinary(this.state.tempFileName).then(() =>{
+                  if(this.state.book.pdf) {
+                    // Save book details to database
+                      this.props.modifyBook(this.state.book).then(() => {
+                        this.setState({loader: false,
+                          successStatus:true,
+                          disableBtn:true,
+                          errorStatus:false,
+                          showHiddinBtns:true,
+                          error: '',
+                          success: "Book has been created."});
+                          setTimeout(()=>{
+                            this.setState({redirect:true})
+                          }, 1000);
+                
+                      })
+                      .catch(error => {
+                        this.setState({
+                          loader: false,
+                          successStatus:false,
+                          errorStatus:true,
+                          disableBtn:true,
+                          error: error.response.data.message});
+                      })
+                  }
+                })
+              } else {
+                console.log('an error occurred'); 
+              }
+              
+            })
+            .catch(error => {
+              console.log(error.response);
+            })
+          }
+        }
   }
 
 
   componentWillMount(){
-    this.setState({book: this.props.getBookToEdit[0]});
+    const fetchedBook = JSON.parse(localStorage.getItem('index'));
+    this.setState({book: fetchedBook[0]});
+    if(this.props.getBookToEdit) {
+      this.setState({book: this.props.getBookToEdit[0]});
+    } else {
+      this.setState({book: fetchedBook[0]});
+    }
   }
 
   componentDidMount() {
@@ -92,8 +227,15 @@ class editBookForm extends React.Component {
     }
 
     if(nextProps.imageUrl) {
-      this.setState({bookData: {
-        ...this.state.bookData, image: nextProps.imageUrl
+      this.setState({book: {
+        ...this.state.book, image: nextProps.imageUrl.secure_url
+      }
+    });
+    } else {
+    }
+    if(nextProps.pdfUrl) {
+      this.setState({book: {
+        ...this.state.book, pdf: nextProps.pdfUrl.secure_url
       }
     });
     }
@@ -120,6 +262,19 @@ class editBookForm extends React.Component {
 
   }
 
+  fileUploadHandler(event) {
+    event.preventDefault();
+    let fileInput = event.target.files[0];
+    let fileReader = new FileReader();
+    this.setState({ tempFileName: fileInput, tempFileSize: fileInput.size});
+    if(fileInput) {
+    fileReader.onload = () => {
+      const newUpload = new File([''], fileInput.name);
+      this.setState({ tempFileName: fileInput});
+    }
+  }
+}
+
   
     render() {
 
@@ -127,7 +282,9 @@ class editBookForm extends React.Component {
 
 
       return (
+        
       <div>
+        {console.log(this.state.book)}
         {this.state.redirect ? <Redirect to ="/user/dashboard"/> : 
           <div>
             <div className="container">
@@ -231,10 +388,32 @@ class editBookForm extends React.Component {
                   <div className="file-field input-field uploadImage">
                     <div className="btn">
                       <span><i className="material-icons">add_a_photo</i></span>
-                      <input type="file" name="image" id="bookImage" accept=".jpg" onChange={this.imageUploadHandler}/>
+                      <input type="file" 
+                      name="image" 
+                      id="bookImage" 
+                      accept=".jpg" 
+                      onChange={this.imageUploadHandler}/>
+                      
                     </div>
                     <div className="file-path-wrapper">
-                      <input className="file-path validate" required type="text" />
+                      <input className="file-path" type="text" placeholder="Upload book image"/>           
+                    </div>
+                  </div>
+                </div>
+
+                <div className="row">
+                  <div className="file-field input-field uploadImage">
+                    <div className="btn">
+                      <span><i className="material-icons">file_upload</i></span>
+                      <input
+                      type="file" name="pdf" 
+                      id="bookImage" 
+                      accept=".pdf" 
+                      onChange={this.fileUploadHandler}/>
+                      
+                    </div>
+                    <div className="file-path-wrapper">
+                      <input className="file-path" type="text" placeholder="Upload book file"/>
                     </div>
                   </div>
                 </div>
@@ -273,7 +452,8 @@ function stateToProps(state, ownProps) {
     getBookToEdit: state.books.editBookID,
     books: state.books.books,
     loadedCategories: state.createCategory.categories,
-    imageUrl: state.books.secure_url
+    imageUrl: state.uploadFiles.image,
+    pdfUrl: state.uploadFiles.pdf
 
   }
 }
@@ -282,7 +462,9 @@ function dispatchToProps(dispatch) {
   return {
     getCategories: () => dispatch(categoryActions.getCategories()),
     modifyBook: (bookData) => dispatch(bookActions.modifyBook(bookData)),
-    saveImageToCloudinary: (image) => dispatch(bookActions.saveImageToCloudinary(image))
+    saveImageToCloudinary: (image) => dispatch(bookActions.saveImageToCloudinary(image)),
+    savePdfToCloudinary: (pdf) => dispatch(bookActions.savePdfToCloudinary(pdf))
+    
     
   }
 }

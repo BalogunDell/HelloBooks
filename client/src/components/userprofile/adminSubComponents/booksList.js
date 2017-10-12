@@ -4,7 +4,9 @@ import { connect } from 'react-redux';
 
 import ConfirmationModal from './confirmationModal';
 import * as bookActions from '../../../Actions/booksAction';
-
+import selectFilterer from '../../../utils/selectFilterer';
+import BorrowedbookTable from './borrowedbooksTable';
+import PublishedBooks from './publishedBooks';
 
 class booksList extends React.Component {
   constructor(props) {
@@ -13,7 +15,8 @@ class booksList extends React.Component {
     this.state = {
       allbooks: [],
       filterable: [],
-      allDatabaseBooks: [],
+      fetchedborrowedbooks: [],
+      borrowedBooksFilterable: [],
       dataReady: false,
       deleteErrorStatus: false,
       deleteErrorSuccess: false,
@@ -25,7 +28,17 @@ class booksList extends React.Component {
       bookIndex: 0,
       bookCountStatus: false,
       noBooks:'There are no books in the library',
-      selectedValue: ''
+      selectedValue: '',
+      all: false,
+      pending: false,
+      returned: false,
+      borrowed: false,
+      mostRead: false,
+      published: false,
+      unpublished: false,
+      showAll: true,
+      booksReturnedCount: 0,
+      pendingReturnCount: 0,
 
     }
     // Bind methods to this class
@@ -45,6 +58,8 @@ class booksList extends React.Component {
   handleBookEdit(event) {
     event.persist();
     let filteredBook = this.state.allbooks.filter((book, index) => index == event.target.dataset.index);
+    
+    localStorage.setItem('index', JSON.stringify(filteredBook));
     this.props.getAdminEditBookId(filteredBook);
   }
   /**
@@ -53,23 +68,38 @@ class booksList extends React.Component {
    * @returns event value
    */
   handleSelectChange(event) {
-    const currentState = this.state.allbooks;
     this.setState({selectedValue: event.target.value});
-    if(this.state.selectedValue ==='allbooks') {
-      this.setState({allbooks: this.state.filterable});
-    } else if (this.state.selectedValue === 'booksreturned') {
-      console.log('create this API');
-    } else if (this.state.selectedValue === 'mostborrowedbooks') {
-      console.log('create this api');
-    } else if (this.state.selectedValue === 'pendingreturn') {
-      console.log('create this api');
-    } else if (this.state.selectedValue === 'unpublishedbooks') {
-      this.setState({allbooks: this.state.allDatabaseBooks})
-      let unpublishedbooks = this.state.allbooks.filter(book => book.visibility === false);
-      console.log(unpublishedbooks);
-      this.setState({allbooks: unpublishedbooks});
-    } else {
-      this.setState({allbooks: filterable});
+    
+    if(this.state.selectedValue === 'allbooks') {
+      this.setState({allbooks:this.state.filterable,
+      all: true,
+      mostRead: false,
+      borrowed: false,
+      published: false,
+      showAll: true
+      
+    });
+    
+    } else if(this.state.selectedValue === 'booksreturned') {
+      this.setState({fetchedborrowedbooks: this.state.borrowedBooksFilterable});
+      let returnedbooks = this.state.borrowedBooksFilterable.filter(book=> book.returnstatus === true);
+      this.setState({fetchedborrowedbooks: returnedbooks,
+      all: false,
+      mostRead: false,
+      borrowed: true,
+      published: false,
+      showAll: false
+      });
+    } else if(this.state.selectedValue === 'pendingreturn') {
+      this.setState({fetchedborrowedbooks: this.state.borrowedBooksFilterable});
+      let unreturned = this.state.borrowedBooksFilterable.filter(book=> book.returnstatus === false);
+      this.setState({fetchedborrowedbooks: unreturned,
+      all: false,
+      mostRead: false,
+      borrowed: true,
+      published: false,
+      showAll: false
+      });
     }
   }
 
@@ -98,7 +128,11 @@ class booksList extends React.Component {
       disabled: false,
     })
   }
-
+  /**
+   * 
+   * 
+   * @returns an object which is the state
+   */
   deleteBookTrigger() {
      // Set neccessary state before action
      this.setState({loader:true, 
@@ -108,9 +142,7 @@ class booksList extends React.Component {
     // Make call to api, delete book and update interface
     this.props.deleteBook(this.state.bookId)
     .then(() => {
-      console.log(this.state.allbooks);
-      let bookToDelete = this.state.filterable.splice(this.state.bookIndex, 1);
-      console.log(this.state.allbooks);
+      this.state.filterable.splice(this.state.bookIndex, 1);
       this.setState({allbooks: this.state.filterable,
         deleteErrorSuccess: true,
         deleteErrorStatus: false,
@@ -138,28 +170,36 @@ class booksList extends React.Component {
     $('.modal').modal({
       dismissible: false,
       opacity: 0.3
-    });
-    if(this.state.allbooks.length == 0) {
-      this.setState({bookCountStatus: true});
-    } else {
-      this.setState({bookCountStatus: false});
-    }
+    }); 
+
+    // Fetch all borrowed books
+    this.props.getAllBorrowedBooks().then(()=> {
+
+    })
+    .catch(error => {
+      console.log(error);
+    })
+
   }
 
   componentWillReceiveProps(nextProps) {
     if(nextProps.loadAllbooks) {
-      console.log(nextProps.loadAllbooks)
-      let tempBooks = nextProps.loadAllbooks.filter(book => book.visibility == true);
       this.setState({
-        allbooks: tempBooks,
-        filterable: tempBooks,
-        allDatabaseBooks: nextProps.loadAllbooks,
+        allbooks: nextProps.loadAllbooks,
+        filterable: nextProps.loadAllbooks,
         dataReady: true});
+    }
+
+    if(nextProps.borrowedBooks) {
+      this.setState({fetchedborrowedbooks: nextProps.borrowedBooks,
+        borrowedBooksFilterable: nextProps.borrowedBooks});
+        
     }
   }
 
 
   render() {
+
   return(
     <div>
       <div className=" row selectFilter">
@@ -167,62 +207,28 @@ class booksList extends React.Component {
           <select>
             <option value="allbooks">All books</option>
             <option value="booksreturned">Books Returned</option>
-            <option value="mostborrowedbooks">Most Borrowed Books</option>
             <option value="pendingreturn">Pending Return</option>
-            <option value="unpublishedbooks">Unpublished/Deleted Books</option>
+            <option value="mostborrowedbooks">Most Borrowed Books</option>
 
           </select>
       </div>
       
       <div className="bookslist">
-        <table className="">
-          <thead>
-            <tr>
-              <th>ISBN</th>
-              <th>Book Cover</th>
-              <th>Book Title</th>
-              <th>Author</th>
-              <th>Category</th>
-              <th>Quantity</th>
-              <th>Pages</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-          {this.state.bookCountStatus ? 
-           this.state.allbooks.map((book, id) => 
-            <tr key={book.id}>
-              <td>{book.isbn}</td>
-              <td><img src={book.image}/></td>
-              <td>{book.title}</td>
-              <td>{book.author}</td>
-              <td>{book.category.category}</td>
-              <td>{book.quantity}</td>
-              <td>{book.pages}</td>
-              <td>
-                <Link to ="/user/editbook">
-                <button 
-              value={book.id}
-              data-index = {id}
-              onClick={this.handleBookEdit}
-              className="material-icons green-text">edit</button>
-                </Link>
-               <a href="#confirmationModal" className="modal-trigger"> 
-                  <button value={book.id}
-                  data-index = {id}
-                  onClick={this.handleBookDelete} 
-                  className="material-icons red-text">delete</button>
-              </a>
-              </td>
-            </tr>
-            )
-          : 
-            <tr>
-              <td className>{this.state.noBooks}</td>
-            </tr>
-            }
-            </tbody>
-        </table>
+        {this.state.borrowed
+        ? 
+          <BorrowedbookTable books={this.state.fetchedborrowedbooks}/>
+        : 
+          null
+        }
+
+        {this.state.all || this.state.showAll
+        ? 
+          <PublishedBooks books={this.state.allbooks}
+          handleBookDelete= {this.handleBookDelete}
+          handleBookEdit= {this.handleBookEdit}/>
+        :
+          null
+        }
       </div>
       <ConfirmationModal deleteErrorStatus = {this.state.deleteErrorStatus}
       deleteErrorSuccess={this.state.deleteErrorSuccess}
@@ -240,6 +246,7 @@ class booksList extends React.Component {
 function stateToProps(state, ownProps) {
   return {
     loadAllbooks: state.books.books,
+    borrowedBooks: state.books.allborrowedbooks
   }
 }
 
@@ -247,7 +254,8 @@ function dispatchToProps(dispatch) {
   return {
     getAllBooks: () => dispatch(bookActions.loadAllbooks()),
     getAdminEditBookId: (id) => dispatch(bookActions.getAdminEditBookId(id)),
-    deleteBook: (id) => dispatch(bookActions.deleteBook(id))
+    deleteBook: (id) => dispatch(bookActions.deleteBook(id)),
+    getAllBorrowedBooks: () => dispatch(bookActions.getAllBorrowedBooks())    
   }
 } 
 

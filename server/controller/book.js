@@ -1,4 +1,3 @@
-import fs from 'fs';
 import model from '../models';
 
 const bookModel = model.books;
@@ -52,7 +51,9 @@ class Book {
               } else if (reply.dataValues.visibility === true) {
                 bookModel.update({ visibility: false }, { where: { id: bookId } })
                   .then(() => {
-                    res.status(201).json({ message: 'Book has been successfully deleted' });
+                    bookModel.findAll().then((allbooks) => {
+                      res.status(201).json({ message: 'Book has been successfully deleted', updatedBooks: allbooks });
+                    });
                   });
               }
             })
@@ -96,7 +97,33 @@ class Book {
    * @returns { object } resposnse
    */
   static getBook(req, res) {
-    bookModel.findAll({ include: { model: categoryModel } }).then((response) => {
+    bookModel.findAll({ where: { visibility: true }, include: { model: categoryModel } }).then((response) => {
+      res.status(200).json({ books: response });
+    }).catch((error) => {
+      res.status(404).json({ message: error.message });
+    });
+  }
+
+  /**
+  * @param {object} req 
+  * @param {object} res
+  * @returns { object } resposnse
+  */
+  static getAllBooks(req, res) {
+    bookModel.findAll({ where: { visibility: false }, include: { model: categoryModel } }).then((response) => {
+      res.status(200).json({ books: response });
+    }).catch((error) => {
+      res.status(404).json({ message: error.message });
+    });
+  }
+
+  /**
+   * @param {object} req 
+   * @param {object} res
+   * @returns { object } resposnse
+   */
+  static getBorrowedBooks(req, res) {
+    borrowedBooks.findAll({ include: { model: bookModel, include: { model: categoryModel } } }).then((response) => {
       res.status(200).json({ books: response });
     }).catch((error) => {
       res.status(404).json({ message: error.message });
@@ -111,7 +138,7 @@ class Book {
    */
   static getBookById(req, res) {
     const bookid = req.params.id;
-    bookModel.findById(bookid)
+    bookModel.findOne({ where: { id: bookid, visibility: true } })
       .then((book) => {
         if (!book) {
           res.status(404).json({ message: 'This books is not available in our database' });
@@ -133,7 +160,8 @@ class Book {
   static modifyBook(req, res) {
     const query = {
       where: {
-        id: parseInt(req.params.id, 10)
+        id: parseInt(req.params.id, 10),
+        visibility: true
       }
     };
     const bookData = {
@@ -144,7 +172,8 @@ class Book {
       category: req.body.category,
       description: req.body.description,
       quantity: req.body.quantity,
-      image: req.body.image
+      image: req.body.image,
+      pdf: req.body.pdf
     };
 
     bookModel.findOne(query)

@@ -20,6 +20,7 @@ import Profile from './profile';
 import AdminDashboard from './admin/Dashboard';
 import CreateBook from './admin/createBook';
 import EditBook from './adminSubComponents/editBook';
+import UnpublishedList from './adminSubComponents/unPublishedBooks';
 
 import * as userNavLinks from './userNavLinks';
 import * as UserActions from '../../Actions/userProfileAction';
@@ -35,7 +36,7 @@ class User extends React.Component {
       isAuthenticated: false,
       redirect: false,
       userData: this.props.userData,
-      dataReady: false,
+      dataReady: true,
     }
 
     this.readBtn = <button className="btn waves-effect">Read</button>
@@ -98,7 +99,7 @@ class User extends React.Component {
   }
 
   componentWillReceiveProps(nextprops) {
-     if(nextprops.userDetails.id) {
+     if(nextprops.userDetails) {
       this.setState({dataReady:true, profileData: nextprops.userDetails})
      }
      
@@ -126,7 +127,7 @@ class User extends React.Component {
           : <div className="container">
             {this.element}
             <div className="row">
-              <div className="col s12 m1">
+              <div className="col s12 m12 l12">
               <UserNav 
               navLinks = { this.navLinks }
               linkIcons = {this.linkIcons}
@@ -164,6 +165,7 @@ class User extends React.Component {
                     <Route path="/user/history" render ={()=> <UserHistory userID = {this.userID}/>}/> 
                     <Route path="/user/borrowedbooks" render={() => <Borrowedbooks userID ={this.userID}/> }/>
                     <Route path="/user/editbook" render={() => <EditBook/>}/>
+                    <Route path="/user/deletedbooks" render={() => <UnpublishedList/>}/>
                   </div>
                 }
               </div>

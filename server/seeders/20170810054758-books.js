@@ -12,6 +12,7 @@ module.exports = {
         categoryid: 1,
         visibility: true,
         image: 'http://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book22_ase4mm.jpg',
+        pdf: 'http://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book22_ase4mm.jpg',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -26,6 +27,7 @@ module.exports = {
         categoryid: 2,
         visibility: true,
         image: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
+        pdf: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -40,6 +42,7 @@ module.exports = {
         visibility: true,
         categoryid: 3,
         image: 'http://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book5_zyqyv1.jpg',
+        pdf: 'http://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book5_zyqyv1.jpg',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -54,6 +57,7 @@ module.exports = {
         categoryid: 4,
         visibility: true,
         image: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book4_pfdh3s.jpg',
+        pdf: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book4_pfdh3s.jpg',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -68,6 +72,7 @@ module.exports = {
         categoryid: 5,
         visibility: true,
         image: 'http://res.cloudinary.com/djvjxp2am/image/upload/v1507295977/book3_thj6nk.jpg',
+        pdf: 'http://res.cloudinary.com/djvjxp2am/image/upload/v1507295977/book3_thj6nk.jpg',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -82,6 +87,7 @@ module.exports = {
         categoryid: 6,
         visibility: true,
         image: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295977/book1_mjwwlq.jpg',
+        pdf: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295977/book1_mjwwlq.jpg',
         createdAt: new Date(),
         updatedAt: new Date()
       }

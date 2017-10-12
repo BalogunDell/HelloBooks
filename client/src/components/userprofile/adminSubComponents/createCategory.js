@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import Spinner from './loader';
 
 import * as categoryActions from '../../../Actions/categoryAction';
 
@@ -19,6 +20,7 @@ class CreateCategoryModal extends React.Component {
 
     this.handleInput = this.handleInput.bind(this);
     this.saveCategory = this.saveCategory.bind(this);
+    this.closeModal = this.closeModal.bind(this);
     this.loaderText = <h6 className="green-text">Creating category...</h6>
   }
 
@@ -26,6 +28,17 @@ class CreateCategoryModal extends React.Component {
     this.setState({newCategory: event.target.value});
   }
 
+  closeModal(event) {
+    this.setState({
+      newCategory: '',
+      newCategoryError: '',
+      newCategoryErrorStatus: false,
+      newCategorySuccessStatus: false,
+      newCategorySuccess: '',
+      loader: false,
+      disableSubmit: false
+    })
+  }
   saveCategory(event) {
     this.setState({loader: true, disableSubmit:true})
     event.preventDefault();
@@ -33,7 +46,7 @@ class CreateCategoryModal extends React.Component {
     .then(()=>{
       this.setState({loader:false, 
         newCategoryError: '', 
-        disableSubmit: false, 
+        disableSubmit: true, 
         newCategoryErrorStatus: false,
         newCategorySuccessStatus:true,
         newCategorySuccess: 'Category has been created'})
@@ -72,7 +85,12 @@ class CreateCategoryModal extends React.Component {
                   <div className="row">
                     <div className="center">
                       
-                      { this.state.loader ? this.loaderText : null }
+                      { this.state.loader ? 
+                      <div>
+                      <Spinner/>
+                      {this.loaderText}
+                      </div>
+                      : null }
                       
                       {/* Check if error status is true, render error message */}
                       { this.state.newCategoryErrorStatus

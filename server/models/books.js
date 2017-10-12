@@ -114,7 +114,7 @@ const book = (sequelize, DataTypes) => {
     visibility: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
-      defaultValue: false
+      defaultValue: true
     },
     image: {
       type: DataTypes.STRING,
@@ -127,6 +127,20 @@ const book = (sequelize, DataTypes) => {
         is: {
           args: /(\w)/i,
           msg: 'image url can only contain strings'
+        }
+      }
+    },
+    pdf: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: 'select a book to upload'
+        },
+        is: {
+          args: /(\w)/i,
+          msg: 'Book must be a file'
         }
       }
     }

@@ -22,10 +22,6 @@ const getAllBooks = (state = {}, action) => {
         return {
           ...state, createbook: action.bookData
         }
-      case types.SAVE_IMAGE:
-        return {
-          ...state, ...action.image
-        }
       case types.RETURN_BOOK:
         return {
           ...state, returnBookData: action.bookid
@@ -44,7 +40,19 @@ const getAllBooks = (state = {}, action) => {
         }
       case types.DELETE_BOOK: 
         return {
-          ...state, deletedBook: action.bookId
+          ...state, updatedBooks:action.updatedBooks
+        }
+      case types.GET_BORROWED_BOOKS: 
+        return {
+          ...state, allborrowedbooks: action.borrowedbooks
+        }
+      case types.ADMIN_GET_ALLBOOKS:
+        return {
+          ...state, unpublishedbooks: action.unpublishedbooks 
+        }
+      case types.PUBLISH_BOOK:
+        return {
+          ...state, publishedBook: action.bookData
         }
     default:
       return state
