@@ -1,4 +1,3 @@
-import fs from 'fs';
 import model from '../models';
 
 const bookModel = model.books;
@@ -39,11 +38,57 @@ class Book {
    * @returns {void}
    */
   static deleteBook(req, res) {
-    bookModel.destroy({ where: { id: req.body.id } }).then(() => {
-      res.status(200).json({ message: 'Book deleted' });
-    }).catch((error) => {
-      res.status(500).json({ message: 'Book Cannot be deleted', data: error });
-    });
+    const bookId = parseInt((req.params.id), 10);
+    borrowedBooks.findOne({ where: { bookid: bookId, returnstatus: false } })
+      .then((response) => {
+        if (response !== null) {
+          res.status(501).json({ message: 'This book has been borrowed and cannot be deleted' });
+        } else {
+          bookModel.findOne({ where: { id: bookId, visibility: true } })
+            .then((reply) => {
+              if (reply === null) {
+                res.status(404).json({ message: 'Book not found in the database' });
+              } else if (reply.dataValues.visibility === true) {
+                bookModel.update({ visibility: false }, { where: { id: bookId } })
+                  .then(() => {
+                    bookModel.findAll().then((allbooks) => {
+                      res.status(201).json({ message: 'Book has been successfully deleted', updatedBooks: allbooks });
+                    });
+                  });
+              }
+            })
+            .catch((error) => {
+              res.status(501).json({ message: error });
+            });
+        }
+      }).catch((error) => {
+        res.status(501).json({ message: error });
+      });
+  }
+
+  /**
+   * 
+   * @param { object } req 
+   * @param { object } res 
+   * @returns { object } response
+   */
+  static enableBook(req, res) {
+    const bookId = parseInt(req.params.id, 10);
+    bookModel.findById(bookId)
+      .then((response) => {
+        if (response) {
+          bookModel.update({ visibility: true }, { where: { id: bookId } })
+            .then(() => {
+              res.status(201).json({ message: 'Book has been published' });
+            })
+            .catch((error) => {
+              res.status(501).json({ error });
+            });
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   /**
@@ -52,7 +97,33 @@ class Book {
    * @returns { object } resposnse
    */
   static getBook(req, res) {
-    bookModel.findAll({ include: { model: categoryModel } }).then((response) => {
+    bookModel.findAll({ where: { visibility: true }, include: { model: categoryModel } }).then((response) => {
+      res.status(200).json({ books: response });
+    }).catch((error) => {
+      res.status(404).json({ message: error.message });
+    });
+  }
+
+  /**
+  * @param {object} req 
+  * @param {object} res
+  * @returns { object } resposnse
+  */
+  static getAllBooks(req, res) {
+    bookModel.findAll({ where: { visibility: false }, include: { model: categoryModel } }).then((response) => {
+      res.status(200).json({ books: response });
+    }).catch((error) => {
+      res.status(404).json({ message: error.message });
+    });
+  }
+
+  /**
+   * @param {object} req 
+   * @param {object} res
+   * @returns { object } resposnse
+   */
+  static getBorrowedBooks(req, res) {
+    borrowedBooks.findAll({ include: { model: bookModel, include: { model: categoryModel } } }).then((response) => {
       res.status(200).json({ books: response });
     }).catch((error) => {
       res.status(404).json({ message: error.message });
@@ -67,7 +138,7 @@ class Book {
    */
   static getBookById(req, res) {
     const bookid = req.params.id;
-    bookModel.findById(bookid)
+    bookModel.findOne({ where: { id: bookid, visibility: true } })
       .then((book) => {
         if (!book) {
           res.status(404).json({ message: 'This books is not available in our database' });
@@ -89,7 +160,8 @@ class Book {
   static modifyBook(req, res) {
     const query = {
       where: {
-        id: parseInt(req.params.id, 10)
+        id: parseInt(req.params.id, 10),
+        visibility: true
       }
     };
     const bookData = {
@@ -100,28 +172,24 @@ class Book {
       category: req.body.category,
       description: req.body.description,
       quantity: req.body.quantity,
-      image: req.body.image
+      image: req.body.image,
+      pdf: req.body.pdf
     };
 
     bookModel.findOne(query)
       .then((book) => {
         if (!book) return res.status(404).json({ msg: 'Book not found' });
-        if (book.dataValues.isbn !== `#${req.body.isbn}`) {
-          res.status(405).json({ message: 'ISBN number cannot be modified' });
-        } else {
-          book.update(bookData)
-            .then((updated) => {
-              if (updated) {
-                res.status(200).json({ message: 'Book modified successfully', data: updated });
-              }
-            }).catch((error) => {
-              res.status(404).json({ message: error.body });
-            });
-        }
-      })
-      .catch(error => res.status(500).json({ msg: error }));
+        book.update(bookData)
+          .then((updated) => {
+            if (updated) {
+              res.status(200).json({ message: 'Book modified successfully', data: updated });
+            }
+          }).catch((error) => {
+            res.status(404).json({ message: error.body });
+          })
+          .catch(error => res.status(500).json({ msg: error }));
+      });
   }
-
 
   /**
    * @param { object } req
@@ -166,9 +234,27 @@ class Book {
             message: 'This book is not in your latest borrow history' });
         } else {
           borrowedBooks.update({ returnstatus: true },
-            { where: { id: response.dataValues.id } }).then(() => {
-            res.status(200).json({ message: 'Book has been returned' });
-          });
+            { where: { id: response.dataValues.id } })
+            .then((feedback) => {
+              if (feedback) {
+                bookModel.findById(req.body.bookid)
+                  .then((foundBook) => {
+                    bookModel.update({ quantity: foundBook.dataValues.quantity + 1 },
+                      { where: { id: req.body.bookid } })
+                      .then((updated) => {
+                        if (updated) {
+                          res.status(201).json({ message: 'Book has been returned' });
+                        }
+                      })
+                      .catch((error) => {
+                        res.status(501).json({ error });
+                      });
+                  })
+                  .catch((error) => {
+                    res.status(501).json({ error });
+                  });
+              }
+            });
         }
       });
   }
@@ -177,7 +263,7 @@ class Book {
    * 
    * @param { object } req
    * @param { object } res
-   * @return { object }
+   * @return { object } object
    */
   static addCategory(req, res) {
     categoryModel.create(req.body)
@@ -195,7 +281,7 @@ class Book {
    * 
    * @param { object } req
    * @param { object } res
-   * @return { object }
+   * @return { object } object
    */
   static getCategories(req, res) {
     categoryModel.findAll()
@@ -213,7 +299,7 @@ class Book {
    * 
    * @param { object } req
    * @param { object } res
-   * @return { object } 
+   * @return { object } object
    */
   static deleteCategory(req, res) {
     categoryModel.findById(req.body.id)

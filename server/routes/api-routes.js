@@ -29,13 +29,19 @@ Router.route('/category')
 // get all users - Admin action
 Router.get('/users', Auth.verifyAdmin, userController.getAllUsers);
 
-
 Router.route('/books')
   .get(bookController.getBook)
   .post(Auth.verifyAdmin, bookController.addBook);
 
+// Get all borrowed books for admin to display
+Router.get('/books/borrowedbooks', Auth.verifyAdmin, bookController.getBorrowedBooks);
+
+//  Get all books including published and unpublished
+Router.get('/books/all', Auth.verifyAdmin, bookController.getAllBooks);
+
 Router.route('/books/:id')
   .put(Auth.verifyAdmin, bookController.modifyBook)
+  .post(Auth.verifyAdmin, bookController.enableBook)
   .get(Auth.verifyAdmin, bookController.getBookById)
   .delete(Auth.verifyAdmin, bookController.deleteBook);
 

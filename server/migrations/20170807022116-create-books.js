@@ -41,7 +41,15 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false
       },
+      visibility: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+      },
       image: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      pdf: {
         type: Sequelize.STRING,
         allowNull: false
       },

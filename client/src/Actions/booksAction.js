@@ -27,6 +27,13 @@ export function loadAllbooks() {
   }
 }
 
+export function getBookId(bookid) {
+  return {
+    type: types.GET_BOOK_ID,
+    bookid
+
+  }
+}
 
 // ********************************************************** //
 // *DEFINE ACTION CREATOR AND MAKE API CALL FOR BORROW BOOKS* //
@@ -79,7 +86,7 @@ export function getUserBooks() {
         headers: {'Authorization': getUserDetails().savedToken}
       }
       ).then(response => {
-        dispatch(userBooks(response.data.books))
+        dispatch(userBooks(response.data));
       })
       .catch(error => {
         throw (error)
@@ -87,6 +94,31 @@ export function getUserBooks() {
   }
 }
 
+
+// ********************************************************** //
+// *DEFINE ACTION CREATOR AND MAKE API CALL FOR RETURN BOOKS* //
+// ********************************************************** //
+
+export function returnBookAction(bookid) {
+  return{
+    type: types.RETURN_BOOK,
+    bookid
+  }
+}
+
+export function returnBook(bookid) {
+  return dispatch => {
+    return axios.put(`${apiRoutes.userProfile}/${getUserDetails().userId}/books`, 
+    bookid,
+    {headers: {'Authorization': getUserDetails().savedToken}})
+    .then(response => {
+      dispatch(returnBookAction(response.data.message));
+    })
+    .catch(error => {
+      console.log(error);
+    })
+  }
+}
 
 // ********************************************************** //
 // **DEFINE ACTION CREATOR & MAKE API CALL FOR CREATE BOOKS** //
@@ -110,3 +142,219 @@ export function createBook(bookData) {
     })
   }
 }
+
+export function savePdf(pdf) {
+  return {
+    type: types.SAVE_PDF,
+    pdf
+  }
+}
+
+export function savePdfToCloudinary(pdf) {
+  
+    const cloudinaryUrl = 'https://api.cloudinary.com/v1_1/djvjxp2am/upload';
+    const cloudinaryPreset = 'vlamwg7y';
+    const requestHeader = 'application/x-www-form-urlencoded';
+  
+    const formData = new FormData();
+    formData.append('file', pdf);
+    formData.append('upload_preset', cloudinaryPreset);
+  
+    return dispatch => {
+      return axios.post(cloudinaryUrl, formData, { headers: {'Content-Type' : requestHeader} })
+      .then(response => {
+        dispatch(savePdf(response.data));
+        console.log(response)
+      })
+      .catch(error => {
+        throw(error);
+      })
+    }
+  }
+
+export function saveImage(image) {
+  return {
+    type: types.SAVE_IMAGE,
+    image
+  }
+}
+
+export function saveImageToCloudinary(image) {
+
+  const cloudinaryUrl = 'https://api.cloudinary.com/v1_1/djvjxp2am/upload';
+  const cloudinaryPreset = 'vlamwg7y';
+  const requestHeader = 'application/x-www-form-urlencoded';
+
+  const formData = new FormData();
+  formData.append('file', image);
+  formData.append('upload_preset', cloudinaryPreset);
+
+  return dispatch => {
+    return axios.post(cloudinaryUrl, formData, { headers: {'Content-Type' : requestHeader} })
+    .then(response => {
+      dispatch(saveImage(response.data));
+    })
+    .catch(error => {
+      throw(error);
+    })
+  }
+}
+
+// *********************************************** //
+// **DEFINE ACTION CREATOR FOR ADMIN EDIT BOOKS** //
+// ********************************************** //
+
+export function getAdminEditBookId(bookid) {
+  return {
+    type: types.EDIT_BOOK_ID,
+    bookid
+  }
+}
+
+export function modifyBookAction(bookData) {
+  return {
+    type: types.MODIFY_BOOK,
+    bookData
+  }
+}
+
+export function modifyBook(bookData) {
+  const bookId = parseInt(bookData.id);
+  return dispatch => {
+    return axios.put(`${apiRoutes.books}/${bookId}`,
+      bookData,
+    { headers: {'Authorization': getUserDetails().savedToken}})
+    .then(response => {
+      dispatch(modifyBookAction(response.data.data));
+    })
+    .catch(error => {
+      throw (error);
+    })
+  }
+}
+
+// ************************************************ //
+// **DEFINE ACTION CREATOR FOR ADMIN DELETE BOOKS** //
+// *********************************************** //
+
+/**
+ * 
+ * 
+ * @export deleteBookAction method
+ * @param { integer } bookId 
+ * @returns { object } action type and bookid
+ */
+export function deleteBookAction (updatedBooks) {
+  return {
+    type: types.DELETE_BOOK,
+    updatedBooks
+  }
+}
+
+/**
+ * @export deleteBook method
+ * @param { integer } bookId 
+ * @returns { object } axios response
+ */
+export function deleteBook(bookId) {
+  return dispatch => {
+    return axios.delete(`${apiRoutes.books}/${bookId}`, { 
+      headers: {'Authorization': getUserDetails().savedToken}
+    })
+    .then(response => {
+      dispatch(deleteBookAction(response.data.updatedBooks));
+      console.log(response);
+    })
+    .catch(error => {
+      throw (error);
+    })
+  }
+}
+
+// ************************************************ //
+// *DEFINE ACTION CREATOR FOR ADMIN BORROWED BOOKS //
+// *********************************************** //
+
+/**
+ * @export getborrowedbooks method
+ * @returns { object } action type and bookid
+ */
+
+ export function getborrowedbooksAction(borrowedbooks) {
+   return {
+     type: types.GET_BORROWED_BOOKS,
+     borrowedbooks
+   }
+ }
+
+ export function getAllBorrowedBooks() {
+   return dispatch => {
+     return axios.get(`${apiRoutes.books}/borrowedbooks`, {headers: {'Authorization': getUserDetails().savedToken}})
+     .then(response => {
+       dispatch(getborrowedbooksAction(response.data.books));
+     })
+     .catch(error => {
+       throw (error)
+     })
+   }
+ }
+
+ // ************************************************ //
+ // *DEFINE ACTION CREATOR FOR ADMIN GET ALL BOOKS** //
+ // ************************************************ //
+
+ /**
+  * 
+  * @param { object } unpublishedbooks 
+  * @returns { objectv } action type
+  */
+ export function adminGetAllBooksAction(unpublishedbooks) {
+   return {
+     type: types.ADMIN_GET_ALLBOOKS,
+      unpublishedbooks
+   }
+ }
+
+ /**
+  * @returns { object } axios response
+  */
+ export function adminGetAllBooks() {
+   return dispatch => {
+     return axios.get(`${apiRoutes.books}/all` , { headers: {'Authorization': getUserDetails().savedToken}})
+     .then(response => {
+        dispatch(adminGetAllBooksAction(response.data.books));
+     })
+     .catch(error => {
+       throw (error);
+     })
+   }
+ }
+
+ 
+// *********************************************** //
+// *DEFINE ACTION CREATOR FOR ADMIN PUBLISH BOOK* //
+// ********************************************** //
+
+/**
+ * 
+ * @param { integer } bookId 
+ * @returns { object } axios response
+ */
+ export function publishBookAction(bookData) {
+  return {
+    type: types.PUBLISH_BOOK,
+    bookData
+  }
+ }
+
+ export function publishBook(bookData) {
+  return dispatch => {
+    return axios.post(`${apiRoutes.books}/${bookData}`, null, {headers: {'Authorization': getUserDetails().savedToken}})
+    .then(response => {
+      dispatch(publishBookAction(response.data));
+    })
+    .catch(error => {
+      throw (error);
+    });
+  }
+ }

@@ -319,3 +319,35 @@
     }
   }
 }
+
+#confirmationModal {
+  margin: auto;
+
+  .btn {
+    width: 50%;
+  }
+}
+
+.unpublished {
+
+  img {
+    max-height: 50px;
+    max-width: 50px;
+  }
+
+  .btn {
+    max-width: 100%;
+  }
+
+  table {
+    max-width: 800px;
+
+    th {
+      background-color: $custom-color;
+      color: white;
+    }
+    td {
+      word-wrap: break-word;
+    }
+  }
+}

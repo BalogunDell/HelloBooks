@@ -63,8 +63,15 @@ class Helper {
     };
     borrowedBookModel.findAndCountAll(query)
       .then((response) => {
+        // const foundBook = );
+        // let dbug = {
+        //   response,
+        //   foundBook,
+        //   rows: response.rows[0].dataValues
+        // };
+        // return console.log(dbug);
         if (response.count < util[req.membership.toLowerCase()].limit
-          && !response.rows.find(book => book.dataValues.bookid === req.body.bookid)) {
+          && !response.rows.find(book => book.dataValues.bookid === parseInt(req.body.bookid, 10))) {
           req.body = Helper.composeRequest(req);
           next();
         } else {

@@ -1,14 +1,19 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import LoaderText from './loader';
 
 import CreateCategoryModal from './createCategory';
 
-const createBookForm = ({disableBtn, showHiddenBtns,loader, loaderText, error, successStatus, errorStatus, success, createBookHandler, handleInput, initialData, createCategory, loadedCategories, imageUploadHandler }) => {
+const createBookForm = ({disableBtn, showHiddenBtns,loader, 
+  error, successStatus, errorStatus, success, createBookHandler, 
+  handleInput, initialData, createCategory, loadedCategories, 
+  imageUploadHandler, fileUploadHandler }) => {
 
   const selectOptions = loadedCategories.map((val, key) =>
     <option key={val.id} value={val.category}>{val.category}</option>);
   
   return (
+    
     <div className="createBookForm">
       <div>
         <h4 className="center">CREATE BOOK</h4>
@@ -18,7 +23,7 @@ const createBookForm = ({disableBtn, showHiddenBtns,loader, loaderText, error, s
         <form onSubmit={createBookHandler} className="create-form" encType="multipart/form-data">
           <div className="input-field">
             <input type="text" name="isbn"
-              maxLength="6"
+              maxLength="4"
               value={initialData.isbn}
               onChange={handleInput}
               className="validate" required />
@@ -85,6 +90,7 @@ const createBookForm = ({disableBtn, showHiddenBtns,loader, loaderText, error, s
 
             <div className="input-field col s12 m12 l6">
               <select name="categoryid" value={initialData.categoryid} onChange={handleInput}>
+                <option value="...">Select a category</option>
                 { loadedCategories.map((val, key) => {                  
                   return (<option key={val.id} value={val.id}>{val.category}</option>)
                 })
@@ -101,7 +107,19 @@ const createBookForm = ({disableBtn, showHiddenBtns,loader, loaderText, error, s
                 <input type="file" name="image" id="bookImage" accept=".jpg" onChange={imageUploadHandler} />
               </div>
               <div className="file-path-wrapper">
-                <input className="file-path validate" required type="text" />
+                <input className="file-path validate" required type="text" placeholder="Upload book image"/>
+              </div>
+            </div>
+          </div>
+
+          <div className="row">
+            <div className="file-field input-field uploadImage">
+              <div className="btn">
+                <span><i className="material-icons">file_upload</i></span>
+                <input type="file" name="pdf" id="pdf" accept=".pdf" onChange={fileUploadHandler} />
+              </div>
+              <div className="file-path-wrapper">
+                <input className="file-path validate" required type="text" placeholder="Upload book file" />
               </div>
             </div>
           </div>
@@ -109,7 +127,7 @@ const createBookForm = ({disableBtn, showHiddenBtns,loader, loaderText, error, s
 
           <div className="row">
             <div className="input-field center">
-              { loader ? loaderText : null }
+              { loader ? <LoaderText/> : null }
               { errorStatus ? <h6 className="red-text">{error}</h6>: null }
               { successStatus ? <h6 className="green-text">{success}</h6>: null }
 

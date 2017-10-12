@@ -10,7 +10,7 @@ const config = {
     publicPath: '/'
   },
   devServer: {
-    contentBase: './dist/',
+    contentBase: './dist',
     historyApiFallback: true
   },
   devtool: 'cheap-eval-source-map',

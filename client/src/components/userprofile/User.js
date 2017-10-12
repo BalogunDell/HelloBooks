@@ -19,6 +19,8 @@ import Profile from './profile';
 
 import AdminDashboard from './admin/Dashboard';
 import CreateBook from './admin/createBook';
+import EditBook from './adminSubComponents/editBook';
+import UnpublishedList from './adminSubComponents/unPublishedBooks';
 
 import * as userNavLinks from './userNavLinks';
 import * as UserActions from '../../Actions/userProfileAction';
@@ -34,8 +36,7 @@ class User extends React.Component {
       isAuthenticated: false,
       redirect: false,
       userData: this.props.userData,
-      dataReady: false,
-      book_id: 0
+      dataReady: true,
     }
 
     this.readBtn = <button className="btn waves-effect">Read</button>
@@ -51,9 +52,8 @@ class User extends React.Component {
     this.userType='';
 
 
-    // Bind logout, book details method to this
+    // Bind logout method to this
     this.handleLogout = this.handleLogout.bind(this)
-    this.getBookId = this.getBookId.bind(this)
   }
 
 
@@ -64,9 +64,6 @@ class User extends React.Component {
     localStorage.clear();
   }
 
-  getBookId(event) {
-    this.state.book_id = event.target.value
-  }
 
 // *********************************************************//
 // PERFORM ALL NECESSARY OPERATIONS BEFORE COMPONENT MOUNTS //
@@ -78,8 +75,6 @@ class User extends React.Component {
       return this.setState({isAuthenticated: false})
     }
 
-    // Fetch all books
-    this.props.loadAllbooks();
 
      // Get user profile before mount
     this.props.userProfile(this.userID).then(()=> {
@@ -104,7 +99,7 @@ class User extends React.Component {
   }
 
   componentWillReceiveProps(nextprops) {
-     if(nextprops.userDetails.id) {
+     if(nextprops.userDetails) {
       this.setState({dataReady:true, profileData: nextprops.userDetails})
      }
      
@@ -132,7 +127,7 @@ class User extends React.Component {
           : <div className="container">
             {this.element}
             <div className="row">
-              <div className="col s12 m1">
+              <div className="col s12 m12 l12">
               <UserNav 
               navLinks = { this.navLinks }
               linkIcons = {this.linkIcons}
@@ -169,6 +164,8 @@ class User extends React.Component {
                     <Route path="/user/bookdetails" render={() => <BookDetails book_id = {this.state.book_id}/>}/>
                     <Route path="/user/history" render ={()=> <UserHistory userID = {this.userID}/>}/> 
                     <Route path="/user/borrowedbooks" render={() => <Borrowedbooks userID ={this.userID}/> }/>
+                    <Route path="/user/editbook" render={() => <EditBook/>}/>
+                    <Route path="/user/deletedbooks" render={() => <UnpublishedList/>}/>
                   </div>
                 }
               </div>
@@ -188,14 +185,12 @@ function mapStateToProps(state, ownProps) {
     isAuthenticated: state.userAccess.isAuthenticated,
     userDetails: state.userProfile,
     url: ownProps.match.path,
-    retrievedBooks: state.books.books,
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     userProfile: (userID) => dispatch(UserActions.fetchUserTrigger(userID)),
-    loadAllbooks: () => dispatch(bookActions.loadAllbooks())
   }
 }
 
