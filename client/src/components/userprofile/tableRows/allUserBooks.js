@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
  
 const allUserBooksComp = ({allUserBooks, getRowKey, tableHeader, handleReturn, successMessage, returnSuccessStatus}) => {
   const bookLength = allUserBooks.length;
-  console.log(successMessage);
     return (
 			<div>
 

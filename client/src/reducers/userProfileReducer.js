@@ -5,7 +5,11 @@ export default function fetchUserReducer(state={}, action) {
     case types.FETCH_USER:
       return {
         ...state, ...action.userID
-      } 
+      }
+    case types.EDIT_PROFILE: 
+      return {
+        ...state, ...action.newUserData
+      }
     default: 
       return state
   }

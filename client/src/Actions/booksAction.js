@@ -347,6 +347,11 @@ export function deleteBook(bookId) {
   }
  }
 
+ /**
+  * 
+  * @param { integer } bookData 
+  * @returns { object } axios response
+  */
  export function publishBook(bookData) {
   return dispatch => {
     return axios.post(`${apiRoutes.books}/${bookData}`, null, {headers: {'Authorization': getUserDetails().savedToken}})

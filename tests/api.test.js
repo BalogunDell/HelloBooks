@@ -21,7 +21,6 @@ let adminToken;
   it('Should return welcome to libary api', (done) => {
     request
       .get('/api/')
-      .set('Accept', 'Application/json')
       .expect(200, done);
   });
 });

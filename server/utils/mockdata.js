@@ -25,7 +25,7 @@ const mockData = {
   },
 
   user1Login: {
-    email: 'user1Email@gmail.com',
+    username: 'user1Username',
     password: 'user1password',
   },
 
@@ -41,6 +41,7 @@ const mockData = {
   user2: {
     firstname: 'user2FirstName',
     lastname: 'user2LastName',
+    username: 'user2Username',
     email: 'user2Email@gmail.com',
     password: 'user2password',
     role: 'user',
@@ -51,13 +52,14 @@ const mockData = {
     firstname: 'user3FirstName',
     lastname: 'user3LastName',
     email: 'user3Email@gmail.com',
+    username: 'user3Username',
     password: 'user3password',
     role: 'user',
     membership: 'gold'
   },
 
   adminLogin: {
-    email: 'adminEmail@gmail.com',
+    username: 'adminUsername',
     password: 'adminpassword'
   },
 
@@ -96,12 +98,12 @@ const mockData = {
   },
 
   invaliduser: {
-    email: '',
+    username: '',
     password: ''
   },
 
   emptyCredence: {
-    email: '',
+    username: '',
     password: ''
   },
 

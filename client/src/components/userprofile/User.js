@@ -162,7 +162,6 @@ class User extends React.Component {
                      getBookId = {this.getBookId}/>}/>
                     <Route path="/user/upload" render={() => <CreateBook/>}/> 
                     <Route path="/user/bookdetails" render={() => <BookDetails book_id = {this.state.book_id}/>}/>
-                    <Route path="/user/history" render ={()=> <UserHistory userID = {this.userID}/>}/> 
                     <Route path="/user/borrowedbooks" render={() => <Borrowedbooks userID ={this.userID}/> }/>
                     <Route path="/user/editbook" render={() => <EditBook/>}/>
                     <Route path="/user/deletedbooks" render={() => <UnpublishedList/>}/>
