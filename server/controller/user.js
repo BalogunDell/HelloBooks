@@ -75,10 +75,9 @@ class User {
    * @returns { void }
    */
   static getUserBooks(req, res) {
-    const returnStatus = req.query;
+    const returnStatus = req.query.returned;
     const query = {};
-
-    if (returnStatus === {}) {
+    if (returnStatus === undefined) {
       query.where = {
         userid: req.body.userid
       };
@@ -98,7 +97,7 @@ class User {
       };
     }
 
-    borrowedBookModel.findAll({ query, include: [{ model: booksModel }] })
+    borrowedBookModel.findAll({ where: query.where, include: [{ model: booksModel }] })
       .then((response) => {
         if (response.length < 1) {
           res.status(200).json({ message: 'You have no books yet' });
@@ -170,7 +169,12 @@ class User {
    * @returns {object} object
    */
   static editProfile(req, res) {
-    userModel.update(req.body, { where: { id: req.body.userid }, individualHooks: true }).then((response) => {
+    const userData = {
+      firstname: req.body.firstname,
+      lastname: req.body.lastname,
+      email: req.body.email
+    };
+    userModel.update(userData, { where: { id: req.body.userid }, individualHooks: true }).then((response) => {
       res.status(201).json({ data: response[1] });
     })
       .catch((error) => {

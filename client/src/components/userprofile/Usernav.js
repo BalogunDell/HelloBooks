@@ -5,9 +5,6 @@ import profileImage from '../../assets/images/abbey.jpg';
 import logo from '../../assets/images/hb-logo.png';
 
 
-
-
-
 const UserNav = ({ navLinks, linkIcons, linkTexts, path, userDetails, handleLogout }) => {
   return(
     <div>
@@ -16,9 +13,9 @@ const UserNav = ({ navLinks, linkIcons, linkTexts, path, userDetails, handleLogo
         {/* SHOW APP LOGO AND WELCOME MESSAGE  */}
         <li>
           <div className="user-view">
-            <div className="background user-view-bg">
+            <div className="background user-view-bg centered">
             </div>
-            <img src={logo} className="responsive-img center" alt=""/>
+            <img src='https://res.cloudinary.com/djvjxp2am/image/upload/v1507971952/hellobooks/hb-logo.png' className="responsive-img center" alt=""/>
           </div>
         </li>
 

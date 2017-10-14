@@ -31,6 +31,9 @@ export function failureMessage(message) {
 }
 
 export function membershipIconCreator(membershipLevel) {
+  if(!membershipLevel) {
+    membershipLevel == 'null'
+  }
   switch(membershipLevel.toLowerCase()) {
     case 'silver':
       return (

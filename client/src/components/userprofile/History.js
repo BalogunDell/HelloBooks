@@ -53,16 +53,19 @@ class History extends React.Component {
   handleSelectChange(event) {
     this.setState({bookToDisplay: event.target.value});
     if(this.state.bookToDisplay == "Pending Returns") {
+      this.setState({tableHeader: 'pending returns'});
      let unreturned = this.state.filterable.filter(book => book.returnstatus == false);
       this.setState({ allUserBooks: unreturned });
     } else if(this.state.bookToDisplay == "Returned books") {
+      this.setState({tableHeader: 'Returned books'});
       this.setState({allUserBooks: this.state.filterable});
       let returned = this.state.filterable.filter(book => book.returnstatus == true);
       this.setState({ allUserBooks: returned });
     } else if (this.state.bookToDisplay == "allbooks") {
+      this.setState({tableHeader: 'All books'});
       this.setState({allUserBooks: this.state.filterable});
     } else {
-      console.log('npthing');
+      console.log('nothing');
     }
   }
 
