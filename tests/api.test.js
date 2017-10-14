@@ -123,7 +123,7 @@ describe('Wrong User Credentials', (done) => {
     .set('Accept', 'Application/json')
     .send(mockdata.adminLogin)
     .end((error, res) =>{
-      adminToken = res.body.response.data.token;
+      adminToken = res.body.data.token;
       expect(res.status).to.equal(200);
     done();
       }); 
