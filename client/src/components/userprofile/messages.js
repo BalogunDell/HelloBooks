@@ -39,7 +39,7 @@ export function membershipIconCreator(membershipLevel) {
       return (
         <span>
           <i className="material-icons green-text">star</i>
-          <i className="material-icons silver">star</i>
+          <i className="material-icons green-text">star</i>
         </span>
       )
     case 'bronze':
