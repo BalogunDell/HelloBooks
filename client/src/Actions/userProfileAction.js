@@ -62,8 +62,8 @@ export function editProfile(newUserData) {
     newUserData,
     { headers: {'Authorization': getUserDetails().savedToken}})
     .then(response => {
-      dispatch(editProfileAction(response.data));
-      console.log(response);
+      dispatch(editProfileAction(response.data.data[0]));
+      console.log(response.data.data[0]);
     })
     .catch(error => {
       throw (error);

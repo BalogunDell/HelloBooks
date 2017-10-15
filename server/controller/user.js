@@ -172,9 +172,29 @@ class User {
     const userData = {
       firstname: req.body.firstname,
       lastname: req.body.lastname,
-      email: req.body.email
+      username: req.body.username,
+      image: req.body.image
     };
-    userModel.update(userData, { where: { id: req.body.userid }, individualHooks: true }).then((response) => {
+    const fieldsToUpdate = ['firstname', 'lastname', 'username', 'image'];
+    userModel.update(userData, { where: { id: req.body.userid }, individualHooks: true },
+      { fields: fieldsToUpdate }).then((response) => {
+      res.status(201).json({ data: response[1] });
+    })
+      .catch((error) => {
+        res.status(501).json({ message: error.errors[0].message });
+      });
+  }
+
+
+  /**
+   * 
+   * @param { object } req
+   * @param { object } res
+   * @returns {object} object
+   */
+  static editPassword(req, res) {
+    userModel.update(req.body, { where: { id: req.body.userid }, individualHooks: true },
+      { fields: ['password'] }).then((response) => {
       res.status(201).json({ data: response[1] });
     })
       .catch((error) => {

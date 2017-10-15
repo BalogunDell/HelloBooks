@@ -4,19 +4,27 @@ const mockData = {
   user1: {
     firstname: 'user1FirstName',
     lastname: 'user1LastName',
+    username: 'user1Username',
     email: 'user1Email@gmail.com',
     password: 'user1password',
     role: 'user',
-    membership: 'bronze'
+    membership: 'bronze',
+    image: 'image1'
   },
 
   adminData: {
     firstname: 'uadminFirstName',
     lastname: 'adminLastName',
+    username: 'user1Username',
     email: 'adminEmail@gmail.com',
     password: 'adminpassword',
     role: 'admin',
     membership: 'bronze'
+  },
+
+  adminSigninData: {
+    username: 'user1Username',
+    password: 'adminpassword',
   },
 
   invaliduser1Login: {

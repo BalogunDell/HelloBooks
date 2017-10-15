@@ -109,7 +109,7 @@ class User extends React.Component {
   $(document).ready(function(){
    $('.button-collapse').off('click').sideNav({
     closeOnclick:true,
-    menuWidth: 280,
+    menuWidth: 230,
     });
   });
   }
@@ -135,10 +135,11 @@ class User extends React.Component {
               path = {this.props.url}
               userDetails = {this.props.userDetails}
               handleLogout = {this.handleLogout}
+              userType={this.userType}
               /> 
               </div>
               
-              <div className="col s12 m11 l12 offset-l1">
+              <div className="col s12 m12 l12 offset-l1">
                 {this.userType == 'user' ?
                   <div className="content-display">
                     {/* <h4>Welcome to Hello books</h4> */}
