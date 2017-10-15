@@ -15,8 +15,6 @@ const api = '/api';
 const userAPI = '/api/users';
 let userId;
 
-console.log('ENVIRONMENT:', process.env.NODE_ENV);
-
 //**********************************//
 //********TEST THE HOME PAGE******* //
 //**********************************//
