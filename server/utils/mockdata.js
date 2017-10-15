@@ -2,29 +2,41 @@ const mockData = {
 
   // Valid user data
   user1: {
-    firstname: 'user1FirstName',
-    lastname: 'user1LastName',
-    username: 'user1Username',
-    email: 'user1Email@gmail.com',
-    password: 'user1password',
+    firstname: 'janet',
+    lastname: 'teddy',
+    email: 'jane5@mail.com',
+    username: 'abbey33',
+    password: 'abbey2',
     role: 'user',
-    membership: 'bronze',
-    image: 'image1'
+    membership: 'silver',
+    image: 'image2'
+  },
+
+  // Valid user data
+  userEdit: {
+    firstname: 'janet',
+    lastname: 'teddy',
+    username: 'abbey33'
+  },
+
+  borrowBookData: {
+    bookid: 2
   },
 
   adminData: {
     firstname: 'uadminFirstName',
     lastname: 'adminLastName',
-    username: 'user1Username',
+    username: 'userUsername123',
     email: 'adminEmail@gmail.com',
     password: 'adminpassword',
     role: 'admin',
-    membership: 'bronze'
+    membership: 'bronze',
+    image: 'image1'
   },
 
   adminSigninData: {
-    username: 'user1Username',
-    password: 'adminpassword',
+    username: 'adminUsername',
+    password: 'password',
   },
 
   invaliduser1Login: {
@@ -33,8 +45,8 @@ const mockData = {
   },
 
   user1Login: {
-    username: 'user1Username',
-    password: 'user1password',
+    username: 'abbey33',
+    password: 'abbey2',
   },
 
   user1ConflictData: {
@@ -49,7 +61,7 @@ const mockData = {
   user2: {
     firstname: 'user2FirstName',
     lastname: 'user2LastName',
-    username: 'user2Username',
+    username: 'userUsername123',
     email: 'user2Email@gmail.com',
     password: 'user2password',
     role: 'user',
@@ -60,14 +72,14 @@ const mockData = {
     firstname: 'user3FirstName',
     lastname: 'user3LastName',
     email: 'user3Email@gmail.com',
-    username: 'user3Username',
+    username: 'user1Username123',
     password: 'user3password',
     role: 'user',
     membership: 'gold'
   },
 
   adminLogin: {
-    username: 'adminUsername',
+    username: 'user1Username123',
     password: 'adminpassword'
   },
 
@@ -116,19 +128,36 @@ const mockData = {
   },
 
   bookdata: {
-    isbn: '#7764',
-    title: 'learn angular 4',
+    isbn: '1111',
+    title: 'React for Beginners',
     author: 'Nelson Brook',
-    pages: 123,
-    year: 1977,
+    pages: 1080,
+    year: 2010,
     description: 'the books does this and that',
-    quantity: 32,
-    category: 'Self Growth',
-    image: 'images/andela.jpg'
+    quantity: 3,
+    categoryid: 2,
+    visibility: true,
+    image: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
+    pdf: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
+  },
+
+  editBookdata: {
+    id: 2,
+    isbn: '4392',
+    title: 'React for Beginners',
+    author: 'Nelson Brook',
+    pages: 100,
+    year: 2000,
+    description: 'the books does this and that',
+    quantity: 300,
+    categoryid: 5,
+    visibility: true,
+    image: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
+    pdf: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
   },
 
   invalidBookdata: {
-    isbn: '#7764',
+    isbn: '7764',
     title: '',
     author: 'Nelson Brook',
     pages: 123,
@@ -195,11 +224,6 @@ const mockData = {
     quantity: 32,
     category: 'Self Growth',
     image: 'images/andela.jpg'
-  },
-
-  borrowBookData: {
-    userid: 1,
-    bookid: 2
   },
 
   userID: {
