@@ -55,9 +55,9 @@ describe('Hellobooks API', () => {
         password: fakeUsers.users[1].password})
         
       .end((err, res) => {
+        console.log(res.body)
         userToken=res.body.responseData.token;
         userId = res.body.responseData.userID;
-        console.log(res.body)
         done();
       });
     });
