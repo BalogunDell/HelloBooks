@@ -56,6 +56,8 @@ Router.route('/users/:userId/')
   .get(Auth.verifyUser, userController.profilePage)
   .put(Auth.verifyUser, userController.editProfile);
 
+// Edit password
+Router.put('/users/:userId/updatepassword', Auth.verifyUser, userController.editPassword);
 
 // redirect every other address
 Router.route('*')

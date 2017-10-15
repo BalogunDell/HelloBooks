@@ -4,6 +4,13 @@ import { connect } from 'react-redux';
 import * as userActions from '../../Actions/userProfileAction';
 import Loader from './adminSubComponents/loader';
 
+
+/**
+ * 
+ * @class profileUpdateForm
+ * @extends {React.Component}
+ * @classdesc Creates form for profile edit
+ */
 class profileUpdateForm extends React.Component {
   constructor(props){
     super(props);
@@ -14,13 +21,21 @@ class profileUpdateForm extends React.Component {
       errorStatus: false,
       loader: false,
       successStatus: false,
-      successMessage: ''
+      successMessage: '',
+      disable: false,
+      
     }
 
     this.handleUserInput = this.handleUserInput.bind(this);
     this.handleProfileUpdate = this.handleProfileUpdate.bind(this);
   }
 
+  /**
+   * 
+   * @param {object} event
+   * @returns {object} updated state
+   * @memberof profileUpdateForm
+   */
   handleUserInput(event) {
     let tempFileHolder = Object.assign({}, this.state.userData);
     let name = event.target.name;
@@ -34,7 +49,8 @@ class profileUpdateForm extends React.Component {
     
     // Set loader to true
     this.setState({loader: true});
-    console.log(this.state.userData)
+
+    // Check if there is a new image selected
     // Save edit update
     this.props.updateProfile(this.state.userData)
     .then(() => {
@@ -43,11 +59,13 @@ class profileUpdateForm extends React.Component {
         errorStatus: false, 
         errorMessage: '',
         successStatus: true,
+        disable: true,
         successMessage: 'Profile has been updated'});
     })
     .catch(error => {
       this.setState({
-        errorStatus: true, 
+        errorStatus: true,
+        disable: false,
         errorMessage: error.response.data.message,
         loader: false});
     });
@@ -62,6 +80,10 @@ class profileUpdateForm extends React.Component {
     $(document).ready(() => {
       Materialize.updateTextFields();
     });
+  }
+
+  componentWillReceiveProps(nextProps) {
+    console.log(nextProps);
   }
   render() {
     const {cancelEdit} = this.props;
@@ -105,23 +127,21 @@ class profileUpdateForm extends React.Component {
           <div className="row">
               <div className="input-field col s12">
                 <input 
-                  type="email" 
-                  id="email" 
-                  name="email" 
+                  type="text" 
+                  id="username" 
+                  name="username" 
                   className="validate" 
-                  value = {this.state.userData.email}
+                  value = {this.state.userData.username}
                   onChange= {this.handleUserInput}
                 />
                 <label 
-                  htmlFor="email" 
+                  htmlFor="username" 
                   data-error="Invalid email" 
-                  data-success="">Email
+                  data-success="">Username
                     <span>*</span>
                 </label>
               </div>  
             </div>
-
-
             <div className="row">
               { 
                 this.state.errorStatus 
@@ -138,12 +158,20 @@ class profileUpdateForm extends React.Component {
                 : 
                 null
               }
+
+              { 
+                this.state.successStatus 
+                ?
+                  <h6 className="green-text center">{this.state.successMessage}</h6>
+                : 
+                null
+              }
             </div>
 
             {/* Email input  */}
          <div className="row">
           <div className="input-field col s12 m12 l6">
-            <button className="btn waves-ripple waves-effect">Save</button>
+            <button className="btn waves-ripple waves-effect" disabled={this.state.disable}>Save</button>
           </div>  
 
           <div className="input-field col s12 m12 l6">
@@ -158,7 +186,7 @@ class profileUpdateForm extends React.Component {
 
 const stateToProps = (state, ownProps) => {
   return {
-    newUserDetails: state.userProfile
+    newUserDetails: state.userProfile.data
   }
 }
 
