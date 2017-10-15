@@ -169,14 +169,13 @@ class profileUpdateForm extends React.Component {
             </div>
 
             {/* Email input  */}
-         <div className="row">
-          <div className="input-field col s12 m12 l6">
-            <button className="btn waves-ripple waves-effect" disabled={this.state.disable}>Save</button>
-          </div>  
-
+         <div className="row">  
           <div className="input-field col s12 m12 l6">
             <button className="btn waves-ripple waves-effect red" onClick={cancelEdit}>Cancel</button>
-          </div>  
+          </div> 
+          <div className="input-field col s12 m12 l6">
+            <button className="btn waves-ripple waves-effect" disabled={this.state.disable}>Save</button>
+          </div> 
         </div>
         </form>
       </div>  

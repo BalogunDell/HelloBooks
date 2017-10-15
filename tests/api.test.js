@@ -5,6 +5,11 @@ import supertest from 'supertest';
 import app from '../server/index';
 import mockdata from '../server/utils/mockdata';
 import jwt from 'jsonwebtoken';
+import fakeUsers from '../server/seeds/users';
+import fakeBooks from '../server/seeds/books';
+import models from '../server/models/index';
+import categories from '../server/seeds/category';
+
 require('dotenv').config();
 
 const request = supertest(app);
@@ -14,6 +19,63 @@ let adminToken;
 const api = '/api';
 const userAPI = '/api/users';
 let userId;
+
+// Seeds
+
+// Sync database
+before((done) => {
+  models.sequelize.sync({force:true}, {individualHooks: true})
+  .then(() => {
+    done();
+  })
+});
+
+// Save admin and normal user, sign them in and get token
+before((done) => {
+  models.users.bulkCreate(fakeUsers.users, {individualHooks: true})
+  .then(() => {
+    request
+    .post(`${userAPI}/signin`)
+    .send({
+      username: fakeUsers.users[0].username,
+      password: fakeUsers.users[0].password
+    })
+    .end((err, res) => {
+      adminToken=res.body.responseData.token;
+    });
+  })
+  .then(() => {
+    request
+    .post(`${userAPI}/signin`)
+    .send({
+      username: fakeUsers.users[1].username,
+      password: fakeUsers.users[1].password})
+      
+    .end((err, res) => {
+      userToken=res.body.responseData.token;
+      userId = res.body.responseData.userID;
+      done();
+    });
+  });
+})
+
+//Load sample category before test
+before((done) => {
+  models.categories.bulkCreate(categories.categories, {individualHooks: true})
+  .then(() => {
+    done();
+  })
+});
+
+
+//Load sample book before test
+before((done) => {
+  models.books.bulkCreate(fakeBooks.books, {individualHooks: true})
+  .then(() => {
+    done();
+  })
+});
+
 
 //**********************************//
 //********TEST THE HOME PAGE******* //
@@ -30,22 +92,23 @@ describe('Homepage', () => {
 //**********************************//
 //********TEST GET BOOKS*********** //
 //**********************************//
+
 describe('Get books', () => {
   it('should return list of books', (done) => {
     request
     .get(`${api}/books/`)
     .end((err, res, body) => {
       expect(res.status).to.equal(200);
-      expect(res.body).to.have.key('books')
+      expect(res.body).to.have.property('books')
       done();
     });
   })
 });
 
-
 //**********************************//
 //********TEST USER SIGNUP ******* //
 //**********************************//
+
 describe('User registration', () => {
   it('should register a user' , (done) => {
     request
@@ -53,18 +116,17 @@ describe('User registration', () => {
     .send('Accept', 'Application/json')
     .send(mockdata.user1)
     .end((err, res) => {
-      console.log(err);
       expect(res.status).to.equal(201);
-      expect(res.body).to.have.key('responseData');
+      expect(res.body).to.have.property('responseData');
       done();
     });
   });
 });
 
-
 //**********************************//
 //********TEST USER SIGNIN ******* //
 //**********************************//
+
 describe('User Sign in', () => {
   it('should log a user in' , (done) => {
     request
@@ -73,18 +135,17 @@ describe('User Sign in', () => {
     .send(mockdata.user1Login)
     .end((err, res) => {
       expect(res.status).to.equal(200);
-      expect(res.body).to.have.key('responseData');
-      userToken =  res.body.responseData.token;
-      userId = res.body.responseData.userID;
+      expect(res.body).to.have.property('responseData');
+      expect(res.body.responseData).to.have.property('token');
       done();
     });
   });
 });
 
-
 //**********************************//
 //********TEST USER FEATURES ******* //
 //**********************************//
+
 describe('User Actions', () => {
   it('should fetch user books' , (done) => {
     request
@@ -92,7 +153,7 @@ describe('User Actions', () => {
     .set('Authorization', userToken)
     .end((err, res) => {
       expect(res.status).to.equal(200);
-      // expect(res.body).to.have.key('responseData');
+      expect(res.body.message).to.have.equal('You have no books yet');
       done();
     });
   });
@@ -102,7 +163,7 @@ describe('User Actions', () => {
     .post(`${userAPI}/${userId}/books`)
     .set('Authorization', userToken)
     .send('Accept', 'Application/json')
-    .send(mockdata.borrowBookData)
+    .send({bookid: 1})
     .end((err, res) => {
       expect(res.status).to.equal(201);
       expect(res.body).to.be.an('object');
@@ -117,7 +178,7 @@ describe('User Actions', () => {
     .put(`${userAPI}/${userId}/books`)
     .set('Authorization', userToken)
     .send('Accept', 'Application/json')
-    .send(mockdata.borrowBookData)
+    .send({bookid: 1})
     .end((err, res) => {
       expect(res.status).to.equal(201);
       expect(res.body).to.be.an('object');
@@ -163,7 +224,6 @@ describe('User Actions', () => {
     });
   })
 });
-
 describe('Admin Login' , () => {
   it('should be able to login ', (done) => {
     request
@@ -172,38 +232,16 @@ describe('Admin Login' , () => {
     .send(mockdata.adminSigninData)
     .end((err, res) => {
       expect(res.status).to.equal(200);
-      expect(res.body).to.have.key('responseData');
+      expect(res.body).to.have.property('responseData');
       expect(res.body.responseData).to.have.property('token');
       expect(res.body.responseData).to.have.property('userID');
       expect(res.body.responseData).to.have.property('username');
       expect(res.body.responseData).to.have.property('userRole');
       expect(res.body.responseData).to.have.property('message');
       expect(res.body.responseData.message).to.equal('signed in');
-      adminToken = res.body.responseData.token;
       done();
     });
-  })
-});
-
-describe('Admin Login' , () => {
-  it('should be able to login ', (done) => {
-    request
-    .post(`${userAPI}/signin`)
-    .send('Accept', 'Application/json')
-    .send(mockdata.adminSigninData)
-    .end((err, res) => {
-      expect(res.status).to.equal(200);
-      expect(res.body).to.have.key('responseData');
-      expect(res.body.responseData).to.have.property('token');
-      expect(res.body.responseData).to.have.property('userID');
-      expect(res.body.responseData).to.have.property('username');
-      expect(res.body.responseData).to.have.property('userRole');
-      expect(res.body.responseData).to.have.property('message');
-      expect(res.body.responseData.message).to.equal('signed in');
-      adminToken = res.body.responseData.token;
-      done();
-    });
-  })
+  });
 });
 
 describe('Admin' , () => {
@@ -265,10 +303,8 @@ describe('Admin' , () => {
     .set('Authorization', adminToken)
     .send('Accept', 'Application/json')
     .end((err, res) => {
-      console.log(res.body)
-      // expect(res.body).to.have.property('message');
-      // expect(res.body.message).to.equal('Book has been successfully deleted');
-      // expect(res.body).to.have.property('updatedBooks');
+      expect(res.body).to.have.property('message');
+      expect(res.body.message).to.equal('Book has been published');
       done();
     });
   });

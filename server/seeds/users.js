@@ -4,6 +4,7 @@ const users = [
   {
     firstname: 'admin',
     lastname: 'admin',
+    username: 'adminUsername22',
     email: 'admin@mail.com',
     password: 'password',
     role: 'admin',
@@ -13,6 +14,7 @@ const users = [
     firstname: 'david',
     lastname: 'brook',
     email: 'david@mail.com',
+    username: 'username22',
     password: 'password',
     role: 'user',
     membership: 'bronze'
@@ -21,6 +23,7 @@ const users = [
     firstname: 'daniel',
     lastname: 'doe',
     email: 'daniel@mail.com',
+    username: 'username32',
     password: 'password',
     role: 'user',
     membership: 'silver',
