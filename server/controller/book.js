@@ -143,7 +143,7 @@ class Book {
         if (!book) {
           res.status(404).json({ message: 'This books is not available in our database' });
         } else {
-          res.status(201).json({ message: book });
+          res.status(200).json({ message: book });
         }
       })
       .catch((error) => {
