@@ -7,8 +7,9 @@ const books = [
     year: 2017,
     description: 'the books does this and that',
     quantity: 6,
-    category: 'programming',
+    categoryid: 1,
     image: 'images/andela.jpg',
+    pdf: 'pdf2'
   },
   {
     isbn: '#7765',
@@ -18,8 +19,9 @@ const books = [
     year: 2010,
     description: 'the books does this and that',
     quantity: 3,
-    category: 'programming',
-    image: 'images/andela.jpg'
+    categoryid: 2,
+    image: 'images/andela.jpg',
+    pdf: 'pdf1'
   },
   {
     isbn: '#7766',
@@ -29,10 +31,9 @@ const books = [
     year: 2016,
     description: 'the books does this and that',
     quantity: 32,
-    category: 'business',
+    categoryid: 3,
     image: 'images/andela.jpg',
-    createdAt: new Date(),
-    updatedAt: new Date()
+    pdf: 'pdf3'
   },
   {
     isbn: '#7767',
@@ -42,10 +43,9 @@ const books = [
     year: 2014,
     description: 'the books does this and that',
     quantity: 15,
-    category: 'health',
+    categoryid: 4,
     image: 'images/andela.jpg',
-    createdAt: new Date(),
-    updatedAt: new Date()
+    pdf: 'pdf4'
   },
   {
     isbn: '#7768',
@@ -55,10 +55,9 @@ const books = [
     year: 2017,
     description: 'the books does this and that',
     quantity: 5,
-    category: 'social',
+    categoryid: 5,
     image: 'images/andela.jpg',
-    createdAt: new Date(),
-    updatedAt: new Date()
+    pdf: 'pdf5'
   }
 ];
 
@@ -71,8 +70,9 @@ const invalidBooks = [
     year: 2017,
     description: 'the books does this and that',
     quantity: 6,
-    category: 'programming',
+    categoryid: '3',
     image: 'images/andela.jpg',
+    pdf: 'pdf6'
   },
   {
     isbn: '#7780',
@@ -82,8 +82,9 @@ const invalidBooks = [
     year: 2017,
     description: 'the books does this and that',
     quantity: 6,
-    category: 'programming',
+    categoryid: 2,
     image: 'images/andela.jpg',
+    pdf: 'pdf7'
   }
 ];
 

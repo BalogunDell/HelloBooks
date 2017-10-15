@@ -14,9 +14,9 @@ const mockData = {
 
   // Valid user data
   userEdit: {
-    firstname: 'janet',
-    lastname: 'teddy',
-    username: 'abbey33'
+    firstname: 'Biodun',
+    lastname: 'Olaoluwa',
+    username: 'abbey33333'
   },
 
   borrowBookData: {
@@ -35,7 +35,7 @@ const mockData = {
   },
 
   adminSigninData: {
-    username: 'adminUsername',
+    username: 'adminUsername22',
     password: 'password',
   },
 
