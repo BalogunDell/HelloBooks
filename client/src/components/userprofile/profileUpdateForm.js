@@ -183,6 +183,7 @@ class profileUpdateForm extends React.Component {
   }
 }
 
+
 const stateToProps = (state, ownProps) => {
   return {
     newUserDetails: state.userProfile.data
