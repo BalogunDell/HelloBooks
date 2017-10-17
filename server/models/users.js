@@ -106,7 +106,8 @@ const user = (sequelize, DataTypes) => {
       associate(model) {
         // associations can be defined here
         usersModel.hasMany(model.borrowedbooks, {
-          foreignKey: 'userid'
+          foreignKey: 'userid',
+          onDelete: 'CASCADE'
         });
       }
     },

@@ -41,9 +41,9 @@ const borrowedbook = (sequelize, DataTypes) => {
   });
 
   borrowedbooks.associate = (models) => {
-    borrowedbooks.belongsTo(models.users, { foreignKey: 'userid'});
-    borrowedbooks.belongsTo(models.books, { foreignKey: 'bookid'});
-  }
+    borrowedbooks.belongsTo(models.users, { foreignKey: 'userid', onDelete: 'CASCADE' });
+    borrowedbooks.belongsTo(models.books, { foreignKey: 'bookid', onDelete: 'CASCADE' });
+  };
   return borrowedbooks;
 };
 

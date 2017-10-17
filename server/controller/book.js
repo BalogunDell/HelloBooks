@@ -123,7 +123,8 @@ class Book {
    * @returns { object } resposnse
    */
   static getBorrowedBooks(req, res) {
-    borrowedBooks.findAll({ include: { model: bookModel, include: { model: categoryModel } } }).then((response) => {
+    borrowedBooks.findAll({ include: { model: bookModel,
+      include: { model: categoryModel } } }).then((response) => {
       res.status(200).json({ books: response });
     }).catch((error) => {
       res.status(404).json({ message: error.message });

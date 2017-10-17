@@ -158,7 +158,8 @@ const book = (sequelize, DataTypes) => {
       foreignKey: 'bookid',
     });
     books.belongsTo(model.categories, {
-      foreignKey: 'categoryid'
+      foreignKey: 'categoryid',
+      onDelete: 'CASCADE'
     });
   };
   return books;

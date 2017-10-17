@@ -228,6 +228,7 @@ describe('Hellobooks API', () => {
       });
     })
   });
+
   describe('Admin Login' , () => {
     it('should be able to login ', (done) => {
       request
@@ -248,6 +249,9 @@ describe('Hellobooks API', () => {
     });
   });
 
+  //**********************************//
+  //********TEST ADMIN FEATURES******* //
+  //**********************************//
   describe('Admin' , () => {
     it('should upload a book', (done) => {
       request
@@ -294,7 +298,6 @@ describe('Hellobooks API', () => {
       .set('Authorization', adminToken)
       .send('Accept', 'Application/json')
       .end((err, res) => {
-        expect(res.body).to.have.property('message');
         expect(res.body.message).to.equal('Book has been successfully deleted');
         expect(res.body).to.have.property('updatedBooks');
         done();
@@ -305,13 +308,113 @@ describe('Hellobooks API', () => {
       request
       .post(`${api}/books/${mockdata.editBookdata.id}`)
       .set('Authorization', adminToken)
-      .send('Accept', 'Application/json')
       .end((err, res) => {
         expect(res.body).to.have.property('message');
         expect(res.body.message).to.equal('Book has been published');
         done();
       });
     });
+
+    it('should delete a book', (done) => {
+      request
+      .delete(`${api}/books/2`)
+      .set('Authorization', adminToken)
+      .send('Accept', 'Application/json')
+      .end((err, res) => {
+        expect(res.body.message).to.equal('Book has been successfully deleted');
+        expect(res.body).to.have.property('updatedBooks');
+        done();
+      });
+    });
+
+    it('should get all borrowed books', (done) => {
+      request
+      .get(`${api}/books/borrowedbooks`)
+      .set('Authorization', adminToken)
+      .end((err, res) => {
+        expect(res.body).to.have.property('books');
+        expect(res.body.books).to.be.an('array');
+        expect(res.body.books[0]).to.have.property('id');
+        expect(res.body.books[0]).to.have.property('userid');
+        expect(res.body.books[0]).to.have.property('bookid');
+        expect(res.body.books[0]).to.have.property('dateborrowed');
+        expect(res.body.books[0]).to.have.property('expectedreturndate');
+        expect(res.body.books[0]).to.have.property('returnstatus');
+        expect(res.body.books[0]).to.have.property('book');
+        done();
+      });
+    });
+
+    it('should get all books, deleted and not deleted', (done) => {
+      request
+      .get(`${api}/books/all`)
+      .set('Authorization', adminToken)
+      .end((err, res) => {
+        expect(res.body).to.have.property('books');
+        expect(res.body.books).to.be.an('array');
+        expect(res.body.books[0]).to.have.property('id');
+        expect(res.body.books[0]).to.have.property('isbn');
+        expect(res.body.books[0]).to.have.property('pages');
+        expect(res.body.books[0]).to.have.property('title');
+        expect(res.body.books[0]).to.have.property('description');
+        expect(res.body.books[0]).to.have.property('quantity');
+        expect(res.body.books[0]).to.have.property('categoryid');
+        expect(res.body.books[0]).to.have.property('visibility');
+        expect(res.body.books[0].visibility).to.equal(false);
+        done();
+      });
+    });
+  });
+
+  //**********************************//
+  //******TEST CATEGORY FEATURES**** //
+  //**********************************//
+
+  describe('Create category:', () => {
+    it('should display all categories' , (done) => {
+      request
+      .get(`${api}/categories`)
+      .set('Authorization', adminToken)
+      .end((err, res) => {
+        expect(res.status).to.equal(200);
+        expect(res.body).to.be.an('object');
+        expect(res.body.categories).to.be.an('array');
+        expect(res.body.categories[0]).to.property('id');
+        expect(res.body.categories[0]).to.property('category');
+        expect(res.body.categories[0]).to.property('createdAt');
+        expect(res.body.categories[0]).to.property('updatedAt');
+        done();
+      });
+    })
+
+    // it('should add a new category' , (done) => {
+    //   request
+    //   .post(`${api}/newcategory`)
+    //   .set('Authorization', adminToken)
+    //   .send('Accept', 'Application/json')
+    //   .send({category:'category'})
+    //   .end((err, res) => {
+    //     console.log(err);
+    //     expect(res.status).to.equal(200);
+    //     console.log(res.body)
+        
+    //     done();
+    //   });
+    // })
+
+    it('should delete a category' , (done) => {
+      request
+      .delete(`${api}/category`)
+      .set('Authorization', adminToken)
+      .send('Accept', 'Application/json')
+      .send({id:1})
+      .end((err, res) => {
+        expect(res.status).to.equal(201);
+        expect(res.body).to.have.property('message');
+        expect(res.body.message).to.equal('Category deleted');
+        done();
+      });
+    })
   });
 });
 
