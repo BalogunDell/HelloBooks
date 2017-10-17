@@ -105,7 +105,7 @@ class User {
           res.status(200).json({ response });
         }
       }).catch((error) => {
-        res.status(404).json({ message: error });
+        res.status(404).json({ message: error.errors[0].message });
       });
   }
 

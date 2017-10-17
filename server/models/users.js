@@ -11,7 +11,7 @@ const user = (sequelize, DataTypes) => {
           msg: 'Firstname cannot be empty'
         },
         is: {
-          args: /(\D+)/,
+          args: /([A-Za-z])+/,
           msg: 'Firstname can only contain strings'
         },
         len: {
@@ -29,7 +29,7 @@ const user = (sequelize, DataTypes) => {
           msg: 'Lastname cannot be empty'
         },
         is: {
-          args: /(\w)/i,
+          args: /([A-Za-z])+/,
           msg: 'Lastname can only contain strings'
         },
         len: {

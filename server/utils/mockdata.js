@@ -12,6 +12,60 @@ const mockData = {
     image: 'image2'
   },
 
+  user1InvalidDataFirstname: {
+    firstname: 1223,
+    lastname: 'teddy',
+    email: 'jane5@mail.com',
+    username: 'abbey33',
+    password: 'abbey2',
+    role: 'user',
+    membership: 'silver',
+    image: 'image2'
+  },
+
+  user1InvalidDataEmptyLastname: {
+    firstname: 'George',
+    lastname: '',
+    email: 'jane5@mail.com',
+    username: 'abbey33',
+    password: 'abbey2',
+    role: 'user',
+    membership: 'silver',
+    image: 'image2'
+  },
+
+  user1InvalidDataDigitLastname: {
+    firstname: 'George',
+    lastname: 123,
+    email: 'jane5@mail.com',
+    username: 'abbey33',
+    password: 'abbey2',
+    role: 'user',
+    membership: 'silver',
+    image: 'image2'
+  },
+  user1InvalidData: {
+    firstname: 1223,
+    lastname: 'teddy',
+    email: 'jane5@mail.com',
+    username: 'abbey33',
+    password: 'abbey2',
+    role: 'user',
+    membership: 'silver',
+    image: 'image2'
+  },
+
+  user1IncompleteData: {
+    firstname: 1223,
+    lastname: '',
+    email: 'jane5@mail.com',
+    username: '',
+    password: 'abbey2',
+    role: 'user',
+    membership: 'silver',
+    image: 'image2'
+  },
+
   // Valid user data
   userEdit: {
     firstname: 'Biodun',
