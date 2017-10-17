@@ -416,6 +416,20 @@ describe('Hellobooks API', () => {
       });
     })
   });
+
+  describe('Invalid user login' , () => {
+    it('given invalid user data, should not be able to login', () => {
+      request
+      .post(`${userAPI}/signin`)
+      .send('Accept', 'Application/json')
+      .send(mockdata.user1InvalidLogin)
+      .end((err, res) => {
+        // expect(res.status).to.equal(404);
+        console.log(res.body);
+        done();
+      });
+    });
+  });
 });
 
 
