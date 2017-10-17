@@ -42,7 +42,6 @@ class Allbooks extends React.Component {
   }
 
   render() {
-    // console.log(this.props.retrievedBooks)
     return(
       
       <div>

@@ -31,12 +31,15 @@ export function failureMessage(message) {
 }
 
 export function membershipIconCreator(membershipLevel) {
+  if(!membershipLevel) {
+    membershipLevel == 'null'
+  }
   switch(membershipLevel.toLowerCase()) {
     case 'silver':
       return (
         <span>
           <i className="material-icons green-text">star</i>
-          <i className="material-icons silver">star</i>
+          <i className="material-icons green-text">star</i>
         </span>
       )
     case 'bronze':

@@ -109,7 +109,7 @@ class User extends React.Component {
   $(document).ready(function(){
    $('.button-collapse').off('click').sideNav({
     closeOnclick:true,
-    menuWidth: 280,
+    menuWidth: 230,
     });
   });
   }
@@ -135,10 +135,11 @@ class User extends React.Component {
               path = {this.props.url}
               userDetails = {this.props.userDetails}
               handleLogout = {this.handleLogout}
+              userType={this.userType}
               /> 
               </div>
               
-              <div className="col s12 m11 l12 offset-l1">
+              <div className="col s12 m12 l12 offset-l1">
                 {this.userType == 'user' ?
                   <div className="content-display">
                     {/* <h4>Welcome to Hello books</h4> */}
@@ -162,7 +163,6 @@ class User extends React.Component {
                      getBookId = {this.getBookId}/>}/>
                     <Route path="/user/upload" render={() => <CreateBook/>}/> 
                     <Route path="/user/bookdetails" render={() => <BookDetails book_id = {this.state.book_id}/>}/>
-                    <Route path="/user/history" render ={()=> <UserHistory userID = {this.userID}/>}/> 
                     <Route path="/user/borrowedbooks" render={() => <Borrowedbooks userID ={this.userID}/> }/>
                     <Route path="/user/editbook" render={() => <EditBook/>}/>
                     <Route path="/user/deletedbooks" render={() => <UnpublishedList/>}/>

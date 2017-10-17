@@ -43,7 +43,7 @@ const user = (sequelize, DataTypes) => {
       allowNull: false,
       unique: {
         args: true,
-        msg: "A user with this email exists"},
+        msg: 'A user with this email exists' },
       validate: {
         notEmpty: {
           args: true,
@@ -60,7 +60,7 @@ const user = (sequelize, DataTypes) => {
       allowNull: false,
       unique: {
         args: true,
-        msg: "Username taken, use another"
+        msg: 'Username taken, use another'
       },
       validate: {
         notEmpty: {
@@ -106,7 +106,8 @@ const user = (sequelize, DataTypes) => {
       associate(model) {
         // associations can be defined here
         usersModel.hasMany(model.borrowedbooks, {
-          foreignKey: 'userid'
+          foreignKey: 'userid',
+          onDelete: 'CASCADE'
         });
       }
     },
@@ -116,11 +117,6 @@ const user = (sequelize, DataTypes) => {
         users.password = hashP;
         return users;
       },
-      beforeUpdate: (users) => {
-        const hashP = bcrypt.hashSync(users.password, bcrypt.genSaltSync(10));
-        users.password = hashP;
-        return users;
-      }
     }
   });
   return usersModel;

@@ -3,7 +3,9 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import { membershipIconCreator } from './messages';
-import * as profileEditConst from './profileEditElements';
+import ProfileInfo from './profileInfo';
+import ProfileEditForm from './profileUpdateForm';
+import ImageModal from './updateImageModal';
 
 class Profile extends React.Component {
   constructor(props) {
@@ -12,46 +14,106 @@ class Profile extends React.Component {
     this.state = {
       userData: this.props.userProfile,
       viewProfile:false,
-      editBtn: false,
-      editPass: false,
-      editFirstname: false,
-      editLastname:false,
-      editUsername: false,
-      editEmail: false,
-      newPassData: {
-        currentPassword: '',
-        newPassword: '',
-        confirmNewPassword: ''
-      }
+      showInput: false,
+      editButton: true,
+      tempImageName: '',
+      imageHeight: 0,
+      imageWidth: 0,
+      loader: false
     }
 
-    this.showChangePassForm = this.showChangePassForm.bind(this)
-    this.hideChangePassForm = this.hideChangePassForm.bind(this)
-    this.EditProfileHandler = this.EditProfileHandler.bind(this)
-    this.editPassword = this.editPassword.bind(this)
+    this.showProfile = this.showProfile.bind(this);
+    this.hideChangeForm = this.hideChangeForm.bind(this);
+    this.showInputHandler = this.showInputHandler.bind(this);
+    this.cancelEdit = this.cancelEdit.bind(this);
+    this.handleImageEdit = this.handleImageEdit.bind(this);
+    this.imageUploadHandler = this.imageUploadHandler.bind(this);
+    
   }
 
-  editPassword() {
-    this.setState({editPass: true, editBtn:true})
-  }
-  showChangePassForm() {
-    return this.setState({viewProfile:true})
+  showProfile() {
+    this.setState({viewProfile:true, editButton: false});
   } 
   
-  hideChangePassForm(event) {
-    this.setState({viewProfile:false})
+  hideChangeForm(event) {
+    this.setState({viewProfile:false});
     event.target.value = ''
   }
 
+  showInputHandler() {
+    this.setState({showInput: true, editButton: true,});
+    const info = JSON.stringify(this.state.userData);
+    localStorage.setItem('info', info);
+  }
+ 
+   /**
+   * @method cancelEdit
+   *  @returns a new state with cancelEditStatus set to false
+   * @memberof profileUpdateForm
+   */
+  cancelEdit() {
+    this.setState({
+      viewProfile: true,
+      showInput: false,
+      editButton: false
 
-  EditProfileHandler(){
-    console.log('hello')
+    })
+  }
+
+  /**
+   * 
+   * @memberof Profile
+   */
+
+  handleImageEdit(event) {
+    event.preventDefault();
+    console.log(this.state.tempImageName);
+  }
+
+  /**
+   * 
+   * @param {object} event
+   * @returns { object } updated state
+   * @memberof profileUpdateForm
+   */
+  imageUploadHandler(event) {
+    event.preventDefault();
+    event.persist();
+    let imageInput = event.target.files[0];
+    let imageReader = new FileReader();
+    if(imageInput) {
+      imageReader.onload = () => {
+        const newUpload = new Image();
+        newUpload.src = imageReader.result;
+        newUpload.onload = () => {
+          this.setState({ tempImageName: imageInput, 
+          imageHeight:newUpload.height,
+          imageWidth: newUpload.width});
+        }
+      }
+    }
+    imageReader.readAsDataURL(imageInput);
+
   }
 
   componentDidMount() {
     $(document).ready(()=> {
       $('.modal').modal();
-    })
+
+     const showImageOverlay = () => {
+        $('#image-target').hover(() => {
+          $('#test').addClass("change-image-overlay");
+        });     
+      };
+      showImageOverlay();
+    });
+    
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.userProfile) {
+      this.setState({userData: nextProps.userProfile});
+    }
   }
 
   render() {
@@ -61,13 +123,15 @@ class Profile extends React.Component {
           <div className="details">
             {/* Profile image here */}
             <div className="profile-image-holder">
-              <img src="/images/abbey.jpg" className="circle responsive-img" id="" alt=""/>
-              <div className="circle change-image-overlay">
+              <a onClick={this.handleImageEdit} href="#confirmationModal" className="modal-trigger">
+              <img src="/images/abbey.jpg" className="circle responsive-img" id="image-target" alt=""/>
+              <div className="circle image-overlay" id="test">
                 <span>
                   <i className="material-icons">photo_camera</i>
                   <h6>Upload new image</h6>
                 </span>
               </div>
+              </a>
             </div>
             
             {/* User details0 */}
@@ -75,12 +139,12 @@ class Profile extends React.Component {
             <div>
               <h4>{`${this.state.userData.firstname} ${this.state.userData.lastname}`}</h4>
               <p>Joined: {this.state.userData.createdAt} | {this.state.userData.email}</p>
-              <p>Member level: {membershipIconCreator(this.state.userData.membership)}</p>
+              <p>Member level: {membershipIconCreator(this.state.userData.membership)} </p>
               <div className="row">
                 <div className="col s12 l12">
                   {!this.state.viewProfile
                   ?
-                  <button className="btn waves-teal waves-effect" onClick={this.showChangePassForm}>View Full Profile</button>
+                  <button className="btn waves-teal waves-effect" onClick={this.showProfile}>View Full Profile</button>
                   :
                   ''
                   }
@@ -92,53 +156,30 @@ class Profile extends React.Component {
             {this.state.viewProfile 
             ?
             <div>
-              <table>
-                <thead>
-                  <tr>
-                    <td><b>Profile Details</b></td>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>Firstname:</td>
-                    <td>{this.state.userData.firstname} </td>
-                  </tr>
-
-                  <tr>
-                    <td>Lastname:</td>
-                    <td> {this.state.userData.lastname} </td>
-                  </tr>
-
-                  <tr>
-                    <td>Email:</td>
-                    <td> {this.state.userData.email} </td>
-                  </tr>
-
-                  <tr>
-                    <td>Username:</td>
-                    <td> {this.state.userData.username} </td>
-                  </tr>
-
-                  <tr>
-                    <td>Password:</td>
-                    <td> ***<i className="material-icons" onClick={this.editPassword}>edit</i></td>
-                  </tr>
-                </tbody>
-              </table>
-              <button className="btn waves-ripple waves-effect modal-trigger" disabled={this.state.editBtn}>EDIT</button>
+              {this.state.showInput 
+              ? 
+                <ProfileEditForm cancelEdit = {this.cancelEdit}/>
+              :
+                <ProfileInfo userData={this.state.userData}
+                showInput={this.state.showInput}
+                showInputHandler={this.showInputHandler}/>
+              }
+              {!this.state.editButton 
+              ?
+                <button className="btn waves-ripple waves-effect modal-trigger" onClick={this.showInputHandler}>EDIT</button>
+              : 
+                null
+              }
             </div>
             :
             ''
             }
-
-            {this.state.editPass 
-            ?
-            <profileEditConst.editPasswordEle/>
-            : 
-            ''
-            }
           </div>
         </div>
+        <ImageModal 
+        imageUploadHandler = {this.imageUploadHandler}
+        loader ={this.state.loader}
+        handleImageEdit={this.handleImageEdit}/>
       </div>
     )
   }

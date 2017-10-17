@@ -30,7 +30,8 @@ const categoriesModel = (sequelize, DataTypes) => {
   });
   categories.associate = (model) => {
     categories.hasMany(model.books, {
-      foreignKey: 'categoryid'
+      foreignKey: 'categoryid',
+      onDelete: 'CASCADE'
     });
   };
 

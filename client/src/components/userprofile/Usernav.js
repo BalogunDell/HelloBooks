@@ -5,10 +5,7 @@ import profileImage from '../../assets/images/abbey.jpg';
 import logo from '../../assets/images/hb-logo.png';
 
 
-
-
-
-const UserNav = ({ navLinks, linkIcons, linkTexts, path, userDetails, handleLogout }) => {
+const UserNav = ({ userType, navLinks, linkIcons, linkTexts, path, userDetails, handleLogout }) => {
   return(
     <div>
 
@@ -16,32 +13,39 @@ const UserNav = ({ navLinks, linkIcons, linkTexts, path, userDetails, handleLogo
         {/* SHOW APP LOGO AND WELCOME MESSAGE  */}
         <li>
           <div className="user-view">
-            <div className="background user-view-bg">
+            <div className="background user-view-bg centered">
             </div>
-            <img src={logo} className="responsive-img center" alt=""/>
+            <img src='https://res.cloudinary.com/djvjxp2am/image/upload/v1507971952/hellobooks/hb-logo.png' 
+            className="responsive-img center" alt=""/>
           </div>
         </li>
 
         {/* SHOW NAVIGATION FOR USER/ADMIN */}
         <li id="dashboard"><div className="black white-text">A HEADER TEXT HERE</div></li>
-        <li><NavLink className="active" to={`${path}/${linkTexts[0]}`}>{navLinks[0]}<i className="material-icons white-text">{linkIcons[0]}</i></NavLink></li>
-       <li><NavLink className="active" to={`${path}/${linkTexts[1]}`}>{navLinks[1]}<i className="material-icons white-text">{linkIcons[1]}</i></NavLink></li>
-        <li><NavLink className="active" to={`${path}/${linkTexts[2]}`}>{navLinks[2]}<i className="material-icons white-text">{linkIcons[2]}</i></NavLink></li>
-        <li><NavLink className="active" to={`${path}/${linkTexts[3]}`}>{navLinks[3]}<i className="material-icons white-text">{linkIcons[3]}</i></NavLink></li>
-        <li><NavLink className="active" to={`${path}/${linkTexts[4]}`}>{navLinks[4]}<i className="material-icons white-text">{linkIcons[4]}</i></NavLink></li>
-        <li><NavLink className="active" to={`${path}/${linkTexts[5]}`}>{navLinks[5]}<i className="material-icons white-text">{linkIcons[5]}</i></NavLink></li>
+        <li><NavLink activeClassName="active" to={`${path}/${linkTexts[0]}`}>{navLinks[0]}<i className="material-icons white-text">{linkIcons[0]}</i></NavLink></li>
+       <li><NavLink activeClassName="active" to={`${path}/${linkTexts[1]}`}>{navLinks[1]}<i className="material-icons white-text">{linkIcons[1]}</i></NavLink></li>
+        <li><NavLink activeClassName="active" to={`${path}/${linkTexts[2]}`}>{navLinks[2]}<i className="material-icons white-text">{linkIcons[2]}</i></NavLink></li>
+        <li><NavLink activeClassName="active" to={`${path}/${linkTexts[3]}`}>{navLinks[3]}<i className="material-icons white-text">{linkIcons[3]}</i></NavLink></li>
+        <li><NavLink activeClassName="active" to={`${path}/${linkTexts[4]}`}>{navLinks[4]}<i className="material-icons white-text">{linkIcons[4]}</i></NavLink></li>
+        <li><NavLink activeClassName="active" to={`${path}/${linkTexts[5]}`}>{navLinks[5]}<i className="material-icons white-text">{linkIcons[5]}</i></NavLink></li>
         
-        <li id="dashboard"><div className="black white-text">A HEADER TEXT HERE</div></li>
+        <li id="dashboard"><div className="settings white-text"><i className="material-icons">settings</i>SETTINGS</div></li>
         
         {/* SHOW USER IMAGE, USERNAME AND MEMBERSHIP LEVEL */}
         <li>
           <div className="user-view">
             <div className="background user-view-bg">
             </div>
-            <img src={profileImage} className="circle profilepix" alt=""/>
+
+            
+              <span className="white-text username">Password:*****<i className="material-icons editPass">edit</i></span>
             <span className="white-text username">Username: {userDetails.username}</span>
-            <span className="white-text email">Email: {userDetails.email}</span>
-            <span className="white-text email">Membership: {userDetails.membership}</span>
+            {userType === 'user'
+            ?
+              <span className="white-text email">Membership: {userDetails.membership}</span>
+              :
+              ''
+            }
           </div>
         </li>
         <li><Link to='/login' className="red-text" onClick={handleLogout}><i className="material-icons red-text">logout</i>Logout</Link></li>
