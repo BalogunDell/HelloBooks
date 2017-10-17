@@ -53,6 +53,11 @@ const mockData = {
     password: 'abbey2',
   },
 
+  user1InvalidLogin: {
+    username: 'abbey6433',
+    password: 'abbey24554',
+  },
+
   user1ConflictData: {
     firstname: 'user1FirstName',
     lastname: 'user1LastName',
