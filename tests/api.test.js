@@ -417,15 +417,116 @@ describe('Hellobooks API', () => {
     })
   });
 
+  //************************************//
+  //*****TEST FOR INVALID SIGNUP DATA**//
+  //**********************************//
+
+  describe('Invalid User Signup', () => {
+    it('given invalid signup data, should not be able to signup', (done) => {
+      request
+      .post(`${userAPI}/signup`)
+      .send('Accept', 'Application/json')
+      .send(mockdata.user1InvalidDataFirstname)
+      .end((err, res) => {
+        expect(res.status).to.equal(501);
+        expect(res.body).to.have.property('message');
+        expect(res.body.message).to.equal('Firstname can only contain strings');
+        done();
+      });
+    });
+
+    it('given invalid signup data, should not be able to signup', (done) => {
+      request
+      .post(`${userAPI}/signup`)
+      .send('Accept', 'Application/json')
+      .send(mockdata.user1InvalidDataEmptyLastname)
+      .end((err, res) => {
+        expect(res.status).to.equal(501);
+        expect(res.body).to.have.property('message');
+        expect(res.body.message).to.equal('Lastname cannot be empty');
+        done();
+      });
+    });
+
+    
+    it('given invalid signup data, should not be able to signup', (done) => {
+      request
+      .post(`${userAPI}/signup`)
+      .send('Accept', 'Application/json')
+      .send(mockdata.user1InvalidDataDigitLastname)
+      .end((err, res) => {
+        expect(res.status).to.equal(501);
+        expect(res.body).to.have.property('message');
+        expect(res.body.message).to.equal('Lastname can only contain strings');
+        done();
+      });
+    });
+
+    it('given invalid signup data, should not be able to signup', (done) => {
+      request
+      .post(`${userAPI}/signup`)
+      .send('Accept', 'Application/json')
+      .send(mockdata.user1ConflictData)
+      .end((err, res) => {
+        expect(res.status).to.equal(501);
+        expect(res.body).to.have.property('message');
+        expect(res.body.message).to.equal('A user with this email exists');
+        done();
+      });
+    });
+  });
+
+  //***********************************//
+  //*****TEST FOR INVALID LOGIN DATA**//
+  //**********************************//
   describe('Invalid user login' , () => {
-    it('given invalid user data, should not be able to login', () => {
+    it('given invalid user data, should not be able to login', (done) => {
       request
       .post(`${userAPI}/signin`)
       .send('Accept', 'Application/json')
       .send(mockdata.user1InvalidLogin)
       .end((err, res) => {
-        // expect(res.status).to.equal(404);
-        console.log(res.body);
+        expect(res.status).to.equal(404);
+        expect(res.body).to.have.property('message');
+        expect(res.body.message).to.be.equal('Invalid username or password');
+        done();
+      });
+    });
+
+    it('given invalid admin data, should not be able to login', (done) => {
+      request
+      .post(`${userAPI}/signin`)
+      .send('Accept', 'Application/json')
+      .send(mockdata.user1InvalidLogin)
+      .end((err, res) => {
+        expect(res.status).to.equal(404);
+        expect(res.body).to.have.property('message');
+        expect(res.body.message).to.be.equal('Invalid username or password');
+        done();
+      });
+    });
+
+    it('given no data , should not be able to login', (done) => {
+      request
+      .post(`${userAPI}/signin`)
+      .send('Accept', 'Application/json')
+      .end((err, res) => {
+        expect(res.status).to.equal(404);
+        expect(res.body).to.have.property('message');
+        expect(res.body.message).to.be.equal('Username and password is required');
+        done();
+      });
+    });
+
+    it('given incomplete data , should not be able to login', (done) => {
+      request
+      .post(`${userAPI}/signin`)
+      .send('Accept', 'Application/json')
+      .send({username: '', password:'abbey2'})
+      .end((err, res) => {
+        expect(res.status).to.equal(404);
+        expect(res.body).to.have.property('message');
+        expect(res.body.message).to.be.equal('Username and password is required');
         done();
       });
     });
