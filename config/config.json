@@ -15,7 +15,8 @@
   },
 
   "travis": {
-    "use_env_variables": "HELLOBOOKS_TEST"
+    "use_env_variables": "HELLOBOOKS_TEST",
+    "dialect": "postgres"
   },
 
   "production": {
