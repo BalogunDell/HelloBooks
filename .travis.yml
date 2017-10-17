@@ -8,9 +8,9 @@ services:
 
 before_script:
   - npm install -g codeclimate-test-reporter
-
-script: 
-  - npm run test:travis
+ 
+ script: 
+  - NODE_ENV=travis npm run test:travis
 
 after_success:
   - CODECLIMATE_REPO_TOKEN=$CODECLIMATE_REPO_TOKEN codeclimate-test-reporter < coverage/lcov.info
