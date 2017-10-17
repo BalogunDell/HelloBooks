@@ -39,6 +39,10 @@ const mockData = {
     password: 'password',
   },
 
+  category: {
+    category: 'Test Category'
+  },
+
   invaliduser1Login: {
     email: 'user1Email@gmail.com',
     password: 'user1password',
