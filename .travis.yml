@@ -8,9 +8,11 @@ services:
 
 before_script:
   - npm install -g codeclimate-test-reporter
- 
- script: 
-  - NODE_ENV=travis npm run test:travis
+  - psql -c 'drop database if exists HELLOBOOKS_TEST;' -U postgres
+  - psql -c 'create database HELLOBOOKS_TEST;' -U postgres
+  
+script:
+  - NODE_ENV=test npm run test:travis
 
 after_success:
   - CODECLIMATE_REPO_TOKEN=$CODECLIMATE_REPO_TOKEN codeclimate-test-reporter < coverage/lcov.info
