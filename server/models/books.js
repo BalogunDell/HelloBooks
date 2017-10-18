@@ -3,7 +3,10 @@ const book = (sequelize, DataTypes) => {
     isbn: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true,
+      unique: {
+        args: true,
+        msg: 'A book with this isbn exists '
+      },
       validate: {
         notEmpty: {
           args: true,

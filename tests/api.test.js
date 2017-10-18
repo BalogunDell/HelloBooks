@@ -1,6 +1,6 @@
 process.env.NODE_ENV = 'test'
 
-import { expect } from 'chai';
+import chai from 'chai';
 import supertest from 'supertest';
 import app from '../server/index';
 import mockdata from '../server/utils/mockdata';
@@ -12,6 +12,7 @@ import categories from '../server/seeds/category';
 
 require('dotenv').config();
 
+const expect = chai.expect;
 const request = supertest(app);
 const secret = process.env.SECRET;
 let userToken;
@@ -461,16 +462,113 @@ describe('Hellobooks API', () => {
         done();
       });
     });
-
+    // Check for last name
     it('given invalid signup data, should not be able to signup', (done) => {
       request
       .post(`${userAPI}/signup`)
       .send('Accept', 'Application/json')
-      .send(mockdata.user1ConflictData)
+      .send(mockdata.user1IncompleteData)
       .end((err, res) => {
         expect(res.status).to.equal(501);
         expect(res.body).to.have.property('message');
-        expect(res.body.message).to.equal('A user with this email exists');
+        expect(res.body.message).to.equal('Lastname cannot be empty');
+        done();
+      });
+    });
+    // Check for empty email
+    it('given invalid signup data, should not be able to signup', (done) => {
+      request
+      .post(`${userAPI}/signup`)
+      .send('Accept', 'Application/json')
+      .send(mockdata.user1IncompleteData2)
+      .end((err, res) => {
+        expect(res.status).to.equal(501);
+        expect(res.body).to.have.property('message');
+        expect(res.body.message).to.equal('Email cannot be empty');
+        done();
+      });
+    });
+
+    // Check for invalid email
+    it('given invalid signup data, should not be able to signup', (done) => {
+      request
+      .post(`${userAPI}/signup`)
+      .send('Accept', 'Application/json')
+      .send(mockdata.user1IncompleteData3)
+      .end((err, res) => {
+        expect(res.status).to.equal(501);
+        expect(res.body).to.have.property('message');
+        expect(res.body.message).to.equal('Field must contain a valid email address');
+        done();
+      });
+    });
+
+    // Check for empty username
+    it('given invalid signup data, should not be able to signup', (done) => {
+      request
+      .post(`${userAPI}/signup`)
+      .send('Accept', 'Application/json')
+      .send(mockdata.user1IncompleteData4)
+      .end((err, res) => {
+        expect(res.status).to.equal(501);
+        expect(res.body).to.have.property('message');
+        expect(res.body.message).to.equal('Username cannot be empty');
+        done();
+      });
+    });
+
+    // Check for invalid username
+    it('given invalid signup data, should not be able to signup', (done) => {
+      request
+      .post(`${userAPI}/signup`)
+      .send('Accept', 'Application/json')
+      .send(mockdata.user1IncompleteData5)
+      .end((err, res) => {
+        expect(res.status).to.equal(501);
+        expect(res.body).to.have.property('message');
+        expect(res.body.message).to.equal('Username must start with letter(s) and end with digit(s)');
+        done();
+      });
+    });
+
+    // Check for existing username
+    it('given invalid signup data, should not be able to signup', (done) => {
+      request
+      .post(`${userAPI}/signup`)
+      .send('Accept', 'Application/json')
+      .send(mockdata.user1IncompleteData6)
+      .end((err, res) => {
+        expect(res.status).to.equal(501);
+        expect(res.body).to.have.property('message');
+        expect(res.body.message).to.equal('Username taken, use another');
+        done();
+      });
+    });
+
+    // Check for empty password
+    it('given invalid signup data, should not be able to signup', (done) => {
+      request
+      .post(`${userAPI}/signup`)
+      .send('Accept', 'Application/json')
+      .send(mockdata.user1IncompleteData7)
+      .end((err, res) => {
+        expect(res.status).to.equal(501);
+        expect(res.body).to.have.property('message');
+        expect(res.body.message).to.equal('Password cannot be empty');
+        done();
+      });
+    });
+
+    // Check for empty password
+    it('given invalid signup data, should not be able to signup', (done) => {
+      request
+      .post(`${userAPI}/signup`)
+      .send('Accept', 'Application/json')
+      .send(mockdata.user1IncompleteData8)
+      .end((err, res) => {
+        expect(res.status).to.equal(501);
+        expect(res.body).to.have.property('message');
+        expect(res.body.message).to.equal('Password should be 6 to 30 characters long');
         done();
       });
     });
@@ -527,6 +625,82 @@ describe('Hellobooks API', () => {
         expect(res.status).to.equal(404);
         expect(res.body).to.have.property('message');
         expect(res.body.message).to.be.equal('Username and password is required');
+        done();
+      });
+    });
+  });
+
+  //***********************************//
+  //*****TEST FOR INVALID BOOK DATA***//
+  //**********************************//
+  describe('Invalid Book Upload Data', () => {
+    it('given that book isbn is missing, it should not create a book', () => {
+      request
+      .post(`${api}/books`)
+      .set('Authorization', adminToken)
+      .send('Accept', 'Application/json')
+      .send(mockdata.invalidBookdata1)
+      .end((err, res) => {
+        expect(res.status).to.equal(400);
+        expect(res.body).to.have.property('message');
+        expect(res.body.message).to.equal('One or more fields are empty');
+        done();
+      });
+    });
+
+    it('given that book title is missing, it should not create a book', () => {
+      request
+      .post(`${api}/books`)
+      .set('Authorization', adminToken)
+      .send('Accept', 'Application/json')
+      .send(mockdata.invalidBookdata2)
+      .end((err, res) => {
+        expect(res.status).to.equal(400);
+        expect(res.body).to.have.property('message');
+        expect(res.body.message).to.equal('One or more fields are empty');
+        done();
+      });
+    });
+
+    it('given that book author is missing, it should not create a book', () => {
+      request
+      .post(`${api}/books`)
+      .set('Authorization', adminToken)
+      .send('Accept', 'Application/json')
+      .send(mockdata.invalidBookdata3)
+      .end((err, res) => {
+        expect(res.status).to.equal(400);
+        expect(res.body).to.have.property('message');
+        expect(res.body.message).to.equal('One or more fields are empty');
+        done();
+      });
+    });
+
+    it('given that book pages is missing, it should not create a book', () => {
+      request
+      .post(`${api}/books`)
+      .set('Authorization', adminToken)
+      .send('Accept', 'Application/json')
+      .send(mockdata.invalidBookdata4)
+      .end((err, res) => {
+        expect(res.status).to.equal(400);
+        expect(res.body).to.have.property('message');
+        expect(res.body.message).to.equal('One or more fields are empty');
+        done();
+      });
+    });
+
+    it('given that book year is missing, it should not create a book', () => {
+      request
+      .post(`${api}/books`)
+      .set('Authorization', adminToken)
+      .send('Accept', 'Application/json')
+      .send(mockdata.invalidBookdata5)
+      .end((err, res) => {
+        expect(res.status).to.equal(501);
+        expect(res.body).to.have.property('message');
+        expect(res.body.message).to.equal('One or more fields are empty');
+        console.log(res.body)
         done();
       });
     });
