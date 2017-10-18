@@ -19,15 +19,16 @@ class Book {
     bookModel.create(req.body).then((book) => {
       res.status(201).json({ message: 'Book created', data: book });
     }).catch((error) => {
+      res.status(501).json({ message: error.errors[0].message });
       // check if all fields are supplied.
-      if (error.name === 'SequelizeValidationError') {
-        res.status(400).json({ message: 'One or more fields are empty' });
-        // check if a duplicate request was made.
-      } else if (error.name === 'SequelizeUniqueConstraintError') {
-        res.status(409).json({ message: 'A book with this ISBN already exists' });
-      } else {
-        res.status(501).json({ error });
-      }
+      // if (error.name === 'SequelizeValidationError') {
+      //   res.status(400).json({ message: 'One or more fields are empty' });
+      //   // check if a duplicate request was made.
+      // } else if (error.name === 'SequelizeUniqueConstraintError') {
+      //   res.status(409).json({ message: 'A book with this ISBN already exists' });
+      // } else {
+      //   res.status(501).json({ error });
+      // }
     });
   }
 

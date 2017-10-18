@@ -56,11 +56,90 @@ const mockData = {
   },
 
   user1IncompleteData: {
-    firstname: 1223,
+    firstname: 'shola',
     lastname: '',
     email: 'jane5@mail.com',
     username: '',
     password: 'abbey2',
+    role: 'user',
+    membership: 'silver',
+    image: 'image2'
+  },
+
+  user1IncompleteData2: {
+    firstname: 'shola',
+    lastname: 'Abbey',
+    email: '',
+    username: 'gsfgsf',
+    password: 'abbey2',
+    role: 'user',
+    membership: 'silver',
+    image: 'image2'
+  },
+
+  user1IncompleteData3: {
+    firstname: 'Shola',
+    lastname: 'Abbey',
+    email: 'dfdfgsfs',
+    username: 'adwasadsg',
+    password: 'abbey2',
+    role: 'user',
+    membership: 'silver',
+    image: 'image2'
+  },
+
+  user1IncompleteData4: {
+    firstname: 'Shola',
+    lastname: 'Abbey',
+    email: 'deli@gmail.com',
+    username: '',
+    password: 'abbey2',
+    role: 'user',
+    membership: 'silver',
+    image: 'image2'
+  },
+
+  user1IncompleteData5: {
+    firstname: 'Shola',
+    lastname: 'Abbey',
+    email: 'deli@gmail.com',
+    username: 1234,
+    password: 'abbey2',
+    role: 'user',
+    membership: 'silver',
+    image: 'image2'
+  },
+
+  user1IncompleteData6: {
+    firstname: 'Shola',
+    lastname: 'Abbey',
+    email: 'deli@gmail.com',
+    username: 'abbey33',
+    password: 'abbey2',
+    role: 'user',
+    membership: 'silver',
+    image: 'image2'
+  },
+  
+  // empty password
+  user1IncompleteData7: {
+    firstname: 'Shola',
+    lastname: 'Abbey',
+    email: 'deli@gmail.com',
+    username: 'mathew234',
+    password: '',
+    role: 'user',
+    membership: 'silver',
+    image: 'image2'
+  },
+
+  // too short password
+  user1IncompleteData8: {
+    firstname: 'Shola',
+    lastname: 'Abbey',
+    email: 'deli@gmail.com',
+    username: 'mathew234',
+    password: '123',
     role: 'user',
     membership: 'silver',
     image: 'image2'
@@ -121,58 +200,9 @@ const mockData = {
     membership: 'bronze'
   },
 
-  user2: {
-    firstname: 'user2FirstName',
-    lastname: 'user2LastName',
-    username: 'userUsername123',
-    email: 'user2Email@gmail.com',
-    password: 'user2password',
-    role: 'user',
-    membership: 'silver'
-  },
-
-  user3: {
-    firstname: 'user3FirstName',
-    lastname: 'user3LastName',
-    email: 'user3Email@gmail.com',
-    username: 'user1Username123',
-    password: 'user3password',
-    role: 'user',
-    membership: 'gold'
-  },
-
   adminLogin: {
     username: 'user1Username123',
     password: 'adminpassword'
-  },
-
-
-  // Inalid user data
-  invalidUser1: {
-    firstname: '',
-    lastname: 'invaliduser1LastName',
-    email: 'invaliduser1Email@gmail.com',
-    password: 'user1password',
-    role: 'user',
-    membership: 'bronze'
-  },
-
-  invaliduser2: {
-    firstname: 'invaliduser2FirstName',
-    lastname: 'invaliduser2LastName',
-    email: 'invaliduser2Email@gmail.com',
-    password: 'invaliduser2password',
-    role: 'user',
-    membership: 'silver'
-  },
-
-  invaliduser3: {
-    firstname: 'invaliduser3FirstName',
-    lastname: 'invaliduser3LastName',
-    email: 'invalidUser3Email@gmail.com',
-    password: 'invaliduser3password',
-    role: 'user',
-    membership: 'gold'
   },
 
   invalidadmin: {
@@ -180,15 +210,6 @@ const mockData = {
     password: 'invalidAdminpassword'
   },
 
-  invaliduser: {
-    username: '',
-    password: ''
-  },
-
-  emptyCredence: {
-    username: '',
-    password: ''
-  },
 
   bookdata: {
     isbn: '1111',
@@ -219,43 +240,81 @@ const mockData = {
     pdf: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
   },
 
-  invalidBookdata: {
-    isbn: '7764',
+  //  Invalid book data isbn
+  invalidBookdata1: {
+    isbn: '',
+    title: 'React for Beginners',
+    author: 'Nelson Brook',
+    pages: 1080,
+    year: 2010,
+    description: 'the books does this and that',
+    quantity: 3,
+    categoryid: 2,
+    visibility: true,
+    image: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
+    pdf: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
+  },
+
+  //  Invalid book data title
+  invalidBookdata2: {
+    isbn: 1234,
     title: '',
     author: 'Nelson Brook',
-    pages: 123,
-    year: 1977,
+    pages: 1080,
+    year: 2010,
     description: 'the books does this and that',
-    quantity: 32,
-    category: 'Self Growth',
-    image: 'images/andela.jpg'
+    quantity: 3,
+    categoryid: 2,
+    visibility: true,
+    image: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
+    pdf: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
   },
 
-  invalidBookdata2: {
-    isbn: '#7764',
-    title: 'Abbey owns',
-    author: 'Nelson Brook',
+  // Invalid book data author
+  invalidBookdata3: {
+    isbn: 1234,
+    title: 'React for beginners',
+    author: '',
+    pages: 1080,
+    year: 2010,
+    description: 'the books does this and that',
+    quantity: 3,
+    categoryid: 2,
+    visibility: true,
+    image: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
+    pdf: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
+  },
+
+  // Invalid book data pages
+  invalidBookdata4: {
+    isbn: 1234,
+    title: 'React for beginners',
+    author: '',
     pages: '',
+    year: 2010,
+    description: 'the books does this and that',
+    quantity: 3,
+    categoryid: 2,
+    visibility: true,
+    image: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
+    pdf: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
+  },
+
+  // Invalid book data pages
+  invalidBookdata5: {
+    isbn: 1234,
+    title: 'React for beginners',
+    author: '',
+    pages: 1223,
     year: '',
     description: 'the books does this and that',
-    quantity: 32,
-    category: 'Self Growth',
-    image: 'images/andela.jpg'
+    quantity: 3,
+    categoryid: 2,
+    visibility: true,
+    image: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
+    pdf: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
   },
-
-  invalidBookdata3: {
-    isbn: '11164',
-    title: 'Abbey owns',
-    author: 'Nelson Brook',
-    pages: 123,
-    year: 1768,
-    description: '',
-    quantity: '',
-    category: 'Self Growth',
-    image: 'images/andela.jpg'
-  },
-
-  invalidBookdata4: {
+  invalidBookdata: {
     isbn: '11164',
     title: 'Abbey owns',
     author: 'Nelson Brook',
