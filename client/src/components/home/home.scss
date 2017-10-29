@@ -106,7 +106,6 @@
   width: 80%;
   text-align: center;
   margin-bottom: 25%;
-  background-color: black;
 
   h1 {
     font-family: Georgia, 'Times New Roman', Times, serif;
@@ -122,18 +121,19 @@
 
   }
 
-  .button {
-    // margin-top: 5%;
-    padding-right: 20px;
-    background: #017eb7;
-    min-height: 60px;
-    // max-width: 40%;
+  .btn {
+    margin-top: 5%;
+    background:$custom-color;
+    padding-bottom: 20px;
+    padding-top: 20px;
+    line-height: 10px;
+    width: 250px;
     -webkit-transition: background 1s;
     -o-webkit-transition: background 0.5s;
     -ms-webkit-transition: background 0.5s;
   }
 
-  button:hover {
+  .btn:hover {
     background: rgba(0,0,0,0.6);
   }
 }
