@@ -10,6 +10,10 @@ export default function fetchUserReducer(state={}, action) {
       return {
         ...state, ...action.newUserData
       }
+    case types.EDIT_IMAGE:
+      return {
+        ...state, ...action.newImageUrl
+      }
     default: 
       return state
   }

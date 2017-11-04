@@ -18,8 +18,14 @@ export default class Home extends React.Component {
               <p>Hello books allows you to borrow books that have been gathered from 
               different part of the  world. Finding books of your choice 
             just got easier with us</p>
-              <Link className=" button btn waves-effect waves-ripple" to ="/about">Get to know more</Link>
-              <Link className="button btn waves-effect waves-ripple" to ="/register">Signup</Link>
+              <div className ="row">
+                <div className= "col s12 m12 l6">
+                  <Link className="btn waves-effect waves-ripple" to ="/about">Get to know more</Link>  
+                </div>
+                <div className= "col s12 m12 l6">
+                  <Link className="btn waves-effect waves-ripple" to ="/register">Signup</Link>
+                </div>
+              </div>
           </div>
           <div className="arrow-down center">
             <a href="#">
