@@ -6,6 +6,7 @@ import { membershipIconCreator } from './messages';
 import ProfileInfo from './profileInfo';
 import ProfileEditForm from './profileUpdateForm';
 import ImageModal from './updateImageModal';
+import * as userActions from '../../Actions/userProfileAction';
 
 class Profile extends React.Component {
   constructor(props) {
@@ -55,7 +56,12 @@ class Profile extends React.Component {
     this.setState({
       viewProfile: true,
       showInput: false,
-      editButton: false
+      editButton: false,
+      tempImageName: '',
+      loader: false,
+      imageHeight: 0,
+      imageWidth: 0
+
 
     })
   }
@@ -67,7 +73,13 @@ class Profile extends React.Component {
 
   handleImageEdit(event) {
     event.preventDefault();
-    console.log(this.state.tempImageName);
+    this.props.saveNewImage(this.state.tempImageName)
+    .then(() => {
+      console.log('done');
+    })
+    .catch((error) => {
+      console.log(error);
+    })
   }
 
   /**
@@ -123,7 +135,7 @@ class Profile extends React.Component {
           <div className="details">
             {/* Profile image here */}
             <div className="profile-image-holder">
-              <a onClick={this.handleImageEdit} href="#confirmationModal" className="modal-trigger">
+              <a href="#confirmationModal" className="modal-trigger">
               <img src="/images/abbey.jpg" className="circle responsive-img" id="image-target" alt=""/>
               <div className="circle image-overlay" id="test">
                 <span>
@@ -134,7 +146,7 @@ class Profile extends React.Component {
               </a>
             </div>
             
-            {/* User details0 */}
+            {/* User details */}
 
             <div>
               <h4>{`${this.state.userData.firstname} ${this.state.userData.lastname}`}</h4>
@@ -179,7 +191,8 @@ class Profile extends React.Component {
         <ImageModal 
         imageUploadHandler = {this.imageUploadHandler}
         loader ={this.state.loader}
-        handleImageEdit={this.handleImageEdit}/>
+        handleImageEdit={this.handleImageEdit}
+        cancelEdit = {this.cancelEdit}/>
       </div>
     )
   }
@@ -189,4 +202,10 @@ function mapStateToProps(state, ownProps) {
     userProfile: state.userProfile
   }
 }
-export default connect(mapStateToProps, null)(Profile);
+
+function mapDispatchToProps(dispatch) {
+  return {
+    saveNewImage: (image) => dispatch(userActions.saveNewImage(image))
+  }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Profile);

@@ -2,6 +2,7 @@ import axios from 'axios';
 
 import * as types from './actionTypes';
 import * as apiRoutes from '../utils/apiEndPoints';
+import * as cloudKeys from '../utils/cloudinaryKeys';
 import { getUserDetails } from '../utils/getUserInfo';
 
 
@@ -115,7 +116,6 @@ export function returnBook(bookid) {
       dispatch(returnBookAction(response.data.message));
     })
     .catch(error => {
-      console.log(error);
     })
   }
 }
@@ -150,21 +150,22 @@ export function savePdf(pdf) {
   }
 }
 
+/**
+ * 
+ * @export savePdfToCloudinary
+ * @param { object } pdf 
+ * @returns { object } axios responsee
+ */
 export function savePdfToCloudinary(pdf) {
-  
-    const cloudinaryUrl = 'https://api.cloudinary.com/v1_1/djvjxp2am/upload';
-    const cloudinaryPreset = 'vlamwg7y';
-    const requestHeader = 'application/x-www-form-urlencoded';
   
     const formData = new FormData();
     formData.append('file', pdf);
-    formData.append('upload_preset', cloudinaryPreset);
+    formData.append('upload_preset', cloudKeys.cloudinaryPreset);
   
     return dispatch => {
-      return axios.post(cloudinaryUrl, formData, { headers: {'Content-Type' : requestHeader} })
+      return axios.post(cloudKeys.cloudinaryUrl, formData, { headers: {'Content-Type' : cloudKeys.requestHeader} })
       .then(response => {
         dispatch(savePdf(response.data));
-        console.log(response)
       })
       .catch(error => {
         throw(error);
@@ -172,6 +173,12 @@ export function savePdfToCloudinary(pdf) {
     }
   }
 
+/**
+ * 
+ * @export saveImage
+ * @param { object } image 
+ * @returns { object } action type and payload (image)
+ */
 export function saveImage(image) {
   return {
     type: types.SAVE_IMAGE,
@@ -179,18 +186,20 @@ export function saveImage(image) {
   }
 }
 
+/**
+ * 
+ * @export saveImageToCloudinary
+ * @param { object } image 
+ * @returns { object } axios response
+ */
 export function saveImageToCloudinary(image) {
-
-  const cloudinaryUrl = 'https://api.cloudinary.com/v1_1/djvjxp2am/upload';
-  const cloudinaryPreset = 'vlamwg7y';
-  const requestHeader = 'application/x-www-form-urlencoded';
 
   const formData = new FormData();
   formData.append('file', image);
-  formData.append('upload_preset', cloudinaryPreset);
+  formData.append('upload_preset', cloudKeys.cloudinaryPreset);
 
   return dispatch => {
-    return axios.post(cloudinaryUrl, formData, { headers: {'Content-Type' : requestHeader} })
+    return axios.post(cloudKeys.cloudinaryUrl, formData, { headers: {'Content-Type': cloudKeys.requestHeader} })
     .then(response => {
       dispatch(saveImage(response.data));
     })

@@ -40,23 +40,3 @@ export default function selectFilterer(selectedElement, arrayToFilter){
           return arrayToFilter
     }
 } 
-
-// if(this.state.selectedValue ==='allbooks') {
-//   this.setState({allbooks: this.props.updatedBooks});
-//   let all = this.state.allbooks.filter(book => book.visibility === true);
-//   console.log(all)
-//   this.setState({allbooks:all});
-// } else if (this.state.selectedValue === 'booksreturned') {
-//   console.log('create this API');
-// } else if (this.state.selectedValue === 'mostborrowedbooks') {
-//   console.log('create this api');
-// } else if (this.state.selectedValue === 'pendingreturn') {
-//   console.log('create this api');
-// } else if (this.state.selectedValue === 'unpublishedbooks') {
-//   this.setState({allbooks: this.state.allDatabaseBooks})
-//   let unpublishedbooks = this.state.allDatabaseBooks.filter(book => book.visibility === false);
-//   console.log(unpublishedbooks);
-//   this.setState({allbooks: unpublishedbooks});
-// } else {
-//   this.setState({allbooks: filterable});
-// }
