@@ -32,10 +32,11 @@ class PasswordResetModal extends React.Component {
     // prevent button default action
     event.preventDefault();
   }
+
   render() {
     return(
     <div className="passwordModal">
-      <div className="modal" id="modal-link">
+      <div className="modal" id="passwordResetModal">
         <div className="modal-content">
           <h5 className="center-align"> Password reset</h5>
             <p className="center-align" id="message">

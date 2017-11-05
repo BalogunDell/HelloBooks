@@ -90,7 +90,8 @@ class User {
               userModel.update({ passurl: resetPassUrl }, { where:
                 { email: req.body.email } })
                 .then(() => {
-                  res.status(200).json({ resetUrl: resetPassUrl });
+                  const reply = helper.generateMail(req.body.email, resetPassUrl);
+                  console.log(reply);
                 })
                 .catch((error) => {
                   res.status(201).json({ error });

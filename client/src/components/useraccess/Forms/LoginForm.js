@@ -69,7 +69,9 @@ const LoginForm = ({ userData, handleLoginInput, loginHandler, error, isLoading 
                     </div>  
                   </div>
 
-                  <div className="row"><span className="button forgotPass modal-trigger">Forgot password</span></div>
+                  <div className="row"><a href="#passwordResetModal" 
+                  className="button forgotPass modal-trigger">Forgot password
+                  </a></div>
                   
                   {/* Signin button  */}
                   <div className="row">

@@ -70,6 +70,11 @@ class Login extends React.Component {
 // DEFINE METHODS OF THE CLASS TO HANDLE INPUT AND LOGIN //
 // ******************************************************//
 
+componentDidMount() {
+  $(document).ready(()=> {
+    $('.modal').modal();
+  });
+}
 
 
 // ******************************************************//

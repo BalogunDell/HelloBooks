@@ -1,14 +1,14 @@
 import moment from 'moment';
 import jwt from 'jsonwebtoken';
-import multer from 'multer';
+import nodeMailer from 'nodemailer';
 import model from '../models';
 import util from '../utils/limits';
 
 require('dotenv').config();
 
 const secret = process.env.SECRET;
+const mailPassword = process.env.PASSWORD;
 const borrowedBookModel = model.borrowedbooks;
-const userModel = model.users;
 const bookModel = model.books;
 
 /**
@@ -124,6 +124,42 @@ class Helper {
       urlString += characters[Math.round(Math.random(arg) * (arg * 2))];
     }
     return urlString;
+  }
+
+
+  /**
+   * 
+   * @param { string } userEmail
+   * @param { string } passwordUrl
+   * @returns { string } email
+   */
+  static generateMail(userEmail, passwordUrl) {
+    // Define email transporter
+    const mailCourier = nodeMailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: 'delighteddell@gmail.com',
+        pass: mailPassword
+      }
+    });
+
+    // Define email content and optiobs
+    const mailOptions = {
+      from: 'delighteddell@gmail.com',
+      to: userEmail,
+      subject: 'Password reset link',
+      html: `<h1>RESET YOUR PASSWORD</h1>
+      <p>You requested to reset your password</p>
+      <p><a href="mylife/${passwordUrl}">Click here to reset your password</a></p>`
+    };
+
+    mailCourier.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log(info);
+      }
+    });
   }
 }
 

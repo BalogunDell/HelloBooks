@@ -26,7 +26,7 @@ Router.route('/category')
 // .put(Auth.verifyAdmin, bookController.editCategory);
 
 
-// Reset passwords
+// Generate uique url for password reset, Reset password
 Router.post('/resetpassword', userController.generateResetPassUrl);
 Router.put('/resetpassword/:resetUrl', userController.resetPassword);
 
