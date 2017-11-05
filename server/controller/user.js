@@ -68,6 +68,90 @@ class User {
       .catch(err => res.send(err));
   }
 
+  /**
+   * @param { object } req
+   * @param { object } res
+   * @returns { object } generated url for password reset
+   */
+  static generateResetPassUrl(req, res) {
+    if (!req.body.email) {
+      res.status(400).json({ message: 'Your registered email is required' });
+    } else {
+      const lastWord = req.body.email.substring(req.body.email.lastIndexOf('.') + 1);
+      const dotPosition = req.body.email.lastIndexOf('.');
+      const atPosition = req.body.email.indexOf('@');
+      if (lastWord.length < 2 || dotPosition < atPosition || atPosition === -1) {
+        res.status(400).json({ message: 'Invalid email' });
+      } else {
+        userModel.findOne({ where: { email: req.body.email } })
+          .then((response) => {
+            if (response) {
+              const resetPassUrl = helper.urlGenerator(12, process.env.CHARACTERS);
+              userModel.update({ passurl: resetPassUrl }, { where:
+                { email: req.body.email } })
+                .then(() => {
+                  res.status(200).json({ resetUrl: resetPassUrl });
+                })
+                .catch((error) => {
+                  res.status(201).json({ error });
+                });
+            } else {
+              res.status(404).json({ message: 'Email not found ' });
+            }
+          })
+          .catch((error) => {
+            res.status(500).json({ message: error });
+          });
+      }
+    }
+  }
+
+
+  /**
+   * @param { object } req
+   * @param { object } res
+   * @returns { object } message that password has been changed
+   */
+  static resetPassword(req, res) {
+    const resetUrl = req.params.resetUrl;
+    const newPassword = req.body.password;
+    if (resetUrl.length !== 12) {
+      res.status(404).json({ message: 'This link is invalid' });
+    } else {
+      userModel.findOne({ where: { passurl: resetUrl } })
+        .then((foundUrl) => {
+          if (foundUrl) {
+            if ((!newPassword) || (newPassword === '')) {
+              res.status(400).json({ message: 'Please type in your new password' });
+            } else if (newPassword.length < 6) {
+              res.status(400).json({ message: 'Password should be 6 to 30 characters long' });
+            } else {
+              userModel.update({ password: newPassword }, { where: { passurl: resetUrl },
+                individualHooks: true },
+              { fields: ['password'] })
+                .then(() => {
+                  userModel.update({ passurl: '' }, { where: { passurl: resetUrl } })
+                    .then(() => {
+                      res.status(201).json({ message: 'Your password has been updated' });
+                    })
+                    .catch((err) => {
+                      res.status(500).json({ err });
+                    });
+                })
+                .catch((error) => {
+                  res.status(500).json({ error });
+                });
+            }
+          } else {
+            res.status(404).json({ message: 'This link is invalid' });
+          }
+        })
+        .catch((error) => {
+          res.status(404).json({ message: error });
+        });
+    }
+    // userModel.findOne({ where: { passurl: resetUrl } });
+  }
 
   /**
    * @param { object } req

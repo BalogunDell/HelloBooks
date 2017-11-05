@@ -26,6 +26,11 @@ Router.route('/category')
 // .put(Auth.verifyAdmin, bookController.editCategory);
 
 
+// Reset passwords
+Router.post('/resetpassword', userController.generateResetPassUrl);
+Router.put('/resetpassword/:resetUrl', userController.resetPassword);
+
+
 // get all users - Admin action
 Router.get('/users', Auth.verifyAdmin, userController.getAllUsers);
 

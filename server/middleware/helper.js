@@ -81,10 +81,9 @@ class Helper {
   }
 
   /**
-   * 
    * @param { object} req
+   * @param { object} res
    * @returns { object } body
-   * 
    */
   static composeRequest(req, res) {
     if (!req.body.bookid) return res.status(400).json({ message: 'provide a book id' });
@@ -110,6 +109,21 @@ class Helper {
     }, secret, { expiresIn: '24h' });
 
     return token;
+  }
+
+
+  /**
+   * 
+   * @param { number } arg
+   * @param { string } characters
+   * @returns { string } urlstring
+   */
+  static urlGenerator(arg, characters) {
+    let urlString = '';
+    for (let i = 0; i < arg; ++i) { //eslint-disable-line
+      urlString += characters[Math.round(Math.random(arg) * (arg * 2))];
+    }
+    return urlString;
   }
 }
 
