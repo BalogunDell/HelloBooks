@@ -90,14 +90,21 @@ class User {
               userModel.update({ passurl: resetPassUrl }, { where:
                 { email: req.body.email } })
                 .then(() => {
-                  const reply = helper.generateMail(req.body.email, resetPassUrl);
-                  console.log(reply);
+                  helper.generateMail(req.body.email, resetPassUrl)
+                    .then((mailerResponse) => {
+                      if (mailerResponse) {
+                        res.status(200).json({ message: 'A link for password reset has been sent to your email' });
+                      }
+                    })
+                    .catch((mailerError) => {
+                      res.status(501).json({ message: mailerError });
+                    });
                 })
                 .catch((error) => {
                   res.status(201).json({ error });
                 });
             } else {
-              res.status(404).json({ message: 'Email not found ' });
+              res.status(404).json({ message: 'This email does not exist in our database' });
             }
           })
           .catch((error) => {

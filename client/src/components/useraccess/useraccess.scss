@@ -67,12 +67,15 @@
         color: black;
       }
     }
-
+      .resetPassBtn {
+        margin-top: 10px;
+        margin-bottom: 15PX; 
+      }
       .forgotPass {
         color: black;
         font-size: 15px;
         margin-top: 10px;
-        margin-bottom: 10px;
+        margin-bottom: 30px;
         cursor: pointer
         }
       .forgotPass:hover {
@@ -86,14 +89,33 @@
         margin-bottom: 10px;
 
       }
+
+      h6 {
+        color: black;
+        line-height: 0.001em;
+        border: 0.5px solid black;
+        text-align: center;
+        margin-top: 30px;
+        margin-bottom: 30px;
+      }
+  
+      h6 span {
+        background-color: white;
+        padding: 0 10px;
+        border-radius: 50%;
+      }
   }
       
 }
 
 .passwordModal {
-  background-color: black;
-  button{
-    width: 50%;
+  form {
+    width: 250px;
+    margin: auto;
+    
+    .btn{
+      width: 50%;
+    }
   }
 }
 

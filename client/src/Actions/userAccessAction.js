@@ -37,7 +37,6 @@ export function saveNewUser(userSignupData) {
       }
     })
     .catch((errors) => {
-      // dispatch(userSignupFailureAction(errors.response.data.message))
       throw (errors);
       
     })
@@ -46,7 +45,6 @@ export function saveNewUser(userSignupData) {
 
 
 //  Create thunk for signin
-
 export function userLogin(loginData){
   return dispatch => {
     return axios.post(apiRoutes.signin, loginData)
@@ -67,10 +65,30 @@ export function userLogin(loginData){
   }
 }
 
+// Action for reset password
+export function resetPasswordAction(serverRes) {
+  return {
+    type: types.RESET_PASS,
+    serverRes
+  }
+}
+
+// Thunk action for api call for reset password
+
+export function resetPassword(userEmail) {
+  return dispatch => {
+    return axios.post(`${apiRoutes.newPassword}`, userEmail)
+    .then((response) => {
+      dispatch(resetPasswordAction(response));
+    })
+    .catch((error) => {
+      throw (error);
+    });
+  }
+}
 
 
 // Helper function to check if localstorage is supported
-
 function checkStorage(){
   localStorage ? true : false
 }

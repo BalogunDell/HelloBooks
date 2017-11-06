@@ -153,13 +153,8 @@ class Helper {
       <p><a href="mylife/${passwordUrl}">Click here to reset your password</a></p>`
     };
 
-    mailCourier.sendMail(mailOptions, (error, info) => {
-      if (error) {
-        console.log(error);
-      } else {
-        console.log(info);
-      }
-    });
+    const result = mailCourier.sendMail(mailOptions);
+    return result;
   }
 }
 

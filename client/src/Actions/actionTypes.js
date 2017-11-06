@@ -20,3 +20,4 @@ export const ADMIN_GET_ALLBOOKS = "ADMIN_GET_ALLBOOKS";
 export const PUBLISH_BOOK = "PUBLISH_BOOK";
 export const EDIT_PROFILE = "EDIT_PROFILE";
 export const EDIT_IMAGE = "EDIT_IMAGE";
+export const RESET_PASS = "RESET_PASS";

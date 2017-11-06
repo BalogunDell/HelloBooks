@@ -145,11 +145,6 @@ const RegistrationForm  = ({ userData, handleSubmit, handleUserInput, error }) =
             </div>
 
           </form>
-
-          {/* G plus Signup button  */}
-            <div className="row">
-              <button className="btn waves-effect waves-teal red">Signup with Google+ </button>
-            </div>
         </div>
       </div>
     </div>

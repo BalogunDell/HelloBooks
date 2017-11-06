@@ -22,6 +22,10 @@ const config = {
         use: 'babel-loader'
       },
       {
+        test: /\.jsx$/,
+        use: 'babel-loader'
+      },
+      {
         test: /\.css$/,
         use: [
           'style-loader',

@@ -22,7 +22,6 @@ app.use(cors());
 
 // Setup Routing
 app.use('/api', router);
-app.get('*', (res => res.sendFile(path.resolve(__dirname, '../client/dist/index.html'))));
 
 // Listen at this port
 app.listen(port, (err) => {
