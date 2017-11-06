@@ -100,6 +100,10 @@ const user = (sequelize, DataTypes) => {
     image: {
       type: DataTypes.STRING,
       allowNull: true
+    },
+    passurl: {
+      type: DataTypes.STRING,
+      allowNull: true
     }
   }, {
     classMethods: {
@@ -113,6 +117,11 @@ const user = (sequelize, DataTypes) => {
     },
     hooks: {
       beforeCreate: (users) => {
+        const hashP = bcrypt.hashSync(users.password, bcrypt.genSaltSync(10));
+        users.password = hashP;
+        return users;
+      },
+      beforeUpdate: (users) => {
         const hashP = bcrypt.hashSync(users.password, bcrypt.genSaltSync(10));
         users.password = hashP;
         return users;
