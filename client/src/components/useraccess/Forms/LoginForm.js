@@ -80,9 +80,9 @@ const LoginForm = ({ userData, handleLoginInput, loginHandler, error, isLoading 
                     </div>
                   </div>
                 </form>
-                <h6><span>or</span></h6>
+                <h5><span>or</span></h5>
                    <div className="row">
-                    <button className="btn waves-effect waves-teal red" onClick={console.log(2+2)}>Signup with Google+ </button>
+                    <button className="btn waves-effect waves-teal red">Signup with Google+ </button>
                   </div>
               </div>
             </div>

@@ -150,7 +150,7 @@ class Helper {
       subject: 'Password reset link',
       html: `<h1>RESET YOUR PASSWORD</h1>
       <p>You requested to reset your password</p>
-      <p><a href="mylife/${passwordUrl}">Click here to reset your password</a></p>`
+      <p><a href="http://localhost:8080/resetpassword/${passwordUrl}">Click here to reset your password</a></p>`
     };
 
     const result = mailCourier.sendMail(mailOptions);

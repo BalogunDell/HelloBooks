@@ -14,7 +14,7 @@ const config = {
     historyApiFallback: true
   },
   devtool: 'cheap-eval-source-map',
-
+ 
   module: {
     rules: [
       {

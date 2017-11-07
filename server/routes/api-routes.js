@@ -28,7 +28,8 @@ Router.route('/category')
 
 // Generate uique url for password reset, Reset password
 Router.post('/resetpassword', userController.generateResetPassUrl);
-Router.put('/resetpassword/:resetUrl', userController.resetPassword);
+Router.put('/resetpassword/:resetUrl', Auth.verifyUrl, userController.resetPassword);
+// Router.post('/validateUrl/:resetUrl', Auth.verifyUrl);
 
 
 // get all users - Admin action

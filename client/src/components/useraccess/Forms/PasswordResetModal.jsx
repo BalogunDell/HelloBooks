@@ -19,10 +19,23 @@ class PasswordResetModal extends React.Component {
     const message = document.getElementById('message');
   }
 
+  /**
+   * 
+   * @param { object } event 
+   * @memberof PasswordResetModal
+   * @returns { object } a new state with use email
+   */
   handleInput(event) {
     this.setState({email: event.target.value})
   }
 
+  /**
+   * 
+   * 
+   * @param { object } event 
+   * @memberof PasswordResetModal
+   * @returns { object } respose from api call 
+   */
   handleSubmit(event) {
     // validate input
     if(this.state.email === "") {
@@ -31,14 +44,19 @@ class PasswordResetModal extends React.Component {
     } else {
       
       //Make API call
-      this.props.resetPassword({email: this.state.email})
+      this.props.sendEmail({email: this.state.email})
       .then(() => {
         message.innerHTML = `A password reset link has been sent to ${this.state.email}`;
         message.className="green-text center-align";
       })
       .catch((error) => {
-        message.innerHTML = error.response.data.message;
-        message.className="red-text center-align";  
+        if (error.response.status === 501) {
+          message.innerHTML ="Ooops! Something went wrong, the server could not process your request at this time. Please try again.";
+          message.className="red-text center-align";
+        } else {
+          message.innerHTML = error.response.data.message;
+          message.className="red-text center-align";
+        }
       })
     }
     // prevent button default action
@@ -82,7 +100,7 @@ class PasswordResetModal extends React.Component {
 
 function dispatchToProps(dispatch){
   return {
-    resetPassword: (email) => dispatch(userActions.resetPassword(email))
+    sendEmail: (email) => dispatch(userActions.sendEmail(email))
   }
 }
 
