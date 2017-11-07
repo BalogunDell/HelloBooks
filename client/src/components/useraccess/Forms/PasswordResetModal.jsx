@@ -71,7 +71,8 @@ class PasswordResetModal extends React.Component {
   }
 
   cancelPassReset() {
-    this.setState({email: '', loader: false, disableBtn: false});
+    this.setState({email: '', loader: false, disableBtn: false
+  });
     message.innerHTML = 'A password reset link will be sent to this email';
     message.className="black-text center-align"
   }
@@ -82,10 +83,9 @@ class PasswordResetModal extends React.Component {
       <div className="container">
         <div className="col s12 m6 l4 offset-l8">
           <div className="modal-content">
-            <h5 className="center-align"> Password reset</h5>
+            <h5 className="center-align">Password reset</h5>
               <p className="center-align" id="message">
               A password reset link will be sent to this email</p>
-
               {
                 this.state.error 
                 ? 
