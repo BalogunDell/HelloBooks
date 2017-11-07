@@ -1,7 +1,7 @@
 .home-bg {
   font: 100% $font-stack;
   color: $primary-color;
-  background-image: url('../images/newbg.png');
+  background-image: url('/../images/newbg.png');
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -90,7 +90,6 @@
 }
 
 .passwordModal {
-  background-color: black;
   button{
     width: 50%;
   }

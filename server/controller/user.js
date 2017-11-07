@@ -90,14 +90,21 @@ class User {
               userModel.update({ passurl: resetPassUrl }, { where:
                 { email: req.body.email } })
                 .then(() => {
-                  const reply = helper.generateMail(req.body.email, resetPassUrl);
-                  console.log(reply);
+                  helper.generateMail(req.body.email, resetPassUrl)
+                    .then((mailerResponse) => {
+                      if (mailerResponse) {
+                        res.status(200).json({ message: 'A link for password reset has been sent to your email' });
+                      }
+                    })
+                    .catch((mailerError) => {
+                      res.status(501).json({ message: mailerError });
+                    });
                 })
                 .catch((error) => {
                   res.status(201).json({ error });
                 });
             } else {
-              res.status(404).json({ message: 'Email not found ' });
+              res.status(404).json({ message: 'This email does not exist in our database' });
             }
           })
           .catch((error) => {
@@ -116,42 +123,27 @@ class User {
   static resetPassword(req, res) {
     const resetUrl = req.params.resetUrl;
     const newPassword = req.body.password;
-    if (resetUrl.length !== 12) {
-      res.status(404).json({ message: 'This link is invalid' });
+    if ((!newPassword) || (newPassword === '')) {
+      res.status(400).json({ message: 'Please type in your new password' });
+    } else if (newPassword.length < 6) {
+      res.status(400).json({ message: 'Password should be 6 to 30 characters long' });
     } else {
-      userModel.findOne({ where: { passurl: resetUrl } })
-        .then((foundUrl) => {
-          if (foundUrl) {
-            if ((!newPassword) || (newPassword === '')) {
-              res.status(400).json({ message: 'Please type in your new password' });
-            } else if (newPassword.length < 6) {
-              res.status(400).json({ message: 'Password should be 6 to 30 characters long' });
-            } else {
-              userModel.update({ password: newPassword }, { where: { passurl: resetUrl },
-                individualHooks: true },
-              { fields: ['password'] })
-                .then(() => {
-                  userModel.update({ passurl: '' }, { where: { passurl: resetUrl } })
-                    .then(() => {
-                      res.status(201).json({ message: 'Your password has been updated' });
-                    })
-                    .catch((err) => {
-                      res.status(500).json({ err });
-                    });
-                })
-                .catch((error) => {
-                  res.status(500).json({ error });
-                });
-            }
-          } else {
-            res.status(404).json({ message: 'This link is invalid' });
-          }
+      userModel.update({ password: newPassword }, { where: { passurl: resetUrl },
+        individualHooks: true },
+      { fields: ['password'] })
+        .then(() => {
+          userModel.update({ passurl: '' }, { where: { passurl: resetUrl } })
+            .then(() => {
+              res.status(201).json({ message: 'Your password has been updated' });
+            })
+            .catch((err) => {
+              res.status(500).json({ err });
+            });
         })
         .catch((error) => {
-          res.status(404).json({ message: error });
+          res.status(500).json({ error });
         });
     }
-    // userModel.findOne({ where: { passurl: resetUrl } });
   }
 
   /**

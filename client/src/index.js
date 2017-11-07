@@ -21,6 +21,7 @@ import Dashboard from './components/userprofile/Dashboard';
 import UserHistory from './components/userprofile/History';
 import Allbooks from './components/userprofile/Allbooks/Allbooks';
 import BookDetails from './components/userprofile/bookDetails';
+import ResetPassword from './components/useraccess/resetpassword.jsx';
 
 import { loadAllbooks } from './Actions/booksAction';
 
@@ -40,6 +41,7 @@ class App extends React.Component {
               <Route path= '/login' component={Login}/>
               <Route path='/user' component={User}/>
                <Route path="/user/bookdetails" component={BookDetails}/> 
+               <Route path="/resetpassword/:uniqueUrl" exact component={ResetPassword}/>
               <Route render= {() => {
                   return <p>Not found</p>
                 }}/>

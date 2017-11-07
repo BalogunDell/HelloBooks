@@ -14,11 +14,15 @@ const config = {
     historyApiFallback: true
   },
   devtool: 'cheap-eval-source-map',
-
+ 
   module: {
     rules: [
       {
         test: /\.js$/,
+        use: 'babel-loader'
+      },
+      {
+        test: /\.jsx$/,
         use: 'babel-loader'
       },
       {

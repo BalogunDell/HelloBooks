@@ -67,12 +67,15 @@
         color: black;
       }
     }
-
+      .resetPassBtn {
+        margin-top: 10px;
+        margin-bottom: 15PX; 
+      }
       .forgotPass {
         color: black;
         font-size: 15px;
         margin-top: 10px;
-        margin-bottom: 10px;
+        margin-bottom: 30px;
         cursor: pointer
         }
       .forgotPass:hover {
@@ -85,16 +88,65 @@
         padding-top: 5px;
         margin-bottom: 10px;
 
+        h6 {
+          color: black;
+          text-align: center;
+          margin-top: 30px;
+          margin-bottom: 30px;
+        }
+
+      }
+
+      h5 {
+        color: black;
+        line-height: 0.001em;
+        border: 0.5px solid black;
+        text-align: center;
+        font-size: 15px;
+        margin-top: 30px;
+        margin-bottom: 30px;
+      }
+  
+      h5 span {
+        background-color: white;
+        padding: 0 10px;
+        border-radius: 50%;
       }
   }
       
 }
 
 .passwordModal {
-  background-color: black;
-  button{
-    width: 50%;
+  form {
+    width: 250px;
+    margin: auto;
+    
+    .btn{
+      width: 50%;
+    }
   }
+}
+
+.resetPassword {
+  margin-top: -300px;
+  width: 450px;
+  max-width: 450px;
+
+  form {
+    background-color: white;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    padding-right: 30px;
+    padding-left: 30px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+
+    h5 {
+      text-align: center;
+      padding-bottom: 20px;
+    }
+  }
+
 }
 
 .borrowHistory {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import 'jquery';
-import PasswordResetModal from './PasswordResetModal';
+import PasswordResetModal from './PasswordResetModal.jsx';
 
 
 const LoginForm = ({ userData, handleLoginInput, loginHandler, error, isLoading }) => {
@@ -32,8 +32,8 @@ const LoginForm = ({ userData, handleLoginInput, loginHandler, error, isLoading 
                 </div>
               </div>
             {/* form header ends  */}
-              <div>
-                <form className="user-form" onSubmit={loginHandler}>
+              <div className="user-form">
+                <form className="" onSubmit={loginHandler}>
                   {/* Username input  */}
                   <div className="row">
                     <div className="input-field s12">
@@ -69,7 +69,7 @@ const LoginForm = ({ userData, handleLoginInput, loginHandler, error, isLoading 
                     </div>  
                   </div>
 
-                  <div className="row"><a href="#passwordResetModal" 
+                  <div className="row resetPassBtn"><a href="#passwordResetModal" 
                   className="button forgotPass modal-trigger">Forgot password
                   </a></div>
                   
@@ -80,11 +80,15 @@ const LoginForm = ({ userData, handleLoginInput, loginHandler, error, isLoading 
                     </div>
                   </div>
                 </form>
+                <h5><span>or</span></h5>
+                   <div className="row">
+                    <button className="btn waves-effect waves-teal red">Signup with Google+ </button>
+                  </div>
               </div>
             </div>
           </div>
 
-  {/* <PasswordResetModal/> */}
+  {<PasswordResetModal/>}
  </div>
     );
   }

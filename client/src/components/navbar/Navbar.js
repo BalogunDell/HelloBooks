@@ -1,5 +1,4 @@
 import React from 'react';
-import logo from '../../assets/images/hb-logo.png';
 import { Link, NavLink } from 'react-router-dom';
 
 /**
@@ -11,7 +10,8 @@ export default class Navbar extends React.Component {
     return (
       <nav>
         <div className="container nav-wrapper">
-          <a href="#!" className="brand-logo"><img src={logo} alt="HelloBooks logo"/></a>
+          <a href="#!" className="brand-logo">
+            <img src={'https://res.cloudinary.com/djvjxp2am/image/upload/v1509980754/hb-logo_fyj92s.png'} alt="HelloBooks logo"/></a>
          <a id="sideBarTrigger" data-activates="side_menu" className="button-collapse"><i className="material-icons">menu</i></a>
          <ul className="right hide-on-med-and-down">
           <li>

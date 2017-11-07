@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import Navbar from '../navbar/Navbar';
 import LoginForm from './Forms/LoginForm';
 import Background from '../Background/Background';
-import PasswordResetModal from './Forms/PasswordResetModal';
+// import PasswordResetModal from './Forms/PasswordResetModal';
 import * as UserAcessActions from '../../Actions/userAccessAction'; 
 
 /**

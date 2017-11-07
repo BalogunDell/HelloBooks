@@ -16,6 +16,14 @@ export default function userAccessReducer(state = {}, action) {
         userData: action.loginData,
         isAuthenticated:true
       }
+    case types.SEND_EMAIL: 
+      return {
+        ...state, ...action.serverResponse
+      }
+    case types.RESET_PASS: 
+      return {
+        ...state, ...action.newPassword
+      }
     default: 
       return state;
   }

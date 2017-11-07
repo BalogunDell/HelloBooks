@@ -129,7 +129,7 @@ const RegistrationForm  = ({ userData, handleSubmit, handleUserInput, error }) =
 
             <div className="row center error-holder">
               <div className="col s12">
-                <h6>{error}</h6>
+                <h6 className="red-text">{error}</h6>
               </div>
             </div>
             
@@ -143,13 +143,7 @@ const RegistrationForm  = ({ userData, handleSubmit, handleUserInput, error }) =
                 value="Create Account"/>
               </div>
             </div>
-
           </form>
-
-          {/* G plus Signup button  */}
-            <div className="row">
-              <button className="btn waves-effect waves-teal red">Signup with Google+ </button>
-            </div>
         </div>
       </div>
     </div>
