@@ -65,27 +65,68 @@ export function userLogin(loginData){
   }
 }
 
-// Action for reset password
-export function resetPasswordAction(serverRes) {
+/**
+ * @export sendEmailAction
+ * @param { object } serverRes 
+ * @returns { object } type of action and the 
+ * payload sending reset password link
+ */
+export function sendEmailAction(serverRes) {
   return {
-    type: types.RESET_PASS,
+    type: types.SEND_EMAIL,
     serverRes
   }
 }
 
-// Thunk action for api call for reset password
-
-export function resetPassword(userEmail) {
+/**
+ * 
+ * @export sendEmail
+ * @param { object } userEmail 
+ * @returns { object } response reset password link from the server
+ */
+export function sendEmail(userEmail) {
   return dispatch => {
     return axios.post(`${apiRoutes.newPassword}`, userEmail)
     .then((response) => {
-      dispatch(resetPasswordAction(response));
+      dispatch(sendEmailAction(response.data.message));
     })
     .catch((error) => {
       throw (error);
     });
   }
 }
+
+/**
+ * @export resetPasswordAction
+ * @param { object } newPassword
+ * @param { object } uniqueUrl
+ * @returns { object } type of action and payload
+ */
+export function resetPasswordAction(newPassword) {
+  return {
+    type: types.RESET_PASS,
+    newPassword
+  }
+}
+
+/**
+ * @export resetPassword
+ * @param { object } newPassword
+ * @param { object } uniqueUrl
+ * @returns { object } server response
+ */
+export function resetPassword(newPassword, uniqueUrl) {
+  return dispatch => {
+    return axios.put(`${apiRoutes.newPassword}/${uniqueUrl}`, newPassword)
+    .then((response) => {
+      dispatch(resetPasswordAction(response))
+    })
+    .catch((error) => {
+      throw (error);
+    })
+  }
+}
+
 
 
 // Helper function to check if localstorage is supported
