@@ -1,8 +1,6 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import morgan from 'morgan';
-import path from 'path';
-import fs from 'fs';
 import cors from 'cors';
 import router from './routes/api-routes';
 
@@ -22,7 +20,7 @@ app.use(bodyParser.json());
 app.use(cors());
 
 // Setup Routing
-app.use('/api', router);
+app.use('/api/v1/', router);
 
 // Listen at this port
 app.listen(port, (err) => {

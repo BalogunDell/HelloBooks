@@ -17,8 +17,8 @@ const request = supertest(app);
 const secret = process.env.SECRET;
 let userToken;
 let adminToken;
-const api = '/api';
-const userAPI = '/api/users';
+const api = '/api/v1';
+const userAPI = '/api/v1/users';
 let userId;
 
 // Seeds
