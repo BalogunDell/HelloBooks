@@ -14,7 +14,7 @@
     "seed": "sequelize db:seed:all",
     "migrate:dev": "npm run migrate:undo && npm run migrate && npm run seed",
     "seed:test": "sequelize db:seed:all --env test",
-    "migrate:test": "sequelize db:migrate:undo:all && sequelize db:migrate"
+    "migrate:test": "sequelize db:migrate:undo:all --env test && sequelize db:migrate --env test && npm run seed:test"
   },
   "dependencies": {
     "babel-cli": "^6.24.1",
