@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import 'jquery';
-import PasswordResetModal from './PasswordResetModal.jsx';
+import PasswordResetModal from './PasswordResetModal';
 
 
 const LoginForm = ({ userData, handleLoginInput, loginHandler, error, isLoading }) => {

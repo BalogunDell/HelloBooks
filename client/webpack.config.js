@@ -71,7 +71,13 @@ const config = {
       'window.$': 'jquery',
       'window.jQuery': 'jquery'
     })
-  ]
+  ],
+  resolve: { extensions: ['.js', '.jsx', '.css'] },
+  node: {
+    dns: 'empty',
+    net: 'empty',
+    fs: 'empty'
+  }
 };
 
 module.exports = config;
