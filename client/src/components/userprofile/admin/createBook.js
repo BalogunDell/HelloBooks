@@ -10,7 +10,7 @@ class CreateBook extends React.Component {
     super(props);
 
     this.state = {
-      bookData: Object.assign({}, this.props.initialData),
+      bookData: { ...this.props.initialData },
       loadedCategories: [],
       imageHeight: 0,
       imageWidth: 0,
@@ -68,10 +68,12 @@ class CreateBook extends React.Component {
         disableBtn:false });
         
         // Save image to cloudinary
-        this.props.saveImageToCloudinary(this.state.tempImageName).then(()=> {
+        this.props.saveImageToCloudinary(this.state.tempImageName)
+        .then(()=> {
           // Check if image url has been set before dispatching  save pdf action
           if(this.state.bookData.image) {
-            this.props.savePdfToCloudinary(this.state.tempFileName).then(() =>{
+            this.props.savePdfToCloudinary(this.state.tempFileName)
+            .then(() =>{
               if(this.state.bookData.pdf) {
                 // Save book details to database
                   this.props.createBook(this.state.bookData).then(() => {

@@ -96,10 +96,37 @@ export function saveNewImage(image) {
   return dispatch => {
     return axios.post(cloudKeys.cloudinaryUrl, formdata, { headers: {'Content-Type': cloudKeys.requestHeader }})
     .then((response) => {
-      dispatch(saveImage(response));
+      dispatch(saveImage(response.data));
     })
     .catch((error) => {
       throw (error);
+    });
+  }
+}
+
+/**
+ * @export
+ * @param { object } newImage 
+ * @returns { object } action type and newImage url (from cloudinary)
+ */
+export function saveImageToDB(newImage) {
+  return {
+    type: types.EDIT_IMAGE,
+    newImage
+  }
+}
+
+export function saveNewImageToDB(newImage) {
+  return dispatch => {
+    return axios.put(`${apiRoutes.userProfile}/${getUserDetails().userId}`, 
+    newImage, { 
+      headers: { 'Authorization': getUserDetails().savedToken }
+    })
+    .then((response) => {
+      dispatch(saveImage(response.data.data[0]))
+    })
+    .catch((error) => {
+      throw(error);
     });
   }
 }

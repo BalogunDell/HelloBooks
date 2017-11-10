@@ -20,7 +20,13 @@ class Profile extends React.Component {
       tempImageName: '',
       imageHeight: 0,
       imageWidth: 0,
-      loader: false
+      loader: false,
+      newImageUploadError: false,
+      newImageUploadSuccess: false,
+      newImageUploadSuccessMessage: '',
+      newImageUploadErrorMessage: '',
+      disableUpdateBtn: false,
+      defaultUserImage: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1510302773/default_image_yi56ca.jpg'
     }
 
     this.showProfile = this.showProfile.bind(this);
@@ -32,15 +38,29 @@ class Profile extends React.Component {
     
   }
 
+  /**
+   * @returns changed state of viewprofile and editButton
+   * @memberof Profile
+   */
   showProfile() {
     this.setState({viewProfile:true, editButton: false});
   } 
   
+  /**
+   * 
+   * 
+   * @param { object } event 
+   * @memberof Profile
+   */
   hideChangeForm(event) {
     this.setState({viewProfile:false});
     event.target.value = ''
   }
 
+   /**
+   * @returns changed state of showInput and editButton
+   * @memberof Profile
+   */
   showInputHandler() {
     this.setState({showInput: true, editButton: true,});
     const info = JSON.stringify(this.state.userData);
@@ -61,24 +81,48 @@ class Profile extends React.Component {
       loader: false,
       imageHeight: 0,
       imageWidth: 0
-
-
-    })
+    });
   }
 
   /**
    * 
    * @memberof Profile
    */
-
   handleImageEdit(event) {
     event.preventDefault();
+    this.setState({ 
+      loader: true,
+      newImageUploadError: false,
+      newImageUploadSuccess: false,
+      newImageUploadErrorMessage: '',
+      newImageUploadSuccessMessage: ''
+    });
     this.props.saveNewImage(this.state.tempImageName)
     .then(() => {
-      console.log('done');
-    })
-    .catch((error) => {
-      console.log(error);
+      this.setState({userData: { ...this.state.userData, image: this.props.newImageUrl } })      
+      this.props.saveNewImageToDB(this.state.userData)
+        .then(() => {
+          this.setState({ 
+            loader: false,
+            newImageUploadError: false,
+            newImageUploadSuccess: true,
+            newImageUploadErrorMessage: '',
+            newImageUploadSuccessMessage: 'Success'
+          });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+        console.log(this.state.userData);
+      })
+      .catch((error) => {
+        this.setState({ 
+          loader: false,
+          newImageUploadError: true,
+          newImageUploadSuccess: false,
+          newImageUploadErrorMessage: error.response.data.message,
+          newImageUploadSuccessMessage: ''
+        });
     })
   }
 
@@ -98,9 +142,14 @@ class Profile extends React.Component {
         const newUpload = new Image();
         newUpload.src = imageReader.result;
         newUpload.onload = () => {
-          this.setState({ tempImageName: imageInput, 
-          imageHeight:newUpload.height,
-          imageWidth: newUpload.width});
+          if((newUpload.height > newUpload.width) || newUpload.height === newUpload.width) {
+            this.setState({ disableUpdateBtn: false, 
+              tempImageName: imageInput,
+              newImageUploadErrorMessage: '' });
+          } else {
+            this.setState({ newImageUploadError: true, disableUpdateBtn: true,
+            newImageUploadErrorMessage: 'Only portraits are allowed.' });
+          }
         }
       }
     }
@@ -113,6 +162,7 @@ class Profile extends React.Component {
       $('.modal').modal();
 
      const showImageOverlay = () => {
+       $('.change-image-overlay').css({ display: 'none'});
         $('#image-target').hover(() => {
           $('#test').addClass("change-image-overlay");
         });     
@@ -136,22 +186,21 @@ class Profile extends React.Component {
             {/* Profile image here */}
             <div className="profile-image-holder">
               <a href="#confirmationModal" className="modal-trigger">
-              <img src="/images/abbey.jpg" className="circle responsive-img" id="image-target" alt=""/>
-              <div className="circle image-overlay" id="test">
-                <span>
-                  <i className="material-icons">photo_camera</i>
-                  <h6>Upload new image</h6>
-                </span>
-              </div>
+              { this.state.userData.image 
+                ?
+                <img src={this.state.userData.image} className="responsive-img" id="image-target" alt=""/>
+                :
+                <img src={this.state.defaultUserImage} className="responsive-img" id="image-target" alt=""/>
+              }
               </a>
             </div>
             
             {/* User details */}
 
-            <div>
+            <div className="userInfoDisplay">
               <h4>{`${this.state.userData.firstname} ${this.state.userData.lastname}`}</h4>
               <p>Joined: {this.state.userData.createdAt} | {this.state.userData.email}</p>
-              <p>Member level: {membershipIconCreator(this.state.userData.membership)} </p>
+              <p>Member level: {membershipIconCreator(this.state.userData.membership || 'bronze')} </p>
               <div className="row">
                 <div className="col s12 l12">
                   {!this.state.viewProfile
@@ -192,20 +241,27 @@ class Profile extends React.Component {
         imageUploadHandler = {this.imageUploadHandler}
         loader ={this.state.loader}
         handleImageEdit={this.handleImageEdit}
-        cancelEdit = {this.cancelEdit}/>
+        cancelEdit = {this.cancelEdit}
+        newImageUploadError= {this.state.newImageUploadError}
+        newImageUploadSuccess = {this.state.newImageUploadSuccess}
+        newImageUploadErrorMessage = {this.state.newImageUploadErrorMessage}
+        newImageUploadSuccessMessage = {this.state.newImageUploadSuccessMessage}
+        disableUpdateBtn = {this.state.disableUpdateBtn}/>
       </div>
     )
   }
 }
 function mapStateToProps(state, ownProps) {
   return {
-    userProfile: state.userProfile
+    userProfile: state.userProfile,
+    newImageUrl: state.userProfile.secure_url
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    saveNewImage: (image) => dispatch(userActions.saveNewImage(image))
+    saveNewImage: (image) => dispatch(userActions.saveNewImage(image)),
+    saveNewImageToDB: (newimage) => dispatch(userActions.saveNewImageToDB(newimage))
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Profile);
