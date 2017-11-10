@@ -1,5 +1,5 @@
 import { getUserDetails } from '../utils/getUserInfo';
-const routeDefault = 'http://localhost:3000/api';
+const routeDefault = 'http://localhost:3000/api/v1';
 
 //  Export Routes
 export const signup = `${routeDefault}/users/signup`;
