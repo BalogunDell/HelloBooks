@@ -45,6 +45,9 @@ describe('Hellobooks API', () => {
       })
       .end((err, res) => {
         adminToken=res.body.responseData.token;
+        console.log(res, '=================');
+        console.log(res.body,'-------------body===============');
+        console.log(res.body.responseData, '=================response data');
       });
     })
     .then(() => {
