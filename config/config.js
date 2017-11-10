@@ -9,7 +9,8 @@ module.exports = {
     dialect: 'postgres'
   },
   test: {
-    use_env_variable: 'TEST_DB'
+    use_env_variable: 'TEST_DB',
+    dialect: 'postgres'
   },
 
   production: {
