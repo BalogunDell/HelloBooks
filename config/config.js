@@ -9,16 +9,7 @@ module.exports = {
     dialect: 'postgres'
   },
   test: {
-    username: 'postgres',
-    password: 'Abbey2433',
-    database: 'hellobooks_test',
-    host: '127.0.0.1',
-    dialect: 'postgres'
-  },
-
-  travis: {
-    use_env_variable: 'HELLOBOOKS_TEST',
-    dialect: 'postgres'
+    use_env_variable: 'TEST_DB'
   },
 
   production: {
