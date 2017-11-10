@@ -16,11 +16,6 @@ module.exports = {
     dialect: 'postgres'
   },
 
-  travis: {
-    use_env_variable: 'HELLOBOOKS_TEST',
-    dialect: 'postgres'
-  },
-
   production: {
     use_env_constiable: 'DATABASE_URL'
   }
