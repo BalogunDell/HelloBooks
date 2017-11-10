@@ -4,7 +4,6 @@ services:
   - postgresql
 
 script:
-  - npm install
   - npm run test
 
 env:
