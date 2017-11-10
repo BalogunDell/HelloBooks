@@ -22,6 +22,12 @@
 
 #userprofile {
 
+  .user-view {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap; 
+  }
+
   li a {
     padding: 0;
     margin: 0;
@@ -104,9 +110,6 @@
     }
   }
 
-  .main-container {
-    // margin: auto;
-  }
 
   img {
       max-height: 300px;
@@ -168,7 +171,7 @@
   }
 
   .profile {
-    margin-top:16%;
+    margin-top:10%;
 
     .btn {
       width:60%;
@@ -194,6 +197,10 @@
     margin-top: 20px;
     text-align: center;
 
+    .userInfoDisplay {
+      margin-top: 50px;
+    }
+
     .profile-image-holder {
       max-width: 100px;
       margin: 0 auto;
@@ -206,6 +213,15 @@
         cursor: pointer;
       }
 
+      img {
+        max-height: 300px;
+        max-width: auto;
+        border-radius: 50%;
+      }
+
+      img:hover {
+        
+      }
       .change-image-overlay {
         position: absolute;
         top: 0;
@@ -361,6 +377,7 @@
         width: 100%;
         border: none;
         color: white;
+        text-align: center;
     }
   }
 }

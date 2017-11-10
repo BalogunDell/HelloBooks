@@ -13,23 +13,18 @@ const UserNav = ({ userType, navLinks, linkIcons, linkTexts, path, userDetails, 
         {/* SHOW APP LOGO AND WELCOME MESSAGE  */}
         <li>
           <div className="user-view">
-            <div className="background user-view-bg centered">
-            </div>
             <img src='https://res.cloudinary.com/djvjxp2am/image/upload/v1507971952/hellobooks/hb-logo.png' 
             className="responsive-img center" alt=""/>
           </div>
         </li>
 
         {/* SHOW NAVIGATION FOR USER/ADMIN */}
-        <li id="dashboard"><div className="black white-text">A HEADER TEXT HERE</div></li>
+        <li id="dashboard"><div className="black white-text settings ">HELLO BOOKS</div></li>
         <li><NavLink activeClassName="active" to={`${path}/${linkTexts[0]}`}>{navLinks[0]}<i className="material-icons white-text">{linkIcons[0]}</i></NavLink></li>
-       <li><NavLink activeClassName="active" to={`${path}/${linkTexts[1]}`}>{navLinks[1]}<i className="material-icons white-text">{linkIcons[1]}</i></NavLink></li>
+        <li><NavLink activeClassName="active" to={`${path}/${linkTexts[1]}`}>{navLinks[1]}<i className="material-icons white-text">{linkIcons[1]}</i></NavLink></li>
         <li><NavLink activeClassName="active" to={`${path}/${linkTexts[2]}`}>{navLinks[2]}<i className="material-icons white-text">{linkIcons[2]}</i></NavLink></li>
-        <li><NavLink activeClassName="active" to={`${path}/${linkTexts[3]}`}>{navLinks[3]}<i className="material-icons white-text">{linkIcons[3]}</i></NavLink></li>
-        <li><NavLink activeClassName="active" to={`${path}/${linkTexts[4]}`}>{navLinks[4]}<i className="material-icons white-text">{linkIcons[4]}</i></NavLink></li>
-        <li><NavLink activeClassName="active" to={`${path}/${linkTexts[5]}`}>{navLinks[5]}<i className="material-icons white-text">{linkIcons[5]}</i></NavLink></li>
-        
-        <li id="dashboard"><div className="settings white-text"><i className="material-icons">settings</i>SETTINGS</div></li>
+        <li><NavLink activeClassName="active" to={`${path}/${linkTexts[3]}`}>{navLinks[3]}<i className="material-icons white-text">{linkIcons[3]}</i></NavLink></li> 
+        <li id="dashboard"><div className="settings white-text">SETTINGS</div></li>
         
         {/* SHOW USER IMAGE, USERNAME AND MEMBERSHIP LEVEL */}
         <li>

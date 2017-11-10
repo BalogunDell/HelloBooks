@@ -25,7 +25,8 @@ class Profile extends React.Component {
       newImageUploadSuccess: false,
       newImageUploadSuccessMessage: '',
       newImageUploadErrorMessage: '',
-      disableUpdateBtn: false
+      disableUpdateBtn: false,
+      defaultUserImage: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1510302773/default_image_yi56ca.jpg'
     }
 
     this.showProfile = this.showProfile.bind(this);
@@ -112,13 +113,14 @@ class Profile extends React.Component {
         .catch((error) => {
           console.log(error);
         });
+        console.log(this.state.userData);
       })
       .catch((error) => {
         this.setState({ 
           loader: false,
           newImageUploadError: true,
           newImageUploadSuccess: false,
-          newImageUploadErrorMessage: error,
+          newImageUploadErrorMessage: error.response.data.message,
           newImageUploadSuccessMessage: ''
         });
     })
@@ -140,10 +142,12 @@ class Profile extends React.Component {
         const newUpload = new Image();
         newUpload.src = imageReader.result;
         newUpload.onload = () => {
-          if(newUpload.height > newUpload.width) {
-            this.setState({ tempImageName: imageInput });
+          if((newUpload.height > newUpload.width) || newUpload.height === newUpload.width) {
+            this.setState({ disableUpdateBtn: false, 
+              tempImageName: imageInput,
+              newImageUploadErrorMessage: '' });
           } else {
-            this.setState({ newImageUploadError: true,
+            this.setState({ newImageUploadError: true, disableUpdateBtn: true,
             newImageUploadErrorMessage: 'Only portraits are allowed.' });
           }
         }
@@ -158,6 +162,7 @@ class Profile extends React.Component {
       $('.modal').modal();
 
      const showImageOverlay = () => {
+       $('.change-image-overlay').css({ display: 'none'});
         $('#image-target').hover(() => {
           $('#test').addClass("change-image-overlay");
         });     
@@ -181,22 +186,21 @@ class Profile extends React.Component {
             {/* Profile image here */}
             <div className="profile-image-holder">
               <a href="#confirmationModal" className="modal-trigger">
-              <img src={this.state.userData.image || "/images/abbey.jpg"} className="circle responsive-img" id="image-target" alt=""/>
-              <div className="circle image-overlay" id="test">
-                <span>
-                  <i className="material-icons">photo_camera</i>
-                  <h6>Upload new image</h6>
-                </span>
-              </div>
+              { this.state.userData.image 
+                ?
+                <img src={this.state.userData.image} className="responsive-img" id="image-target" alt=""/>
+                :
+                <img src={this.state.defaultUserImage} className="responsive-img" id="image-target" alt=""/>
+              }
               </a>
             </div>
             
             {/* User details */}
 
-            <div>
+            <div className="userInfoDisplay">
               <h4>{`${this.state.userData.firstname} ${this.state.userData.lastname}`}</h4>
               <p>Joined: {this.state.userData.createdAt} | {this.state.userData.email}</p>
-              <p>Member level: {membershipIconCreator(this.state.userData.membership)} </p>
+              <p>Member level: {membershipIconCreator(this.state.userData.membership || 'bronze')} </p>
               <div className="row">
                 <div className="col s12 l12">
                   {!this.state.viewProfile
