@@ -284,7 +284,6 @@ class editBookForm extends React.Component {
       return (
         
       <div>
-        {console.log(this.state.book)}
         {this.state.redirect ? <Redirect to ="/user/dashboard"/> : 
           <div>
             <div className="container">
