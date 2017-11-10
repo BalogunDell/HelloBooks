@@ -1,3 +1,7 @@
 node_modules/
 .env
 coverage/
+dist/fonts/
+dist/images/
+dist/bundle.js
+build/
