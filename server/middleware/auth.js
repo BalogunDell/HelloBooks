@@ -73,7 +73,7 @@ class Authentication {
           }
         })
         .catch(() => {
-          res.status(401).json({ message: 'This link has expired' });
+          res.status(404).json({ message: 'This link has expired' });
         });
     }
   }

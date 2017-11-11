@@ -60,12 +60,14 @@ class User {
             image: user.image };
           res.status(200).json({ responseData });
         } else if (!req.body.username || !req.body.password) {
-          res.status(404).json({ message: 'Username and password is required' });
+          res.status(400).json({ message: 'Username and password is required' });
         } else {
           res.status(404).json({ message: 'Invalid username or password' });
         }
       })
-      .catch(err => res.send(err));
+      .catch(() => {
+        res.status(404).json({ message: 'Invalid username or password' });
+      });
   }
 
   /**
@@ -92,8 +94,10 @@ class User {
                 .then(() => {
                   helper.generateMail(req.body.email, resetPassUrl)
                     .then((mailerResponse) => {
-                      if (mailerResponse) {
-                        res.status(200).json({ message: 'A link for password reset has been sent to your email' });
+                      if (mailerResponse.accepted[0] === req.body.email) {
+                        res.status(201).json({
+                          message: 'A link for password reset has been sent to your email',
+                          url: resetPassUrl });
                       }
                     })
                     .catch((mailerError) => {
@@ -108,7 +112,7 @@ class User {
             }
           })
           .catch((error) => {
-            res.status(500).json({ message: error });
+            res.status(501).json({ message: error });
           });
       }
     }
@@ -185,42 +189,6 @@ class User {
         res.status(404).json({ message: error.errors[0].message });
       });
   }
-
-  /**
-   * @param { object } req
-   * @param { object } res
-   * @returns { void }
-   */
-  static booksReturned(req, res) {
-    const returnStatus = req.query.returned;
-    borrowedBookModel.findAll({ where: { returnstatus: returnStatus } }).then((response) => {
-      if (response.length === 0) {
-        res.status(200).json({ message: 'You have not returned any book' });
-      } else {
-        res.status(200).json({ returned: response });
-      }
-    }).catch((error) => {
-      res.status(404).json({ message: error });
-    });
-  }
-
-  /**
-   * @param { object } req
-   * @param { object } res
-   * @returns { object } response is an object of users
-   */
-  static getAllUsers(req, res) {
-    userModel.findAll()
-      .then((response) => {
-        if (response) {
-          res.status(200).json({ users: response });
-        } else {
-          res.status(404).json({ response: 'Database is empty' });
-        }
-      }).catch((error) => {
-        res.status(500).json({ response: error });
-      });
-  }
   /**
    * 
    * @param { object } req
@@ -255,23 +223,6 @@ class User {
     const fieldsToUpdate = ['firstname', 'lastname', 'username', 'image'];
     userModel.update(userData, { where: { id: req.body.userid }, individualHooks: true },
       { fields: fieldsToUpdate }).then((response) => {
-      res.status(201).json({ data: response[1] });
-    })
-      .catch((error) => {
-        res.status(501).json({ message: error.errors[0].message });
-      });
-  }
-
-
-  /**
-   * 
-   * @param { object } req
-   * @param { object } res
-   * @returns {object} object
-   */
-  static editPassword(req, res) {
-    userModel.update(req.body, { where: { id: req.body.userid }, individualHooks: true },
-      { fields: ['password'] }).then((response) => {
       res.status(201).json({ data: response[1] });
     })
       .catch((error) => {

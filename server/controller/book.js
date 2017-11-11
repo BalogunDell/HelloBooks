@@ -19,16 +19,24 @@ class Book {
     bookModel.create(req.body).then((book) => {
       res.status(201).json({ message: 'Book created', data: book });
     }).catch((error) => {
-      res.status(501).json({ message: error.errors[0].message });
+      // res.status(501).json({ message: error.errors[0].message });
       // check if all fields are supplied.
-      // if (error.name === 'SequelizeValidationError') {
-      //   res.status(400).json({ message: 'One or more fields are empty' });
-      //   // check if a duplicate request was made.
-      // } else if (error.name === 'SequelizeUniqueConstraintError') {
-      //   res.status(409).json({ message: 'A book with this ISBN already exists' });
-      // } else {
-      //   res.status(501).json({ error });
-      // }
+      if (error.errors[0].path === 'isbn') {
+        res.status(400).json({ message: 'ISBN number is required' });
+      } else if (error.errors[0].path === 'title') {
+        res.status(400).json({ message: 'Title is required' });
+      } else if (error.errors[0].path === 'pages') {
+        res.status(400).json({ message: 'Number of pages is required' });
+      } else if (error.errors[0].path === 'author') {
+        res.status(400).json({ message: 'Please provide the author of the book' });
+        // check if a duplicate request was made.
+      } else if (error.errors[0].path === 'year') {
+        res.status(400).json({ message: 'Please provide the year this book was published' });
+      } else if (error.errors[0].path === 'SequelizeUniqueConstraintError') {
+        res.status(409).json({ message: 'A book with this ISBN already exists' });
+      } else {
+        res.status(501).json({ error });
+      }
     });
   }
 
