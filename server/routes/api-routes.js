@@ -31,10 +31,6 @@ Router.post('/resetpassword', userController.generateResetPassUrl);
 Router.put('/resetpassword/:resetUrl', Auth.verifyUrl, userController.resetPassword);
 // Router.post('/validateUrl/:resetUrl', Auth.verifyUrl);
 
-
-// get all users - Admin action
-Router.get('/users', Auth.verifyAdmin, userController.getAllUsers);
-
 Router.route('/books')
   .get(bookController.getBook)
   .post(Auth.verifyAdmin, bookController.addBook);
@@ -61,9 +57,6 @@ Router.route('/users/:userId/books')
 Router.route('/users/:userId/')
   .get(Auth.verifyUser, userController.profilePage)
   .put(Auth.verifyUser, userController.editProfile);
-
-// Edit password
-Router.put('/users/:userId/updatepassword', Auth.verifyUser, userController.editPassword);
 
 // redirect every other address
 Router.route('*')

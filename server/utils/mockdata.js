@@ -304,7 +304,7 @@ const mockData = {
   invalidBookdata5: {
     isbn: 1234,
     title: 'React for beginners',
-    author: '',
+    author: 'Dennis',
     pages: 1223,
     year: '',
     description: 'the books does this and that',
