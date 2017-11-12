@@ -11,7 +11,7 @@ let sequelize;
 
 if (config.use_env_constiable) {
   sequelize = new Sequelize(process.env[config.use_env_constiable], {
-    dialect: process.env[config.dialect]
+    dialect: config.dialect
   });
 } else {
   sequelize = new Sequelize(config.database, config.username, config.password, config);
