@@ -9,7 +9,7 @@ const db = {};
 let sequelize;
 
 if (config.use_env_constiable) {
-  sequelize = new Sequelize(process.env[config.use_env_constiable]);
+  sequelize = new Sequelize(process.env[config.use_env_constiable], process.env[config.dialect]);
 } else {
   sequelize = new Sequelize(config.database, config.username, config.password, config);
 }
