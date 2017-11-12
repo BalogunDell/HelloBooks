@@ -133,7 +133,7 @@ class Helper {
    * @param { string } passwordUrl
    * @returns { string } email
    */
-  static async generateMail(userEmail, passwordUrl) {
+  static generateMail(userEmail, passwordUrl) {
     // Define email transporter
     const mailCourier = nodeMailer.createTransport({
       service: 'gmail',
@@ -153,7 +153,7 @@ class Helper {
       <p><a href="http://localhost:8080/resetpassword/${passwordUrl}">Click here to reset your password</a></p>`
     };
 
-    const result = await mailCourier.sendMail(mailOptions);
+    const result = mailCourier.sendMail(mailOptions);
     return result;
   }
 }
