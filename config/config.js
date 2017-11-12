@@ -17,7 +17,8 @@ module.exports = {
   },
 
   production: {
-    use_env_constiable: 'DATABASE_URL'
+    use_env_constiable: 'DATABASE_URL',
+    dialect: 'postgres'
   }
 };
 
