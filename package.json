@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "engines": {
+    "node": "6.11.0",
+    "npm": "3.10.10"
+  },
   "scripts": {
     "test": "npm run migrate:test && babel-node node_modules/babel-istanbul/lib/cli.js cover node_modules/mocha/bin/_mocha -- ./tests/*.test.js --timeout 10000",
     "lint": "eslint ./server/**/*.js --fix",
