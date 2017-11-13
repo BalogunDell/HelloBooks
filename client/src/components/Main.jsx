@@ -10,18 +10,16 @@ import Background from './Background/Background';
  * @class Main 
  * @classdesc returns the main wrapper of the app
  */
-class Main extends React.Component {
-  render() {
-    return(
-      <div>
-        <Background>
-          <Navbar/> 
-          <Home/>
-          <Footer/>
+const Main = () => {
+  return (
+    <div>
+      <Background>
+        <Navbar/>
+        <Home/>
+        <Footer/>
       </Background>
-      </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 export default Main;
