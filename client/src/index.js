@@ -21,7 +21,7 @@ import Dashboard from './components/userprofile/Dashboard';
 import UserHistory from './components/userprofile/History';
 import Allbooks from './components/userprofile/Allbooks/Allbooks';
 import BookDetails from './components/userprofile/bookDetails';
-import ResetPassword from './components/useraccess/resetpassword.jsx';
+import ResetPassword from './components/useraccess/resetpassword';
 
 import { loadAllbooks } from './Actions/booksAction';
 

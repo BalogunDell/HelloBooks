@@ -1,7 +1,13 @@
 import express from 'express';
 import bodyParser from 'body-parser';
+import path from 'path';
 import morgan from 'morgan';
 import cors from 'cors';
+import webpack from 'webpack';
+import webpackMiddleware from 'webpack-dev-middleware';
+import webpackHotMiddleware from 'webpack-hot-middleware';
+
+import webpackConfig from '../webpack.config';
 import router from './routes/api-routes';
 
 require('dotenv').config();
@@ -16,11 +22,19 @@ app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+app.use(express.static(path.join(__dirname, '../dist')));
 // Use Header for Cross Origin Resource Sharing
 app.use(cors());
 
+app.use(webpackMiddleware(webpack(webpackConfig)));
+app.use(webpackHotMiddleware(webpack(webpackConfig)));
+
 // Setup Routing
 app.use('/api/v1/', router);
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../dist/index.html'));
+});
 
 // Listen at this port
 app.listen(port, (err) => {

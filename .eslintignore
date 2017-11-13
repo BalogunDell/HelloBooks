@@ -2,3 +2,7 @@ client/
 node_modules/
 template/
 tests/
+client/webpack.config/
+template/
+client/assets/
+client/tests
