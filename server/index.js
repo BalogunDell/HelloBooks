@@ -21,8 +21,6 @@ app.use(morgan('dev'));
 // Use Body Parser for incoming data request
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-
-app.use(express.static(path.join(__dirname, '../dist')));
 // Use Header for Cross Origin Resource Sharing
 app.use(cors());
 
