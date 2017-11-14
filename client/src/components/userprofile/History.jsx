@@ -45,7 +45,6 @@ class History extends React.Component {
         returnSuccessMessage:'Book has been successfully returned'});
     })
     .catch(error => {
-      console.log(error);
     });
   }
 
@@ -65,7 +64,6 @@ class History extends React.Component {
       this.setState({tableHeader: 'All books'});
       this.setState({allUserBooks: this.state.filterable});
     } else {
-      console.log('nothing');
     }
   }
 
@@ -75,7 +73,6 @@ class History extends React.Component {
       this.setState({loading:false})
     })
     .catch(error => {
-      console.log(error);
     })
   }
 

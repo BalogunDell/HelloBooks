@@ -173,12 +173,7 @@ class booksList extends React.Component {
     }); 
 
     // Fetch all borrowed books
-    this.props.getAllBorrowedBooks().then(()=> {
-
-    })
-    .catch(error => {
-      console.log(error);
-    })
+    this.props.getAllBorrowedBooks();
 
   }
 

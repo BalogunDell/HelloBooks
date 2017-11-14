@@ -72,7 +72,6 @@ class editBookForm extends React.Component {
             error: 'error',
             successStatus: false,
           redirect:false})
-          console.log(error);
         })
     // Check if a new image and and no pdf was selected, if !, save default values 
     } else if((this.state.tempImageName) && (!this.state.tempFileName)) {
@@ -99,11 +98,9 @@ class editBookForm extends React.Component {
                   }, 1000);
               })
               .catch(error => {
-                console.log(error);
               });
             })
             .catch(error => {
-              console.log(error);
             })
         }
       } else if((!this.state.tempImageName) && (this.state.tempFileName)) {
@@ -128,11 +125,9 @@ class editBookForm extends React.Component {
                     }, 1000);
                 })
                 .catch(error => {
-                  console.log(error);
                 });
               })
               .catch(error => {
-                console.log(error);
               })
             }
       } else {
@@ -188,13 +183,9 @@ class editBookForm extends React.Component {
                       })
                   }
                 })
-              } else {
-                console.log('an error occurred'); 
               }
-              
             })
             .catch(error => {
-              console.log(error.response);
             })
           }
         }

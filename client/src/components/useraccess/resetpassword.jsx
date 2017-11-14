@@ -108,7 +108,6 @@ class ResetPassword extends React.Component {
       if(error.response.status === 401) {
         this.setState({ redirectOnExpiredUrl: true})
       }
-      console.log(error);
     });
   }
 

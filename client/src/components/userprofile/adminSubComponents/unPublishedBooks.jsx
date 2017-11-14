@@ -2,8 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Loader from '../adminSubComponents/loader';
-
-
 import * as booksAction from '../../../Actions/booksAction';
 import PublishBookModal from './publishBookModal';
 

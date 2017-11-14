@@ -8,8 +8,7 @@ export default class Footer extends React.Component {
   render() {
     return(
       <footer className="page-footer">
-        <h6>All rights reserved</h6>
-        <h1>gfgg</h1>
+        <h6 className="center">All rights reserved</h6>
       </footer>
     );
   }

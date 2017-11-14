@@ -329,24 +329,6 @@ class Book {
         res.status(501).json({ error: error.errors[0].message });
       });
   }
-
-  /**
-   * 
-   * @param { object } req
-   * @param { object } res
-   * @return { object } 
-   */
-  // static editCategory(req, res) {
-  //   categoryModel.update({ category: req.body.category { where: { id: req.body.id } } })
-  //     .then((response) => {
-  //       if (response) {
-  //         res.status(200).json({ message: 'Category deleted' });
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       res.status(409).json({ message: error.errors[0].message });
-  //     });
-  // }
 }
 
 export default Book;

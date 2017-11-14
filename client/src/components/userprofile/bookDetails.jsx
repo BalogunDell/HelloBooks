@@ -58,7 +58,6 @@ class bookDetails extends React.Component {
 
 
   render() {
-    console.log(this.props.currentBookId)
     const processing = <h6 className="center">Processing Request...</h6>
     const successMessage = messages.successMessage('You have successfully borrowed this book')
     const failureMessage = messages.failureMessage(this.state.borrowError);
@@ -82,7 +81,6 @@ class bookDetails extends React.Component {
           <div className="row">
             <div className="col s12 m12 l6 offset-4 center">
                <img src= {this.state.book.image} alt={this.state.book.title} className="responsive-img"/>  
-              {/* <ul><li>Helo</li></ul> */}
             </div>
 
             <div className="col s12 m12 l3 offset-9">
