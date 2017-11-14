@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as bookActions from '../../../Actions/booksAction';
+import Loader from '../adminSubComponents/loader';
 
 /**
  * @class Books
@@ -25,14 +26,15 @@ class Allbooks extends React.Component {
 
 
   getBookId(event) {
-    // this.state.book_id = event.target.value
-    // console.log(this.state.book_id);
     this.props.getCurrentBookId(event.target.value);
   }
 
-  componentWillMount() {
+  componentDidMount() {
+    this.setState({ loadingBooks: true });
     // Fetch all books
-    this.props.loadAllbooks();
+    this.props.loadAllbooks().then(() => {
+      this.setState({ loadingBooks: false });
+    });
   }
 
   componentWillReceiveProps(nextProps) {
@@ -51,7 +53,14 @@ class Allbooks extends React.Component {
             <h1>All Books</h1>
           </div>
         </div>
-      
+        { this.state.loadingBooks ? 
+        <div>
+          <h5 className="center"><Loader/></h5>
+          <br/>
+          <h6 className="center">Loading books..</h6>
+          </div>
+          : 
+          null }
         {/* Row for books  */}
         <div className="row">
           <div className="col s12 m12 l11 offset-l1">

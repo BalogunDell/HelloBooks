@@ -1,5 +1,5 @@
 import { getUserDetails } from '../utils/getUserInfo';
-const routeDefault = 'https://hellobooksapp.herokuapp.com/api/v1';
+const routeDefault = '/api/v1';
 
 //  Export Routes
 export const signup = `${routeDefault}/users/signup`;

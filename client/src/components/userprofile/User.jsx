@@ -109,7 +109,7 @@ class User extends React.Component {
   $(document).ready(function(){
    $('.button-collapse').off('click').sideNav({
     closeOnclick:true,
-    menuWidth: 230,
+    menuWidth: 260,
     });
   });
   }

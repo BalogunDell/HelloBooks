@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import Loader from '../adminSubComponents/loader';
 
 
 import * as booksAction from '../../../Actions/booksAction';
@@ -71,18 +72,16 @@ class unPublishedBooks extends React.Component {
         successStatus: false, 
         errorStatus: true,
         modalHeader: error});      
-      console.log(error);
     })
   }
 
   componentDidMount(){
+    this.setState({ loader: true });
     $('.modal').modal();
-  }
-  componentWillMount() {
     this.props.adminGetAllBooks().then(() => {
+      this.setState({ loader: false });
     })
     .catch(error => {
-      console.log(error);
     })
   }
 
@@ -104,6 +103,7 @@ class unPublishedBooks extends React.Component {
         <div className="row">
           <div className="col s12 m12 l10 offset-l2">
             <div className="unpublished">
+              <div className="center">{ this.state.loader ? <Loader/> : null }</div>
             <table className="centered highlight responsive-table">
               <thead>
                   <tr>
@@ -118,7 +118,7 @@ class unPublishedBooks extends React.Component {
                   </tr>
                 </thead>
                 <tbody>
-                  { !this.state.bookCountStatus 
+                  { !this.state.bookCountStatus
                   ?
                   this.state.unpublishedBooksArray.map((book, id) => 
                       <tr key={book.id}>
