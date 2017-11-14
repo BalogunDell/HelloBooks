@@ -19,7 +19,8 @@ const UserNav = ({ userType, navLinks, linkIcons, linkTexts, path, userDetails, 
         </li>
 
         {/* SHOW NAVIGATION FOR USER/ADMIN */}
-        <li id="dashboard"><div className="black white-text settings ">HELLO BOOKS</div></li>
+        <li id="dashboard"><div className="black white-text settings "><h5>HELLO BOOKS</h5></div></li>
+        <li></li>
         <li><NavLink activeClassName="active" to={`${path}/${linkTexts[0]}`}>{navLinks[0]}<i className="material-icons white-text">{linkIcons[0]}</i></NavLink></li>
         <li><NavLink activeClassName="active" to={`${path}/${linkTexts[1]}`}>{navLinks[1]}<i className="material-icons white-text">{linkIcons[1]}</i></NavLink></li>
         <li><NavLink activeClassName="active" to={`${path}/${linkTexts[2]}`}>{navLinks[2]}<i className="material-icons white-text">{linkIcons[2]}</i></NavLink></li>

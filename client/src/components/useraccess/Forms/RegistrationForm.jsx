@@ -1,11 +1,12 @@
 import React from 'react';
 import toastr from 'toastr';
 import { Link, Redirect } from 'react-router-dom';
+import Loading from '../../userprofile/adminSubComponents/loader';
 
 
 
 
-const RegistrationForm  = ({ userData, handleSubmit, handleUserInput, error }) => {
+const RegistrationForm  = ({ userData, handleSubmit, handleUserInput, error, loading }) => {
 
   return ( 
     <div className="row">
@@ -130,6 +131,7 @@ const RegistrationForm  = ({ userData, handleSubmit, handleUserInput, error }) =
             <div className="row center error-holder">
               <div className="col s12">
                 <h6 className="red-text">{error}</h6>
+                { loading ? <Loading/> : null }
               </div>
             </div>
             
@@ -154,7 +156,8 @@ RegistrationForm.propTypes = {
 userData:React.PropTypes.object.isRequired,
 handleSubmit: React.PropTypes.func.isRequired,
 handleUserInput: React.PropTypes.func.isRequired,
-error: React.PropTypes.string.isRequired
+error: React.PropTypes.string.isRequired,
+// loading: React.PropTypes.bool.isRequired
 } 
 
 

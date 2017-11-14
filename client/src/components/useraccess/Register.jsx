@@ -19,7 +19,8 @@ class Register extends React.Component {
     this.state = {
       userData: Object.assign({}, this.props.initialUserData),
       redirect: false,
-      error: ''
+      error: '',
+      loading: false
     }
 
     this.handleUserInput = this.handleUserInput.bind(this);
@@ -46,10 +47,11 @@ class Register extends React.Component {
 
     handleSubmit(event) {
       event.preventDefault()
+      this.setState({ loading: true, error: '' })
       this.props.saveNewUser(this.state.userData).then(() =>{
-          this.setState({redirect:this.props.authStatus})
+          this.setState({redirect:this.props.authStatus, loading: false})
       }).catch(errors =>{
-        this.setState({error: errors.response.data.message})
+        this.setState({error: errors.response.data.message, loading: false})
       })
     }
   
@@ -66,6 +68,7 @@ class Register extends React.Component {
             error = {this.state.error}
             handleUserInput =  {this.handleUserInput}
             handleSubmit = {this.handleSubmit}
+            loading = { this.state.loading}
           />
         </Background>
         </div>

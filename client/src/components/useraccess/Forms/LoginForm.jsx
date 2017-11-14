@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import 'jquery';
 import PasswordResetModal from './PasswordResetModal';
-
+import Loader from '../../userprofile/adminSubComponents/loader';
 
 const LoginForm = ({ userData, handleLoginInput, loginHandler, error, isLoading }) => {
 
@@ -13,7 +13,7 @@ const LoginForm = ({ userData, handleLoginInput, loginHandler, error, isLoading 
     const errorDisplay = <div className="center red-text">{error}</div>
 
     // check condition
-    let showIsLoading = isLoading ?  isLoadingText : ''; 
+    let showIsLoading = isLoading ?  <Loader/> : ''; 
 
     // set error status to empty if loader is displayed
     let errorStatus = isLoading ? '' : errorDisplay;
