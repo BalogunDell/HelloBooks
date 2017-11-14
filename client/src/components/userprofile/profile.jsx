@@ -111,9 +111,7 @@ class Profile extends React.Component {
           });
         })
         .catch((error) => {
-          console.log(error);
         });
-        console.log(this.state.userData);
       })
       .catch((error) => {
         this.setState({ 

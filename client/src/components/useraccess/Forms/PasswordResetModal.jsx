@@ -40,6 +40,8 @@ class PasswordResetModal extends React.Component {
    * @returns { object } respose from api call 
    */
   handleSubmit(event) {
+     // prevent button default action
+     event.preventDefault();
     // validate input
     this.setState({ error: true, disableBtn: true});
     if(this.state.email === "") {
@@ -66,8 +68,6 @@ class PasswordResetModal extends React.Component {
         }
       })
     }
-    // prevent button default action
-    event.preventDefault();
   }
 
   cancelPassReset() {

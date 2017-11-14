@@ -40,8 +40,8 @@ class CreateCategoryModal extends React.Component {
     })
   }
   saveCategory(event) {
-    this.setState({loader: true, disableSubmit:true})
     event.preventDefault();
+    this.setState({loader: true, disableSubmit:true})
     this.props.createCategory({category: this.state.newCategory})
     .then(()=>{
       this.setState({loader:false, 
@@ -52,7 +52,6 @@ class CreateCategoryModal extends React.Component {
         newCategorySuccess: 'Category has been created'})
     })
     .catch(error => {
-      console.log(error)
       this.setState({
         loader:false, 
         newCategoryError: error.response.data.message, 

@@ -2,27 +2,24 @@ import React from 'react';
 import { Route } from 'react-router-dom';
 import { axios } from 'axios';
 import $ from 'jquery';
-
-import Details from './Details';
-import UserNav from './Usernav';
 import { Redirect, Link } from 'react-router-dom';
 import { connect } from 'react-redux'
+
 import { getUserDetails } from '../../utils/getUserInfo';
-
-
 import Allbooks from './Allbooks/Allbooks';
 import UserDashboard from './Dashboard';
 import UserHistory from './History';
 import BookDetails from './bookDetails';
 import Borrowedbooks from './Borrowedbooks';
 import Profile from './profile';
-
 import AdminDashboard from './admin/Dashboard';
 import CreateBook from './admin/createBook';
 import EditBook from './adminSubComponents/editBook';
 import UnpublishedList from './adminSubComponents/unPublishedBooks';
-
 import * as userNavLinks from './userNavLinks';
+import Details from './Details';
+import UserNav from './Usernav';
+
 import * as UserActions from '../../Actions/userProfileAction';
 import * as bookActions from '../../Actions/booksAction';
 
@@ -83,7 +80,9 @@ class User extends React.Component {
       
     .catch(error =>{
       // Do some stuff is error
-      error.response.status === 401 || 500 ? this.setState({isAuthenticated:false}): console.log('me')
+      error.response.status === 401 || 500 ? this.setState({isAuthenticated:false})
+      :
+      this.setState({isAuthenticated:false})
     })
 
     // Set all values needed

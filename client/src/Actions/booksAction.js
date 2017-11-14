@@ -23,7 +23,6 @@ export function loadAllbooks() {
     return axios.get(apiRoutes.books).then( response => {
       dispatch(getAllBooks(response.data.books));
     }).catch(error => {
-      console.log(error)
     })
   }
 }
@@ -272,7 +271,6 @@ export function deleteBook(bookId) {
     })
     .then(response => {
       dispatch(deleteBookAction(response.data.updatedBooks));
-      console.log(response);
     })
     .catch(error => {
       throw (error);

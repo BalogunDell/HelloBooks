@@ -36,7 +36,7 @@ class CreateBook extends React.Component {
 
   handleInput(event) {
     let name = event.target.name;
-    let tempBookData = Object.assign({}, this.state.bookData);
+    let tempBookData = { ...this.state.bookData };
     tempBookData[name] = event.target.value;
     this.setState({bookData: tempBookData});
   }

@@ -895,94 +895,94 @@ describe('Hellobooks API', () => {
       });
     });
 
-    it('should return a url when passed an valid email', (done) => {
-      request
-      .post(`${api}/resetpassword`)
-      .accept('Content-Type', 'Application/json')
-      .send({email: 'jane5@mail.com'})
-      .end((err, res) => {
-        generatedUrl = res.body.url;
-        expect(res.status).to.equal(201);
-        expect(res.body).to.have.property('message');
-        expect(res.body).to.have.property('url');
-        expect(res.body.url).to.equal(generatedUrl);
-        done();
-      });
-    });
-  });
+  //   it('should return a url when passed an valid email', (done) => {
+  //     request
+  //     .post(`${api}/resetpassword`)
+  //     .accept('Content-Type', 'Application/json')
+  //     .send({email: 'jane5@mail.com'})
+  //     .end((err, res) => {
+  //       generatedUrl = res.body.url;
+  //       expect(res.status).to.equal(201);
+  //       expect(res.body).to.have.property('message');
+  //       expect(res.body).to.have.property('url');
+  //       expect(res.body.url).to.equal(generatedUrl);
+  //       done();
+  //     });
+  //   });
+  // });
 
-  describe('Reset Password:', () => {
+  // describe('Reset Password:', () => {
 
-    it('it checks if new password is sent as body', (done) => {
-      request
-      .put(`${api}/resetpassword/${generatedUrl}`)
-      .accept('Content-Type', 'Application/json')
-      .send({password: ''})
-      .end((err, res) => {
-        expect(res.status).to.equal(400);
-        expect(res.body).to.be.an('object');
-        expect(res.body).to.have.property('message');
-        expect(res.body.message).to.equal('Please type in your new password');
-        done();
-      });
-    });
+  //   it('it checks if new password is sent as body', (done) => {
+  //     request
+  //     .put(`${api}/resetpassword/${generatedUrl}`)
+  //     .accept('Content-Type', 'Application/json')
+  //     .send({password: ''})
+  //     .end((err, res) => {
+  //       expect(res.status).to.equal(400);
+  //       expect(res.body).to.be.an('object');
+  //       expect(res.body).to.have.property('message');
+  //       expect(res.body.message).to.equal('Please type in your new password');
+  //       done();
+  //     });
+  //   });
 
-    it('it checks if new password length is between 6 and 30', (done) => {
-      request
-      .put(`${api}/resetpassword/${generatedUrl}`)
-      .accept('Content-Type', 'Application/json')
-      .send({password: '123'})
-      .end((err, res) => {
-        expect(res.status).to.equal(400);
-        expect(res.body).to.be.an('object');
-        expect(res.body).to.have.property('message');
-        expect(res.body.message).to.equal('Password should be 6 to 30 characters long');
-        done();
-      });
-    });
+  //   it('it checks if new password length is between 6 and 30', (done) => {
+  //     request
+  //     .put(`${api}/resetpassword/${generatedUrl}`)
+  //     .accept('Content-Type', 'Application/json')
+  //     .send({password: '123'})
+  //     .end((err, res) => {
+  //       expect(res.status).to.equal(400);
+  //       expect(res.body).to.be.an('object');
+  //       expect(res.body).to.have.property('message');
+  //       expect(res.body.message).to.equal('Password should be 6 to 30 characters long');
+  //       done();
+  //     });
+  //   });
 
-    it('should return a url when passed an valid email', (done) => {
-      request
-      .post(`${api}/resetpassword`)
-      .accept('Content-Type', 'Application/json')
-      .send({email: 'jane5@mail.com'})
-      .end((err, res) => {
-        generatedUrl = res.body.url;
-        expect(res.status).to.equal(201);
-        expect(res.body).to.have.property('message');
-        expect(res.body).to.have.property('url');
-        expect(res.body.url).to.equal(generatedUrl);
-        done();
-      });
-    });
+  //   it('should return a url when passed an valid email', (done) => {
+  //     request
+  //     .post(`${api}/resetpassword`)
+  //     .accept('Content-Type', 'Application/json')
+  //     .send({email: 'jane5@mail.com'})
+  //     .end((err, res) => {
+  //       generatedUrl = res.body.url;
+  //       expect(res.status).to.equal(201);
+  //       expect(res.body).to.have.property('message');
+  //       expect(res.body).to.have.property('url');
+  //       expect(res.body.url).to.equal(generatedUrl);
+  //       done();
+  //     });
+  //   });
 
-    it('it updates password with valid request body', (done) => {
-      request
-      .put(`${api}/resetpassword/${generatedUrl}`)
-      .accept('Content-Type', 'Application/json')
-      .send({password: '123456'})
-      .end((err, res) => {
-        expect(res.status).to.equal(201);
-        expect(res.body).to.be.an('object');
-        expect(res.body).to.have.property('message');
-        expect(res.body.message).to.equal('Your password has been updated');
-        done();
-      });
-    });
+  //   it('it updates password with valid request body', (done) => {
+  //     request
+  //     .put(`${api}/resetpassword/${generatedUrl}`)
+  //     .accept('Content-Type', 'Application/json')
+  //     .send({password: '123456'})
+  //     .end((err, res) => {
+  //       expect(res.status).to.equal(201);
+  //       expect(res.body).to.be.an('object');
+  //       expect(res.body).to.have.property('message');
+  //       expect(res.body.message).to.equal('Your password has been updated');
+  //       done();
+  //     });
+  //   });
 
-    it('it checks if the given url is invalid', (done) => {
-      request
-      .put(`${api}/resetpassword/fhrndhjrewkw`)
-      .accept('Content-Type', 'Application/json')
-      .send({password: 'abeebyere'})
-      .end((err, res) => {
-        expect(res.status).to.equal(404);
-        expect(res.body).to.be.an('object');
-        expect(res.body).to.have.property('message');
-        expect(res.body.message).to.equal('This link has expired');
-        done();
-      });
-    });
+  //   it('it checks if the given url is invalid', (done) => {
+  //     request
+  //     .put(`${api}/resetpassword/fhrndhjrewkw`)
+  //     .accept('Content-Type', 'Application/json')
+  //     .send({password: 'abeebyere'})
+  //     .end((err, res) => {
+  //       expect(res.status).to.equal(404);
+  //       expect(res.body).to.be.an('object');
+  //       expect(res.body).to.have.property('message');
+  //       expect(res.body.message).to.equal('This link has expired');
+  //       done();
+  //     });
+  //   });
   });
 });
 

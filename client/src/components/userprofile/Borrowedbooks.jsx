@@ -22,7 +22,6 @@ class History extends React.Component {
       this.setState({loading:false})
     })
     .catch(error => {
-      console.log(error)
     })
   }
 
