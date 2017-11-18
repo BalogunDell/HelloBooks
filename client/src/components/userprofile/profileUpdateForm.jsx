@@ -14,7 +14,6 @@ import Loader from './adminSubComponents/loader';
 class profileUpdateForm extends React.Component {
   constructor(props){
     super(props);
-
     this.state = {
       userData: {},
       errorMessage: '',
@@ -23,7 +22,6 @@ class profileUpdateForm extends React.Component {
       successStatus: false,
       successMessage: '',
       disable: false,
-      
     }
 
     this.handleUserInput = this.handleUserInput.bind(this);
@@ -37,9 +35,8 @@ class profileUpdateForm extends React.Component {
    * @memberof profileUpdateForm
    */
   handleUserInput(event) {
-    let tempFileHolder = Object.assign({}, this.state.userData);
+    let tempFileHolder = { ...this.state.userData};
     let name = event.target.name;
-    console.log(tempFileHolder[name].value);
     tempFileHolder[name] = event.target.value;
     this.setState({userData: tempFileHolder});
   }
@@ -61,6 +58,11 @@ class profileUpdateForm extends React.Component {
         successStatus: true,
         disable: true,
         successMessage: 'Profile has been updated'});
+        setTimeout(() => {
+          const {cancelEdit} = this.props;
+          cancelEdit();
+        }, 1000);
+        
     })
     .catch(error => {
       this.setState({
@@ -73,7 +75,7 @@ class profileUpdateForm extends React.Component {
 
   componentWillMount() {
     const userData = JSON.parse(localStorage.getItem('info'));
-    this.setState({userData: Object.assign({}, userData)});
+    this.setState({userData: { ...userData } });
   }
 
   componentDidMount() {
@@ -82,12 +84,14 @@ class profileUpdateForm extends React.Component {
     });
   }
 
-  componentWillReceiveProps(nextProps) {
-  }
   render() {
     const {cancelEdit} = this.props;
     return(
       <div className="change-password">
+      { this.state.loadingData 
+        ?
+        <h3>Loading profile data...</h3>
+        :
         <form onSubmit={this.handleProfileUpdate}>
           <div className="row">
             <div className="input-field col s6">
@@ -170,13 +174,19 @@ class profileUpdateForm extends React.Component {
             {/* Email input  */}
          <div className="row">  
           <div className="input-field col s12 m12 l6">
-            <button className="btn waves-ripple waves-effect red" onClick={cancelEdit}>Cancel</button>
+            <input type="button" 
+              className="btn waves-ripple waves-effect red" 
+              onClick={cancelEdit} value="Cancel"/>
           </div> 
           <div className="input-field col s12 m12 l6">
-            <button className="btn waves-ripple waves-effect" disabled={this.state.disable}>Save</button>
+            <input type="submit"
+              className="btn waves-ripple waves-effect" 
+              disabled={this.state.disable} 
+              value="Save"/>
           </div> 
         </div>
         </form>
+      }
       </div>  
     );
   }

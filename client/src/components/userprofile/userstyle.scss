@@ -211,6 +211,12 @@
 
       a {
         cursor: pointer;
+        color: black !important;
+        font-size: 10px;
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
       }
 
       img {
@@ -219,9 +225,6 @@
         border-radius: 50%;
       }
 
-      img:hover {
-        
-      }
       .change-image-overlay {
         position: absolute;
         top: 0;
@@ -397,6 +400,18 @@
   .btn {
     width: 100%;
   }
+
+  .selectedImagePreview {
+    width: 140px;
+  }
+
+  .selectedImagePreview img{
+    margin-top: 30px;
+    max-height: 200px;
+    max-width: auto;
+    border-radius: 50%;
+  }
+
 }
 
 .unpublished {

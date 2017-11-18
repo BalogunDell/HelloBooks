@@ -1,15 +1,25 @@
 import React from 'react';
 import LoaderText from './adminSubComponents/loader';
 
-const updateImageModal = ({imageUploadHandler, handleImageEdit, cancelEdit, loader, newImageUploadError, 
-  newImageUploadSuccess, newImageUploadErrorMessage, newImageUploadSuccessMessage, disableUpdateBtn }) => {
+const updateImageModal = ({
+    imageUploadHandler, 
+    handleImageEdit, 
+    cancelEdit, 
+    loader, 
+    newImageUploadError, 
+    newImageUploadSuccess, 
+    newImageUploadErrorMessage, 
+    newImageUploadSuccessMessage, 
+    disableUpdateBtn,
+    preview }) => {
   return (
   <div>
     <div className="modal" id="confirmationModal">
       <div className="container">
         <div className="modal-content">
           <div className="row">
-            <div className="col s12 m12 l7 offset-l3">
+            {/*  Form container  */}
+            <div className="col s12 m12 l7">
               <div className="row">
                 <h5 className="center">Upload new image</h5>
               </div>
@@ -48,6 +58,15 @@ const updateImageModal = ({imageUploadHandler, handleImageEdit, cancelEdit, load
               </div>
               </form>
             </div>
+            {/* End of form container */}
+
+            <div className="col s12 m12 l5">
+              <h6 className="center">Image preview</h6>
+              <div className="selectedImagePreview">
+                <img src={preview} className="img-circle" alt=""/>
+              </div>
+            </div>
+
           </div>
         </div> 
       </div>
