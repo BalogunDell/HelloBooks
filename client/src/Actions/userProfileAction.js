@@ -3,7 +3,7 @@ import axios from 'axios';
 import * as types from '../Actions/actionTypes';
 import * as apiRoutes from '../utils/apiEndPoints';
 import * as cloudKeys from '../utils/cloudinaryKeys';
-import { getUserDetails } from '../utils/getUserInfo';
+import getUserDetails from '../utils/getUserInfo';
 
 
 // *********************************************** //

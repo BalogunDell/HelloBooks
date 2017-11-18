@@ -2,6 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
+import getUserDetails from '../../utils/getUserInfo';
+
 
 import * as bookActions from '../../Actions/booksAction';
 import * as messages from './messages';
@@ -13,14 +15,16 @@ class bookDetails extends React.Component {
 
     this.state = {
       book_id: this.props.currentBookId,
-      books: this.props.books,
+      books: this.props.allbooks,
       book: [],
       dataReady: false,
       borrowError: '',
       borrowErrorStatus:false,
       disableBtn: false,
       processingRequest: false,
-      borrowSuccessStatus: false
+      borrowSuccessStatus: false,
+      borrowedMessage: '',
+      isAdmin: false
     }
 
     this.handleBorrow = this.handleBorrow.bind(this)
@@ -50,9 +54,45 @@ class bookDetails extends React.Component {
   }
 
   componentWillMount() {
-    this.setState({dataReady:true, borrowErrorStatus: false, disableBtn: false, borrowBookSuccess:false})
+    this.setState({dataReady:true,
+      borrowErrorStatus: false,
+      disableBtn: false,
+      borrowBookSuccess:false});    
     let filteredBook = this.state.books.filter(book => book.id == this.state.book_id)
-    this.setState({book: filteredBook[0], dataReady:false})
+    this.setState({book: filteredBook[0], dataReady:false});
+    this.props.userBooks();
+  }
+
+  componentDidMount() {
+    if(getUserDetails().userType === 'admin') {
+      this.setState({ isAdmin: true });
+    } else {
+      this.setState({ isAdmin: false });
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.fetchedUserbooks.response) {
+      this.setState({
+        dataReady:false,
+        borrowErrorStatus: false,
+        disableBtn: false,
+        borrowBookSuccess:false });
+      let filteredBook = nextProps.fetchedUserbooks.response.filter(book => (
+        book.bookid == this.state.book_id) 
+        && 
+        (book.returnstatus == false));
+        
+      
+      if(filteredBook.length === 1) {
+        this.setState({ disableBtn: true,
+          borrowedMessage: 'You have already borrowed this book!' });
+      }
+       else {
+        this.setState({ disableBtn: false, borrowedMessage: '' });
+       }
+      
+    }
   }
 
 
@@ -67,6 +107,7 @@ class bookDetails extends React.Component {
     let failure = this.state.borrowErrorStatus ? failureMessage : null
 
     return (
+      
       this.state.dataReady 
       ? 
       <h4 className="center">Loading book details...</h4> 
@@ -74,10 +115,9 @@ class bookDetails extends React.Component {
         <div className="row">
           <div className="row">
             <div className="col s12 m12 l6 offset-3 center">
-              <h3>Book Details</h3>
+              <h3 className="center">Book Details</h3>
             </div>
           </div>
-
           <div className="row">
             <div className="col s12 m12 l6 offset-4 center">
                <img src= {this.state.book.image} alt={this.state.book.title} className="responsive-img"/>  
@@ -140,9 +180,19 @@ class bookDetails extends React.Component {
                   <table>
                     <tbody>
                       <tr>
-                        <td><button className="btn waves-teal waves-effect" 
-                        onClick={this.handleBorrow} disabled={this.state.disableBtn}>BORROW</button></td>
+                        <td>
+                          { this.state.isAdmin 
+                          ?
+                          <Link to="/user/books" className="btn waves-teal waves-effect">Back</Link>
+                          :
+                          <button className="btn waves-teal waves-effect" 
+                          onClick={this.handleBorrow} disabled={this.state.disableBtn}>BORROW
+                          </button>
+
+                          }
+                        </td>
                       </tr>
+                      <tr className="red-text"><td>{this.state.borrowedMessage}</td></tr>
                       {this.state.borrowErrorStatus 
                       ? <tr>
                           <td><button className="btn waves-teal waves-effect" 
@@ -179,7 +229,8 @@ class bookDetails extends React.Component {
 
 function mapStateToProps (state, ownProps) {
   return {
-    books: state.books.books,
+    fetchedUserbooks: state.books.fetchedBooks,
+    allbooks: state.books.books,
     currentBookId: state.books.currentBookId
 
   }
@@ -187,7 +238,8 @@ function mapStateToProps (state, ownProps) {
 
 function maptDispatchToProps(dispatch) {
   return {
-    borrowBook: (bookDetails) => dispatch(bookActions.borrowBook(bookDetails))
+    borrowBook: (bookDetails) => dispatch(bookActions.borrowBook(bookDetails)),
+    userBooks: () => dispatch(bookActions.getUserBooks())
   }
 }
 
