@@ -4,21 +4,20 @@
  * @param {array} arrayToFilter
  * @returns { array } filtered array 
  */
-export default function selectFilterer(selectedElement, arrayToFilter){
-    const elements = {
-      allbooks: 'allbooks',
-      booksreturned: 'booksreturned',
-      mostborrowedbooks: 'mostborrowedbooks',
-      pendingreturn: 'pendingreturn',
-      unpublishedbooks: 'unpublishedbooks'
-    }
-    const result = [];
+export default function selectFilterer(selectedElement, arrayToFilter) {
+  const elements = {
+    allbooks: 'allbooks',
+    booksreturned: 'booksreturned',
+    mostborrowedbooks: 'mostborrowedbooks',
+    pendingreturn: 'pendingreturn',
+    unpublishedbooks: 'unpublishedbooks'
+  };
 
-    switch(selectedElement) {
-        case elements.allbooks:
-             const filtered = arrayToFilter.filter(book => book.visibility == true);
-              return filtered;
-            break;
+  switch (selectedElement) {
+    case elements.allbooks:
+      const filtered = arrayToFilter.filter(book => book.visibility == true);
+      return filtered;
+      break;
         case elements.booksreturned:
           () => {
             const filtered = arrayToFilter.filter(book => book.returnstatus == true);

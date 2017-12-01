@@ -1,6 +1,7 @@
 import bcrypt from 'bcrypt';
 import model from '../models';
 import helper from '../middleware/helper';
+import errorMessages from '../middleware/errorMessages';
 
 
 require('dotenv').config();
@@ -36,7 +37,17 @@ class User {
         });
       })
       .catch((error) => {
-        res.status(501).json({ message: error.errors[0].message });
+        const messageObject = errorMessages(error);
+        switch (messageObject.type) {
+          case 'uniqueError':
+            res.status(409).json({ error: messageObject.error });
+            break;
+          case 'validationError':
+            res.status(400).json({ error: messageObject.error });
+            break;
+          default:
+            res.status(501).json({ error: messageObject.error });
+        }
       });
   }
 
@@ -201,9 +212,18 @@ class User {
         .json({ message: 'Invalid/Expired token' });
       // other implementations
     } else {
-      userModel.findById(req.body.userid).then((user) => {
-        res.send(user);
-      });
+      const userid = parseInt(req.params.userId, 10);
+      userModel.findById(userid)
+        .then((user) => {
+          if (user) {
+            res.status(200).json({ user });
+          } else {
+            res.status(404).json({ message: 'User not found' });
+          }
+        })
+        .catch(() => {
+          res.status(501).json({ message: 'Cannot implement request now, please try again' });
+        });
     }
   }
 
@@ -226,7 +246,17 @@ class User {
       res.status(201).json({ data: response[1] });
     })
       .catch((error) => {
-        res.status(501).json({ message: error.errors[0].message });
+        const messageObject = errorMessages(error);
+        switch (messageObject.type) {
+          case 'uniqueError':
+            res.status(409).json({ error: messageObject.error });
+            break;
+          case 'validationError':
+            res.status(400).json({ error: messageObject.error });
+            break;
+          default:
+            res.status(501).json({ error: messageObject.error });
+        }
       });
   }
 }

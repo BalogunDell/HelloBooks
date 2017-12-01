@@ -203,66 +203,69 @@ class Profile extends React.Component {
   render() {
     return (
       <div className="center profile">
-        { 
-          Object.keys(this.state.userData).length === 0
+        { Object.keys(this.state.userData).length === 0
         ?
-          <h5>Loading profile information...</h5>
+        <h5>Loading profile information...</h5>
         :
+        <div>
           <div className="profile-holder">
             <div className="details">
               {/* Profile image here */}
               <div className="profile-image-holder">
+                <a href="#confirmationModal" className="modal-trigger">
                 { this.state.userData.image 
                   ?
                   <img src={this.state.userData.image} className="responsive-img" id="image-target" alt=""/>
                   :
                   <img src={this.state.defaultUserImage} className="responsive-img" id="image-target" alt=""/>
                 }
-                <a href="#confirmationModal" className="modal-trigger">Change image</a>
+                </a>
               </div>
-                
-                {/* User details */}
+              
+              {/* User details */}
 
-                <div className="userInfoDisplay">
-                  <h4>{`${this.state.userData.firstname} ${this.state.userData.lastname}`}</h4>
-                  <p>Joined: {this.state.userData.createdAt} | {this.state.userData.email}</p>
-                  <p>Member level: {membershipIconCreator(this.state.userData.membership || 'bronze')} </p>
-                  <div className="row">
-                    <div className="col s12 l12">
-                      {!this.state.viewProfile
-                      ?
-                      <button className="btn waves-teal waves-effect" onClick={this.showProfile}>View Full Profile</button>
-                      :
-                      ''
-                      }
-                    </div>
+              <div className="userInfoDisplay">
+                <h4>{`${this.state.userData.firstname} ${this.state.userData.lastname}`}</h4>
+                <p>Joined: {this.state.userData.createdAt} | {this.state.userData.email}</p>
+                <p>Member level: {membershipIconCreator(this.state.userData.membership || 'bronze')} </p>
+                <div className="row">
+                  <div className="col s12 l12">
+                    {!this.state.viewProfile
+                    ?
+                    <button className="btn waves-teal waves-effect" 
+                      onClick={this.showProfile}>View Full Profile</button>
+                    :
+                    ''
+                    }
                   </div>
                 </div>
+              </div>
 
-                {/* Form for profile update  */}
-                {this.state.viewProfile 
-                ?
-                <div>
-                  {this.state.showInput 
-                  ? 
-                    <ProfileUpdateForm cancelEdit = {this.cancelEdit}
-                    showProfile = {this.showstProfile}/>
-                  :
-                    <ProfileInfo userData={this.state.userData}
-                    showInput={this.state.showInput}
-                    showInputHandler={this.showInputHandler}/>
-                  }
-                  {!this.state.editButton 
-                  ?
-                    <button className="btn waves-ripple waves-effect modal-trigger" onClick={this.showInputHandler}>EDIT</button>
-                  : 
-                    null
-                  }
-                </div>
+              {/* Form for profile update  */}
+              {this.state.viewProfile 
+              ?
+              <div>
+                {this.state.showInput 
+                ? 
+                  <ProfileUpdateForm cancelEdit = {this.cancelEdit}
+                  showProfile = {this.showstProfile}/>
                 :
-                ''
+                  <ProfileInfo userData={this.state.userData}
+                  showInput={this.state.showInput}
+                  showInputHandler={this.showInputHandler}/>
+                }
+                {!this.state.editButton 
+                ?
+                  <button className="btn waves-ripple waves-effect modal-trigger" onClick={this.showInputHandler}>EDIT</button>
+                : 
+                  null
                 }
               </div>
+              :
+              ''
+              }
+            </div>
+          </div>
         <ImageModal 
         imageUploadHandler = {this.imageUploadHandler}
         loader ={this.state.loader}

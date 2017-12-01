@@ -51,7 +51,7 @@ class Register extends React.Component {
       this.props.saveNewUser(this.state.userData).then(() =>{
           this.setState({redirect:this.props.authStatus, loading: false})
       }).catch(errors =>{
-        this.setState({error: errors.response.data.message, loading: false})
+        this.setState({error: errors.response.data.error, loading: false})
       })
     }
   
