@@ -212,7 +212,7 @@ const mockData = {
 
 
   bookdata: {
-    isbn: '1111',
+    isbn: '111111',
     title: 'React for Beginners',
     author: 'Nelson Brook',
     pages: 1080,
@@ -227,7 +227,7 @@ const mockData = {
 
   editBookdata: {
     id: 2,
-    isbn: '4392',
+    isbn: '439275',
     title: 'React for Beginners',
     author: 'Nelson Brook',
     pages: 100,
@@ -257,7 +257,7 @@ const mockData = {
 
   //  Invalid book data title
   invalidBookdata2: {
-    isbn: 1234,
+    isbn: 123456,
     title: '',
     author: 'Nelson Brook',
     pages: 1080,
@@ -272,7 +272,7 @@ const mockData = {
 
   // Invalid book data author
   invalidBookdata3: {
-    isbn: 1234,
+    isbn: 123456,
     title: 'React for beginners',
     author: '',
     pages: 1080,
@@ -287,7 +287,7 @@ const mockData = {
 
   // Invalid book data pages
   invalidBookdata4: {
-    isbn: 1234,
+    isbn: 123456,
     title: 'React for beginners',
     author: '',
     pages: '',
@@ -302,7 +302,7 @@ const mockData = {
 
   // Invalid book data pages
   invalidBookdata5: {
-    isbn: 1234,
+    isbn: 123456,
     title: 'React for beginners',
     author: 'Dennis',
     pages: 1223,

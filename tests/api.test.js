@@ -397,6 +397,20 @@ describe('Hellobooks API', () => {
         done();
       });
     });
+
+    it('should not upload the same book', (done) => {
+      request
+      .post(`${api}/books`)
+      .set('Authorization', adminToken)
+      .send('Accept', 'Application/json')
+      .send(mockdata.bookdata)
+      .end((err, res) => {
+        expect(res.status).to.equal(409);
+        expect(res.body).to.have.property('message');
+        expect(res.body.message).to.equal('A book with this isbn exists');
+        done();
+      });
+    });
     
     it('should edit a book', (done) => {
       request
@@ -518,20 +532,78 @@ describe('Hellobooks API', () => {
       });
     })
 
-    // it('should add a new category' , (done) => {
-    //   request
-    //   .post(`${api}/newcategory`)
-    //   .set('Authorization', adminToken)
-    //   .send('Accept', 'Application/json')
-    //   .send({category:'category'})
-    //   .end((err, res) => {
-    //     console.log(err);
-    //     expect(res.status).to.equal(200);
-    //     console.log(res.body)
-        
-    //     done();
-    //   });
-    // })
+    it('should add a new category' , (done) => {
+      request
+      .post(`${api}/newcategory`)
+      .set('Authorization', adminToken)
+      .send('Accept', 'Application/json')
+      .send({category:'category'})
+      .end((err, res) => {
+        if(res) {
+          expect(res.status).to.equal(201);
+          expect(res.body).to.have.property('message');
+          expect(res.body.message).to.equal('Category created');
+        }
+        done();
+      });
+    })
+
+
+    it('should not add an existing category' , (done) => {
+      request
+      .post(`${api}/newcategory`)
+      .set('Authorization', adminToken)
+      .send('Accept', 'Application/json')
+      .send({category:'Business'})
+      .end((err, res) => {
+        expect(res.status).to.equal(409);
+        expect(res.body).to.have.property('error');
+        expect(res.body.error).to.equal('This category exists');
+        done();
+      });
+    })
+
+    it('should not add category with length less than 4' , (done) => {
+      request
+      .post(`${api}/newcategory`)
+      .set('Authorization', adminToken)
+      .send('Accept', 'Application/json')
+      .send({category:'qw'})
+      .end((err, res) => {
+        expect(res.status).to.equal(400);
+        expect(res.body).to.have.property('error');
+        expect(res.body.error).to.equal('Category should between 4-30 characters long');
+        done();
+      });
+    })
+
+    it('should not add category if invalid' , (done) => {
+      request
+      .post(`${api}/newcategory`)
+      .set('Authorization', adminToken)
+      .send('Accept', 'Application/json')
+      .send({category:123456})
+      .end((err, res) => {
+        expect(res.status).to.equal(400);
+        expect(res.body).to.have.property('error');
+        expect(res.body.error).to.equal('Category should be words');
+        done();
+      });
+    })
+
+    it('should not add category if separated with space' , (done) => {
+      request
+      .post(`${api}/newcategory`)
+      .set('Authorization', adminToken)
+      .send('Accept', 'Application/json')
+      .send({category:'ola sugar'})
+      .end((err, res) => {
+        expect(res.status).to.equal(400);
+        expect(res.body).to.have.property('error');
+        expect(res.body.error).to.equal('Category should be words separated with -');
+        done();
+      });
+    })
 
     it('should delete a category' , (done) => {
       request
@@ -786,7 +858,7 @@ describe('Hellobooks API', () => {
       .end((err, res) => {
         expect(res.status).to.equal(400);
         expect(res.body).to.have.property('message');
-        expect(res.body.message).to.equal('ISBN number is required');
+        expect(res.body.message).to.equal('Isbn field cannot be empty');
         done();
       });
     });
@@ -800,7 +872,7 @@ describe('Hellobooks API', () => {
       .end((err, res) => {
         expect(res.status).to.equal(400);
         expect(res.body).to.have.property('message');
-        expect(res.body.message).to.equal('Title is required');
+        expect(res.body.message).to.equal('Title field cannot be empty');
         done();
       });
     });
@@ -814,7 +886,7 @@ describe('Hellobooks API', () => {
       .end((err, res) => {
         expect(res.status).to.equal(400);
         expect(res.body).to.have.property('message');
-        expect(res.body.message).to.equal('Please provide the author of the book');
+        expect(res.body.message).to.equal('Author field cannot be empty');
         done();
       });
     });
@@ -828,7 +900,7 @@ describe('Hellobooks API', () => {
       .end((err, res) => {
         expect(res.status).to.equal(400);
         expect(res.body).to.have.property('message');
-        expect(res.body.message).to.equal('Number of pages is required');
+        expect(res.body.message).to.equal('Pages field cannot be empty');
         done();
       });
     });
@@ -842,7 +914,7 @@ describe('Hellobooks API', () => {
       .end((err, res) => {
         expect(res.status).to.equal(400);
         expect(res.body).to.have.property('message');
-        expect(res.body.message).to.equal('Please provide the year this book was published');
+        expect(res.body.message).to.equal('Year cannot be empty');
         done();
       });
     });

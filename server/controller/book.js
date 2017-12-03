@@ -1,4 +1,5 @@
 import model from '../models';
+import errorMessages from '../middleware/errorMessages';
 
 const bookModel = model.books;
 const borrowedBooks = model.borrowedbooks;
@@ -21,21 +22,16 @@ class Book {
     }).catch((error) => {
       // res.status(501).json({ message: error.errors[0].message });
       // check if all fields are supplied.
-      if (error.errors[0].path === 'isbn') {
-        res.status(400).json({ message: 'ISBN number is required' });
-      } else if (error.errors[0].path === 'title') {
-        res.status(400).json({ message: 'Title is required' });
-      } else if (error.errors[0].path === 'pages') {
-        res.status(400).json({ message: 'Number of pages is required' });
-      } else if (error.errors[0].path === 'author') {
-        res.status(400).json({ message: 'Please provide the author of the book' });
-        // check if a duplicate request was made.
-      } else if (error.errors[0].path === 'year') {
-        res.status(400).json({ message: 'Please provide the year this book was published' });
-      } else if (error.errors[0].path === 'SequelizeUniqueConstraintError') {
-        res.status(409).json({ message: 'A book with this ISBN already exists' });
-      } else {
-        res.status(501).json({ error });
+      const messageObject = errorMessages(error);
+      switch (messageObject.type) {
+        case 'uniqueError':
+          res.status(409).json({ message: messageObject.error });
+          break;
+        case 'validationError':
+          res.status(400).json({ message: messageObject.error });
+          break;
+        default:
+          res.status(501).json({ message: messageObject.error });
       }
     });
   }
@@ -119,11 +115,13 @@ class Book {
   * @returns { object } resposnse
   */
   static getAllBooks(req, res) {
-    bookModel.findAll({ where: { visibility: false }, include: { model: categoryModel } }).then((response) => {
-      res.status(200).json({ books: response });
-    }).catch((error) => {
-      res.status(404).json({ message: error.message });
-    });
+    bookModel.findAll({ where: { visibility: false },
+      include: { model: categoryModel } })
+      .then((response) => {
+        res.status(200).json({ books: response });
+      }).catch((error) => {
+        res.status(501).json({ message: error.message });
+      });
   }
 
   /**
@@ -283,7 +281,17 @@ class Book {
         }
       })
       .catch((error) => {
-        res.status(409).json({ message: error.errors[0].message });
+        const messageObject = errorMessages(error);
+        switch (messageObject.type) {
+          case 'uniqueError':
+            res.status(409).json({ error: messageObject.error });
+            break;
+          case 'validationError':
+            res.status(400).json({ error: messageObject.error });
+            break;
+          default:
+            res.status(501).json({ error: messageObject.error });
+        }
       });
   }
 

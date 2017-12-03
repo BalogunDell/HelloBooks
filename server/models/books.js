@@ -5,15 +5,15 @@ const book = (sequelize, DataTypes) => {
       allowNull: false,
       unique: {
         args: true,
-        msg: 'A book with this isbn exists '
+        msg: 'A book with this isbn exists'
       },
       validate: {
         notEmpty: {
           args: true,
-          msg: 'Isbn cannot be empty'
+          msg: 'Isbn field cannot be empty'
         },
         len: {
-          args: [6 - 9],
+          args: [6, 9],
           msg: 'Isbn should be 6 and 9 digits'
         }
       }
@@ -24,11 +24,11 @@ const book = (sequelize, DataTypes) => {
       validate: {
         notEmpty: {
           args: true,
-          msg: 'pages cannot be empty'
+          msg: 'Pages field cannot be empty'
         },
         isNumeric: {
           args: true,
-          msg: 'pages must be a number'
+          msg: 'Pages must be a number'
         },
       }
     },
@@ -38,11 +38,11 @@ const book = (sequelize, DataTypes) => {
       validate: {
         notEmpty: {
           args: true,
-          msg: 'author cannot be empty'
+          msg: 'Author field cannot be empty'
         },
         is: {
           args: /(\w)+/i,
-          msg: 'author can only contain strings'
+          msg: 'Author can only contain strings'
         },
         len: {
           args: [3, 50],
@@ -56,15 +56,15 @@ const book = (sequelize, DataTypes) => {
       validate: {
         notEmpty: {
           args: true,
-          msg: 'year cannot be empty'
+          msg: 'Year cannot be empty'
         },
         isNumeric: {
           args: true,
-          msg: 'year must be a number'
+          msg: 'Year must be a number'
         },
         len: {
           args: [4],
-          msg: 'year is invalid'
+          msg: 'Year is invalid'
         }
       }
     },
@@ -74,11 +74,11 @@ const book = (sequelize, DataTypes) => {
       validate: {
         notEmpty: {
           args: true,
-          msg: 'title cannot be empty'
+          msg: 'Title field cannot be empty'
         },
         is: {
           args: /(\w)+/i,
-          msg: 'title can only contain strings'
+          msg: 'Title can only contain strings'
         }
       }
     },
@@ -88,11 +88,11 @@ const book = (sequelize, DataTypes) => {
       validate: {
         notEmpty: {
           args: true,
-          msg: 'description cannot be empty'
+          msg: 'Description field cannot be empty'
         },
         is: {
           args: /(\w)+/i,
-          msg: 'description only contain strings'
+          msg: 'Description only contain strings'
         }
       }
     },
@@ -102,11 +102,11 @@ const book = (sequelize, DataTypes) => {
       validate: {
         notEmpty: {
           args: true,
-          msg: 'quantity cannot be empty'
+          msg: 'Quantity field cannot be empty'
         },
         isNumeric: {
           args: true,
-          msg: 'quantity must be a number'
+          msg: 'Quantity must be a number'
         }
       }
     },
@@ -125,11 +125,11 @@ const book = (sequelize, DataTypes) => {
       validate: {
         notEmpty: {
           args: true,
-          msg: 'image cannot be empty'
+          msg: 'Image cannot be empty'
         },
         is: {
           args: /(\w)/i,
-          msg: 'image url can only contain strings'
+          msg: 'Image url can only contain strings'
         }
       }
     },
@@ -139,7 +139,7 @@ const book = (sequelize, DataTypes) => {
       validate: {
         notEmpty: {
           args: true,
-          msg: 'select a book to upload'
+          msg: 'Select a book to upload'
         },
         is: {
           args: /(\w)/i,
@@ -150,6 +150,11 @@ const book = (sequelize, DataTypes) => {
   }, {
     hooks: {
       beforeCreate: (bookInstance) => {
+        // if (bookInstance.isbn.indexOf('#') !== -1) {
+        //   bookInstance = bookInstance.isbn.substring(1);
+        //   bookInstance.isbn = `#${bookInstance.isbn}`;
+        //   return bookInstance;
+        // }
         bookInstance.isbn = `#${bookInstance.isbn}`;
         return bookInstance;
       },

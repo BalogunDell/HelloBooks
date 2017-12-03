@@ -1,12 +1,10 @@
 import React from 'react';
-
-import book1 from '../../assets/images/books/book1.png';
 /**
  * @class Books
  * @classdesc returns the Books component
  */
-export default class Books extends React.Component {
-  render() {
+const Books = () => {
+  const book1 = 'https://artofproblemsolving.com/m/store/images/otherbooks.png';
     return(
       <div className="container home-books">
         <div className="row">
@@ -90,5 +88,6 @@ export default class Books extends React.Component {
         </div> 
       </div>
     );
-  }
-}
+  };
+
+  export default Books;
