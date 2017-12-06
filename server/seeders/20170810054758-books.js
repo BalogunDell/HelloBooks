@@ -2,6 +2,21 @@ module.exports = {
   up(queryInterface) {
     return queryInterface.bulkInsert('books', [
       {
+        isbn: '#7765',
+        title: 'React for Beginners',
+        author: 'Nelson Brook',
+        pages: 1080,
+        year: 2010,
+        description: 'the books does this and that',
+        quantity: 0,
+        categoryid: 2,
+        visibility: true,
+        image: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
+        pdf: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
         isbn: '#7764',
         title: 'learn angular 4',
         author: 'Nelson Brook',
@@ -13,21 +28,6 @@ module.exports = {
         visibility: true,
         image: 'http://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book22_ase4mm.jpg',
         pdf: 'http://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book22_ase4mm.jpg',
-        createdAt: new Date(),
-        updatedAt: new Date()
-      },
-      {
-        isbn: '#7765',
-        title: 'React for Beginners',
-        author: 'Nelson Brook',
-        pages: 1080,
-        year: 2010,
-        description: 'the books does this and that',
-        quantity: 3,
-        categoryid: 2,
-        visibility: true,
-        image: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
-        pdf: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -84,7 +84,7 @@ module.exports = {
         year: 2009,
         description: 'Learn angular 2 and all of its basics with this wonderful book by Tom Cruise. Move from novice to professional in no time.',
         quantity: 5,
-        categoryid: 6,
+        categoryid: 0,
         visibility: true,
         image: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295977/book1_mjwwlq.jpg',
         pdf: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295977/book1_mjwwlq.jpg',

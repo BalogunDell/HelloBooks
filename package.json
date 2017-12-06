@@ -16,8 +16,7 @@
     "migrate:undo": "sequelize db:migrate:undo:all",
     "seed": "sequelize db:seed:all",
     "migrate:dev": "npm run migrate:undo && npm run migrate && npm run seed",
-    "seed:test": "sequelize db:seed:all --env test",
-    "migrate:test": "sequelize db:migrate:undo:all --env test && sequelize db:migrate --env test && npm run seed:test",
+    "migrate:test": "sequelize db:migrate:undo:all --env test && sequelize db:migrate --env test && sequelize db:seed:all --env test",
     "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
   "dependencies": {

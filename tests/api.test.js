@@ -238,6 +238,21 @@ describe('Hellobooks API', () => {
       });
     });
 
+    it('should not allow a user borrow a book that does not exist', (done) => {
+      request
+      .post(`${userAPI}/${userId}/books`)
+      .set('Authorization', userToken)
+      .send('Accept', 'Application/json')
+      .send({bookid: 20})
+      .end((err, res) => {
+        expect(res.status).to.equal(404);
+        expect(res.body).to.be.an('object');
+        expect(res.body).to.have.property('msg');
+        expect(res.body.msg).to.equal('Book not found')
+        done();
+      });
+    });
+
     it('should fetch books borrowed by users', (done) => {
       request
       .get(`${userAPI}/${userId}/books`)
@@ -274,7 +289,7 @@ describe('Hellobooks API', () => {
       })
     });
 
-    it('should fetch books borrowed by users', (done) => {
+    it('should fetch books borrowed by users and not returned', (done) => {
       request
       .get(`${userAPI}/${userId}/books?returned=false`)
       .set('Authorization', userToken)
@@ -994,21 +1009,6 @@ describe('Hellobooks API', () => {
         expect(res.body).to.be.an('object');
         expect(res.body).to.have.property('message');
         expect(res.body.message).to.equal('Password should be 6 to 30 characters long');
-        done();
-      });
-    });
-
-    it('should return a url when passed an valid email', (done) => {
-      request
-      .post(`${api}/resetpassword`)
-      .accept('Content-Type', 'Application/json')
-      .send({email: 'jane5@mail.com'})
-      .end((err, res) => {
-        generatedUrl = res.body.url;
-        expect(res.status).to.equal(201);
-        expect(res.body).to.have.property('message');
-        expect(res.body).to.have.property('url');
-        expect(res.body.url).to.equal(generatedUrl);
         done();
       });
     });

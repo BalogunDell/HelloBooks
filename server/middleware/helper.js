@@ -18,20 +18,6 @@ const bookModel = model.books;
  * @returns { object} - returns an object
  */
 class Helper {
-/** 
- * @param { object } req 
- * @param { object } res 
- * @returns { object } books with count and rows
- */
-  static countBooks(req, res) {
-    borrowedBookModel.findAndCountAll({ where: {
-      bookid: req.body.bookid
-    } })
-      .then((books) => {
-        res.status(201).json({ message: books });
-      });
-  }
-
   /** 
  * @param { object } req request object
  * @param { object } res response object
@@ -72,7 +58,7 @@ class Helper {
           req.body = Helper.composeRequest(req);
           next();
         } else {
-          res.status(501).json({
+          res.status(200).json({
             msg: 'You have either exhausted your book limit or you still have this book with you'
           });
         }

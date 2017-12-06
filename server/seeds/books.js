@@ -18,7 +18,7 @@ const books = [
     pages: 1080,
     year: 2010,
     description: 'the books does this and that',
-    quantity: 3,
+    quantity: 0,
     categoryid: 2,
     image: 'images/andela.jpg',
     pdf: 'pdf1'
@@ -63,13 +63,13 @@ const books = [
 
 const invalidBooks = [
   {
-    isbn: '#7764',
+    isbn: '#7769',
     title: 'learn angular 4',
     author: 'Nelson Brook',
     pages: 870,
     year: 2017,
     description: 'the books does this and that',
-    quantity: 6,
+    quantity: 0,
     categoryid: '3',
     image: 'images/andela.jpg',
     pdf: 'pdf6'
