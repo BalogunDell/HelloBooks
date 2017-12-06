@@ -40,7 +40,7 @@ class Book {
   /**
    * @param {object} req 
    * @param {object} res
-   * @returns {void}
+   * @returns { object } server response
    */
   static deleteBook(req, res) {
     const bookId = parseInt((req.params.id), 10);

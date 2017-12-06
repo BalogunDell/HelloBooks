@@ -1,0 +1,24 @@
+swagger: "2.0"
+info:
+  version: "1.0.0"
+  title: "Hellobooks API"
+host: localhost:3003
+basePath: /
+schemes:
+  - http
+consumes:
+  - application/json
+produces:
+  - application/json
+paths: 
+  /api/v1:
+    get:
+      tags: 
+        - "Home"
+      description: Get API endpoint entry
+      responses:
+        "200":
+          description: "Welcome to API endpoints"
+
+
+

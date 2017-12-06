@@ -24,6 +24,12 @@ app.use(bodyParser.json());
 // Use Header for Cross Origin Resource Sharing
 app.use(cors());
 
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  next();
+});
+
 if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'production') {
   app.use(webpackMiddleware(webpack(webpackConfig)));
   app.use(webpackHotMiddleware(webpack(webpackConfig)));
