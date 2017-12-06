@@ -8,7 +8,7 @@
     "npm": "3.10.10"
   },
   "scripts": {
-    "test": "npm run migrate:test && babel-node node_modules/babel-istanbul/lib/cli.js cover node_modules/mocha/bin/_mocha -- ./tests/*.test.js --timeout 10000",
+    "test": "npm run migrate:test && node_modules/.bin/nyc --reporter=lcov --reporter=text mocha --require babel-polyfill --compilers js:babel-register -- ./tests/*.test.js --timeout 10000",
     "lint": "eslint ./server/**/*.js && eslint ./client/**/*.jsx && eslint ./client/**/*.js --fix",
     "build": "babel ./server --out-dir build",
     "start": "NODE_ENV=development babel-node -- server/index.js",
