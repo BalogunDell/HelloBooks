@@ -9,6 +9,7 @@ const users = [
     password: 'password',
     role: 'admin',
     membership: '',
+    passurl: 'uFUhdjHDJjdt',
   },
   {
     firstname: 'david',
@@ -17,7 +18,8 @@ const users = [
     username: 'username22',
     password: 'password',
     role: 'user',
-    membership: 'bronze'
+    membership: 'bronze',
+    passurl: 'uFUhdjHDJjdg',
   },
   {
     firstname: 'daniel',
@@ -27,6 +29,7 @@ const users = [
     password: 'password',
     role: 'user',
     membership: 'silver',
+    passurl: 'uFUhdjHDJjdf'
   },
 ];
 

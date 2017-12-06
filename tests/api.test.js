@@ -20,7 +20,7 @@ let adminToken;
 const api = '/api/v1';
 const userAPI = '/api/v1/users';
 let userId;
-let generatedUrl= '';
+let generatedUrl= 'uFUhdjHDJjdf';
 
 // Seeds
 
@@ -963,23 +963,6 @@ describe('Hellobooks API', () => {
         expect(res.body).to.be.an('object');
         expect(res.body).to.have.property('message');
         expect(res.body.message).to.equal('This email does not exist in our database');
-        done();
-      });
-    });
-
-    it('should return a url when passed an valid email', (done) => {
-      request
-      .post(`${api}/resetpassword`)
-      .accept('Content-Type', 'Application/json')
-      .send({email: 'delighteddell@gmail.com'})
-      .end((err, res) => {
-        console.log(err, "=============================");
-        console.log(res, "=============================");
-        generatedUrl = res.body.url;
-        expect(res.status).to.equal(201);
-        expect(res.body).to.have.property('message');
-        expect(res.body).to.have.property('url');
-        expect(res.body.url).to.equal(generatedUrl);
         done();
       });
     });
