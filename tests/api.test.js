@@ -971,8 +971,9 @@ describe('Hellobooks API', () => {
       request
       .post(`${api}/resetpassword`)
       .accept('Content-Type', 'Application/json')
-      .send({email: 'jane5@mail.com'})
+      .send({email: 'delighteddell@gmail.com'})
       .end((err, res) => {
+        console.log(err, "=============================");
         generatedUrl = res.body.url;
         expect(res.status).to.equal(201);
         expect(res.body).to.have.property('message');
