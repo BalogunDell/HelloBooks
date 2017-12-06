@@ -974,6 +974,7 @@ describe('Hellobooks API', () => {
       .send({email: 'delighteddell@gmail.com'})
       .end((err, res) => {
         console.log(err, "=============================");
+        console.log(res, "=============================");
         generatedUrl = res.body.url;
         expect(res.status).to.equal(201);
         expect(res.body).to.have.property('message');
