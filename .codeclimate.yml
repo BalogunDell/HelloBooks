@@ -3,6 +3,7 @@ exclude_paths:
 - "tests/"
 - "client/tests/"
 - "template"
+version: "2"
 file-lines:
   enabled: false
 return-statements:
