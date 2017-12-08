@@ -18,20 +18,10 @@ const bookModel = model.books;
  * @returns { object} - returns an object
  */
 class Helper {
-/** 
- * @param { object } req 
- * @param { object } res 
- * @returns { object } books with count and rows
- */
-  static countBooks(req, res) {
-    borrowedBookModel.findAndCountAll({ where: { bookid: req.body.bookid } }).then((books) => {
-      res.status(201).json({ message: books });
-    });
-  }
-
   /** 
- * @param { object } req 
- * @param { object } res 
+ * @param { object } req request object
+ * @param { object } res response object
+ * @param { object } next passes action to following controller
  * @returns { object } books with count and rows
  */
   static checkBook(req, res, next) {
@@ -63,19 +53,14 @@ class Helper {
     };
     borrowedBookModel.findAndCountAll(query)
       .then((response) => {
-        // const foundBook = );
-        // let dbug = {
-        //   response,
-        //   foundBook,
-        //   rows: response.rows[0].dataValues
-        // };
-        // return console.log(dbug);
         if (response.count < util[req.membership.toLowerCase()].limit
           && !response.rows.find(book => book.dataValues.bookid === parseInt(req.body.bookid, 10))) {
           req.body = Helper.composeRequest(req);
           next();
         } else {
-          res.status(501).json({ msg: 'You have either exhausted your book limit or you still have this book with you' });
+          res.status(200).json({
+            msg: 'You have either exhausted your book limit or you still have this book with you'
+          });
         }
       });
   }
@@ -90,7 +75,9 @@ class Helper {
     const body = {
       bookid: req.body.bookid,
       userid: req.body.userid,
-      expectedreturndate: moment().add(util[req.membership.toLowerCase()].limit, 'days').format('YYYY-MM-DD')
+      expectedreturndate: moment()
+        .add(util[req.membership.toLowerCase()].limit, 'days')
+        .format('YYYY-MM-DD')
     };
     return body;
   }

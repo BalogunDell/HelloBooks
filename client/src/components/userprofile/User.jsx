@@ -5,7 +5,7 @@ import $ from 'jquery';
 import { Redirect, Link } from 'react-router-dom';
 import { connect } from 'react-redux'
 
-import { getUserDetails } from '../../utils/getUserInfo';
+import getUserDetails from '../../utils/getUserInfo';
 import Allbooks from './Allbooks/Allbooks';
 import UserDashboard from './Dashboard';
 import UserHistory from './History';

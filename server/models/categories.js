@@ -3,7 +3,7 @@ const categoriesModel = (sequelize, DataTypes) => {
   const categories = sequelize.define('categories', {
     category: {
       type: DataTypes.STRING,
-      allowNull: true,
+      allowNull: false,
       unique: {
         args: true,
         msg: 'This category exists'

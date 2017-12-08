@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 import { membershipIconCreator } from './messages';
 import ProfileInfo from './profileInfo';
-import ProfileEditForm from './profileUpdateForm';
+import ProfileUpdateForm from './profileUpdateForm';
 import ImageModal from './updateImageModal';
 import * as userActions from '../../Actions/userProfileAction';
 
@@ -26,6 +26,7 @@ class Profile extends React.Component {
       newImageUploadSuccessMessage: '',
       newImageUploadErrorMessage: '',
       disableUpdateBtn: false,
+      preview: '',
       defaultUserImage: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1510302773/default_image_yi56ca.jpg'
     }
 
@@ -80,7 +81,11 @@ class Profile extends React.Component {
       tempImageName: '',
       loader: false,
       imageHeight: 0,
-      imageWidth: 0
+      imageWidth: 0,
+      preview: '',
+      newImageUploadError : false,
+      newImageUploadSuccessMessage: '',
+      disableUpdateBtn: false
     });
   }
 
@@ -99,7 +104,10 @@ class Profile extends React.Component {
     });
     this.props.saveNewImage(this.state.tempImageName)
     .then(() => {
-      this.setState({userData: { ...this.state.userData, image: this.props.newImageUrl } })      
+      this.setState({
+        userData: { 
+          ...this.state.userData, 
+          image: this.props.newImageUrl } })      
       this.props.saveNewImageToDB(this.state.userData)
         .then(() => {
           this.setState({ 
@@ -107,8 +115,22 @@ class Profile extends React.Component {
             newImageUploadError: false,
             newImageUploadSuccess: true,
             newImageUploadErrorMessage: '',
-            newImageUploadSuccessMessage: 'Success'
+            tempImageName: '',
+            newImageUploadSuccessMessage: 'Profile image has been updated'
           });
+          // Close modal afer message has been displayed
+          setTimeout(() => {
+            $('.modal').modal('close');
+            this.setState({ 
+              loader: false,
+              newImageUploadError: false,
+              newImageUploadSuccess: false,
+              newImageUploadErrorMessage: '',
+              newImageUploadSuccessMessage: '',
+              preview: '',
+              newImageUploadError:false,
+            });
+          }, 2000);
         })
         .catch((error) => {
         });
@@ -119,7 +141,8 @@ class Profile extends React.Component {
           newImageUploadError: true,
           newImageUploadSuccess: false,
           newImageUploadErrorMessage: error.response.data.message,
-          newImageUploadSuccessMessage: ''
+          newImageUploadSuccessMessage: '',
+          tempImageName: ''
         });
     })
   }
@@ -143,7 +166,10 @@ class Profile extends React.Component {
           if((newUpload.height > newUpload.width) || newUpload.height === newUpload.width) {
             this.setState({ disableUpdateBtn: false, 
               tempImageName: imageInput,
+              preview: newUpload.src,
               newImageUploadErrorMessage: '' });
+              
+              
           } else {
             this.setState({ newImageUploadError: true, disableUpdateBtn: true,
             newImageUploadErrorMessage: 'Only portraits are allowed.' });
@@ -152,7 +178,6 @@ class Profile extends React.Component {
       }
     }
     imageReader.readAsDataURL(imageInput);
-
   }
 
   componentDidMount() {
@@ -167,84 +192,93 @@ class Profile extends React.Component {
       };
       showImageOverlay();
     });
-    
   }
 
   componentWillReceiveProps(nextProps) {
     if(nextProps.userProfile) {
-      this.setState({userData: nextProps.userProfile});
+      this.setState({ userData: nextProps.userProfile });
     }
   }
 
   render() {
     return (
       <div className="center profile">
-        <div className="profile-holder">
-          <div className="details">
-            {/* Profile image here */}
-            <div className="profile-image-holder">
-              <a href="#confirmationModal" className="modal-trigger">
-              { this.state.userData.image 
-                ?
-                <img src={this.state.userData.image} className="responsive-img" id="image-target" alt=""/>
-                :
-                <img src={this.state.defaultUserImage} className="responsive-img" id="image-target" alt=""/>
-              }
-              </a>
-            </div>
-            
-            {/* User details */}
-
-            <div className="userInfoDisplay">
-              <h4>{`${this.state.userData.firstname} ${this.state.userData.lastname}`}</h4>
-              <p>Joined: {this.state.userData.createdAt} | {this.state.userData.email}</p>
-              <p>Member level: {membershipIconCreator(this.state.userData.membership || 'bronze')} </p>
-              <div className="row">
-                <div className="col s12 l12">
-                  {!this.state.viewProfile
+        { Object.keys(this.state.userData).length === 0
+        ?
+        <h5>Loading profile information...</h5>
+        :
+        <div>
+          <div className="profile-holder">
+            <div className="details">
+              {/* Profile image here */}
+              <div className="profile-image-holder">
+                <a href="#confirmationModal" className="modal-trigger">
+                { this.state.userData.image 
                   ?
-                  <button className="btn waves-teal waves-effect" onClick={this.showProfile}>View Full Profile</button>
+                  <img src={this.state.userData.image} className="responsive-img" id="image-target" alt=""/>
                   :
-                  ''
-                  }
+                  <img src={this.state.defaultUserImage} className="responsive-img" id="image-target" alt=""/>
+                }
+                </a>
+              </div>
+              
+              {/* User details */}
+
+              <div className="userInfoDisplay">
+                <h4>{`${this.state.userData.firstname} ${this.state.userData.lastname}`}</h4>
+                <p>Joined: {this.state.userData.createdAt} | {this.state.userData.email}</p>
+                <p>Member level: {membershipIconCreator(this.state.userData.membership || 'bronze')} </p>
+                <div className="row">
+                  <div className="col s12 l12">
+                    {!this.state.viewProfile
+                    ?
+                    <button className="btn waves-teal waves-effect" 
+                      onClick={this.showProfile}>View Full Profile</button>
+                    :
+                    ''
+                    }
+                  </div>
                 </div>
               </div>
-            </div>
 
-            {/* Form for profile update  */}
-            {this.state.viewProfile 
-            ?
-            <div>
-              {this.state.showInput 
-              ? 
-                <ProfileEditForm cancelEdit = {this.cancelEdit}/>
-              :
-                <ProfileInfo userData={this.state.userData}
-                showInput={this.state.showInput}
-                showInputHandler={this.showInputHandler}/>
-              }
-              {!this.state.editButton 
+              {/* Form for profile update  */}
+              {this.state.viewProfile 
               ?
-                <button className="btn waves-ripple waves-effect modal-trigger" onClick={this.showInputHandler}>EDIT</button>
-              : 
-                null
+              <div>
+                {this.state.showInput 
+                ? 
+                  <ProfileUpdateForm cancelEdit = {this.cancelEdit}
+                  showProfile = {this.showstProfile}/>
+                :
+                  <ProfileInfo userData={this.state.userData}
+                  showInput={this.state.showInput}
+                  showInputHandler={this.showInputHandler}/>
+                }
+                {!this.state.editButton 
+                ?
+                  <button className="btn waves-ripple waves-effect modal-trigger" onClick={this.showInputHandler}>EDIT</button>
+                : 
+                  null
+                }
+              </div>
+              :
+              ''
               }
             </div>
-            :
-            ''
-            }
           </div>
-        </div>
         <ImageModal 
         imageUploadHandler = {this.imageUploadHandler}
         loader ={this.state.loader}
         handleImageEdit={this.handleImageEdit}
         cancelEdit = {this.cancelEdit}
+        preview = {this.state.preview}
         newImageUploadError= {this.state.newImageUploadError}
         newImageUploadSuccess = {this.state.newImageUploadSuccess}
         newImageUploadErrorMessage = {this.state.newImageUploadErrorMessage}
         newImageUploadSuccessMessage = {this.state.newImageUploadSuccessMessage}
         disableUpdateBtn = {this.state.disableUpdateBtn}/>
+        </div>
+        }
       </div>
     )
   }

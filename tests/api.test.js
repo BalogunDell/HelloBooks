@@ -20,7 +20,7 @@ let adminToken;
 const api = '/api/v1';
 const userAPI = '/api/v1/users';
 let userId;
-let generatedUrl= '';
+let generatedUrl= 'uFUhdjHDJjdf';
 
 // Seeds
 
@@ -238,6 +238,21 @@ describe('Hellobooks API', () => {
       });
     });
 
+    it('should not allow a user borrow a book that does not exist', (done) => {
+      request
+      .post(`${userAPI}/${userId}/books`)
+      .set('Authorization', userToken)
+      .send('Accept', 'Application/json')
+      .send({bookid: 20})
+      .end((err, res) => {
+        expect(res.status).to.equal(404);
+        expect(res.body).to.be.an('object');
+        expect(res.body).to.have.property('msg');
+        expect(res.body.msg).to.equal('Book not found')
+        done();
+      });
+    });
+
     it('should fetch books borrowed by users', (done) => {
       request
       .get(`${userAPI}/${userId}/books`)
@@ -274,7 +289,7 @@ describe('Hellobooks API', () => {
       })
     });
 
-    it('should fetch books borrowed by users', (done) => {
+    it('should fetch books borrowed by users and not returned', (done) => {
       request
       .get(`${userAPI}/${userId}/books?returned=false`)
       .set('Authorization', userToken)
@@ -317,17 +332,17 @@ describe('Hellobooks API', () => {
       .set('Authorization', userToken)
       .end((err, res) => {
         expect(res.status).to.equal(200);
-        expect(res.body).to.be.an('object');
-        expect(res.body).to.have.property('id');
-        expect(res.body).to.have.property('firstname');
-        expect(res.body).to.have.property('lastname');
-        expect(res.body).to.have.property('email');
-        expect(res.body).to.have.property('username');
-        expect(res.body).to.have.property('password');
-        expect(res.body).to.have.property('membership');
-        expect(res.body).to.have.property('createdAt');
-        expect(res.body).to.have.property('updatedAt');
-        expect(res.body).to.have.property('image');
+        expect(res.body).to.have.property('user');
+        expect(res.body.user).to.have.property('id');
+        expect(res.body.user).to.have.property('firstname');
+        expect(res.body.user).to.have.property('lastname');
+        expect(res.body.user).to.have.property('email');
+        expect(res.body.user).to.have.property('username');
+        expect(res.body.user).to.have.property('password');
+        expect(res.body.user).to.have.property('membership');
+        expect(res.body.user).to.have.property('createdAt');
+        expect(res.body.user).to.have.property('updatedAt');
+        expect(res.body.user).to.have.property('image');
         done();
       });
     });
@@ -394,6 +409,20 @@ describe('Hellobooks API', () => {
         expect(res.status).to.equal(201);
         expect(res.body).to.have.property('message');
         expect(res.body).to.have.property('data');
+        done();
+      });
+    });
+
+    it('should not upload the same book', (done) => {
+      request
+      .post(`${api}/books`)
+      .set('Authorization', adminToken)
+      .send('Accept', 'Application/json')
+      .send(mockdata.bookdata)
+      .end((err, res) => {
+        expect(res.status).to.equal(409);
+        expect(res.body).to.have.property('message');
+        expect(res.body.message).to.equal('A book with this isbn exists');
         done();
       });
     });
@@ -518,20 +547,78 @@ describe('Hellobooks API', () => {
       });
     })
 
-    // it('should add a new category' , (done) => {
-    //   request
-    //   .post(`${api}/newcategory`)
-    //   .set('Authorization', adminToken)
-    //   .send('Accept', 'Application/json')
-    //   .send({category:'category'})
-    //   .end((err, res) => {
-    //     console.log(err);
-    //     expect(res.status).to.equal(200);
-    //     console.log(res.body)
-        
-    //     done();
-    //   });
-    // })
+    it('should add a new category' , (done) => {
+      request
+      .post(`${api}/newcategory`)
+      .set('Authorization', adminToken)
+      .send('Accept', 'Application/json')
+      .send({category:'category'})
+      .end((err, res) => {
+        if(res) {
+          expect(res.status).to.equal(201);
+          expect(res.body).to.have.property('message');
+          expect(res.body.message).to.equal('Category created');
+        }
+        done();
+      });
+    })
+
+
+    it('should not add an existing category' , (done) => {
+      request
+      .post(`${api}/newcategory`)
+      .set('Authorization', adminToken)
+      .send('Accept', 'Application/json')
+      .send({category:'Business'})
+      .end((err, res) => {
+        expect(res.status).to.equal(409);
+        expect(res.body).to.have.property('error');
+        expect(res.body.error).to.equal('This category exists');
+        done();
+      });
+    })
+
+    it('should not add category with length less than 4' , (done) => {
+      request
+      .post(`${api}/newcategory`)
+      .set('Authorization', adminToken)
+      .send('Accept', 'Application/json')
+      .send({category:'qw'})
+      .end((err, res) => {
+        expect(res.status).to.equal(400);
+        expect(res.body).to.have.property('error');
+        expect(res.body.error).to.equal('Category should between 4-30 characters long');
+        done();
+      });
+    })
+
+    it('should not add category if invalid' , (done) => {
+      request
+      .post(`${api}/newcategory`)
+      .set('Authorization', adminToken)
+      .send('Accept', 'Application/json')
+      .send({category:123456})
+      .end((err, res) => {
+        expect(res.status).to.equal(400);
+        expect(res.body).to.have.property('error');
+        expect(res.body.error).to.equal('Category should be words');
+        done();
+      });
+    })
+
+    it('should not add category if separated with space' , (done) => {
+      request
+      .post(`${api}/newcategory`)
+      .set('Authorization', adminToken)
+      .send('Accept', 'Application/json')
+      .send({category:'ola sugar'})
+      .end((err, res) => {
+        expect(res.status).to.equal(400);
+        expect(res.body).to.have.property('error');
+        expect(res.body.error).to.equal('Category should be words separated with -');
+        done();
+      });
+    })
 
     it('should delete a category' , (done) => {
       request
@@ -559,9 +646,9 @@ describe('Hellobooks API', () => {
       .send('Accept', 'Application/json')
       .send(mockdata.user1InvalidDataFirstname)
       .end((err, res) => {
-        expect(res.status).to.equal(501);
-        expect(res.body).to.have.property('message');
-        expect(res.body.message).to.equal('Firstname can only contain strings');
+        expect(res.status).to.equal(400);
+        expect(res.body).to.have.property('error');
+        expect(res.body.error).to.equal('Firstname can only contain strings');
         done();
       });
     });
@@ -572,9 +659,9 @@ describe('Hellobooks API', () => {
       .send('Accept', 'Application/json')
       .send(mockdata.user1InvalidDataEmptyLastname)
       .end((err, res) => {
-        expect(res.status).to.equal(501);
-        expect(res.body).to.have.property('message');
-        expect(res.body.message).to.equal('Lastname cannot be empty');
+        expect(res.status).to.equal(400);
+        expect(res.body).to.have.property('error');
+        expect(res.body.error).to.equal('Lastname cannot be empty');
         done();
       });
     });
@@ -586,9 +673,9 @@ describe('Hellobooks API', () => {
       .send('Accept', 'Application/json')
       .send(mockdata.user1InvalidDataDigitLastname)
       .end((err, res) => {
-        expect(res.status).to.equal(501);
-        expect(res.body).to.have.property('message');
-        expect(res.body.message).to.equal('Lastname can only contain strings');
+        expect(res.status).to.equal(400);
+        expect(res.body).to.have.property('error');
+        expect(res.body.error).to.equal('Lastname can only contain strings');
         done();
       });
     });
@@ -599,9 +686,9 @@ describe('Hellobooks API', () => {
       .send('Accept', 'Application/json')
       .send(mockdata.user1IncompleteData)
       .end((err, res) => {
-        expect(res.status).to.equal(501);
-        expect(res.body).to.have.property('message');
-        expect(res.body.message).to.equal('Lastname cannot be empty');
+        expect(res.status).to.equal(400);
+        expect(res.body).to.have.property('error');
+        expect(res.body.error).to.equal('Lastname cannot be empty');
         done();
       });
     });
@@ -612,9 +699,9 @@ describe('Hellobooks API', () => {
       .send('Accept', 'Application/json')
       .send(mockdata.user1IncompleteData2)
       .end((err, res) => {
-        expect(res.status).to.equal(501);
-        expect(res.body).to.have.property('message');
-        expect(res.body.message).to.equal('Email cannot be empty');
+        expect(res.status).to.equal(400);
+        expect(res.body).to.have.property('error');
+        expect(res.body.error).to.equal('Email cannot be empty');
         done();
       });
     });
@@ -626,9 +713,9 @@ describe('Hellobooks API', () => {
       .send('Accept', 'Application/json')
       .send(mockdata.user1IncompleteData3)
       .end((err, res) => {
-        expect(res.status).to.equal(501);
-        expect(res.body).to.have.property('message');
-        expect(res.body.message).to.equal('Field must contain a valid email address');
+        expect(res.status).to.equal(400);
+        expect(res.body).to.have.property('error');
+        expect(res.body.error).to.equal('Field must contain a valid email address');
         done();
       });
     });
@@ -640,9 +727,9 @@ describe('Hellobooks API', () => {
       .send('Accept', 'Application/json')
       .send(mockdata.user1IncompleteData4)
       .end((err, res) => {
-        expect(res.status).to.equal(501);
-        expect(res.body).to.have.property('message');
-        expect(res.body.message).to.equal('Username cannot be empty');
+        expect(res.status).to.equal(400);
+        expect(res.body).to.have.property('error');
+        expect(res.body.error).to.equal('Username cannot be empty');
         done();
       });
     });
@@ -654,9 +741,9 @@ describe('Hellobooks API', () => {
       .send('Accept', 'Application/json')
       .send(mockdata.user1IncompleteData5)
       .end((err, res) => {
-        expect(res.status).to.equal(501);
-        expect(res.body).to.have.property('message');
-        expect(res.body.message).to.equal('Username must start with letter(s) and end with digit(s)');
+        expect(res.status).to.equal(400);
+        expect(res.body).to.have.property('error');
+        expect(res.body.error).to.equal('Username must start with letter(s) and end with digit(s)');
         done();
       });
     });
@@ -668,9 +755,9 @@ describe('Hellobooks API', () => {
       .send('Accept', 'Application/json')
       .send(mockdata.user1IncompleteData6)
       .end((err, res) => {
-        expect(res.status).to.equal(501);
-        expect(res.body).to.have.property('message');
-        expect(res.body.message).to.equal('Username taken, use another');
+        expect(res.status).to.equal(409);
+        expect(res.body).to.have.property('error');
+        expect(res.body.error).to.equal('Username taken, use another');
         done();
       });
     });
@@ -682,9 +769,9 @@ describe('Hellobooks API', () => {
       .send('Accept', 'Application/json')
       .send(mockdata.user1IncompleteData7)
       .end((err, res) => {
-        expect(res.status).to.equal(501);
-        expect(res.body).to.have.property('message');
-        expect(res.body.message).to.equal('Password cannot be empty');
+        expect(res.status).to.equal(400);
+        expect(res.body).to.have.property('error');
+        expect(res.body.error).to.equal('Password cannot be empty');
         done();
       });
     });
@@ -696,9 +783,9 @@ describe('Hellobooks API', () => {
       .send('Accept', 'Application/json')
       .send(mockdata.user1IncompleteData8)
       .end((err, res) => {
-        expect(res.status).to.equal(501);
-        expect(res.body).to.have.property('message');
-        expect(res.body.message).to.equal('Password should be 6 to 30 characters long');
+        expect(res.status).to.equal(400);
+        expect(res.body).to.have.property('error');
+        expect(res.body.error).to.equal('Password should be 6 to 30 characters long');
         done();
       });
     });
@@ -786,7 +873,7 @@ describe('Hellobooks API', () => {
       .end((err, res) => {
         expect(res.status).to.equal(400);
         expect(res.body).to.have.property('message');
-        expect(res.body.message).to.equal('ISBN number is required');
+        expect(res.body.message).to.equal('Isbn field cannot be empty');
         done();
       });
     });
@@ -800,7 +887,7 @@ describe('Hellobooks API', () => {
       .end((err, res) => {
         expect(res.status).to.equal(400);
         expect(res.body).to.have.property('message');
-        expect(res.body.message).to.equal('Title is required');
+        expect(res.body.message).to.equal('Title field cannot be empty');
         done();
       });
     });
@@ -814,7 +901,7 @@ describe('Hellobooks API', () => {
       .end((err, res) => {
         expect(res.status).to.equal(400);
         expect(res.body).to.have.property('message');
-        expect(res.body.message).to.equal('Please provide the author of the book');
+        expect(res.body.message).to.equal('Author field cannot be empty');
         done();
       });
     });
@@ -828,7 +915,7 @@ describe('Hellobooks API', () => {
       .end((err, res) => {
         expect(res.status).to.equal(400);
         expect(res.body).to.have.property('message');
-        expect(res.body.message).to.equal('Number of pages is required');
+        expect(res.body.message).to.equal('Pages field cannot be empty');
         done();
       });
     });
@@ -842,7 +929,7 @@ describe('Hellobooks API', () => {
       .end((err, res) => {
         expect(res.status).to.equal(400);
         expect(res.body).to.have.property('message');
-        expect(res.body.message).to.equal('Please provide the year this book was published');
+        expect(res.body.message).to.equal('Year cannot be empty');
         done();
       });
     });
@@ -894,95 +981,65 @@ describe('Hellobooks API', () => {
         done();
       });
     });
+  });
 
-  //   it('should return a url when passed an valid email', (done) => {
-  //     request
-  //     .post(`${api}/resetpassword`)
-  //     .accept('Content-Type', 'Application/json')
-  //     .send({email: 'jane5@mail.com'})
-  //     .end((err, res) => {
-  //       generatedUrl = res.body.url;
-  //       expect(res.status).to.equal(201);
-  //       expect(res.body).to.have.property('message');
-  //       expect(res.body).to.have.property('url');
-  //       expect(res.body.url).to.equal(generatedUrl);
-  //       done();
-  //     });
-  //   });
-  // });
+  describe('Reset Password:', () => {
 
-  // describe('Reset Password:', () => {
+    it('it checks if new password is sent as body', (done) => {
+      request
+      .put(`${api}/resetpassword/${generatedUrl}`)
+      .accept('Content-Type', 'Application/json')
+      .send({password: ''})
+      .end((err, res) => {
+        expect(res.status).to.equal(400);
+        expect(res.body).to.be.an('object');
+        expect(res.body).to.have.property('message');
+        expect(res.body.message).to.equal('Please type in your new password');
+        done();
+      });
+    });
 
-  //   it('it checks if new password is sent as body', (done) => {
-  //     request
-  //     .put(`${api}/resetpassword/${generatedUrl}`)
-  //     .accept('Content-Type', 'Application/json')
-  //     .send({password: ''})
-  //     .end((err, res) => {
-  //       expect(res.status).to.equal(400);
-  //       expect(res.body).to.be.an('object');
-  //       expect(res.body).to.have.property('message');
-  //       expect(res.body.message).to.equal('Please type in your new password');
-  //       done();
-  //     });
-  //   });
+    it('it checks if new password length is between 6 and 30', (done) => {
+      request
+      .put(`${api}/resetpassword/${generatedUrl}`)
+      .accept('Content-Type', 'Application/json')
+      .send({password: '123'})
+      .end((err, res) => {
+        expect(res.status).to.equal(400);
+        expect(res.body).to.be.an('object');
+        expect(res.body).to.have.property('message');
+        expect(res.body.message).to.equal('Password should be 6 to 30 characters long');
+        done();
+      });
+    });
 
-  //   it('it checks if new password length is between 6 and 30', (done) => {
-  //     request
-  //     .put(`${api}/resetpassword/${generatedUrl}`)
-  //     .accept('Content-Type', 'Application/json')
-  //     .send({password: '123'})
-  //     .end((err, res) => {
-  //       expect(res.status).to.equal(400);
-  //       expect(res.body).to.be.an('object');
-  //       expect(res.body).to.have.property('message');
-  //       expect(res.body.message).to.equal('Password should be 6 to 30 characters long');
-  //       done();
-  //     });
-  //   });
+    it('it updates password with valid request body', (done) => {
+      request
+      .put(`${api}/resetpassword/${generatedUrl}`)
+      .accept('Content-Type', 'Application/json')
+      .send({password: '123456'})
+      .end((err, res) => {
+        expect(res.status).to.equal(201);
+        expect(res.body).to.be.an('object');
+        expect(res.body).to.have.property('message');
+        expect(res.body.message).to.equal('Your password has been updated');
+        done();
+      });
+    });
 
-  //   it('should return a url when passed an valid email', (done) => {
-  //     request
-  //     .post(`${api}/resetpassword`)
-  //     .accept('Content-Type', 'Application/json')
-  //     .send({email: 'jane5@mail.com'})
-  //     .end((err, res) => {
-  //       generatedUrl = res.body.url;
-  //       expect(res.status).to.equal(201);
-  //       expect(res.body).to.have.property('message');
-  //       expect(res.body).to.have.property('url');
-  //       expect(res.body.url).to.equal(generatedUrl);
-  //       done();
-  //     });
-  //   });
-
-  //   it('it updates password with valid request body', (done) => {
-  //     request
-  //     .put(`${api}/resetpassword/${generatedUrl}`)
-  //     .accept('Content-Type', 'Application/json')
-  //     .send({password: '123456'})
-  //     .end((err, res) => {
-  //       expect(res.status).to.equal(201);
-  //       expect(res.body).to.be.an('object');
-  //       expect(res.body).to.have.property('message');
-  //       expect(res.body.message).to.equal('Your password has been updated');
-  //       done();
-  //     });
-  //   });
-
-  //   it('it checks if the given url is invalid', (done) => {
-  //     request
-  //     .put(`${api}/resetpassword/fhrndhjrewkw`)
-  //     .accept('Content-Type', 'Application/json')
-  //     .send({password: 'abeebyere'})
-  //     .end((err, res) => {
-  //       expect(res.status).to.equal(404);
-  //       expect(res.body).to.be.an('object');
-  //       expect(res.body).to.have.property('message');
-  //       expect(res.body.message).to.equal('This link has expired');
-  //       done();
-  //     });
-  //   });
+    it('it checks if the given url is invalid', (done) => {
+      request
+      .put(`${api}/resetpassword/fhrndhjrewkw`)
+      .accept('Content-Type', 'Application/json')
+      .send({password: 'abeebyere'})
+      .end((err, res) => {
+        expect(res.status).to.equal(404);
+        expect(res.body).to.be.an('object');
+        expect(res.body).to.have.property('message');
+        expect(res.body.message).to.equal('This link has expired');
+        done();
+      });
+    });
   });
 });
 

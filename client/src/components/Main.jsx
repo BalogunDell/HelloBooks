@@ -5,6 +5,7 @@ import Navbar from './navbar/Navbar';
 import Footer from './footer/Footer';
 import Home from './home/Home';
 import Background from './Background/Background';
+import Books from './books/Books';
 
 /**
  * @class Main 
@@ -16,8 +17,10 @@ const Main = () => {
       <Background>
         <Navbar/>
         <Home/>
-        <Footer/>
       </Background>
+       <Books/>
+       {/* Some other stuff here */}
+      <Footer/>
     </div>
   );
 };

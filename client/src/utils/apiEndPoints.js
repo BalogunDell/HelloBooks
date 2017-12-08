@@ -1,4 +1,3 @@
-import { getUserDetails } from '../utils/getUserInfo';
 const routeDefault = '/api/v1';
 
 //  Export Routes

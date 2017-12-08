@@ -23,7 +23,7 @@ const createBookForm = ({disableBtn, showHiddenBtns,loader,
         <form onSubmit={createBookHandler} className="create-form" encType="multipart/form-data">
           <div className="input-field">
             <input type="text" name="isbn"
-              maxLength="4"
+              maxLength="6"
               value={initialData.isbn}
               onChange={handleInput}
               className="validate" required />

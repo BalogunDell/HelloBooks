@@ -27,11 +27,6 @@ export default class Home extends React.Component {
                 </div>
               </div>
           </div>
-          <div className="arrow-down center">
-            <a href="#">
-              <i className="fa fa-arrow-circle-down fa-4x arrow"></i>
-            </a>
-          </div>
         </div>
     </div>
     );

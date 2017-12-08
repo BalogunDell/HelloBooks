@@ -49,8 +49,8 @@ class Authentication {
         } else {
           res.status(404).json({ message: 'User does not exist' });
         }
-      }).catch(() => {
-        res.status(401).json({ message: 'Invalid/expired token' });
+      }).catch((error) => {
+        res.status(501).json({ message: error.errors[0].message });
       });
     }
   }
