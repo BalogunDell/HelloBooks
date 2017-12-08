@@ -3,3 +3,11 @@ exclude_paths:
 - "tests/"
 - "client/tests/"
 - "template"
+file-lines:
+  enabled: false
+return-statements:
+  enabled: false
+similar-code:
+  enabled: false
+identical-code:
+  enabled: false
