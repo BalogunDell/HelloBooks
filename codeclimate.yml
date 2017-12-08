@@ -1,0 +1,4 @@
+exclude_paths:
+- "client/assets/"
+- "test/"
+- "template"
