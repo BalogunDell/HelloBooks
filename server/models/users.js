@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt';
 
-const user = (sequelize, DataTypes) => {
-  const usersModel = sequelize.define('users', {
+const User = (sequelize, DataTypes) => {
+  const userModel = sequelize.define('user', {
     firstname: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -109,26 +109,26 @@ const user = (sequelize, DataTypes) => {
     classMethods: {
       associate(model) {
         // associations can be defined here
-        usersModel.hasMany(model.borrowedbooks, {
+        userModel.hasMany(model.borrowedbook, {
           foreignKey: 'userid',
           onDelete: 'CASCADE'
         });
       }
     },
     hooks: {
-      beforeCreate: (users) => {
-        const hashP = bcrypt.hashSync(users.password, bcrypt.genSaltSync(10));
-        users.password = hashP;
-        return users;
+      beforeCreate: (user) => {
+        const hashP = bcrypt.hashSync(user.password, bcrypt.genSaltSync(10));
+        user.password = hashP;
+        return user;
       },
-      beforeUpdate: (users) => {
-        const hashP = bcrypt.hashSync(users.password, bcrypt.genSaltSync(10));
-        users.password = hashP;
-        return users;
+      beforeUpdate: (user) => {
+        const hashP = bcrypt.hashSync(user.password, bcrypt.genSaltSync(10));
+        user.password = hashP;
+        return user;
       },
     }
   });
-  return usersModel;
+  return userModel;
 };
 
-export default user;
+export default User;

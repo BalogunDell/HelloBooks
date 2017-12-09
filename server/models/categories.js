@@ -1,6 +1,6 @@
 
-const categoriesModel = (sequelize, DataTypes) => {
-  const categories = sequelize.define('categories', {
+const categoryModel = (sequelize, DataTypes) => {
+  const category = sequelize.define('category', {
     category: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -28,13 +28,13 @@ const categoriesModel = (sequelize, DataTypes) => {
       }
     }
   });
-  categories.associate = (model) => {
-    categories.hasMany(model.books, {
+  category.associate = (model) => {
+    category.hasMany(model.book, {
       foreignKey: 'categoryid',
       onDelete: 'CASCADE'
     });
   };
 
-  return categories;
+  return category;
 };
-export default categoriesModel;
+export default categoryModel;

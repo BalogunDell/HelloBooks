@@ -3,7 +3,7 @@ import model from '../models';
 
 require('dotenv').config();
 
-const userModel = model.users;
+const userModel = model.user;
 const secret = process.env.SECRET;
 
 /**
