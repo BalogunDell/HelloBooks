@@ -1,9 +1,9 @@
 import model from '../models';
 import errorMessages from '../middleware/errorMessages';
 
-const bookModel = model.books;
-const borrowedBooks = model.borrowedbooks;
-const categoryModel = model.categories;
+const bookModel = model.book;
+const borrowedBook = model.borrowedbook;
+const categoryModel = model.category;
 
 
 /**
@@ -44,7 +44,7 @@ class Book {
    */
   static deleteBook(req, res) {
     const bookId = parseInt((req.params.id), 10);
-    borrowedBooks.findOne({ where: { bookid: bookId, returnstatus: false } })
+    borrowedBook.findOne({ where: { bookid: bookId, returnstatus: false } })
       .then((response) => {
         if (response !== null) {
           res.status(501).json({ message: 'This book has been borrowed and cannot be deleted' });
@@ -130,7 +130,7 @@ class Book {
    * @returns { object } resposnse
    */
   static getBorrowedBooks(req, res) {
-    borrowedBooks.findAll({ include: { model: bookModel,
+    borrowedBook.findAll({ include: { model: bookModel,
       include: { model: categoryModel } } }).then((response) => {
       res.status(200).json({ books: response });
     }).catch((error) => {
@@ -205,7 +205,7 @@ class Book {
    * @returns { void }
    */
   static borrowBook(req, res) {
-    borrowedBooks.create(req.body)
+    borrowedBook.create(req.body)
       .then((response) => {
         bookModel.update({ quantity: req.book.dataValues.quantity - 1 },
           { where: { id: response.dataValues.bookid } })
@@ -232,7 +232,7 @@ class Book {
    * @returns { object } returns object
    */
   static returnBook(req, res) {
-    borrowedBooks.findOne({ where: {
+    borrowedBook.findOne({ where: {
       userid: req.body.userid,
       bookid: req.body.bookid,
       returnstatus: false } })
@@ -241,7 +241,7 @@ class Book {
           res.status(404).json({
             message: 'This book is not in your latest borrow history' });
         } else {
-          borrowedBooks.update({ returnstatus: true },
+          borrowedBook.update({ returnstatus: true },
             { where: { id: response.dataValues.id } })
             .then((feedback) => {
               if (feedback) {

@@ -7,9 +7,9 @@ import errorMessages from '../middleware/errorMessages';
 require('dotenv').config();
 
 
-const userModel = model.users;
-const borrowedBookModel = model.borrowedbooks;
-const booksModel = model.books;
+const userModel = model.user;
+const borrowedBookModel = model.borrowedbook;
+const bookModel = model.book;
 
 
 /**
@@ -189,7 +189,7 @@ class User {
       };
     }
 
-    borrowedBookModel.findAll({ where: query.where, include: [{ model: booksModel }] })
+    borrowedBookModel.findAll({ where: query.where, include: [{ model: bookModel }] })
       .then((response) => {
         if (response.length < 1) {
           res.status(200).json({ message: 'You have no books yet' });

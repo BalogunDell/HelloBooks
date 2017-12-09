@@ -8,8 +8,8 @@ require('dotenv').config();
 
 const secret = process.env.SECRET;
 const mailPassword = process.env.PASSWORD;
-const borrowedBookModel = model.borrowedbooks;
-const bookModel = model.books;
+const borrowedBookModel = model.borrowedbook;
+const bookModel = model.book;
 
 /**
  * 

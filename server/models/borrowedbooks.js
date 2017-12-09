@@ -1,5 +1,5 @@
-const borrowedbook = (sequelize, DataTypes) => {
-  const borrowedbooks = sequelize.define('borrowedbooks', {
+const Borrowedbook = (sequelize, DataTypes) => {
+  const borrowedbook = sequelize.define('borrowedbook', {
 
     userid: {
       type: DataTypes.INTEGER,
@@ -40,11 +40,11 @@ const borrowedbook = (sequelize, DataTypes) => {
     },
   });
 
-  borrowedbooks.associate = (models) => {
-    borrowedbooks.belongsTo(models.users, { foreignKey: 'userid', onDelete: 'CASCADE' });
-    borrowedbooks.belongsTo(models.books, { foreignKey: 'bookid', onDelete: 'CASCADE' });
+  borrowedbook.associate = (models) => {
+    borrowedbook.belongsTo(models.user, { foreignKey: 'userid', onDelete: 'CASCADE' });
+    borrowedbook.belongsTo(models.book, { foreignKey: 'bookid', onDelete: 'CASCADE' });
   };
-  return borrowedbooks;
+  return borrowedbook;
 };
 
-export default borrowedbook;
+export default Borrowedbook;
