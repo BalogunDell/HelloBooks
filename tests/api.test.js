@@ -36,7 +36,7 @@ describe('Hellobooks API', () => {
 
   // Save admin and normal user, sign them in and get token
   before((done) => {
-    models.users.bulkCreate(fakeUsers.users, {individualHooks: true})
+    models.user.bulkCreate(fakeUsers.users, {individualHooks: true})
     .then(() => {
       request
       .post(`${userAPI}/signin`)
@@ -65,7 +65,7 @@ describe('Hellobooks API', () => {
 
   //Load sample category before test
   before((done) => {
-    models.categories.bulkCreate(categories.categories, {individualHooks: true})
+    models.category.bulkCreate(categories.categories, {individualHooks: true})
     .then(() => {
       done();
     })
@@ -74,7 +74,7 @@ describe('Hellobooks API', () => {
 
   //Load sample book before test
   before((done) => {
-    models.books.bulkCreate(fakeBooks.books, {individualHooks: true})
+    models.book.bulkCreate(fakeBooks.books, {individualHooks: true})
     .then(() => {
       done();
     })

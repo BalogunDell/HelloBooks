@@ -35,7 +35,7 @@ export function saveNewUser(userSignupData) {
           response.data.responseData.userID,
           response.data.responseData.userRole);
         localStorage.setItem('Access-Token', JSON.stringify(userDetails)); //eslint-disable-line
-        dispatch(userSignupSuccessAction(response.data.responseData))
+        dispatch(userSignupSuccessAction(response.data.responseData));
       })
       .catch((errors) => {
         throw (errors);
