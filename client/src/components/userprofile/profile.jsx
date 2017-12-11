@@ -13,7 +13,7 @@ class Profile extends React.Component {
     super(props);
 
     this.state = {
-      userData: this.props.userProfile,
+      userData: { ...this.props.userProfile },
       viewProfile:false,
       showInput: false,
       editButton: true,
@@ -197,6 +197,8 @@ class Profile extends React.Component {
   componentWillReceiveProps(nextProps) {
     if(nextProps.userProfile) {
       this.setState({ userData: nextProps.userProfile });
+    } else {
+      this.state.userData.length === 0;
     }
   }
 
@@ -248,7 +250,7 @@ class Profile extends React.Component {
                 {this.state.showInput 
                 ? 
                   <ProfileUpdateForm cancelEdit = {this.cancelEdit}
-                  showProfile = {this.showstProfile}/>
+                  showProfile = {this.showProfile}/>
                 :
                   <ProfileInfo userData={this.state.userData}
                   showInput={this.state.showInput}
@@ -283,14 +285,14 @@ class Profile extends React.Component {
     )
   }
 }
-function mapStateToProps(state, ownProps) {
+const mapStateToProps = (state, ownProps) => {
   return {
     userProfile: state.userProfile,
     newImageUrl: state.userProfile.secure_url
   }
 }
 
-function mapDispatchToProps(dispatch) {
+const mapDispatchToProps = (dispatch) => {
   return {
     saveNewImage: (image) => dispatch(userActions.saveNewImage(image)),
     saveNewImageToDB: (newimage) => dispatch(userActions.saveNewImageToDB(newimage))

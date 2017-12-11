@@ -34,7 +34,7 @@ export function fetchUserTrigger() {
       {
         headers: { Authorization: getUserDetails().savedToken } })
       .then((response) => {
-        dispatch(fetchUser(response.data));
+        dispatch(fetchUser(response.data.user));
       }).catch((error) => {
         throw (error);
       });

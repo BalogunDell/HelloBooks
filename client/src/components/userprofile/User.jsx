@@ -69,7 +69,7 @@ class User extends React.Component {
   componentWillMount(){
     // Get details from local storage
     if(localStorage.getItem('Access-Token') === null) {
-      return this.setState({isAuthenticated: false})
+      return this.setState({isAuthenticated: false});
     }
 
 
@@ -82,11 +82,11 @@ class User extends React.Component {
       // Do some stuff is error
       error.response.status === 401 || 500 ? this.setState({isAuthenticated:false})
       :
-      this.setState({isAuthenticated:false})
+      this.setState({isAuthenticated:false});
     })
 
     // Set all values needed
-    this.setState({isAuthenticated: true})
+    this.setState({isAuthenticated: true});
     this.userID = getUserDetails().userId;
     this.userType = getUserDetails().userType;
 
@@ -98,7 +98,7 @@ class User extends React.Component {
   }
 
   componentWillReceiveProps(nextprops) {
-     if(nextprops.userDetails) {
+     if (nextprops.userDetails) {
       this.setState({dataReady:true, profileData: nextprops.userDetails})
      }
      
@@ -179,7 +179,7 @@ class User extends React.Component {
 // DEFINE CONNECT PARAMETERS: **THEY ARE BOTH FUNCTIONS**//
 // ******************************************************//
 
-function mapStateToProps(state, ownProps) {
+const mapStateToProps = (state, ownProps) => {
   return {
     isAuthenticated: state.userAccess.isAuthenticated,
     userDetails: state.userProfile,
@@ -187,7 +187,7 @@ function mapStateToProps(state, ownProps) {
   }
 }
 
-function mapDispatchToProps(dispatch) {
+const mapDispatchToProps = (dispatch) => {
   return {
     userProfile: (userID) => dispatch(UserActions.fetchUserTrigger(userID)),
   }
