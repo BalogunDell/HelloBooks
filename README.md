@@ -16,6 +16,11 @@ The application leverages Node; Express for routing and sequelize for ORM.
 - Start app `npm start`
 - Consume via postman
 
+## Documentation
+
+You can find the explanatory documentation of this application API at
+[documentation](https://balogundell.github.io/slate)
+
 ## Endpoints
 
 ### Users
