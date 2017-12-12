@@ -1,4 +1,4 @@
-import bcrypt from 'bcrypt';
+import bcrypt, { genSaltSync } from 'bcrypt';
 import model from '../models';
 import helper from '../middleware/helper';
 import errorMessages from '../middleware/errorMessages';
@@ -60,7 +60,7 @@ class User {
   static signin(req, res) {
     userModel.findOne({ where: { username: req.body.username } })
       .then((user) => {
-        if (user && bcrypt.compareSync(req.body.password, user.dataValues.password)) {
+        if (user !== null && bcrypt.compareSync(req.body.password, user.dataValues.password)) {
           const token = helper.generateToken(user.dataValues);
           const responseData = {
             message: 'signed in',
@@ -70,8 +70,6 @@ class User {
             userRole: user.role,
             image: user.image };
           res.status(200).json({ responseData });
-        } else if (!req.body.username || !req.body.password) {
-          res.status(400).json({ message: 'Username and password is required' });
         } else {
           res.status(404).json({ message: 'Invalid username or password' });
         }
@@ -141,9 +139,11 @@ class User {
     if ((!newPassword) || (newPassword === '')) {
       res.status(400).json({ message: 'Please type in your new password' });
     } else if (newPassword.length < 6) {
-      res.status(400).json({ message: 'Password should be 6 to 30 characters long' });
+      res.status(400).json({ message: 'Password should not be less than 5 characters' });
     } else {
-      userModel.update({ password: newPassword }, { where: { passurl: resetUrl },
+      const hashP = bcrypt.hashSync(newPassword, bcrypt.genSaltSync(10));
+      console.log(hashP);
+      userModel.update({ password: hashP }, { where: { passurl: resetUrl },
         individualHooks: true },
       { fields: ['password'] })
         .then(() => {
@@ -157,6 +157,7 @@ class User {
         })
         .catch((error) => {
           res.status(500).json({ error });
+          console.log(error);
         });
     }
   }

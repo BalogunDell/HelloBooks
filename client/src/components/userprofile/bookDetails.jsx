@@ -38,7 +38,7 @@ class bookDetails extends React.Component {
     .then(() => {
       this.setState({
         borrowBookSuccess: true,
-        borrowErrorStatus:false, 
+        borrowErrorStatus:false,
         processingRequest: false,
         borrowError: '',
         disableBtn: true,
@@ -46,11 +46,12 @@ class bookDetails extends React.Component {
       })
     })
     .catch(error => {
+      console.log(error);
       this.setState({
         processingRequest: false,
         borrowErrorStatus:true,
-        borrowError: error.response.data.msg, disableBtn:true })
-    })
+        borrowError: error.response.data.msg, disableBtn:true });
+    });
   }
 
   componentWillMount() {

@@ -785,7 +785,7 @@ describe('Hellobooks API', () => {
       .end((err, res) => {
         expect(res.status).to.equal(400);
         expect(res.body).to.have.property('error');
-        expect(res.body.error).to.equal('Password should be 6 to 30 characters long');
+        expect(res.body.error).to.equal('Password should not be less than 5 characters');
         done();
       });
     });
