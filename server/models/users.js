@@ -120,15 +120,7 @@ const User = (sequelize, DataTypes) => {
         const hashP = bcrypt.hashSync(user.password, bcrypt.genSaltSync(10));
         user.password = hashP;
         return user;
-      },
-      // beforeUpdate: (user) => {
-      //   if (user.password) {
-      //     console.log(user.password);
-      //   }
-      //   const hashP = bcrypt.hashSync(user.password, bcrypt.genSaltSync(10));
-      //   user.password = hashP;
-      //   return user;
-      // },
+      }
     }
   });
   return userModel;
