@@ -248,7 +248,7 @@ class Profile extends React.Component {
                 {this.state.showInput 
                 ? 
                   <ProfileUpdateForm cancelEdit = {this.cancelEdit}
-                  showProfile = {this.showstProfile}/>
+                  showProfile = {this.showProfile}/>
                 :
                   <ProfileInfo userData={this.state.userData}
                   showInput={this.state.showInput}
