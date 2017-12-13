@@ -43,7 +43,10 @@ class bookDetails extends React.Component {
         borrowError: '',
         disableBtn: true,
         borrowBookSuccessMessage: this.props.borrowBookSuccess
-      })
+      });
+      Materialize.toast('You have successfully borrowed this book',
+      4000,
+      'blue rounded');
     })
     .catch(error => {
       console.log(error);
@@ -62,14 +65,16 @@ class bookDetails extends React.Component {
     let filteredBook = this.state.books.filter(book => book.id == this.state.book_id)
     this.setState({book: filteredBook[0], dataReady:false});
     this.props.userBooks();
-  }
 
-  componentDidMount() {
     if(getUserDetails().userType === 'admin') {
       this.setState({ isAdmin: true });
     } else {
       this.setState({ isAdmin: false });
     }
+  }
+
+  componentDidMount() {
+    
   }
 
   componentWillReceiveProps(nextProps) {
