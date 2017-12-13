@@ -2,7 +2,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
  
 const allUserBooksComp = ({allUserBooks, getRowKey, tableHeader, handleReturn, successMessage, returnSuccessStatus}) => {
-  const bookLength = allUserBooks.length;
+	const books = allUserBooks.filter((book) => {
+		return book.book.visibility === true
+	});
+	const bookLength = books.length;
     return (
 			<div>
 
@@ -34,7 +37,7 @@ const allUserBooksComp = ({allUserBooks, getRowKey, tableHeader, handleReturn, s
                 <td>You have no book pending return</td>
                 </tr>
               :
-              allUserBooks.map((book, id) =>
+							books.map((book, id) =>
 						<tr key={id}>
 							<td><img src={book.book.image} alt="Book cover"/></td>
 							<td>{book.book.title}</td>
