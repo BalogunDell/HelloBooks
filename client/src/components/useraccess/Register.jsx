@@ -58,7 +58,7 @@ class Register extends React.Component {
 
   render() {
     return( 
-      this.state.redirect ? <Redirect to="/user"/> : 
+      this.state.redirect ? <Redirect to="/user/books"/> : 
       <div>
         {/* This div holds the navbar component  */}
         <Background>

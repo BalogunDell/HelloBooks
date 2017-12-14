@@ -82,7 +82,7 @@ componentDidMount() {
 // ******************************************************//
   render() {
     return(
-      this.state.isAuthenticated ? <Redirect to ="/user"/> : 
+      this.state.isAuthenticated ? <Redirect to ="/user/books"/> : 
       <div>
         {/* This div holds the navbar component  */}
           <Background>

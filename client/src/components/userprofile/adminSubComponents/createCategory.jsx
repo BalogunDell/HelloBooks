@@ -131,8 +131,7 @@ class CreateCategoryModal extends React.Component {
   }
 }
 
-
-function mapDispatchToProps(dispatch) {
+const mapDispatchToProps = (dispatch) => {
   return {
     createCategory: category => dispatch(categoryActions.createCategory(category))
   }

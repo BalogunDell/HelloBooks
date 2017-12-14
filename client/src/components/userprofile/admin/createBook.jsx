@@ -84,6 +84,7 @@ class CreateBook extends React.Component {
                       showHiddinBtns:true,
                       error: '',
                       success: "Book has been created."});
+                      Materialize.toast(this.state.success, 4000, 'blue rounded');
             
                   })
                   .catch(error => {
@@ -97,12 +98,10 @@ class CreateBook extends React.Component {
               }
             })
           } else {
-            console.log('an error occurred'); 
           }
           
         })
         .catch(error => {
-          console.log(error.response);
         })
     }
   }
