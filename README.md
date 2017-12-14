@@ -5,7 +5,11 @@
 Hello-Books is a simple application that helps manage a library and its processes like stocking, tracking and renting books and it was built on Postgres, Express, and Node).
 
 ## Development
-The application leverages Node; Express for routing and sequelize for ORM.
+The application leverages 
+- Node; 
+- Express for routing
+- Postgres
+- sequelize for ORM.
 
 ## Installation
 - Install `node` and `postgres`
@@ -20,3 +24,10 @@ The application leverages Node; Express for routing and sequelize for ORM.
 
 You can find the explanatory documentation of this application API at
 [documentation](https://balogundell.github.io/slate)
+
+
+##License
+
+MIT License
+
+Copyright (c) 2017 Balogun Abiodun Delight
