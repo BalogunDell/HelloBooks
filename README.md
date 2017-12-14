@@ -26,12 +26,6 @@ You can find the explanatory documentation of this application API at
 [documentation](https://balogundell.github.io/slate)
 
 
-# License
-
-MIT License
-
-Copyright (c) 2017 Balogun Abiodun Delight
-
 ## LICENSE
 
 #### [MIT](./LICENSE) © [Balogun Abiodun Delight](https://twitter.com/abiodun_adb)
