@@ -36,7 +36,7 @@ describe('Hellobooks API', () => {
 
   // Save admin and normal user, sign them in and get token
   before((done) => {
-    models.users.bulkCreate(fakeUsers.users, {individualHooks: true})
+    models.user.bulkCreate(fakeUsers.users, {individualHooks: true})
     .then(() => {
       request
       .post(`${userAPI}/signin`)
@@ -65,7 +65,7 @@ describe('Hellobooks API', () => {
 
   //Load sample category before test
   before((done) => {
-    models.categories.bulkCreate(categories.categories, {individualHooks: true})
+    models.category.bulkCreate(categories.categories, {individualHooks: true})
     .then(() => {
       done();
     })
@@ -74,7 +74,7 @@ describe('Hellobooks API', () => {
 
   //Load sample book before test
   before((done) => {
-    models.books.bulkCreate(fakeBooks.books, {individualHooks: true})
+    models.book.bulkCreate(fakeBooks.books, {individualHooks: true})
     .then(() => {
       done();
     })
@@ -156,7 +156,7 @@ describe('Hellobooks API', () => {
       .end((err, res) => {
         expect(res.status).to.equal(400);
         expect(res.body).to.have.property('message');
-        expect(res.body.message).to.be.equal('Username and password is required');
+        expect(res.body.message).to.be.equal('Provide your username and password to login');
         done();
       });
     });
@@ -172,7 +172,7 @@ describe('Hellobooks API', () => {
       .end((err, res) => {
         expect(res.status).to.equal(400);
         expect(res.body).to.have.property('message');
-        expect(res.body.message).to.be.equal('Username and password is required');
+        expect(res.body.message).to.be.equal('Provide your username and password to login');
         done();
       });
     });
@@ -188,7 +188,7 @@ describe('Hellobooks API', () => {
       .end((err, res) => {
         expect(res.status).to.equal(400);
         expect(res.body).to.have.property('message');
-        expect(res.body.message).to.be.equal('Username and password is required');
+        expect(res.body.message).to.be.equal('Provide your username and password to login');
         done();
       });
     });
@@ -841,7 +841,7 @@ describe('Hellobooks API', () => {
       .end((err, res) => {
         expect(res.status).to.equal(400);
         expect(res.body).to.have.property('message');
-        expect(res.body.message).to.be.equal('Username and password is required');
+        expect(res.body.message).to.be.equal('Provide your username and password to login');
         done();
       });
     });
@@ -854,7 +854,7 @@ describe('Hellobooks API', () => {
       .end((err, res) => {
         expect(res.status).to.equal(400);
         expect(res.body).to.have.property('message');
-        expect(res.body.message).to.be.equal('Username and password is required');
+        expect(res.body.message).to.be.equal('Provide your username and password to login');
         done();
       });
     });
@@ -1008,7 +1008,7 @@ describe('Hellobooks API', () => {
         expect(res.status).to.equal(400);
         expect(res.body).to.be.an('object');
         expect(res.body).to.have.property('message');
-        expect(res.body.message).to.equal('Password should be 6 to 30 characters long');
+        expect(res.body.message).to.equal('Password should not be less than 5 characters');
         done();
       });
     });
@@ -1040,6 +1040,23 @@ describe('Hellobooks API', () => {
         done();
       });
     });
+  });
+
+  describe('Trending books' , () => {
+    it('should return the last 4 uploaded books', (done) => {
+      request
+      .get(`${api}/trendingbooks`)
+      .accept('Content-Type', 'Application/json')
+      .end((err, res) => {
+        const trendingBookLen = res.body.books_trending.length;
+        expect(res.status).to.equal(200);
+        expect(res.body).to.be.an('object');
+        expect(res.body).to.have.property('books_trending');
+        expect(res.body.books_trending).to.be.an('array');
+        expect(trendingBookLen).to.equal(4);
+        done();
+      });
+    })
   });
 });
 

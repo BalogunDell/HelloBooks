@@ -20,7 +20,6 @@ class Book {
     bookModel.create(req.body).then((book) => {
       res.status(201).json({ message: 'Book created', data: book });
     }).catch((error) => {
-      // res.status(501).json({ message: error.errors[0].message });
       // check if all fields are supplied.
       const messageObject = errorMessages(error);
       switch (messageObject.type) {

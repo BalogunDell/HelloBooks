@@ -84,7 +84,7 @@ module.exports = {
         year: 2009,
         description: 'Learn angular 2 and all of its basics with this wonderful book by Tom Cruise. Move from novice to professional in no time.',
         quantity: 5,
-        categoryid: 0,
+        categoryid: 4,
         visibility: true,
         image: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295977/book1_mjwwlq.jpg',
         pdf: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295977/book1_mjwwlq.jpg',

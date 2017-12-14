@@ -58,7 +58,10 @@ class User {
    * @returns { object } response
    */
   static signin(req, res) {
-    userModel.findOne({ where: { username: req.body.username } })
+    if (!req.body.username || !req.body.password) {
+      res.status(400).json({ message: 'Provide your username and password to login' });
+    }
+    return userModel.findOne({ where: { username: req.body.username } })
       .then((user) => {
         if (user !== null && bcrypt.compareSync(req.body.password, user.dataValues.password)) {
           const token = helper.generateToken(user.dataValues);
