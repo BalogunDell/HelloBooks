@@ -58,6 +58,9 @@ Router.route('/users/:userId/')
   .get(Auth.verifyUser, userController.profilePage)
   .put(Auth.verifyUser, userController.editProfile);
 
+// Fetch trending books
+Router.get('/trendingbooks', bookController.fetchTrendingBooks);
+
 // redirect every other address
 Router.route('*')
   .post((req, res) => {

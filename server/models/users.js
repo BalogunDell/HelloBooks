@@ -82,8 +82,8 @@ const User = (sequelize, DataTypes) => {
           msg: 'Password cannot be empty'
         },
         len: {
-          args: [6, 30],
-          msg: 'Password should be 6 to 30 characters long'
+          args: [5, 1000],
+          msg: 'Password should not be less than 5 characters'
         }
       }
     },
@@ -120,12 +120,7 @@ const User = (sequelize, DataTypes) => {
         const hashP = bcrypt.hashSync(user.password, bcrypt.genSaltSync(10));
         user.password = hashP;
         return user;
-      },
-      beforeUpdate: (user) => {
-        const hashP = bcrypt.hashSync(user.password, bcrypt.genSaltSync(10));
-        user.password = hashP;
-        return user;
-      },
+      }
     }
   });
   return userModel;

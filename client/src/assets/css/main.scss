@@ -8,11 +8,14 @@ $custom-color: #0F488A;
 @import '../../components/useraccess/useraccess.scss';
 @import '../../components/userprofile/userstyle.scss';
 @import '../../components/userprofile/Allbooks/Allbooks.scss';
+@import '../../components/about/about.css';
 
 
 
 html, body {
 height: 100%;
 }
-
+nav {
+    background: transparent !important;
+}
 

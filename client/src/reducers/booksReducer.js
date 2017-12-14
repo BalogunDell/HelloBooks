@@ -53,6 +53,10 @@ const getAllBooks = (state = {}, action) => {
       return {
         ...state, publishedBook: action.bookData
       };
+    case types.TRENDING_BOOKS:
+      return {
+        ...state, trendingBooks: action.books
+      };
     default:
       return state;
   }

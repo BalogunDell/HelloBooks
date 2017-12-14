@@ -22,6 +22,7 @@ import UserHistory from './components/userprofile/History';
 import Allbooks from './components/userprofile/Allbooks/Allbooks';
 import BookDetails from './components/userprofile/bookDetails';
 import ResetPassword from './components/useraccess/resetpassword';
+import About from './components/about/about';
 
 import { loadAllbooks } from './Actions/booksAction';
 
@@ -39,6 +40,7 @@ class App extends React.Component {
               <Route path='/' exact component={Main}/>
               <Route path='/register' component={Register}/>
               <Route path= '/login' component={Login}/>
+              <Route path='/about' component={About}/>
               <Route path='/user' component={User}/>
                <Route path="/user/bookdetails" component={BookDetails}/> 
                <Route path="/resetpassword/:uniqueUrl" exact component={ResetPassword}/>

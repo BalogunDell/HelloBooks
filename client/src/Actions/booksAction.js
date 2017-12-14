@@ -445,3 +445,37 @@ export function publishBookAction(bookData) {
       });
   };
 }
+
+
+// *********************************************** //
+// ****DEFINE ACTION CREATOR FOR TRENDING BOOK**** //
+// ********************************************** //
+
+/**
+ * 
+ * @param { object } books 
+ * @returns { object } axios response
+ */
+export function trendingBooksAction(books) {
+  return {
+    type: types.TRENDING_BOOKS,
+    books
+  };
+}
+
+ /**
+  * 
+  * @param { books } books
+  * @returns { object } axios response
+  */
+ export function trendingBooks() {
+  return (dispatch) => {
+    return axios.get(`${apiRoutes.trending}`)
+      .then((response) => {
+        dispatch(trendingBooksAction(response.data));
+      })
+      .catch((error) => {
+        throw (error);
+      });
+  };
+}

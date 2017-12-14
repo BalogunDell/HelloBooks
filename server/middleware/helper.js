@@ -53,15 +53,21 @@ class Helper {
     };
     borrowedBookModel.findAndCountAll(query)
       .then((response) => {
-        if (response.count < util[req.membership.toLowerCase()].limit
-          && !response.rows.find(book => book.dataValues.bookid === parseInt(req.body.bookid, 10))) {
+        const userBooklimit = util[req.membership.toLowerCase()].limit;
+        if (response.count < userBooklimit
+            &&
+          !response.rows.find(book => book.dataValues.bookid === parseInt(req.body.bookid, 10))) {
           req.body = Helper.composeRequest(req);
           next();
         } else {
-          res.status(200).json({
+          res.status(403).json({
             msg: 'You have either exhausted your book limit or you still have this book with you'
           });
         }
+      }).catch((error) => {
+        res.status(500).json({
+          msg: error
+        });
       });
   }
 
@@ -137,7 +143,7 @@ class Helper {
       subject: 'Password reset link',
       html: `<h1>RESET YOUR PASSWORD</h1>
       <p>You requested to reset your password</p>
-      <p><a href="http://localhost:8080/resetpassword/${passwordUrl}">Click here to reset your password</a></p>`
+      <p><a href="https://hellobooksapp.herokuapp.com/resetpassword/${passwordUrl}">Click here to reset your password</a></p>`
     };
 
     const result = mailCourier.sendMail(mailOptions);

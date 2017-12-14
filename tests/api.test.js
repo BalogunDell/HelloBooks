@@ -156,7 +156,7 @@ describe('Hellobooks API', () => {
       .end((err, res) => {
         expect(res.status).to.equal(400);
         expect(res.body).to.have.property('message');
-        expect(res.body.message).to.be.equal('Username and password is required');
+        expect(res.body.message).to.be.equal('Provide your username and password to login');
         done();
       });
     });
@@ -172,7 +172,7 @@ describe('Hellobooks API', () => {
       .end((err, res) => {
         expect(res.status).to.equal(400);
         expect(res.body).to.have.property('message');
-        expect(res.body.message).to.be.equal('Username and password is required');
+        expect(res.body.message).to.be.equal('Provide your username and password to login');
         done();
       });
     });
@@ -188,7 +188,7 @@ describe('Hellobooks API', () => {
       .end((err, res) => {
         expect(res.status).to.equal(400);
         expect(res.body).to.have.property('message');
-        expect(res.body.message).to.be.equal('Username and password is required');
+        expect(res.body.message).to.be.equal('Provide your username and password to login');
         done();
       });
     });
@@ -785,7 +785,7 @@ describe('Hellobooks API', () => {
       .end((err, res) => {
         expect(res.status).to.equal(400);
         expect(res.body).to.have.property('error');
-        expect(res.body.error).to.equal('Password should be 6 to 30 characters long');
+        expect(res.body.error).to.equal('Password should not be less than 5 characters');
         done();
       });
     });
@@ -841,7 +841,7 @@ describe('Hellobooks API', () => {
       .end((err, res) => {
         expect(res.status).to.equal(400);
         expect(res.body).to.have.property('message');
-        expect(res.body.message).to.be.equal('Username and password is required');
+        expect(res.body.message).to.be.equal('Provide your username and password to login');
         done();
       });
     });
@@ -854,7 +854,7 @@ describe('Hellobooks API', () => {
       .end((err, res) => {
         expect(res.status).to.equal(400);
         expect(res.body).to.have.property('message');
-        expect(res.body.message).to.be.equal('Username and password is required');
+        expect(res.body.message).to.be.equal('Provide your username and password to login');
         done();
       });
     });
@@ -1008,7 +1008,7 @@ describe('Hellobooks API', () => {
         expect(res.status).to.equal(400);
         expect(res.body).to.be.an('object');
         expect(res.body).to.have.property('message');
-        expect(res.body.message).to.equal('Password should be 6 to 30 characters long');
+        expect(res.body.message).to.equal('Password should not be less than 5 characters');
         done();
       });
     });
@@ -1040,6 +1040,23 @@ describe('Hellobooks API', () => {
         done();
       });
     });
+  });
+
+  describe('Trending books' , () => {
+    it('should return the last 4 uploaded books', (done) => {
+      request
+      .get(`${api}/trendingbooks`)
+      .accept('Content-Type', 'Application/json')
+      .end((err, res) => {
+        const trendingBookLen = res.body.books_trending.length;
+        expect(res.status).to.equal(200);
+        expect(res.body).to.be.an('object');
+        expect(res.body).to.have.property('books_trending');
+        expect(res.body.books_trending).to.be.an('array');
+        expect(trendingBookLen).to.equal(4);
+        done();
+      });
+    })
   });
 });
 

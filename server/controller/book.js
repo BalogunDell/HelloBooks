@@ -20,7 +20,6 @@ class Book {
     bookModel.create(req.body).then((book) => {
       res.status(201).json({ message: 'Book created', data: book });
     }).catch((error) => {
-      // res.status(501).json({ message: error.errors[0].message });
       // check if all fields are supplied.
       const messageObject = errorMessages(error);
       switch (messageObject.type) {
@@ -337,6 +336,21 @@ class Book {
         res.status(501).json({ error: error.errors[0].message });
       });
   }
-}
 
+  /**
+   * 
+   * @param { object } req
+   * @param { object } res
+   * @return { object } object
+   */
+  static fetchTrendingBooks(req, res) {
+    bookModel.findAll({ limit: 4, order: [['createdAt', 'DESC']] })
+      .then((response) => {
+        res.status(200).json({ books_trending: response });
+      })
+      .catch((error) => {
+        res.status(501).json({ error });
+      });
+  }
+}
 export default Book;
