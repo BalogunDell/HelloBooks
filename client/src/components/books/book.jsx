@@ -33,7 +33,7 @@ const book = (bookData) => {
 
             {/* Book details  */}
             <div className="dets">
-              <Link to={`/user/bookdetails`}>
+              <Link to={`/login`}>
                 <button 
                   type="button"
                   value={book.id}
