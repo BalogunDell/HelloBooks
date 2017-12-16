@@ -35,7 +35,7 @@ const updateImageModal = ({
                   </div>
 
                   <div className="file-path-wrapper">
-                    <input className="file-path validate" type="text" placeholder="Upload book image"/>           
+                    <input className="file-path validate" type="text" placeholder="Upload new profile image"/>           
                   </div>
                 </div>
 
