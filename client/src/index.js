@@ -23,6 +23,7 @@ import Allbooks from './components/userprofile/Allbooks/Allbooks';
 import BookDetails from './components/userprofile/bookDetails';
 import ResetPassword from './components/useraccess/resetpassword';
 import About from './components/about/about';
+import NotFound from './components/notFound/index';
 
 import { loadAllbooks } from './Actions/booksAction';
 
@@ -44,9 +45,7 @@ class App extends React.Component {
               <Route path='/user' component={User}/>
                <Route path="/user/bookdetails" component={BookDetails}/> 
                <Route path="/resetpassword/:uniqueUrl" exact component={ResetPassword}/>
-              <Route render= {() => {
-                  return <p>Not found</p>
-                }}/>
+              <Route path="*" component= {NotFound}/>
             </Switch>
           </BrowserRouter> 
           <Footer/>  

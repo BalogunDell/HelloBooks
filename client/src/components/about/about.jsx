@@ -13,7 +13,7 @@ const about = () => {
       <div className="aboutUsHeader_Container">
         <h2 className="center">Hellobooks</h2>
         <div className="row">
-          <div className="col s12 m6 l7">
+          <div className="col s12 m12 l7">
             <p>
             Hellobooks is a simple application that helps manage a library and its processes like stocking, tracking and renting books.
             With this application users are able to find and rent books.
@@ -21,16 +21,16 @@ const about = () => {
             increase the quantity of a book etc.
             </p>
           </div>
-          <div className="col s12 m6 l5">
+          <div className="col s12 m12 l5 howItWorks">
             <img src={aboutUsImage}/>
           </div>
         </div>
 
         <div className="row">
-          <div className="col s12 m6 l5 howItWorks">
+          <div className="col s12 m12 l5 howItWorks">
             <img src={howItWorksImage}/>
           </div>
-          <div className="col s12 m6 l7">
+          <div className="col s12 m12 l7">
             <p>
             <ul>
               <li><i classname="fa fa-arrow-right"></i>Create a new account or log in with an existing account</li>
