@@ -56,13 +56,16 @@ class unPublishedBooks extends React.Component {
       modalHeader: 'Publishing book...'});
     this.props.publishBook(this.state.bookId)
     .then(response => {
-      this.state.filterable.splice(this.state.bookIndex, 1);
+      let updatedArray = this.state.filterable.filter(book => book.id != this.state.bookId);
       this.setState({
-        unpublishedBooksArray: this.state.filterable,
+        unpublishedBooksArray: updatedArray,
         loader: false, 
         successStatus: true, 
         errorStatus: false, 
         modalHeader: 'Book has been successfully pulished'});
+        setTimeout(() => {
+          $('.modal').modal('close');
+        }, 2000);
       
     })
     .catch(error=> {
@@ -156,13 +159,13 @@ class unPublishedBooks extends React.Component {
   }
 }
 
-function mapStateToProps(state) {
+const mapStateToProps = (state) => {
   return {
     allbooks: state.books.unpublishedbooks
   }
 }
 
-function mapDispatchToProps(dispatch) {
+const mapDispatchToProps = (dispatch) => {
   return {
     adminGetAllBooks: () => dispatch(booksAction.adminGetAllBooks()),
     publishBook: (id) => dispatch(booksAction.publishBook(id))
