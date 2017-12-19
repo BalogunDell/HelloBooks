@@ -1,3 +1,4 @@
+
 const path = require('path');
 const extractWebpackPlugin = require('extract-text-webpack-plugin');
 const webpack = require('webpack');
@@ -65,6 +66,10 @@ const config = {
 
   plugins: [
     new extractWebpackPlugin('style.css'),
+    new webpack.EnvironmentPlugin([
+      'CLOUD_KEY',
+      'CLOUD_URL'
+    ]),
     new webpack.ProvidePlugin({
       $: 'jquery',
       jQuery: 'jquery',

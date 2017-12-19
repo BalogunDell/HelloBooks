@@ -1,3 +1,3 @@
-export const cloudinaryUrl = 'https://api.cloudinary.com/v1_1/djvjxp2am/upload';
-export const cloudinaryPreset = 'vlamwg7y';
+export const cloudinaryUrl = process.env.CLOUD_URL;
+export const cloudinaryPreset = process.env.CLOUD_KEY;
 export const requestHeader = 'application/x-www-form-urlencoded';
