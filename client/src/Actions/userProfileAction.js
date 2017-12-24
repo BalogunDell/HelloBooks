@@ -34,7 +34,7 @@ export function fetchUserTrigger() {
       {
         headers: { Authorization: getUserDetails().savedToken } })
       .then((response) => {
-        dispatch(fetchUser(response.data.user));
+        dispatch(fetchUser(response.data));
       }).catch((error) => {
         throw (error);
       });
@@ -70,7 +70,7 @@ export function editProfile(newUserData) {
       newUserData,
       { headers: { Authorization: getUserDetails().savedToken } })
       .then((response) => {
-        dispatch(editProfileAction(response.data.data[0]));
+        dispatch(editProfileAction(response.data));
       })
       .catch((error) => {
         throw (error);
@@ -115,18 +115,6 @@ export function saveNewImage(image) {
 }
 // ****************************************************** //
 // *DEFINE ACTION CREATOR FOR USER EDIT PROFIL IMAGEE**** //
-// ****************************************************** //
-/**
- * @export
- * @param { object } newImage 
- * @returns { object } action type and newImage url (from cloudinary)
- */
-export function saveImageToDB(newImage) {
-  return {
-    type: types.EDIT_IMAGE,
-    newImage
-  };
-}
 
 /**
  * @export saveNewImageToDB
@@ -140,7 +128,8 @@ export function saveNewImageToDB(newImage) {
         headers: { Authorization: getUserDetails().savedToken }
       })
       .then((response) => {
-        dispatch(saveImage(response.data.data[0]));
+        const newUrl = response.data.user;
+        dispatch(saveImage(newUrl));
       })
       .catch((error) => {
         throw (error);

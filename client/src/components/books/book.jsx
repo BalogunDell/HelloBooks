@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import Loader from '../userprofile/adminSubComponents/loader';
 
 const book = (bookData) => {
-  const book1 = 'https://res.cloudinary.com/djvjxp2am/image/upload/v1512986918/rlfkw2eamhkk4fqfvkbh.pdf';
   const books = bookData.bookData.bookData.trendingBooks;
   const loading = bookData.bookData.bookData.loading;
   return (

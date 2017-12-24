@@ -29,7 +29,7 @@ export function getAllBooks(books) {
 export function loadAllbooks() {
   return (dispatch) => {
     return axios.get(apiRoutes.books).then((response) => {
-      dispatch(getAllBooks(response.data.books));
+      dispatch(getAllBooks(response.data));
     }).catch(() => {
     });
   };
@@ -179,7 +179,7 @@ export function createBook(bookData) {
       bookData, {
         headers: { Authorization: getUserDetails().savedToken } })
       .then((response) => {
-        dispatch(createBookAction(response.data.message));
+        dispatch(createBookAction(response.data));
       })
       .catch((error) => {
         throw (error);
@@ -370,7 +370,8 @@ export function getborrowedbooksAction(borrowedbooks) {
  */
 export function getAllBorrowedBooks() {
   return (dispatch) => {
-    return axios.get(`${apiRoutes.books}/borrowedbooks`, {headers: {'Authorization': getUserDetails().savedToken}})
+    return axios.get(`${apiRoutes.books}/borrowedbooks`,
+      { headers: { Authorization: getUserDetails().savedToken } })
       .then((response) => {
         dispatch(getborrowedbooksAction(response.data.books));
       })

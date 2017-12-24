@@ -401,14 +401,14 @@ describe('Hellobooks API', () => {
       .end((err, res) => {
         expect(res.status).to.equal(201);
         expect(res.body).to.be.an('object');
-        expect(res.body.data[0]).to.have.a.property('id');
-        expect(res.body.data[0]).to.have.a.property('firstname');
-        expect(res.body.data[0]).to.have.a.property('lastname');
-        expect(res.body.data[0]).to.have.a.property('username');
-        expect(res.body.data[0].id).to.be.a('number');
-        expect(res.body.data[0].firstname).to.equal(mockdata.userEdit.firstname);
-        expect(res.body.data[0].lastname).to.equal(mockdata.userEdit.lastname);
-        expect(res.body.data[0].username).to.equal(mockdata.userEdit.username);
+        expect(res.body.user).to.have.a.property('id');
+        expect(res.body.user).to.have.a.property('firstname');
+        expect(res.body.user).to.have.a.property('lastname');
+        expect(res.body.user).to.have.a.property('username');
+        expect(res.body.user.id).to.be.a('number');
+        expect(res.body.user.firstname).to.equal(mockdata.userEdit.firstname);
+        expect(res.body.user.lastname).to.equal(mockdata.userEdit.lastname);
+        expect(res.body.user.username).to.equal(mockdata.userEdit.username);
         done();
       });
     })

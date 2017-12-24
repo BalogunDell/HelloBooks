@@ -133,6 +133,7 @@ class Profile extends React.Component {
           }, 2000);
         })
         .catch((error) => {
+          console.log(error);
         });
       })
       .catch((error) => {
