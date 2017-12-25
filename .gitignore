@@ -4,4 +4,4 @@ coverage/
 build/
 npm-debug.log
 client/dist/bundle.js
-nyc_output/
+.nyc_output/
