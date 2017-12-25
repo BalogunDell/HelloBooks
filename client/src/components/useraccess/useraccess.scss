@@ -1,0 +1,163 @@
+// *********************************//
+// style for registration and login
+// *********************************//
+*.btn {
+        width: 100%;
+      }
+
+.form-holder {
+  height: auto;
+  margin: auto;
+
+  .form-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    -webkit-flex-direction: row;
+    color: white;
+
+    h2 {
+      padding: 0;
+      margin: 0, 0,5px;
+    }
+
+    div {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+
+        a, p {
+          color: white;
+          margin-bottom: -5%; 
+        }
+        a:hover {
+          color: white;
+          text-decoration: underline;
+        }
+        button {
+          width: 100%;
+        }
+    }
+
+  }
+
+  .user-form {
+    background: #F9F9F9;
+    margin: auto;
+    padding-top: 30px;
+    padding-right: 20px;
+    padding-left: 20px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+
+    *.row {
+      margin-bottom: 0px;
+    }
+    .btn {
+      background-color: $custom-color
+    }
+    
+
+    label {
+      span {
+        color: red;
+      }
+    
+      input {
+        color: black;
+      }
+    }
+      .resetPassBtn {
+        margin-top: 10px;
+        margin-bottom: 15PX; 
+      }
+      .forgotPass {
+        color: black;
+        font-size: 15px;
+        margin-top: 10px;
+        margin-bottom: 30px;
+        cursor: pointer
+        }
+      .forgotPass:hover {
+        text-decoration: underline;
+        }
+
+      .error-holder {
+        color: red;
+        padding-bottom: 5px;
+        padding-top: 5px;
+        margin-bottom: 10px;
+
+        h6 {
+          color: black;
+          text-align: center;
+          margin-top: 30px;
+          margin-bottom: 30px;
+        }
+
+      }
+
+      h5 {
+        color: black;
+        line-height: 0.001em;
+        border: 0.5px solid black;
+        text-align: center;
+        font-size: 15px;
+        margin-top: 30px;
+        margin-bottom: 30px;
+      }
+  
+      h5 span {
+        background-color: white;
+        padding: 0 10px;
+        border-radius: 50%;
+      }
+  }
+      
+}
+
+.passwordModal {
+  form {
+    width: 250px;
+    margin: auto;
+    
+    .btn{
+      width: 50%;
+    }
+  }
+}
+
+.resetPassword {
+  margin-top: -300px;
+  width: 450px;
+  max-width: 450px;
+
+  form {
+    background-color: white;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    padding-right: 30px;
+    padding-left: 30px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+
+    h5 {
+      text-align: center;
+      padding-bottom: 20px;
+    }
+  }
+
+}
+
+.borrowHistory {
+
+  thead {
+    background-color: $custom-color;
+    color: white;
+  }
+
+  img {
+    height: 60px;
+    width: 50px
+  }
+}

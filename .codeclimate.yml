@@ -1,0 +1,14 @@
+version: "2"
+exclude_paths:
+- "client/src/assets/"
+- "tests/"
+- "client/tests/"
+- "template"
+file-lines:
+  enabled: false
+return-statements:
+  enabled: false
+similar-code:
+  enabled: false
+identical-code:
+  enabled: false

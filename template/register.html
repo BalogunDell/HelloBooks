@@ -14,6 +14,17 @@
 <body>
 	
 <style>
+
+	body{
+			background: url('/images/newbg.png');
+			background-size: cover;
+			background-repeat: no-repeat;
+			min-width: 100%;
+		}
+
+	html{
+		height: 100%;
+	}
 	.navbar{
 		background-color: #0F488A !important;
 		border:none !important;
@@ -64,35 +75,35 @@
 			</div>
 
 			<div class="sigup-bg">
-				<form action="welcome.html" class="signup-form center-block">
+				<form action="welcome.html" name="regForm" class="signup-form center-block">
 					<div class="row">
 						<div class="form-group col-sm-6">
 							<label for="Firstname">Firstname <span>*</span></label>
-							<input type="text" class="form-control input-sm" id="firstname" required>
+							<input type="text" class="form-control input-sm" name="firstname" id="firstname" required>
 						</div>
 
 						<div class="form-group col-sm-6">
 							<label for="lastname">Lastname <span>*</span></label>
-							<input type="text" class="form-control input-sm" id="lastname" required>
+							<input type="text" class="form-control input-sm" name="lastname" id="lastname" required>
 						</div>
 
 
 						<div class="form-group col-sm-12">
 							<label for="email">Email <span>*</span></label>
-							<input type="email" class="form-control input-sm" id="email" required>
+							<input type="email" class="form-control input-sm" name="email" id="email" required>
 						</div>
 
 						<div class="form-group col-sm-12">
 							<label for="password">Password <span>*</span></label>
-							<input type="password" class="form-control input-sm" id="password" required>
+							<input type="password" class="form-control input-sm"  name="password" id="password" required>
 						</div>
 
 						<div class="form-group col-sm-12">
 							<label for="confirmPassword">Confirm Password <span>*</span></label>
-							<input type="password" class="form-control input-sm" id="confirmPassword" required>
+							<input type="password" class="form-control input-sm" id="confirmPassword" name="comfirmPassword" required>
 						</div>
 						<div class="form-group col-sm-12">
-							<button type="submit" class="btn btn-primary btn-submit center-block">SIGN UP</button>
+							<button type="submit" id= "regBtn" onclick="RedirectUser(this)" class="btn btn-primary btn-submit center-block">SIGN UP</button>
 						</div>
 					</div>
 				</form>
