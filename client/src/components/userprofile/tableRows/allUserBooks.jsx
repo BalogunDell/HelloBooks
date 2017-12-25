@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
  
-const allUserBooksComp = ({allUserBooks, getRowKey, tableHeader, handleReturn, successMessage, returnSuccessStatus}) => {
+const allUserBooksComp = ({allUserBooks, getRowKey, tableHeader, handleReturn}) => {
 	const books = allUserBooks.filter((book) => {
 		return book.book.visibility === true
 	});
@@ -9,9 +9,6 @@ const allUserBooksComp = ({allUserBooks, getRowKey, tableHeader, handleReturn, s
     return (
 			<div>
 
-        <div className="row">
-          <h6 className="green-text center">{successMessage}</h6>
-        </div>
 				<div>
 					<h6 className="right custom-text">{`Currently showing: ${tableHeader}`}</h6>
 				</div>

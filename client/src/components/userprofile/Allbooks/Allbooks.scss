@@ -3,11 +3,11 @@
 	margin: 0;
 }
 
-.books{
+.books {
 	margin: auto ;
 }
 
-.home-books{
+.home-books {
 	margin-top: 2%;
 	padding-bottom: 5%;
 	margin: auto;
@@ -15,14 +15,14 @@
 
 }
 
-.books-holder-title h1{
+.books-holder-title h1 {
 	font-size: 40px;
 	padding: 0;
 	margin:20px;
 	color: #0F488A;
 }
 
-.search-filter{
+.search-filter {
 	margin: 20px;
 }
 
@@ -35,14 +35,9 @@
 	-webkit-flex-wrap: wrap;
 	align-content: flex-start;
   padding-bottom: 2%; 
-	// background-color: black;
 
-	// div {
-	// //  flex-grow: 1;
-	// 	margin: 3%;
-	// }
 
-	.book-holder-prot{
+	.book-holder-prot {
     max-height: 349px;
     max-width: 252px;
     border-radius: 5px;
@@ -57,7 +52,7 @@
 	font-size: 10px;
 }
 
-.book-holder-prot .img-holder{
+.book-holder-prot .img-holder {
 	max-height: 250px;
 	max-width: 250px;
 	margin: 0 auto;
@@ -66,7 +61,7 @@
 	position: relative;
 }
 
-.book-holder-prot img{
+.book-holder-prot img {
 	max-height: 250px;
 	max-width: 200px;
 	margin: 0 auto;
@@ -75,7 +70,7 @@
 	min-width: auto;
 }
 
-.book-holder-prot .img-overlay{
+.book-holder-prot .img-overlay {
 	max-height: 91.2px;
 	max-width: 220px;
 	position: absolute;
@@ -91,8 +86,6 @@
 	align-items:center;
 	justify-content:center;
 }
-
-
 
 .book-holder-prot:hover .img-overlay {
 	height: 100%;
@@ -118,7 +111,7 @@
 	text-align: center;	
 }
 
-.book-holder-prot .dets buton {
+.book-holder-prot .dets button {
 	background-color: #0F488A;
 }
 }

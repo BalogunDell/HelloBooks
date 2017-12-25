@@ -19,8 +19,6 @@ class History extends React.Component {
       allUserBooks: [],
       filterable: [],
       bookToDisplay: '',
-      returnSuccessStatus: false,
-      returnSuccessMessage: '',
       allbooks: false,
       returnedBookDisplayStatus: false,
       unreturnedBookDisplayStatus: true,
@@ -36,13 +34,11 @@ class History extends React.Component {
 
   handleReturn(event) {
     event.persist();
+    let spliced = this.state.allUserBooks.filter((book) => book.bookid != event.target.value);
     this.props.returnBook({bookid: event.target.value})
     .then(() => {
-      let spliced = this.state.allUserBooks.splice(event.target.dataset.id, 1);
-      let tempState = this.state.allUserBooks;
-      this.setState({allUserBooks: tempState, 
-        returnSuccessStatus: true, 
-        returnSuccessMessage:'Book has been successfully returned'});
+      this.setState({allUserBooks: spliced });
+        Materialize.toast('Book has been successfully returned', 3000, 'blue rounded');
     })
     .catch(error => {
     });
@@ -67,15 +63,6 @@ class History extends React.Component {
     }
   }
 
-  componentWillMount() {
-    this.setState({loading: true})    
-    this.props.getUserBooks().then(() => {
-      this.setState({loading:false})
-    })
-    .catch(error => {
-    })
-  }
-
 
   componentWillReceiveProps(nextProps) {
     if(nextProps.fetchedBooks.response) {
@@ -87,6 +74,13 @@ class History extends React.Component {
 }
 
   componentDidMount() {
+    this.setState({loading: true})    
+    this.props.getUserBooks().then(() => {
+      this.setState({loading:false})
+    })
+    .catch(error => {
+    });
+
     $('select').material_select();
     $('select').change(e => this.handleSelectChange(e));
   }
@@ -127,8 +121,7 @@ class History extends React.Component {
                 handleBorrow={this.handleBorrow}
                 tableHeader= {this.state.tableHeader}
                 getRowKey={this.getRowKey}
-                successMessage= {this.state.returnSuccessMessage}
-                returnSuccessStatus= {this.state.returnSuccessStatus}/>
+              />
             }
           </div>
         </div>
@@ -138,14 +131,14 @@ class History extends React.Component {
 }
 
 
-function mapStateToProps(state, ownProps) {
+const mapStateToProps = (state, ownProps) => {
   return {
     fetchedBooks: state.books.fetchedBooks,
     test: state
   }
 }
 
-function mapDispatchToProps (dispatch) {
+const mapDispatchToProps = (dispatch) => {
   return {
     getUserBooks: (userid) => dispatch(bookActions.getUserBooks(userid)),
     returnBook: (bookid) => dispatch(bookActions.returnBook(bookid))
