@@ -356,11 +356,11 @@ describe('THUNK FUNCTIONS', () => {
   });
 
 
-  // it('should create MODIFY_BOOK when admin edits a book', async (done) => {
+  // it('should create MODIFY_BOOK when admin edits a book', async(done) => {
     
   //   const serverRes = mockData.editBookResponse;
-
-  //   moxios.stubRequest(`${apiEndPoints.books}/${2}`, {
+  //   const bookid = parseInt(2, 10);
+  //   moxios.stubRequest(`${apiEndPoints.books}/${bookid}`, {
   //     status: 201,
   //     response: serverRes
   //   });
@@ -726,23 +726,6 @@ describe('Modify a Book', () => {
 });
 
 
-// ************************ //
-// *****COMPONENTS TEST**** //
-// ************************ //
-describe('component: Home', () => {
-  it('renders without exploding', () => {
-    expect(shallow(<Home/>).length).to.equal(1);
-  });
-});
-
-const minProps = {
-  bookdata: {}
-}
-describe('component: Books on landing page', () => {
-  it('renders books on the home page', () => { 
-   expect(shallow(<Books {...minProps }/>).length).to.equal(1);
-  });
-});
 
 
 
