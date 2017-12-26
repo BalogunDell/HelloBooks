@@ -65,7 +65,10 @@ class Allbooks extends React.Component {
         <div className="row">
           <div className="col s12 m12 l11 offset-l1">
             <div className="books-holder center">
-              {this.state.books.map((book, id) => 
+              {this.state.books.length === 0 ?
+              <h4 className="center">There's currently no book in the libary</h4>
+              :
+              this.state.books.map((book, id) => 
                 <div className="book-holder-prot" key= {book.id}>
                   {/* Book title  */}
                   <div className="item book-title center">

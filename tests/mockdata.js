@@ -189,3 +189,7 @@ export const editBookResponse = {
       createdAt: "2017-12-12T15:30:17.144Z"
   }
 }
+
+// COMPONENT DATA
+
+export const homeParagraph = `Hello books allows you to borrow books that have been gathered from different part of the  world. Finding books of your choice just got easier with us`

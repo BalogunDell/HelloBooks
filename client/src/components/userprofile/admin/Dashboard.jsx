@@ -32,13 +32,13 @@ class Dashboard extends React.Component {
   }
 }
 
-function stateToProps(state, ownProps) {
+const stateToProps = (state, ownProps) => {
   return {
     allbooks: state.books.books
   }
 }
 
-function dispatchToProps(dispatch) {
+const dispatchToProps = (dispatch) => {
   return {
     getAllBooks: () => dispatch(bookActions.loadAllbooks()),
   }

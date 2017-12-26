@@ -9,7 +9,7 @@ const about = () => {
   return (
     <div>
       <Background>
-      <Navbar/>
+      <Navbar />
       <div className="aboutUsHeader_Container">
         <h2 className="center">Hellobooks</h2>
         <div className="row">
@@ -31,16 +31,14 @@ const about = () => {
             <img src={howItWorksImage}/>
           </div>
           <div className="col s12 m12 l7">
-            <p>
             <ul>
-              <li><i classname="fa fa-arrow-right"></i>Create a new account or log in with an existing account</li>
+              <li><i className="fa fa-arrow-right"></i>Create a new account or log in with an existing account</li>
               <li>Once you are logged in, you have access to our awesome books</li>
               <li>Borrow any book of your choice from the libary for free</li>
               <li>READS</li>
               <li>Once you are done reading, all you need to do is just return the book back to the libary</li>
               <li>... and that's all. Simple!</li>
             </ul>
-            </p>
           </div>
         </div>
       </div>

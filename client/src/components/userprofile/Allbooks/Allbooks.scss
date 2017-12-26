@@ -36,10 +36,16 @@
 	align-content: flex-start;
   padding-bottom: 2%; 
 
+  h4 {
+	  text-align: center;
+	  margin: auto;
+  }
 
 	.book-holder-prot {
     max-height: 349px;
-    max-width: 252px;
+	max-width: 242px;
+	width: 242px;
+	margin: auto;
     border-radius: 5px;
     padding-bottom: 15px;
     margin: 10px;
@@ -72,7 +78,8 @@
 
 .book-holder-prot .img-overlay {
 	max-height: 91.2px;
-	max-width: 220px;
+	max-width: 242px;
+	width: 252px;
 	position: absolute;
 	right:0;
 	left: 0;

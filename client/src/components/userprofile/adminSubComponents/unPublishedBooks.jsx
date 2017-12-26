@@ -56,7 +56,7 @@ class unPublishedBooks extends React.Component {
       modalHeader: 'Publishing book...'});
     this.props.publishBook(this.state.bookId)
     .then(response => {
-      let updatedArray = this.state.filterable.filter(book => book.id != this.state.bookId);
+      let updatedArray = this.state.unpublishedBooksArray.filter(book => book.id != this.state.bookId);
       this.setState({
         unpublishedBooksArray: updatedArray,
         loader: false, 
