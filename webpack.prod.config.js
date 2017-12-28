@@ -1,9 +1,10 @@
 const webpack = require('webpack');
 const merge = require('webpack-merge');
-const DotEnv = require('dotenv-webpack');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const common = require('./webpack.common.config');
+require('dotenv').config();
 
+console.log(process.env);
 module.exports = merge(common, {
   devtool: 'source-map',
   entry: './client/src/index.js',
@@ -16,9 +17,9 @@ module.exports = merge(common, {
         NODE_ENV: JSON.stringify('production'),
       }
     }),
-    new DotEnv({
-      path: './.env',
-      systemvars: true
-    })
+    new webpack.EnvironmentPlugin({
+      CLOUD_KEY: JSON.stringify(process.env.CLOUD_KEY),
+      CLOUD_URL: JSON.stringify(process.env.CLOUD_URL),
+    }),
   ],
 });
