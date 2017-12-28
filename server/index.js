@@ -3,11 +3,11 @@ import bodyParser from 'body-parser';
 import path from 'path';
 import morgan from 'morgan';
 import cors from 'cors';
-import webpack from 'webpack';
-import webpackMiddleware from 'webpack-dev-middleware';
-import webpackHotMiddleware from 'webpack-hot-middleware';
+// import webpack from 'webpack';
+// import webpackMiddleware from 'webpack-dev-middleware';
+// import webpackHotMiddleware from 'webpack-hot-middleware';
 
-import webpackConfig from '../webpack.config';
+// import webpackConfig from '../webpack.config';
 import router from './routes/api-routes';
 
 require('dotenv').config();
@@ -30,16 +30,17 @@ app.use((req, res, next) => {
   next();
 });
 
-if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'production') {
-  app.use(webpackMiddleware(webpack(webpackConfig)));
-  app.use(webpackHotMiddleware(webpack(webpackConfig)));
-}
-// Setup Routing
+// send bundle js
+app.get('/bundle.js', (req, res) => res.sendFile(
+  path.join(path.dirname(__dirname), 'dist/bundle.js')
+));
+
 app.use('/api/v1/', router);
 
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../dist/index.html'));
-});
+// send index.html
+app.get('/*', (req, res) => res.sendFile(
+  path.join(path.dirname(__dirname), 'dist/index.html'))
+);
 
 // Listen at this port
 app.listen(port, (err) => {

@@ -1,6 +1,7 @@
 
 const path = require('path');
 const extractWebpackPlugin = require('extract-text-webpack-plugin');
+const htmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 
 const config = {
@@ -10,20 +11,16 @@ const config = {
     path: path.resolve(__dirname, 'dist'),
     publicPath: '/'
   },
-  devServer: {
-    contentBase: './dist',
-    historyApiFallback: true
-  },
-  devtool: 'cheap-eval-source-map',
- 
   module: {
     rules: [
       {
         test: /\.js$/,
+        include: path.resolve(__dirname, 'client'),
         use: 'babel-loader'
       },
       {
         test: /\.jsx$/,
+        include: path.resolve(__dirname, 'client/src/components'),
         use: 'babel-loader'
       },
       {
@@ -65,11 +62,11 @@ const config = {
   },
 
   plugins: [
+    new htmlWebpackPlugin({
+      title: 'Hellobooks Library',
+      template: './client/src/index.html'
+    }),
     new extractWebpackPlugin('style.css'),
-    new webpack.EnvironmentPlugin([
-      'CLOUD_KEY',
-      'CLOUD_URL'
-    ]),
     new webpack.ProvidePlugin({
       $: 'jquery',
       jQuery: 'jquery',
