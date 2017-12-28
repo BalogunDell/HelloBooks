@@ -57,10 +57,12 @@ class PasswordResetModal extends React.Component {
         message.className="green-text center-align";
       })
       .catch((error) => {
+        console.log(error);
         if (error.response.status === 501) {
           message.innerHTML ="Ooops! Something went wrong, the server could not process your request at this time. Please try again.";
           message.className="red-text center-align";
           this.setState({ error: false, disableBtn: false});
+          return;
         } else {
           message.innerHTML = error.response.data.message;
           message.className="red-text center-align";
