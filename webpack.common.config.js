@@ -15,10 +15,12 @@ const config = {
     rules: [
       {
         test: /\.(jsx|js)$/,
+        exclude: ['node_modules', 'materialize'],
         use: 'babel-loader'
       },
       {
         test: /\.css$/,
+        exclude: ['node_modules', 'materialize'],
         use: [
           'style-loader',
           'css-loader'
@@ -37,6 +39,7 @@ const config = {
       },
       {
         test: /\.scss$/,
+        exclude: ['node_modules', 'materialize'],
         use: [
           {
             loader: 'style-loader'

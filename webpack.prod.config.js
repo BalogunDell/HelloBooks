@@ -1,13 +1,11 @@
 const webpack = require('webpack');
 const merge = require('webpack-merge');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const common = require('./webpack.common.config');
 require('dotenv').config();
 
 module.exports = merge(common, {
   devtool: 'source-map',
   plugins: [
-    new ExtractTextPlugin('bundle.css'),
     new webpack.optimize.UglifyJsPlugin({
       compress: {
         warnings: false
