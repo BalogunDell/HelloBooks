@@ -1,26 +1,20 @@
 
 const path = require('path');
-const extractWebpackPlugin = require('extract-text-webpack-plugin');
 const htmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 
 const config = {
-  entry: './client/src/index.js',
+  entry: './client/src/index.jsx',
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'dist'),
     publicPath: '/'
   },
+  resolve: { extensions: ['.js', '.jsx', '.css'] },
   module: {
     rules: [
       {
-        test: /\.js$/,
-        include: path.resolve(__dirname, 'client'),
-        use: 'babel-loader'
-      },
-      {
-        test: /\.jsx$/,
-        include: path.resolve(__dirname, 'client/src/components'),
+        test: /\.(jsx|js)$/,
         use: 'babel-loader'
       },
       {
@@ -43,7 +37,15 @@ const config = {
       },
       {
         test: /\.scss$/,
-        use: [{ loader: 'style-loader' }, { loader: 'css-loader' }, { loader: 'sass-loader' }],
+        use: [
+          {
+            loader: 'style-loader'
+          }, {
+            loader: 'css-loader'
+          }, {
+            loader: 'sass-loader'
+          }
+        ],
 
       },
 
@@ -66,7 +68,6 @@ const config = {
       title: 'Hellobooks Library',
       template: './client/src/index.html'
     }),
-    new extractWebpackPlugin('style.css'),
     new webpack.ProvidePlugin({
       $: 'jquery',
       jQuery: 'jquery',
@@ -74,7 +75,6 @@ const config = {
       'window.jQuery': 'jquery'
     })
   ],
-  resolve: { extensions: ['.js', '.jsx', '.css'] },
   node: {
     dns: 'empty',
     net: 'empty',

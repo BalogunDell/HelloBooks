@@ -1,17 +1,24 @@
 const webpack = require('webpack');
 const merge = require('webpack-merge');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const common = require('./webpack.common.config');
 require('dotenv').config();
 
-console.log(process.env);
 module.exports = merge(common, {
   devtool: 'source-map',
-  entry: './client/src/index.js',
   plugins: [
-    new UglifyJsPlugin({
-      sourceMap: true,
+    new ExtractTextPlugin('bundle.css'),
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        warnings: false
+      },
+      output: {
+        comments: false,
+      },
+      minimize: true,
+      sourceMap: true
     }),
+
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify('production'),
