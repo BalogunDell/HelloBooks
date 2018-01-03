@@ -46,6 +46,11 @@ class History extends React.Component {
 
 
   handleSelectChange(event) {
+    this.props.getUserBooks().then(() => {
+      this.setState({
+        allUserBooks: this.props.fetchedBooks
+      });
+    });
     this.setState({bookToDisplay: event.target.value});
     if(this.state.bookToDisplay == "Pending Returns") {
       this.setState({tableHeader: 'pending returns'});
