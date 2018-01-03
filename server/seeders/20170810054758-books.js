@@ -2,7 +2,7 @@ module.exports = {
   up(queryInterface) {
     return queryInterface.bulkInsert('books', [
       {
-        isbn: '#7765',
+        isbn: '#111111',
         title: 'React for Beginners',
         author: 'Nelson Brook',
         pages: 1080,
@@ -17,7 +17,7 @@ module.exports = {
         updatedAt: new Date()
       },
       {
-        isbn: '#7764',
+        isbn: '#111112',
         title: 'learn angular 4',
         author: 'Nelson Brook',
         pages: 870,
@@ -32,7 +32,7 @@ module.exports = {
         updatedAt: new Date()
       },
       {
-        isbn: '#7766',
+        isbn: '#111113',
         title: 'Tactical Analysis',
         author: 'Bill Gates',
         pages: 700,
@@ -47,7 +47,7 @@ module.exports = {
         updatedAt: new Date()
       },
       {
-        isbn: '#7767',
+        isbn: '#111114',
         title: 'How to Workout',
         author: 'Michael Vazquez',
         pages: 123,
@@ -62,7 +62,7 @@ module.exports = {
         updatedAt: new Date()
       },
       {
-        isbn: '#7768',
+        isbn: '#111115',
         title: 'Building Relationships',
         author: 'Tom Cruise',
         pages: 300,
@@ -77,7 +77,7 @@ module.exports = {
         updatedAt: new Date()
       },
       {
-        isbn: '#7769',
+        isbn: '#111116',
         title: 'Angular Relationships',
         author: 'Tom Cruise',
         pages: 210,
