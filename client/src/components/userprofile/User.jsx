@@ -95,7 +95,6 @@ class User extends React.Component {
   }
 
   componentWillReceiveProps(nextprops) {
-    
     const savedToken = getUserDetails().savedToken;
     const storeToken = nextprops.currentToken.token;
      if (nextprops.userDetails) {
