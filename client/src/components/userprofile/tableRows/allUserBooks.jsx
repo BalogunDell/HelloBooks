@@ -41,16 +41,22 @@ const allUserBooksComp = ({allUserBooks, getRowKey, tableHeader, handleReturn}) 
 							<td>{book.book.author}</td>
 							<td>{book.dateborrowed}</td>
 							<td>{book.expectedreturndate}</td>
-							<td>{book.returnstatus 
+							{book.returnstatus 
 								? 
-							<button className="btn waves-effect waves-teal custom" disabled={true}>Return Book</button>
-								: 
-							<button className="btn btn-small waves-effect waves-teal custom" 
-							value={book.bookid}
-              data-id={id}
-							onClick={handleReturn}>Return Book
+							<td>
+                <button className="btn waves-effect waves-teal custom" disabled={true}>Return</button>
+              </td>
+              
+                :
+              <td>  
+							  <button className="btn btn-small waves-effect waves-teal custom" 
+							    value={book.bookid}
+                  data-id={id}
+							    onClick={handleReturn}>Return
 							</button>
-							}</td>
+              {/* <button className="btn waves-effect waves-teal custom">Read</button> */}
+							</td>
+              }
 						</tr>)
 					}
 					</tbody>

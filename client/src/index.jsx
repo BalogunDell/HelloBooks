@@ -47,7 +47,7 @@ class App extends React.Component {
                <Route path="/resetpassword/:uniqueUrl" exact component={ResetPassword}/>
               <Route path="*" component= {NotFound}/>
             </Switch>
-          </BrowserRouter> 
+          </BrowserRouter>
           <Footer/>  
       </div>
     );

@@ -250,7 +250,7 @@ class Book {
                       { where: { id: req.body.bookid } })
                       .then((updated) => {
                         if (updated) {
-                          res.status(201).json({ message: 'Book has been returned' });
+                          res.status(201).json({ message: 'Book has been returned', });
                         }
                       })
                       .catch((error) => {

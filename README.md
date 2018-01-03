@@ -1,11 +1,15 @@
 # Hellobooks
-
+[![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://opensource.org/licenses/MIT)
 [![Build Status](https://travis-ci.org/BalogunDell/HelloBooks.svg?branch=develop)](https://travis-ci.org/BalogunDell/HelloBooks) [![Coverage Status](https://coveralls.io/repos/github/BalogunDell/HelloBooks/badge.svg?branch=feedback-implementation)](https://coveralls.io/github/BalogunDell/HelloBooks?branch=feedback-implementation) [![Test Coverage](https://api.codeclimate.com/v1/badges/401f36657b8050c23a1b/test_coverage)](https://codeclimate.com/github/BalogunDell/HelloBooks/test_coverage)
 
 Hello-Books is a simple application that helps manage a library and its processes like stocking, tracking and renting books and it was built on Postgres, Express, and Node).
 
 ## Development
-The application leverages Node; Express for routing and sequelize for ORM.
+The application leverages 
+- Node; 
+- Express for routing
+- Postgres
+- sequelize for ORM.
 
 ## Installation
 - Install `node` and `postgres`
@@ -16,77 +20,12 @@ The application leverages Node; Express for routing and sequelize for ORM.
 - Start app `npm start`
 - Consume via postman
 
-## Endpoints
+## Documentation
 
-### Users
-- User Signup  - api/users/signup               - Registers a user
-- User Signin  - api/users/signin               - Logs a user in
-- Get Book     - api/userid/books               - allows a user to view all books
-- Get Book     - api/userid/books?returnd=false - allows a user to view all books that are not  yet returned
-- Get Book     - api/userid/books?returnd=true  - allows a user to view all books that have been returned
-- Borrow Book  - api/userid/books               - allows a user to borrow books
-- Return Book  - api/userid/books               - allows a user to return borrowed books
+You can find the explanatory documentation of this application API at
+[documentation](https://balogundell.github.io/slate)
 
-### Admin
-- User Signin  - api/users/signin - Logs an admin in
-- Add  Book    - api/books        - allows an admin to add a book
-- Modify Book  - api/books        - allows an admin to modify a book
-- Delete Book  - api/books        - allows an admin to delete book
 
-## Verbs
-- GET
-- POST
-- PUT
-- DELETE
+## License
 
-#### Create user
-- Endpoint: **POST** `api/users/signup`
-- Authorization: NA
-
-```
-Request
-{
-	"firstname": "mike",
-	"lastname": "doe",
-	  "email": "bbb@gmail.com",,
-	"password": "password"
-}
-
-Response
-{
-    "message": "User created",
-    "data": {
-        "membership": "bronze",
-        "role": "user",
-        "id": 4,
-        "firstname": "mike",
-        "lastname": "doe",
-        "email": "bbb@gmail.com",
-        "password": "$2a$10$rIYAMSou0qvwjr8WgddMZO6eTKPZ.wZ9rAU629EgmtWTogPwwniuS",
-        "updatedAt": "2017-08-10T15:35:37.000Z",
-        "createdAt": "2017-08-10T15:35:37.000Z",
-        "image": null
-    },
-    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZW1haWwiOiJiYmJAZ21haWwuY29tIiwibWVtYmVyc2hpcCI6ImJyb256ZSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNTAyMzc5MzM3LCJleHAiOjE1MDI0NjU3Mzd9.FjK888IV26y22zW5Lyrjefgs9TeMM2n22GgV_CcW5H4"
-}
-
-```
-
-#### Sign in
-- Endpoint: **POST** `api/users/signin`
-- Authorization: Yes
-
-```
-Request
-{
-	  "email": "bbb@gmail.com",
-	"password": "password"
-}
-
-Response
-{
-    "message": "Signed in",
-    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZW1haWwiOiJiYmJAZ21haWwuY29tIiwibWVtYmVyc2hpcCI6ImJyb256ZSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNTAyMzc5MzM3LCJleHAiOjE1MDI0NjU3Mzd9.FjK888IV26y22zW5Lyrjefgs9TeMM2n22GgV_CcW5H4"
-}
-
-```
+#### [MIT](./LICENSE) © [Balogun Abiodun Delight](https://twitter.com/abiodun_adb)

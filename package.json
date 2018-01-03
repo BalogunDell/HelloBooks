@@ -8,10 +8,13 @@
     "npm": "3.10.10"
   },
   "scripts": {
-    "test": "npm run migrate:test && node_modules/.bin/nyc --reporter=lcov --reporter=text mocha --require babel-polyfill --timeout 10000 --compilers js:babel-register -- ./tests/api.test.js",
+    "test": "npm run migrate:test && NODE_ENV=test node_modules/.bin/nyc --reporter=lcov --reporter=text mocha --require babel-polyfill --timeout 10000 --compilers js:babel-register -- ./tests/api.test.js",
     "lint": "eslint ./server/**/*.js && eslint ./client/**/*.jsx && eslint ./client/**/*.js --fix",
     "build": "babel ./server --out-dir build",
-    "start": "NODE_ENV=production babel-node -- server/index.js",
+    "start:server": "babel-node -- server/index.js",
+    "start:client": "webpack-dev-server --open --config ./webpack.dev.config.js --hot",
+    "start:dev": "webpack -d --config ./webpack.dev.config.js && NODE_ENV=development npm run start:server",
+    "start": "NODE_ENV=production npm run start:server",
     "migrate": "sequelize db:migrate",
     "migrate:undo": "sequelize db:migrate:undo:all",
     "seed": "sequelize db:seed:all",
@@ -19,7 +22,8 @@
     "migrate:test": "sequelize db:migrate:undo:all --env test && sequelize db:migrate --env test && sequelize db:seed:all --env test",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "client:test": "jest ./tests/*.client.test.js --coverage",
-    "test:all": "npm run test && npm run client:test"
+    "test:all": "npm run test && npm run client:test",
+    "postinstall": "webpack -p --config ./webpack.prod.config.js"
   },
   "dependencies": {
     "axios": "^0.16.2",
@@ -44,6 +48,7 @@
     "faker": "^4.1.0",
     "file-loader": "^0.11.2",
     "html-loader": "^0.5.1",
+    "html-webpack-plugin": "^2.30.1",
     "image-webpack-loader": "^3.3.1",
     "jquery": "^3.2.1",
     "jsonwebtoken": "^7.4.1",
@@ -72,8 +77,10 @@
     "toastr": "^2.1.2",
     "validator": "^8.1.0",
     "webpack": "^3.5.5",
+    "webpack-merge": "^4.1.1",
     "webpack-dev-middleware": "^1.12.0",
-    "webpack-hot-middleware": "^2.20.0"
+    "webpack-hot-middleware": "^2.20.0",
+    "uglifyjs-webpack-plugin": "^1.1.5"
   },
   "devDependencies": {
     "babel-jest": "^22.0.3",

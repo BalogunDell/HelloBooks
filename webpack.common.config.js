@@ -1,33 +1,26 @@
 
 const path = require('path');
-const extractWebpackPlugin = require('extract-text-webpack-plugin');
+const htmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 
 const config = {
-  entry: './client/src/index.js',
+  entry: './client/src/index.jsx',
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'dist'),
     publicPath: '/'
   },
-  devServer: {
-    contentBase: './dist',
-    historyApiFallback: true
-  },
-  devtool: 'cheap-eval-source-map',
- 
+  resolve: { extensions: ['.js', '.jsx', '.css'] },
   module: {
     rules: [
       {
-        test: /\.js$/,
-        use: 'babel-loader'
-      },
-      {
-        test: /\.jsx$/,
+        test: /\.(jsx|js)$/,
+        exclude: ['node_modules', 'materialize'],
         use: 'babel-loader'
       },
       {
         test: /\.css$/,
+        exclude: ['node_modules', 'materialize'],
         use: [
           'style-loader',
           'css-loader'
@@ -46,7 +39,16 @@ const config = {
       },
       {
         test: /\.scss$/,
-        use: [{ loader: 'style-loader' }, { loader: 'css-loader' }, { loader: 'sass-loader' }],
+        exclude: ['node_modules', 'materialize'],
+        use: [
+          {
+            loader: 'style-loader'
+          }, {
+            loader: 'css-loader'
+          }, {
+            loader: 'sass-loader'
+          }
+        ],
 
       },
 
@@ -65,11 +67,10 @@ const config = {
   },
 
   plugins: [
-    new extractWebpackPlugin('style.css'),
-    new webpack.EnvironmentPlugin([
-      'CLOUD_KEY',
-      'CLOUD_URL'
-    ]),
+    new htmlWebpackPlugin({
+      title: 'Hellobooks Library',
+      template: './client/src/index.html'
+    }),
     new webpack.ProvidePlugin({
       $: 'jquery',
       jQuery: 'jquery',
@@ -77,7 +78,6 @@ const config = {
       'window.jQuery': 'jquery'
     })
   ],
-  resolve: { extensions: ['.js', '.jsx', '.css'] },
   node: {
     dns: 'empty',
     net: 'empty',
