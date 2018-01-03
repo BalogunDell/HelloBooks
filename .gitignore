@@ -1,5 +1,6 @@
 node_modules/
 .env
+dist/
 coverage/
 build/
 npm-debug.log
