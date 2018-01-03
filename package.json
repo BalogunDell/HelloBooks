@@ -12,9 +12,9 @@
     "lint": "eslint ./server/**/*.js && eslint ./client/**/*.jsx && eslint ./client/**/*.js --fix",
     "build": "babel ./server --out-dir build",
     "start:server": "babel-node -- server/index.js",
-    "start:client": "webpack-dev-server --open --config ./webpack.dev.config.js",
+    "start:client": "webpack-dev-server --open --config ./webpack.dev.config.js --hot",
     "start:dev": "webpack -d --config ./webpack.dev.config.js && NODE_ENV=development npm run start:server",
-    "start": "webpack -p --config ./webpack.prod.config.js && NODE_ENV=development npm run start:server",
+    "start": "NODE_ENV=production npm run start:server",
     "migrate": "sequelize db:migrate",
     "migrate:undo": "sequelize db:migrate:undo:all",
     "seed": "sequelize db:seed:all",
@@ -22,7 +22,8 @@
     "migrate:test": "sequelize db:migrate:undo:all --env test && sequelize db:migrate --env test && sequelize db:seed:all --env test",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "client:test": "jest ./tests/*.client.test.js --coverage",
-    "test:all": "npm run test && npm run client:test"
+    "test:all": "npm run test && npm run client:test",
+    "postinstall": "webpack -p --config ./webpack.prod.config.js"
   },
   "dependencies": {
     "axios": "^0.16.2",
