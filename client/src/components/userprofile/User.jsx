@@ -141,7 +141,6 @@ class User extends React.Component {
               <div className="col s12 m12 l12 offset-l1">
                 {this.userType == 'user' ?
                   <div className="content-display">
-                    {/* <h4>Welcome to Hello books</h4> */}
                     <Route path="/user/dashboard" render={() => <UserDashboard/>}/> 
                     <Route path="/user/profile" render={() => <Profile/>}/>
                     <Route path="/user/books" render={() => <Allbooks 

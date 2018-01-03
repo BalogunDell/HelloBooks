@@ -6,7 +6,7 @@ import React from 'react';
  */
 class Background extends React.Component {
   render() {
-    return(
+    return (
     <div>
       <div className="home-bg">
          {this.props.children}

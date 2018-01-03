@@ -108,7 +108,7 @@ export function sendEmail(userEmail) {
   return (dispatch) => {
     return axios.post(`${apiRoutes.newPassword}`, userEmail)
       .then((response) => {
-        dispatch(sendEmailAction(response.data.message));
+        dispatch(sendEmailAction(response.data));
       })
       .catch((error) => {
         throw (error);
@@ -142,7 +142,7 @@ export function resetPassword(newPassword, uniqueUrl) {
   return (dispatch) => {
     return axios.put(`${apiRoutes.newPassword}/${uniqueUrl}`, newPassword)
       .then((response) => {
-        dispatch(resetPasswordAction(response));
+        dispatch(resetPasswordAction(response.data));
       })
       .catch((error) => {
         throw (error);

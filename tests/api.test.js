@@ -122,13 +122,23 @@ describe('Hellobooks API', () => {
       .end((err, res) => {
         expect(res.status).to.equal(201);
         expect(res.body).to.have.property('responseData');
+        expect(res.body.responseData).to.have.property('message');
+        expect(res.body.responseData.message).to.equal('User created');
+        expect(res.body.responseData).to.have.property('username');
+        expect(res.body.responseData.username).to.equal('abbey33');
+        expect(res.body.responseData).to.have.property('userID');
+        expect(res.body.responseData.userID).to.equal(4);
+        expect(res.body.responseData).to.have.property('userRole');
+        expect(res.body.responseData.userRole).to.equal('user');
+        expect(res.body.responseData).to.have.property('image');
+        expect(res.body.responseData.image).to.equal('image2');
         done();
       });
     });
   });
 
   //**********************************//
-  //********TEST USER SIGNIN ******* //
+  //********TEST USER SIGNIN********* //
   //**********************************//
 
   describe('User Sign in', () => {
@@ -141,6 +151,14 @@ describe('Hellobooks API', () => {
         expect(res.status).to.equal(200);
         expect(res.body).to.have.property('responseData');
         expect(res.body.responseData).to.have.property('token');
+        expect(res.body.responseData).to.have.property('username');
+        expect(res.body.responseData.username).to.equal(mockdata.user1Login.username);
+        expect(res.body.responseData).to.have.property('userID')
+        expect(res.body.responseData.userID).to.equal(4);
+        expect(res.body.responseData).to.have.property('userRole');
+        expect(res.body.responseData.userRole).to.equal('user');
+        expect(res.body.responseData).to.have.property('image');
+        expect(res.body.responseData.image).to.equal('image2');
         done();
       });
     });
@@ -272,6 +290,15 @@ describe('Hellobooks API', () => {
         expect(res.body.response[0]).to.have.property('createdAt');
         expect(res.body.response[0]).to.have.property('updatedAt');
         expect(res.body.response[0]).to.have.property('book');
+        expect(res.body.response[0].book).to.be.an('object');
+        expect(res.body.response[0].id).to.be.a('number');
+        expect(res.body.response[0].userid).to.be.a('number');
+        expect(res.body.response[0].bookid).to.be.a('number');
+        expect(res.body.response[0].dateborrowed).to.be.a('string');
+        expect(res.body.response[0].expectedreturndate).to.be.a('string');
+        expect(res.body.response[0].returnstatus).to.be.a('boolean');
+        expect(res.body.response[0].approvedreturn).to.be.a('boolean');
+        
         done();
       })
     });
@@ -308,6 +335,14 @@ describe('Hellobooks API', () => {
         expect(res.body.response[0]).to.have.property('createdAt');
         expect(res.body.response[0]).to.have.property('updatedAt');
         expect(res.body.response[0]).to.have.property('book');
+        expect(res.body.response[0].book).to.be.an('object');
+        expect(res.body.response[0].id).to.be.a('number');
+        expect(res.body.response[0].userid).to.be.a('number');
+        expect(res.body.response[0].bookid).to.be.a('number');
+        expect(res.body.response[0].dateborrowed).to.be.a('string');
+        expect(res.body.response[0].expectedreturndate).to.be.a('string');
+        expect(res.body.response[0].returnstatus).to.be.a('boolean');
+        expect(res.body.response[0].approvedreturn).to.be.a('boolean');
         done();
       })
     });
@@ -366,10 +401,14 @@ describe('Hellobooks API', () => {
       .end((err, res) => {
         expect(res.status).to.equal(201);
         expect(res.body).to.be.an('object');
-        expect(res.body.data[0]).to.have.a.property('id');
-        expect(res.body.data[0]).to.have.a.property('firstname');
-        expect(res.body.data[0]).to.have.a.property('lastname');
-        expect(res.body.data[0]).to.have.a.property('username');
+        expect(res.body.user).to.have.a.property('id');
+        expect(res.body.user).to.have.a.property('firstname');
+        expect(res.body.user).to.have.a.property('lastname');
+        expect(res.body.user).to.have.a.property('username');
+        expect(res.body.user.id).to.be.a('number');
+        expect(res.body.user.firstname).to.equal(mockdata.userEdit.firstname);
+        expect(res.body.user.lastname).to.equal(mockdata.userEdit.lastname);
+        expect(res.body.user.username).to.equal(mockdata.userEdit.username);
         done();
       });
     })
@@ -390,6 +429,7 @@ describe('Hellobooks API', () => {
         expect(res.body.responseData).to.have.property('userRole');
         expect(res.body.responseData).to.have.property('message');
         expect(res.body.responseData.message).to.equal('signed in');
+        expect(res.body.responseData.username).to.equal(mockdata.adminSigninData.username);
         done();
       });
     });
@@ -409,6 +449,31 @@ describe('Hellobooks API', () => {
         expect(res.status).to.equal(201);
         expect(res.body).to.have.property('message');
         expect(res.body).to.have.property('data');
+        expect(res.body.data).to.have.property('id');
+        expect(res.body.data).to.have.property('isbn');
+        expect(res.body.data).to.have.property('title');
+        expect(res.body.data).to.have.property('author');
+        expect(res.body.data).to.have.property('pages');
+        expect(res.body.data).to.have.property('year');
+        expect(res.body.data).to.have.property('description');
+        expect(res.body.data).to.have.property('quantity');
+        expect(res.body.data).to.have.property('categoryid');
+        expect(res.body.data).to.have.property('visibility');
+        expect(res.body.data).to.have.property('image');
+        expect(res.body.data).to.have.property('pdf');
+        expect(res.body.data.isbn).to.equal(`#${mockdata.bookdata.isbn}`);
+        expect(res.body.data.title).to.equal(mockdata.bookdata.title);
+        expect(res.body.data.author).to.equal(mockdata.bookdata.author);
+        expect(res.body.data.pages).to.equal(mockdata.bookdata.pages);
+        expect(res.body.data.year).to.equal(mockdata.bookdata.year);
+        expect(res.body.data.description).to.equal(mockdata.bookdata.description);
+        expect(res.body.data.quantity).to.equal(mockdata.bookdata.quantity);
+        expect(res.body.data.categoryid).to.equal(mockdata.bookdata.categoryid);
+        expect(res.body.data.visibility).to.equal(true);
+        expect(res.body.data.image).to.equal(mockdata.bookdata.image);
+        expect(res.body.data.pdf).to.equal(mockdata.bookdata.pdf);
+        
+        
         done();
       });
     });

@@ -12,11 +12,11 @@ export default function fetchUserReducer(state = {}, action) {
   switch (action.type) {
     case types.FETCH_USER:
       return {
-        ...state, ...action.userID
+        ...state, ...action.userID.user
       };
     case types.EDIT_PROFILE:
       return {
-        ...state, ...action.newUserData
+        ...state, ...action.newUserData.user
       };
     case types.EDIT_IMAGE:
       return {

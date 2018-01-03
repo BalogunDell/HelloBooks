@@ -145,7 +145,6 @@ class User {
       res.status(400).json({ message: 'Password should not be less than 5 characters' });
     } else {
       const hashP = bcrypt.hashSync(newPassword, bcrypt.genSaltSync(10));
-      console.log(hashP);
       userModel.update({ password: hashP }, { where: { passurl: resetUrl },
         individualHooks: true },
       { fields: ['password'] })
@@ -160,7 +159,6 @@ class User {
         })
         .catch((error) => {
           res.status(500).json({ error });
-          console.log(error);
         });
     }
   }
@@ -247,7 +245,7 @@ class User {
     const fieldsToUpdate = ['firstname', 'lastname', 'username', 'image'];
     userModel.update(userData, { where: { id: req.body.userid }, individualHooks: true },
       { fields: fieldsToUpdate }).then((response) => {
-      res.status(201).json({ data: response[1] });
+      res.status(201).json({ user: response[1][0] });
     })
       .catch((error) => {
         const messageObject = errorMessages(error);

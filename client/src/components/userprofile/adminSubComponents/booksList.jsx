@@ -126,7 +126,7 @@ class booksList extends React.Component {
       successMessage: false,
       loader: false,
       disabled: false,
-    })
+    });
   }
   /**
    * 
@@ -135,21 +135,36 @@ class booksList extends React.Component {
    */
   deleteBookTrigger() {
      // Set neccessary state before action
-     this.setState({loader:true, 
-      deleteErrorStatus:false, 
-      deleteErrorSuccess: false});
+     this.setState({
+        loader:true,
+        disabled: false,
+        deleteErrorStatus:false, 
+        deleteErrorSuccess: false,
+        errorMessage: ''});
 
     // Make call to api, delete book and update interface
     this.props.deleteBook(this.state.bookId)
     .then(() => {
-      this.state.filterable.splice(this.state.bookIndex, 1);
-      this.setState({allbooks: this.state.filterable,
+      const result = this.state.allbooks.filter(book => book.id != this.state.bookId );
+      this.setState({allbooks: result,
         deleteErrorSuccess: true,
         deleteErrorStatus: false,
         errorMessage: '',
         loader: false,
         disabled: true,
         successMessage: 'Book has been successfully deleted'});
+        setTimeout(() => {
+          $('.modal').modal('close');
+          this.setState({
+            error: '',
+            successMessage: '',
+            errorMessage: '',
+            deleteErrorStatus: false,
+            successMessage: false,
+            loader: false,
+            disabled: false,
+          });
+        }, 2000);
     })
     .catch(error => {
       this.setState({
@@ -170,7 +185,7 @@ class booksList extends React.Component {
     $('.modal').modal({
       dismissible: false,
       opacity: 0.3
-    }); 
+    });
 
     // Fetch all borrowed books
     this.props.getAllBorrowedBooks();
