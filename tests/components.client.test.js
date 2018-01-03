@@ -26,4 +26,9 @@ describe('component: Home', () => {
       expect(wrapper.find('h1').text()).to.equal('Hellobooks Library');
       expect(wrapper.find('p').text()).to.equal(mockData.homeParagraph);
     });
+
+    it('renders About component', () => {
+      const wrapper = render(<About />);
+    expect(wrapper.find('.aboutUsHeader_Container')).to.have.length(1);
+  });
   });

@@ -36,9 +36,6 @@ class User extends React.Component {
       dataReady: true,
     }
 
-    this.readBtn = <button className="btn waves-effect">Read</button>
-    this.returnBtn = <button className="btn waves-effect">Ready to return</button>
-
     // Set inital value for navigation links and icons 
     this.navLinks = [];
     this.linkIcons = [];
@@ -98,10 +95,18 @@ class User extends React.Component {
   }
 
   componentWillReceiveProps(nextprops) {
+    
+    const savedToken = getUserDetails().savedToken;
+    const storeToken = nextprops.currentToken.token;
      if (nextprops.userDetails) {
       this.setState({dataReady:true, profileData: nextprops.userDetails})
      }
-     
+     if (this.state.isAuthenticated) {
+       if ( storeToken != savedToken || savedToken == null) {
+          return this.setState({isAuthenticated: false});
+       }
+       return;
+     }
   }
 
   componentDidMount() {
@@ -183,6 +188,7 @@ const mapStateToProps = (state, ownProps) => {
     isAuthenticated: state.userAccess.isAuthenticated,
     userDetails: state.userProfile,
     url: ownProps.match.path,
+    currentToken: state.userAccess.userData
   }
 }
 
