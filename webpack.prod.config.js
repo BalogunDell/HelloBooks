@@ -25,6 +25,7 @@ module.exports = merge(common, {
     new webpack.EnvironmentPlugin({
       CLOUD_KEY: JSON.stringify(process.env.CLOUD_KEY),
       CLOUD_URL: JSON.stringify(process.env.CLOUD_URL),
+      SECRET: JSON.stringify(process.env.SECRET)
     }),
   ],
 });
