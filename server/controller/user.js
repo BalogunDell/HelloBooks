@@ -2,6 +2,7 @@ import bcrypt from 'bcrypt';
 import model from '../models';
 import helper from '../middleware/helper';
 import errorMessages from '../middleware/errorMessages';
+import * as templates from '../middleware/emailHtmlTemplate';
 
 
 require('dotenv').config();
@@ -104,7 +105,11 @@ class User {
               userModel.update({ passurl: resetPassUrl }, { where:
                 { email: req.body.email } })
                 .then(() => {
-                  helper.generateMail(req.body.email, resetPassUrl)
+                  // Compose email template
+                  const selectedTemplate = templates.htmlTemplates.resetPassword(resetPassUrl);
+                  const subject = templates.emailSubjects.resetpasswordSubject;
+                  
+                  helper.generateMail(req.body.email, selectedTemplate, subject)
                     .then((mailerResponse) => {
                       if (mailerResponse.accepted[0] === req.body.email) {
                         res.status(201).json({
@@ -118,6 +123,7 @@ class User {
                 })
                 .catch((error) => {
                   res.status(201).json({ error });
+                  console.log(error);
                 });
             } else {
               res.status(404).json({ message: 'This email does not exist in our database' });

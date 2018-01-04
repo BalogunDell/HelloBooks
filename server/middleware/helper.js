@@ -4,6 +4,7 @@ import nodeMailer from 'nodemailer';
 import model from '../models';
 import util from '../utils/limits';
 
+
 require('dotenv').config();
 
 const secret = process.env.SECRET;
@@ -123,10 +124,11 @@ class Helper {
   /**
    * 
    * @param { string } userEmail
-   * @param { string } passwordUrl
+   * @param { string } selectedTemplate
+   * @param { string } subject
    * @returns { string } email
    */
-  static generateMail(userEmail, passwordUrl) {
+  static generateMail(userEmail, selectedTemplate, subject) {
     // Define email transporter
     const mailCourier = nodeMailer.createTransport({
       service: 'gmail',
@@ -135,15 +137,12 @@ class Helper {
         pass: mailPassword
       }
     });
-
     // Define email content and optiobs
     const mailOptions = {
       from: 'delighteddell@gmail.com',
       to: userEmail,
-      subject: 'Password reset link',
-      html: `<h1>RESET YOUR PASSWORD</h1>
-      <p>You requested to reset your password</p>
-      <p><a href="https://hellobooksapp.herokuapp.com/resetpassword/${passwordUrl}">Click here to reset your password</a></p>`
+      subject,
+      html: selectedTemplate
     };
 
     const result = mailCourier.sendMail(mailOptions);
