@@ -42,11 +42,13 @@ class PasswordResetModal extends React.Component {
   handleSubmit(event) {
      // prevent button default action
      event.preventDefault();
+     message.innerHTML = ``;
     // validate input
     this.setState({ error: true, disableBtn: true});
     if(this.state.email === "") {
     message.innerHTML = `Your email is needed to reset your password`;
-    message.className="red-text center-align";  
+    message.className="red-text center-align";
+    this.setState({ error: false, disableBtn: false});
     } else {
       
       //Make API call
@@ -55,9 +57,11 @@ class PasswordResetModal extends React.Component {
         this.setState({ error: false, disableBtn: true});
         message.innerHTML = `A password reset link has been sent to ${this.state.email}`;
         message.className="green-text center-align";
+        setTimeout(() => {
+          $('.modal').modal('close');
+        }, 3000);
       })
       .catch((error) => {
-        console.log(error);
         if (error.response.status === 501) {
           message.innerHTML ="Ooops! Something went wrong, the server could not process your request at this time. Please try again.";
           message.className="red-text center-align";
