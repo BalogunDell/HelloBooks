@@ -46,26 +46,45 @@ class History extends React.Component {
 
 
   handleSelectChange(event) {
-    this.props.getUserBooks().then(() => {
+    switch(event.target.value) {
+      case 'Pending Returns':
+        this.setState({
+          tableHeader: event.target.value,
+          loading: true
+        });
+        this.props.getUserBooks().then(() => {
+          const pending = this.props.fetchedBooks.response.filter(book => book.returnstatus == false);
+          this.setState({
+            allUserBooks: pending,
+            loading: false
+          });
+        });
+      break;
+      case 'Returned books':
       this.setState({
-        allUserBooks: this.props.fetchedBooks
+        tableHeader: event.target.value,
+        loading: true
       });
-    });
-    this.setState({bookToDisplay: event.target.value});
-    if(this.state.bookToDisplay == "Pending Returns") {
-      this.setState({tableHeader: 'pending returns'});
-     let unreturned = this.state.filterable.filter(book => book.returnstatus == false);
-      this.setState({ allUserBooks: unreturned });
-    } else if(this.state.bookToDisplay == "Returned books") {
-      this.setState({tableHeader: 'Returned books'});
-      this.setState({allUserBooks: this.state.filterable});
-      let returned = this.state.filterable.filter(book => book.returnstatus == true);
-      this.setState({ allUserBooks: returned });
-    } else if (this.state.bookToDisplay == "allbooks") {
-      this.setState({tableHeader: 'All books'});
-      this.setState({allUserBooks: this.state.filterable});
-    } else {
-    }
+      this.props.getUserBooks().then(() => {
+        const returned = this.props.fetchedBooks.response.filter(book => book.returnstatus == true);
+        this.setState({
+          allUserBooks: returned,
+          loading: false
+        });
+      });
+      break;
+      default:
+      this.setState({
+        tableHeader: event.target.value,
+        loading: true
+      });
+      this.props.getUserBooks().then(() => {
+        this.setState({ 
+          allUserBooks: this.props.fetchedBooks.response,
+          loading: false
+        });
+      });
+      }
   }
 
 
@@ -108,8 +127,7 @@ class History extends React.Component {
             <select value={this.state.selectedValue} onChange={this.handleSelectChange}>
             <option value="Pending Returns">Pending returns</option>
             <option value="Returned books">Returned books</option>
-              <option value="allbooks"> All books</option>
-              <option value="Books Awaiting return confirmation">Books Awaiting return confirmation</option>
+              <option value="All Books"> All books</option>
             </select>
             <label>Filter history table</label>
           </div>
