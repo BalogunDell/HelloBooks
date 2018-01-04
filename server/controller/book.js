@@ -1,10 +1,13 @@
 import model from '../models';
 import errorMessages from '../middleware/errorMessages';
+import helper from '../middleware/helper';
+import * as templates from '../middleware/emailHtmlTemplate';
 
 const bookModel = model.book;
 const borrowedBook = model.borrowedbook;
 const categoryModel = model.category;
 
+require('dotenv').config();
 
 /**
  * @class Book
@@ -210,8 +213,23 @@ class Book {
           { where: { id: response.dataValues.bookid } })
           .then((updateRes) => {
             if (updateRes) {
-              res.status(201).json({ message: 'Book Added',
-                returnDate: req.body.expectedreturndate });
+              // Compose email template
+              const selectedTemplate = templates.htmlTemplates.borrowBookNotifier('abbey', 'tactical analysis');
+              const subject = templates.emailSubjects.borrowNotifierSubject;
+              helper.generateMail(process.env.EMAIL, selectedTemplate, subject)
+                .then((mailerResponse) => {
+                  if (mailerResponse.accepted[0] === process.env.EMAIL) {
+                    res.status(201).json({
+                      emailStatus: 'Email sent to admin',
+                      message: 'Book Added',
+                      returnDate: req.body.expectedreturndate
+                    });
+                  }
+                })
+                .catch((mailerError) => {
+                  res.status(501).json({ message: mailerError });
+                  console.log(mailerError);
+                });
             }
           })
           .catch((error) => {
