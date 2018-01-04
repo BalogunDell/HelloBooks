@@ -3,6 +3,7 @@ import { Link, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as bookActions from '../../../Actions/booksAction';
 import Loader from '../adminSubComponents/loader';
+import AuthenticateUser from '../../HOC/authenticate';
 
 /**
  * @class Books
@@ -122,4 +123,4 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-  export default connect(mapStateToProps, mapDispatchToProps)(Allbooks);
+  export default connect(mapStateToProps, mapDispatchToProps)(AuthenticateUser(Allbooks));

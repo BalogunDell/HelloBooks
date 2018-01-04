@@ -19,7 +19,7 @@ import UnpublishedList from './adminSubComponents/unPublishedBooks';
 import * as userNavLinks from './userNavLinks';
 import Details from './Details';
 import UserNav from './Usernav';
-
+import AuthenticateUser from '../HOC/authenticate';
 import * as UserActions from '../../Actions/userProfileAction';
 import * as bookActions from '../../Actions/booksAction';
 
@@ -71,15 +71,19 @@ class User extends React.Component {
 
 
      // Get user profile before mount
-    this.props.userProfile(this.userID).then(()=> {
+    this.props.userProfile(this.userID).then(() => {
       // Do some stuff
     })
       
-    .catch(error =>{
+    .catch(error => {
+      if(error) {
       // Do some stuff is error
-      error.response.status === 401 || 500 ? this.setState({isAuthenticated:false})
+      error.response.status === 401 || 500 ? this.setState({ isAuthenticated:false })
       :
       this.setState({isAuthenticated:false});
+      } else {
+        
+      }
     })
 
     // Set all values needed
@@ -95,18 +99,11 @@ class User extends React.Component {
   }
 
   componentWillReceiveProps(nextprops) {
-    const savedToken = getUserDetails().savedToken;
-    const storeToken = nextprops.currentToken.token;
+    
      if (nextprops.userDetails) {
       this.setState({dataReady:true, profileData: nextprops.userDetails})
      }
-     if (this.state.isAuthenticated) {
-       if ( storeToken != savedToken || savedToken == null) {
-          return this.setState({isAuthenticated: false});
-       }
-       return;
-     }
-  }
+    }
 
   componentDidMount() {
   $(document).ready(function(){
@@ -145,12 +142,12 @@ class User extends React.Component {
               <div className="col s12 m12 l12 offset-l1">
                 {this.userType == 'user' ?
                   <div className="content-display">
-                    <Route path="/user/dashboard" render={() => <UserDashboard/>}/> 
-                    <Route path="/user/profile" render={() => <Profile/>}/>
-                    <Route path="/user/books" render={() => <Allbooks 
+                    <Route path="/user/dashboard" component={AuthenticateUser(UserDashboard)}/> 
+                    <Route path="/user/profile" component={AuthenticateUser(Profile)}/>
+                    <Route path="/user/books" render={() =><Allbooks 
                      books = {this.props.retrievedBooks} 
                      path = {this.props.url}
-                     getBookId = {this.getBookId}/>}/>  
+                    getBookId = {this.getBookId}/>}/>  
                     <Route path="/user/bookdetails" render={() => <BookDetails book_id = {this.state.book_id}/>}/>
                     <Route path="/user/history" render ={()=> <UserHistory userID = {this.userID}/>}/> 
                     <Route path="/user/borrowedbooks" render={() => <Borrowedbooks userID ={this.userID}/> }/>
@@ -158,16 +155,15 @@ class User extends React.Component {
                 :
                   <div className="content-display">
                     {/* <h4>Welcome to Hello books</h4> */}
-                    <Route path="/user/dashboard" render={() => <AdminDashboard/>}/> 
+                    <Route path="/user/dashboard" component={AuthenticateUser(AdminDashboard)}/>
                     <Route path="/user/books" render={() => <Allbooks 
                      books = {this.props.retrievedBooks} 
                      path = {this.props.url}
                      getBookId = {this.getBookId}/>}/>
-                    <Route path="/user/upload" render={() => <CreateBook/>}/> 
+                    <Route path="/user/upload" component={AuthenticateUser(CreateBook)}/> 
                     <Route path="/user/bookdetails" render={() => <BookDetails book_id = {this.state.book_id}/>}/>
-                    <Route path="/user/borrowedbooks" render={() => <Borrowedbooks userID ={this.userID}/> }/>
-                    <Route path="/user/editbook" render={() => <EditBook/>}/>
-                    <Route path="/user/deletedbooks" render={() => <UnpublishedList/>}/>
+                    <Route path="/user/editbook" component={AuthenticateUser(EditBook)}/>
+                    <Route path="/user/deletedbooks" component={AuthenticateUser(UnpublishedList)}/>
                   </div>
                 }
               </div>

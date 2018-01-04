@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import * as bookActions from '../../Actions/booksAction';
+import AuthenticateUser from '../HOC/authenticate';
 /**
  * @class History
  * @classdesc returns the borrow history of the user
@@ -57,4 +58,4 @@ function mapDispatchToProps (dispatch) {
     getUserBooks: (userid) => dispatch(bookActions.getUserBooks(userid))
   }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(History);
+export default connect(mapStateToProps, mapDispatchToProps)(AuthenticateUser(History));

@@ -28,13 +28,7 @@ export function saveNewUser(userSignupData) {
   return (dispatch) => {
     return axios.post(apiRoutes.signup, userSignupData)
       .then((response) => {
-      //  check if device supports localstorage
-        const userDetails = [];
-        // Push details into the array
-        userDetails.push(response.data.responseData.token,
-          response.data.responseData.userID,
-          response.data.responseData.userRole);
-        localStorage.setItem('Access-Token', JSON.stringify(userDetails)); //eslint-disable-line
+        localStorage.setItem('Access-Token', response.data.responseData.token); // eslint-disable-line
         dispatch(userSignupSuccessAction(response.data.responseData));
       })
       .catch((errors) => {
@@ -68,11 +62,7 @@ export function userLogin(loginData) {
   return (dispatch) => {
     return axios.post(apiRoutes.signin, loginData)
       .then((response) => {
-        const userDetails = [];
-        userDetails.push(response.data.responseData.token,
-          response.data.responseData.userID,
-          response.data.responseData.userRole);
-        localStorage.setItem('Access-Token', JSON.stringify(userDetails)); // eslint-disable-line
+        localStorage.setItem('Access-Token', response.data.responseData.token); // eslint-disable-line
         dispatch(userLoginSuccess(response.data.responseData));
       })
       .catch((error) => {

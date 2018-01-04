@@ -3,11 +3,9 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import getUserDetails from '../../utils/getUserInfo';
-
-
 import * as bookActions from '../../Actions/booksAction';
 import * as messages from './messages';
-
+import AuthenticateUser from '../HOC/authenticate';
 
 class bookDetails extends React.Component {
   constructor(props){
@@ -249,4 +247,4 @@ function maptDispatchToProps(dispatch) {
   }
 }
 
-export default connect(mapStateToProps, maptDispatchToProps)(bookDetails);
+export default connect(mapStateToProps, maptDispatchToProps)(AuthenticateUser(bookDetails));

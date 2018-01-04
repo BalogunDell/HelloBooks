@@ -1,4 +1,4 @@
-import bcrypt, { genSaltSync } from 'bcrypt';
+import bcrypt from 'bcrypt';
 import model from '../models';
 import helper from '../middleware/helper';
 import errorMessages from '../middleware/errorMessages';

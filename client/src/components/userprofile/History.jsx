@@ -4,7 +4,7 @@ import $ from 'jquery';
 
 import * as bookActions from '../../Actions/booksAction';
 import AllUserBooksComp from './tableRows/allUserBooks';
-
+import AuthenticateUser from '../HOC/authenticate';
 /* @class History
  * @classdesc returns the borrow history of the user
  */
@@ -149,4 +149,4 @@ const mapDispatchToProps = (dispatch) => {
     returnBook: (bookid) => dispatch(bookActions.returnBook(bookid))
   }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(History);
+export default connect(mapStateToProps, mapDispatchToProps)(AuthenticateUser(History));

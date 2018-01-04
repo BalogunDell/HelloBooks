@@ -96,41 +96,25 @@ class Profile extends React.Component {
   handleImageEdit(event) {
     event.preventDefault();
     this.setState({ 
-      loader: true,
-      newImageUploadError: false,
-      newImageUploadSuccess: false,
-      newImageUploadErrorMessage: '',
-      newImageUploadSuccessMessage: ''
+      loader: true
     });
     this.props.saveNewImage(this.state.tempImageName)
     .then(() => {
       this.setState({
         userData: { 
           ...this.state.userData, 
-          image: this.props.newImageUrl } })      
+          image: this.props.newImageUrl.secure_url } });
       this.props.saveNewImageToDB(this.state.userData)
         .then(() => {
-          this.setState({ 
-            loader: false,
-            newImageUploadError: false,
-            newImageUploadSuccess: true,
-            newImageUploadErrorMessage: '',
-            tempImageName: '',
-            newImageUploadSuccessMessage: 'Profile image has been updated'
-          });
+          // this.setState({ 
+          //   loader: false,
+          //   newImageUploadError: false,
+          //   newImageUploadSuccess: true,
+          //   newImageUploadErrorMessage: '',
+          //   tempImageName: '',
+          //   newImageUploadSuccessMessage: 'Profile image has been updated'
+          Materialize.toast('Profile image has been updated', 3000, 'blue rounded');
           // Close modal afer message has been displayed
-          setTimeout(() => {
-            $('.modal').modal('close');
-            this.setState({ 
-              loader: false,
-              newImageUploadError: false,
-              newImageUploadSuccess: false,
-              newImageUploadErrorMessage: '',
-              newImageUploadSuccessMessage: '',
-              preview: '',
-              newImageUploadError:false,
-            });
-          }, 2000);
         })
         .catch((error) => {
           console.log(error);
@@ -182,17 +166,7 @@ class Profile extends React.Component {
   }
 
   componentDidMount() {
-    $(document).ready(()=> {
       $('.modal').modal();
-
-     const showImageOverlay = () => {
-       $('.change-image-overlay').css({ display: 'none'});
-        $('#image-target').hover(() => {
-          $('#test').addClass("change-image-overlay");
-        });     
-      };
-      showImageOverlay();
-    });
   }
 
   componentWillReceiveProps(nextProps) {
@@ -289,7 +263,7 @@ class Profile extends React.Component {
 const mapStateToProps = (state, ownProps) => {
   return {
     userProfile: state.userProfile,
-    newImageUrl: state.userProfile.secure_url
+    newImageUrl: state.uploadFiles.image
   }
 }
 
