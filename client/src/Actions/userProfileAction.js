@@ -81,18 +81,20 @@ export function editProfile(newUserData) {
 // ****************************************************** //
 // *DEFINE ACTION CREATOR FOR USER EDIT PROFIL IMAGEE**** //
 // ****************************************************** //
+
+
 /**
- * @export
- * @param { object } newImage 
- * @returns { object } action type and newImage url (from cloudinary)
+ * 
+ * @export saveImage
+ * @param { object } image 
+ * @returns { object } action type and payload (image)
  */
-export function saveImage(newImage) {
+export function saveImageToCloud(image) {
   return {
-    type: types.EDIT_IMAGE,
-    newImageUrl: newImage
+    type: types.SAVE_IMAGE,
+    image
   };
 }
-
 /**
  * @export saveNewImage
  * @param { object } image 
@@ -106,15 +108,31 @@ export function saveNewImage(image) {
     return axios.post(cloudKeys.cloudinaryUrl, formdata,
       { headers: { 'Content-Type': cloudKeys.requestHeader } })
       .then((response) => {
-        dispatch(saveImage(response.data));
+        dispatch(saveImageToCloud(response.data));
       })
       .catch((error) => {
         throw (error);
       });
   };
 }
+
+
 // ****************************************************** //
 // *DEFINE ACTION CREATOR FOR USER EDIT PROFIL IMAGEE**** //
+
+
+/**
+ * @export
+ * @param { object } newImage 
+ * @returns { object } action type and newImage url (from cloudinary)
+ */
+export function saveImage(newImage) {
+  return {
+    type: types.EDIT_IMAGE,
+    newImageUrl: newImage
+  };
+}
+
 
 /**
  * @export saveNewImageToDB

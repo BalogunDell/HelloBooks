@@ -1,15 +1,14 @@
+import jwt from 'jsonwebtoken';
 /**
  * @returns  { object } userDetails
  */
 const getUserDetails = () => {
-  const userDetails = JSON.parse(localStorage.getItem('Access-Token')); //eslint-disable-line
-  if (userDetails == null) {
-    return false;
-  }
+  const userDetails = localStorage.getItem('Access-Token'); //eslint-disable-line
+  const decoded = jwt.decode(userDetails);
   return {
-    userId: userDetails[1],
-    userType: userDetails[2],
-    savedToken: userDetails[0]
+    userId: decoded.id,
+    userType: decoded.role,
+    savedToken: userDetails
   };
 };
 

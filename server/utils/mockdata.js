@@ -168,7 +168,7 @@ const mockData = {
   },
 
   adminSigninData: {
-    username: 'adminUsername22',
+    username: 'adminUsername12',
     password: 'password',
   },
 

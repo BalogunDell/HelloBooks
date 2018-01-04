@@ -56,8 +56,8 @@ class profileUpdateForm extends React.Component {
         errorStatus: false, 
         errorMessage: '',
         successStatus: true,
-        disable: true,
-        successMessage: 'Profile has been updated'});
+        disable: true });
+        Materialize.toast('Profile has been updated', 3000, 'blue rounded');
         setTimeout(() => {
           const {cancelEdit} = this.props;
           cancelEdit();

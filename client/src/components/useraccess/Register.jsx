@@ -17,7 +17,7 @@ class Register extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
-      userData: Object.assign({}, this.props.initialUserData),
+      userData: {...this.props.initialUserData},
       redirect: false,
       error: '',
       loading: false
