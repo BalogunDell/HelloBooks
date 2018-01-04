@@ -48,23 +48,41 @@ class History extends React.Component {
   handleSelectChange(event) {
     switch(event.target.value) {
       case 'Pending Returns':
-        this.setState({tableHeader: event.target.value});
+        this.setState({
+          tableHeader: event.target.value,
+          loading: true
+        });
         this.props.getUserBooks().then(() => {
           const pending = this.props.fetchedBooks.response.filter(book => book.returnstatus == false);
-          this.setState({ allUserBooks: pending});
+          this.setState({
+            allUserBooks: pending,
+            loading: false
+          });
         });
       break;
       case 'Returned books':
-      this.setState({tableHeader: event.target.value});
+      this.setState({
+        tableHeader: event.target.value,
+        loading: true
+      });
       this.props.getUserBooks().then(() => {
         const returned = this.props.fetchedBooks.response.filter(book => book.returnstatus == true);
-        this.setState({ allUserBooks: returned});
+        this.setState({
+          allUserBooks: returned,
+          loading: false
+        });
       });
       break;
       default:
-      this.setState({tableHeader: event.target.value});
+      this.setState({
+        tableHeader: event.target.value,
+        loading: true
+      });
       this.props.getUserBooks().then(() => {
-        this.setState({ allUserBooks: this.props.fetchedBooks.response});
+        this.setState({ 
+          allUserBooks: this.props.fetchedBooks.response,
+          loading: false
+        });
       });
       }
   }
