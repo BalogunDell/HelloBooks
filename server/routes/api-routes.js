@@ -59,10 +59,10 @@ Router.get('/trendingbooks', bookController.fetchTrendingBooks);
 // redirect every other address
 Router.route('*')
   .post((req, res) => {
-    res.send('This is an invalid route');
+    res.status(404).json({ message: 'This is an invalid route' });
   })
   .get((req, res) => {
-    res.send('This is an invalid route');
+    res.status(404).json({ message: 'This is an invalid route' });
   });
 
 export default Router;
