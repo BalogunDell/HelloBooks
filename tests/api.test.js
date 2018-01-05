@@ -1299,6 +1299,17 @@ describe('Hellobooks API', () => {
 
     it('should send a message when users visits invalid routes' , (done) => {
       request
+      .get(`${api}/jgjkfjgjfgjfhgh`)
+      .end((err, res) => {
+        expect(res.status).to.equal(404);
+        expect(res.body).to.have.property('message');
+        expect(res.body.message).to.equal('This is an invalid route');
+        done();
+      });
+    });
+
+    it('should send a message when users visits invalid routes' , (done) => {
+      request
       .get(`${api}/users/dsfadfadsf`)
       .end((err, res) => {
         expect(res.status).to.equal(401);
