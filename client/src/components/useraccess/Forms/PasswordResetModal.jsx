@@ -7,9 +7,9 @@ import * as userActions from '../../../Actions/userAccessAction';
  * @class PasswordResetModal
  * @classdesc returns Password reset modal
  */
-class PasswordResetModal extends React.Component {
-  constructor(prop) {
-    super();
+export class PasswordResetModal extends React.Component {
+  constructor(props) {
+    super(props);
     this.state = {
       email: '',
       loader:false,
@@ -121,7 +121,7 @@ class PasswordResetModal extends React.Component {
 
 }
 
-function dispatchToProps(dispatch){
+const dispatchToProps = (dispatch) => {
   return {
     sendEmail: (email) => dispatch(userActions.sendEmail(email))
   }
