@@ -86,7 +86,7 @@ class Allbooks extends React.Component {
 
                   {/* Book details  */}
                   <div className="dets">
-                    <Link to={`/user/bookdetails`}>
+                    <Link to={`/user/bookdetails`} id="bookdetail">
                       <button 
                         type="button"
                         value={book.id}

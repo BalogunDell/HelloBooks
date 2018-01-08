@@ -176,12 +176,15 @@ class profileUpdateForm extends React.Component {
           <div className="input-field col s12 m12 l6">
             <input type="button" 
               className="btn waves-ripple waves-effect red" 
-              onClick={cancelEdit} value="Cancel"/>
+              onClick={cancelEdit}
+              id= "cancelEdit"
+              value="Cancel"/>
           </div> 
           <div className="input-field col s12 m12 l6">
             <input type="submit"
               className="btn waves-ripple waves-effect" 
-              disabled={this.state.disable} 
+              disabled={this.state.disable}
+              id="saveBtn"
               value="Save"/>
           </div> 
         </div>

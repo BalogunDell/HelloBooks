@@ -22,6 +22,8 @@
     "migrate:test": "sequelize db:migrate:undo:all --env test && sequelize db:migrate --env test && sequelize db:seed:all --env test",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "client:test": "jest ./tests/*.client.test.js --coverage",
+    "e2e:test": "nightwatch ./tests/e2e/*.test.js",
+    "e2e:test:server": "NODE_ENV=test babel-node -- server/index.js",
     "test:all": "npm run test && npm run client:test",
     "postinstall": "webpack -p --config ./webpack.prod.config.js"
   },
@@ -80,7 +82,8 @@
     "webpack-merge": "^4.1.1",
     "webpack-dev-middleware": "^1.12.0",
     "webpack-hot-middleware": "^2.20.0",
-    "uglifyjs-webpack-plugin": "^1.1.5"
+    "uglifyjs-webpack-plugin": "^1.1.5",
+    "nightwatch-html-reporter": "^2.0.4"
   },
   "devDependencies": {
     "babel-jest": "^22.0.3",
@@ -100,6 +103,7 @@
     "jest": "^22.0.3",
     "mocha": "^3.5.0",
     "mocha-lcov-reporter": "^1.3.0",
+    "nightwatch": "^0.9.19",
     "nock": "^9.1.5",
     "nodemon": "^1.11.0",
     "nyc": "^11.1.0",
