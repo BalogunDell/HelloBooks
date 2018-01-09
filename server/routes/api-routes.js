@@ -20,11 +20,6 @@ Router.post('/users/signin', userController.signin);
 Router.post('/newcategory', Auth.verifyAdmin, bookController.addCategory);
 Router.get('/categories', Auth.verifyAdmin, bookController.getCategories);
 
-// Delete and edit categories
-Router.route('/category')
-  .delete(Auth.verifyAdmin, bookController.deleteCategory);
-// .put(Auth.verifyAdmin, bookController.editCategory);
-
 
 // Generate uique url for password reset, Reset password
 Router.post('/resetpassword', userController.generateResetPassUrl);
@@ -64,10 +59,10 @@ Router.get('/trendingbooks', bookController.fetchTrendingBooks);
 // redirect every other address
 Router.route('*')
   .post((req, res) => {
-    res.send('This is an invalid route');
+    res.status(404).json({ message: 'This is an invalid route' });
   })
   .get((req, res) => {
-    res.send('This is an invalid route');
+    res.status(404).json({ message: 'This is an invalid route' });
   });
 
 export default Router;

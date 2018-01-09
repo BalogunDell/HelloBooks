@@ -5,9 +5,9 @@ import renderer from 'react-test-renderer';
 import { shallow, mount, render , configure} from 'enzyme';
 import jestSnapshot from 'chai-jest-snapshot';
 
-import Home from '../client/src/components/home/Home';
-import LoginForm from '../client/src/components/useraccess/Forms/LoginForm';
-import { PasswordResetModal } from '../client/src/components/useraccess/Forms/PasswordResetModal';
+import Home from '../../client/src/components/home/Home';
+import LoginForm from '../../client/src/components/useraccess/Forms/LoginForm';
+import { PasswordResetModal } from '../../client/src/components/useraccess/Forms/PasswordResetModal';
 import * as mockData from './mockdata';
 
 const expect = chai.expect;

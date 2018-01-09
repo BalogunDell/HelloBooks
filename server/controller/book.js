@@ -318,31 +318,6 @@ class Book {
    * @param { object } res
    * @return { object } object
    */
-  static deleteCategory(req, res) {
-    categoryModel.findById(req.body.id)
-      .then((response) => {
-        if (response) {
-          categoryModel.destroy({ where: { id: req.body.id } }).then(() => {
-            res.status(201).json({ message: 'Category deleted' });
-          })
-            .catch((error) => {
-              res.status(501).json({ error: error.errors[0].mess });
-            });
-        } else {
-          res.status(404).json({ message: 'Category does not exist' });
-        }
-      })
-      .catch((error) => {
-        res.status(501).json({ error: error.errors[0].message });
-      });
-  }
-
-  /**
-   * 
-   * @param { object } req
-   * @param { object } res
-   * @return { object } object
-   */
   static fetchTrendingBooks(req, res) {
     bookModel.findAll({ limit: 4, order: [['createdAt', 'DESC']] })
       .then((response) => {

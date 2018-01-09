@@ -117,7 +117,7 @@ class User {
                     });
                 })
                 .catch((error) => {
-                  res.status(201).json({ error });
+                  res.status(501).json({ error });
                 });
             } else {
               res.status(404).json({ message: 'This email does not exist in our database' });

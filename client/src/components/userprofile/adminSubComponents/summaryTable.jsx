@@ -58,23 +58,18 @@ class summaryTable extends React.Component {
 
             <tbody>
               <tr>
-                <td>Total Books in Library</td>
-                <td>{this.state.bookCount}</td>
+                <td id="totalBooksText">Total Books in Library</td>
+                <td id="totalBooks">{this.state.bookCount}</td>
               </tr>
 
               <tr>
-                <td>Books Returned</td>
-                <td>{this.state.booksReturnedCount}</td>
+                <td id="returnedBooksText">Books Returned</td>
+                <td id="returnedBooks">{this.state.booksReturnedCount}</td>
               </tr>
 
               <tr>
-                <td>Pending Return</td>
-                <td>{this.state.pendingReturnCount}</td>
-              </tr>
-
-              <tr>
-                <td>Most Borrowed book</td>
-                <td>Angular 2, React for Beginners...</td>
+                <td id="pendingBooksText">Pending Return</td>
+                <td id="pendingBooks">{this.state.pendingReturnCount}</td>
               </tr>
             </tbody>
           </table>

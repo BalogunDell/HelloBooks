@@ -28,7 +28,7 @@ class Helper {
     bookModel.findById(parseInt(req.body.bookid, 10))
       .then((book) => {
         if (!book) return res.status(404).send({ msg: 'Book not found' });
-        if (!book.dataValues.quantity) return res.status('404').json({ msg: 'This book is currently unavailable' });
+        if (!book.dataValues.quantity) return res.status('403').json({ msg: 'This book is currently unavailable' });
         req.book = book;
         next();
       })

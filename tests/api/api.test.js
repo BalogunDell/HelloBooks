@@ -2,13 +2,13 @@ process.env.NODE_ENV = 'test'
 
 import chai from 'chai';
 import supertest from 'supertest';
-import app from '../server/index';
-import mockdata from '../server/utils/mockdata';
+import app from '../../server/index';
+import mockdata from '../../server/utils/mockdata';
 import jwt from 'jsonwebtoken';
-import fakeUsers from '../server/seeds/users';
-import fakeBooks from '../server/seeds/books';
-import models from '../server/models/index';
-import categories from '../server/seeds/category';
+import fakeUsers from '../../server/seeds/users';
+import fakeBooks from '../../server/seeds/books';
+import models from '../../server/models/index';
+import categories from '../../server/seeds/category';
 
 require('dotenv').config();
 
@@ -256,6 +256,34 @@ describe('Hellobooks API', () => {
       });
     });
 
+    it('should allow user borrow a book', (done) => {
+      request
+      .post(`${userAPI}/${userId}/books`)
+      .set('Authorization', userToken)
+      .send('Accept', 'Application/json')
+      .send({bookid: 1})
+      .end((err, res) => {
+        expect(res.body).to.have.property('msg');
+        expect(res.body.msg).to.equal('You have either exhausted your book limit or you still have this book with you');
+        done();
+      });
+    });
+
+    it('should allow user borrow a book', (done) => {
+      request
+      .post(`${userAPI}/${userId}/books`)
+      .set('Authorization', userToken)
+      .send('Accept', 'Application/json')
+      .send({bookid: 2})
+      .end((err, res) => {
+        expect(res.status).to.equal(403);
+        expect(res.body).to.be.an('object');
+        expect(res.body).to.have.property('msg');
+        expect(res.body.msg).to.equal('This book is currently unavailable');
+        done();
+      });
+    });
+
     it('should not allow a user borrow a book that does not exist', (done) => {
       request
       .post(`${userAPI}/${userId}/books`)
@@ -471,9 +499,7 @@ describe('Hellobooks API', () => {
         expect(res.body.data.categoryid).to.equal(mockdata.bookdata.categoryid);
         expect(res.body.data.visibility).to.equal(true);
         expect(res.body.data.image).to.equal(mockdata.bookdata.image);
-        expect(res.body.data.pdf).to.equal(mockdata.bookdata.pdf);
-        
-        
+        expect(res.body.data.pdf).to.equal(mockdata.bookdata.pdf); 
         done();
       });
     });
@@ -514,8 +540,36 @@ describe('Hellobooks API', () => {
         expect(res.status).to.equal(200);
         expect(res.body.message.id).to.equal(mockdata.editBookdata.id);
         done();
-      })
-    })
+      });
+    });
+
+    it('should allow user borrow a book', (done) => {
+      request
+      .post(`${userAPI}/${userId}/books`)
+      .set('Authorization', userToken)
+      .send('Accept', 'Application/json')
+      .send({bookid: 1})
+      .end((err, res) => {
+        expect(res.status).to.equal(201);
+        expect(res.body).to.be.an('object');
+        expect(res.body).to.have.property('message');
+        expect(res.body).to.have.property('returnDate');
+        done();
+      });
+    });
+
+    it('should delete a book', (done) => {
+      request
+      .delete(`${api}/books/${1}`)
+      .set('Authorization', adminToken)
+      .send('Accept', 'Application/json')
+      .end((err, res) => {
+        expect(res.status).to.equal(501);
+        expect(res.body).to.have.property('message');
+        expect(res.body.message).to.equal('This book has been borrowed and cannot be deleted');
+        done();
+      });
+    });
 
     it('should delete a book', (done) => {
       request
@@ -523,8 +577,22 @@ describe('Hellobooks API', () => {
       .set('Authorization', adminToken)
       .send('Accept', 'Application/json')
       .end((err, res) => {
+        expect(res.status).to.equal(201);
         expect(res.body.message).to.equal('Book has been successfully deleted');
         expect(res.body).to.have.property('updatedBooks');
+        done();
+      });
+    });
+
+    it('should not delete a borrowed book', (done) => {
+      request
+      .delete(`${api}/books/${mockdata.editBookdata.id}`)
+      .set('Authorization', adminToken)
+      .send('Accept', 'Application/json')
+      .end((err, res) => {
+        expect(res.status).to.equal(404);
+        expect(res.body).to.have.property('message');
+        expect(res.body.message).to.equal('Book not found in the database');
         done();
       });
     });
@@ -534,6 +602,7 @@ describe('Hellobooks API', () => {
       .post(`${api}/books/${mockdata.editBookdata.id}`)
       .set('Authorization', adminToken)
       .end((err, res) => {
+        expect(res.status).to.equal(201);
         expect(res.body).to.have.property('message');
         expect(res.body.message).to.equal('Book has been published');
         done();
@@ -546,6 +615,7 @@ describe('Hellobooks API', () => {
       .set('Authorization', adminToken)
       .send('Accept', 'Application/json')
       .end((err, res) => {
+        expect(res.status).to.equal(201);
         expect(res.body.message).to.equal('Book has been successfully deleted');
         expect(res.body).to.have.property('updatedBooks');
         done();
@@ -557,6 +627,7 @@ describe('Hellobooks API', () => {
       .get(`${api}/books/borrowedbooks`)
       .set('Authorization', adminToken)
       .end((err, res) => {
+        expect(res.status).to.equal(200);
         expect(res.body).to.have.property('books');
         expect(res.body.books).to.be.an('array');
         expect(res.body.books[0]).to.have.property('id');
@@ -681,20 +752,6 @@ describe('Hellobooks API', () => {
         expect(res.status).to.equal(400);
         expect(res.body).to.have.property('error');
         expect(res.body.error).to.equal('Category should be words separated with -');
-        done();
-      });
-    })
-
-    it('should delete a category' , (done) => {
-      request
-      .delete(`${api}/category`)
-      .set('Authorization', adminToken)
-      .send('Accept', 'Application/json')
-      .send({id:1})
-      .end((err, res) => {
-        expect(res.status).to.equal(201);
-        expect(res.body).to.have.property('message');
-        expect(res.body.message).to.equal('Category deleted');
         done();
       });
     })
@@ -1124,6 +1181,145 @@ describe('Hellobooks API', () => {
     })
   });
 });
+
+  //***********************************//
+  //*****TEST FOR RESET PASSWORD*******//
+  //**********************************//
+
+  describe('Protected Routes:', () => {
+    it('should not allow users access these routes without token' , (done) => {
+      request
+      .post(`${api}/newcategory`)
+      .end((err, res) => {
+      expect(res.status).to.equal(401);
+      expect(res.body).to.have.property('message');
+      expect(res.body.message).to.equal('Unauthorized - Access Denied');
+      done();
+      });
+    });
+
+    it('should not allow users access these routes without token' , (done) => {
+      request
+      .post(`${api}/books`)
+      .end((err, res) => {
+        expect(res.status).to.equal(401);
+        expect(res.body).to.have.property('message');
+        expect(res.body.message).to.equal('Unauthorized - Access Denied');
+        done();
+      });
+    });
+
+    it('should not allow users access these routes without token' , (done) => {
+      request
+      .put(`${api}/books/${1}`)
+      .end((err, res) => {
+        expect(res.status).to.equal(401);
+        expect(res.body).to.have.property('message');
+        expect(res.body.message).to.equal('Unauthorized - Access Denied');
+        done();
+      });
+    });
+
+    it('should not allow users access these routes without token' , (done) => {
+      request
+      .post(`${api}/books/${1}`)
+      .end((err, res) => {
+        expect(res.status).to.equal(401);
+        expect(res.body).to.have.property('message');
+        expect(res.body.message).to.equal('Unauthorized - Access Denied');
+        done();
+      });
+    });
+
+    it('should not allow users access these routes without token' , (done) => {
+      request
+      .delete(`${api}/books/${1}`)
+      .end((err, res) => {
+        expect(res.status).to.equal(401);
+        expect(res.body).to.have.property('message');
+        expect(res.body.message).to.equal('Unauthorized - Access Denied');
+        done();
+      });
+    });
+
+    it('should not allow users access these routes without token' , (done) => {
+      request
+      .get(`${api}/books/${1}`)
+      .end((err, res) => {
+        expect(res.status).to.equal(401);
+        expect(res.body).to.have.property('message');
+        expect(res.body.message).to.equal('Unauthorized - Access Denied');
+        done();
+      });
+    });
+
+    it('should not allow users access these routes without token' , (done) => {
+      request
+      .get(`${api}/books/borrowedbooks`)
+      .end((err, res) => {
+        expect(res.status).to.equal(401);
+        expect(res.body).to.have.property('message');
+        expect(res.body.message).to.equal('Unauthorized - Access Denied');
+        done();
+      });
+    });
+
+    it('should not allow users access these routes without token' , (done) => {
+      request
+      .get(`${api}/books/all`)
+      .end((err, res) => {
+        expect(res.status).to.equal(401);
+        expect(res.body).to.have.property('message');
+        expect(res.body.message).to.equal('Unauthorized - Access Denied');
+        done();
+      });
+    });
+
+    it('should not allow users access these routes without token' , (done) => {
+      request
+      .get(`${api}/users/${2}/books`)
+      .end((err, res) => {
+        expect(res.status).to.equal(401);
+        expect(res.body).to.have.property('message');
+        expect(res.body.message).to.equal('Invalid/expired token');
+        done();
+      });
+    });
+
+    it('should send a message when users visits invalid routes' , (done) => {
+      request
+      .get(`${api}/jdfidjfdsf`)
+      .end((err, res) => {
+        expect(res.status).to.equal(404);
+        expect(res.body).to.have.property('message');
+        expect(res.body.message).to.equal('This is an invalid route');
+        done();
+      });
+    });
+
+    it('should send a message when users visits invalid routes' , (done) => {
+      request
+      .get(`${api}/jgjkfjgjfgjfhgh`)
+      .end((err, res) => {
+        expect(res.status).to.equal(404);
+        expect(res.body).to.have.property('message');
+        expect(res.body.message).to.equal('This is an invalid route');
+        done();
+      });
+    });
+
+    it('should send a message when users visits invalid routes' , (done) => {
+      request
+      .get(`${api}/users/dsfadfadsf`)
+      .end((err, res) => {
+        expect(res.status).to.equal(401);
+        expect(res.body).to.have.property('message');
+        expect(res.body.message).to.equal('Invalid/expired token');
+        done();
+      });
+    });
+    
+  });
 
 
 

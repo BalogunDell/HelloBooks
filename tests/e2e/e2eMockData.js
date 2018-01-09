@@ -12,7 +12,11 @@ const userLoginData = {
   fakeData3: {
       username: 'Fred1',
       password: 'password'
-  }
+  },
+  fakeData4: {
+    username: 'adminUsername22',
+    password: 'password'
+}
 }
 const userNavImage = 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507971952/hellobooks/hb-logo.png';
 const userEditData = {

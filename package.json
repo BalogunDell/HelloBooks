@@ -8,7 +8,7 @@
     "npm": "3.10.10"
   },
   "scripts": {
-    "test": "npm run migrate:test && NODE_ENV=test node_modules/.bin/nyc --reporter=lcov --reporter=text mocha --require babel-polyfill --timeout 10000 --compilers js:babel-register -- ./tests/api.test.js",
+    "test": "npm run migrate:test && NODE_ENV=test node_modules/.bin/nyc --reporter=lcov --reporter=text mocha --require babel-polyfill --timeout 10000 --compilers js:babel-register -- ./tests/api/api.test.js",
     "lint": "eslint ./server/**/*.js && eslint ./client/**/*.jsx && eslint ./client/**/*.js --fix",
     "build": "babel ./server --out-dir build",
     "start:server": "babel-node -- server/index.js",
@@ -21,7 +21,7 @@
     "migrate:dev": "npm run migrate:undo && npm run migrate && npm run seed",
     "migrate:test": "sequelize db:migrate:undo:all --env test && sequelize db:migrate --env test && sequelize db:seed:all --env test",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
-    "client:test": "jest ./tests/*.client.test.js --coverage",
+    "client:test": "jest ./tests/client/*.client.test.js --coverage",
     "e2e:test": "nightwatch ./tests/e2e/*.test.js",
     "e2e:test:server": "NODE_ENV=test babel-node -- server/index.js",
     "test:all": "npm run test && npm run client:test",
