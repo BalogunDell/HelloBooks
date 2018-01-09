@@ -19,12 +19,33 @@ const UserNav = ({ userType, navLinks, linkIcons, linkTexts, path, userDetails, 
         </li>
 
         {/* SHOW NAVIGATION FOR USER/ADMIN */}
-        <li id="dashboard"><div className="black white-text settings "><h5>HELLO BOOKS</h5></div></li>
+        <li id="dashboard">
+          <div className="black white-text settings ">
+            <h5 id="hellobooksTitle">HELLO BOOKS</h5>
+          </div>
+        </li>
         <li></li>
-        <li><NavLink activeClassName="active" to={`${path}/${linkTexts[0]}`}>{navLinks[0]}<i className="material-icons white-text">{linkIcons[0]}</i></NavLink></li>
-        <li><NavLink activeClassName="active" to={`${path}/${linkTexts[1]}`}>{navLinks[1]}<i className="material-icons white-text">{linkIcons[1]}</i></NavLink></li>
-        <li><NavLink activeClassName="active" to={`${path}/${linkTexts[2]}`}>{navLinks[2]}<i className="material-icons white-text">{linkIcons[2]}</i></NavLink></li>
-        <li><NavLink activeClassName="active" to={`${path}/${linkTexts[3]}`}>{navLinks[3]}<i className="material-icons white-text">{linkIcons[3]}</i></NavLink></li> 
+        <li>
+          <NavLink activeClassName="active" to={`${path}/${linkTexts[0]}`} id="firstLink">
+          {navLinks[0]}
+          <i className="material-icons white-text">{linkIcons[0]}</i>
+          </NavLink>
+        </li>
+        <li>
+          <NavLink activeClassName="active" to={`${path}/${linkTexts[1]}`} id="secondLink">
+          {navLinks[1]}<i className="material-icons white-text">{linkIcons[1]}</i>
+          </NavLink>
+        </li>
+        <li>
+          <NavLink activeClassName="active" to={`${path}/${linkTexts[2]}`} id="thirdLink">
+          {navLinks[2]}<i className="material-icons white-text">{linkIcons[2]}</i>
+          </NavLink>
+        </li>
+        <li>
+          <NavLink activeClassName="active" to={`${path}/${linkTexts[3]}`} id="fourthLink">
+          {navLinks[3]}<i className="material-icons white-text">{linkIcons[3]}</i>
+          </NavLink>
+        </li> 
         <li id="dashboard"><div className="settings white-text">SETTINGS</div></li>
         
         {/* SHOW USER IMAGE, USERNAME AND MEMBERSHIP LEVEL */}
@@ -34,7 +55,7 @@ const UserNav = ({ userType, navLinks, linkIcons, linkTexts, path, userDetails, 
             </div>
 
             
-              <span className="white-text username">Password:*****<i className="material-icons editPass">edit</i></span>
+              <span className="white-text username password">Password:*****<i className="material-icons editPass">edit</i></span>
             <span className="white-text username">Username: {userDetails.username}</span>
             {userType === 'user'
             ?

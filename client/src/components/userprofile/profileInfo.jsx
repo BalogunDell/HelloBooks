@@ -12,28 +12,28 @@ const profileInfo = ({userData, showInputHandler}) => {
           </thead>
           <tbody>
             <tr>
-              <td>Firstname:</td>
-              <td>{userData.firstname} </td>
+              <td id="firstnameText">Firstname:</td>
+              <td id="firstname">{userData.firstname} </td>
             </tr>
 
             <tr>
-              <td>Lastname:</td>
-              <td> {userData.lastname} </td>
+              <td id="lastnameText">Lastname:</td>
+              <td id="lastname"> {userData.lastname} </td>
             </tr>
 
             <tr>
-              <td>Email:</td>
-              <td> {userData.email} </td>
+              <td id="emailText">Email:</td>
+              <td id="email"> {userData.email} </td>
             </tr>
 
             <tr>
-              <td>Username:</td>
-              <td> {userData.username} </td>
+              <td id="usernameText">Username:</td>
+              <td id="username"> {userData.username} </td>
             </tr>
 
             <tr>
-              <td>Password:</td>
-              <td>***</td>
+              <td id="passwordText">Password:</td>
+              <td id="password">***</td>
             </tr>
           </tbody>
         </table>

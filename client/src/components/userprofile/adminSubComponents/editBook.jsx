@@ -336,7 +336,10 @@ class editBookForm extends React.Component {
                     value={this.state.book.year}
                     onChange={this.handleEditInput}                
                     required />
-                    <label htmlFor="year" data-error="Year must be numbers" data-success="">Year <span>*</span></label>
+                    <label htmlFor="year" 
+                      data-error="Year must be numbers" 
+                      id="Year"
+                      data-success="">Year <span>*</span></label>
                   </div>
                 </div>
 
@@ -421,7 +424,10 @@ class editBookForm extends React.Component {
                   <div className="input-field">
                     <div className="row hiddenBtns">
                       <div className="input-field col s12 m6 l12">
-                      <input type="submit"  value= "Update book"  className="btn submitBtn waves-effect waves-teal custom"/>                      
+                      <input type="submit"
+                        value= "Update book"
+                        className="btn submitBtn waves-effect waves-teal custom"
+                        id="editBook"/>                      
                       </div>
                     </div>
                   </div>

@@ -6,9 +6,9 @@ import thunk from 'redux-thunk';
 import moxios from 'moxios';
 import chai from 'chai';
 import * as mockData from './mockdata';
-import * as apiEndPoints from '../client/src/utils/apiEndPoints.js';
-import * as cloundinaryKey from '../client/src/utils/cloudinaryKeys';
-import getUserInfo from '../client/src/utils/getUserInfo';
+import * as apiEndPoints from '../../client/src/utils/apiEndPoints.js';
+import * as cloundinaryKey from '../../client/src/utils/cloudinaryKeys';
+import getUserInfo from '../../client/src/utils/getUserInfo';
 
 // Import mock local storage
 import moclLocalStorage from './mockDataStorage';
@@ -21,14 +21,14 @@ configure({ adapter: new Adapter() });
 import { shallow, mount, render } from 'enzyme';
 
 // Import actions and action types
-import * as userAcessActions from '../client/src/Actions/userAccessAction';
-import * as bookActions from '../client/src/Actions/booksAction';
-import * as userProfileAction from '../client/src/Actions/userProfileAction';
-import * as actionTypes from '../client/src/Actions/actionTypes'
+import * as userAcessActions from '../../client/src/Actions/userAccessAction';
+import * as bookActions from '../../client/src/Actions/booksAction';
+import * as userProfileAction from '../../client/src/Actions/userProfileAction';
+import * as actionTypes from '../../client/src/Actions/actionTypes'
 
-import Home from '../client/src/components/home/Home';
-import Books from '../client/src/components/books/Books';
-import Book from '../client/src/components/books/book';
+import Home from '../../client/src/components/home/Home';
+import Books from '../../client/src/components/books/Books';
+import Book from '../../client/src/components/books/book';
 
 
 const middleware = [thunk];

@@ -2,13 +2,13 @@ process.env.NODE_ENV = 'test'
 
 import chai from 'chai';
 import supertest from 'supertest';
-import app from '../server/index';
-import mockdata from '../server/utils/mockdata';
+import app from '../../server/index';
+import mockdata from '../../server/utils/mockdata';
 import jwt from 'jsonwebtoken';
-import fakeUsers from '../server/seeds/users';
-import fakeBooks from '../server/seeds/books';
-import models from '../server/models/index';
-import categories from '../server/seeds/category';
+import fakeUsers from '../../server/seeds/users';
+import fakeBooks from '../../server/seeds/books';
+import models from '../../server/models/index';
+import categories from '../../server/seeds/category';
 
 require('dotenv').config();
 

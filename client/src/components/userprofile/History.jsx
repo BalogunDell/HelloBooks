@@ -125,9 +125,9 @@ class History extends React.Component {
         <div className="row">
           <div className="input-field col s12 m12 l3 offset-l1 filter-table">
             <select value={this.state.selectedValue} onChange={this.handleSelectChange}>
-            <option value="Pending Returns">Pending returns</option>
-            <option value="Returned books">Returned books</option>
-              <option value="All Books"> All books</option>
+            <option id="pending" value="Pending Returns">Pending returns</option>
+            <option id="returned" value="Returned books">Returned books</option>
+              <option id="allbooks" value="All Books"> All books</option>
             </select>
             <label>Filter history table</label>
           </div>

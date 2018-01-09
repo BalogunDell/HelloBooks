@@ -6,3 +6,7 @@ build/
 npm-debug.log
 client/dist/bundle.js
 .nyc_output/
+selenium-debug.log
+e2e_reports/
+screenshots/
+bin/

@@ -9,7 +9,7 @@ const book = (bookData) => {
     <div>
       <div className="row">
       <div className="col s12 books-holder-title">
-        <h1>Trending Books</h1>
+        <h1 className="trending">Trending Books</h1>
       </div>
   </div>
   <div className="row">
@@ -32,7 +32,7 @@ const book = (bookData) => {
 
             {/* Book details  */}
             <div className="dets">
-              <Link to={`/login`}>
+              <Link to={`/login`} id="borrowBook">
                 <button 
                   type="button"
                   value={book.id}

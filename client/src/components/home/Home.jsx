@@ -20,10 +20,10 @@ export default class Home extends React.Component {
             just got easier with us</p>
               <div className ="row">
                 <div className= "col s12 m12 l6">
-                  <Link className="btn waves-effect waves-ripple" to ="/about">Get to know more</Link>  
+                  <Link className="btn waves-effect waves-ripple about" name="about" to ="/about">Get to know more</Link>  
                 </div>
                 <div className= "col s12 m12 l6">
-                  <Link className="btn waves-effect waves-ripple" to ="/register">Signup</Link>
+                  <Link className="btn waves-effect waves-ripple signup" name="signup" to ="/register">Signup</Link>
                 </div>
               </div>
           </div>

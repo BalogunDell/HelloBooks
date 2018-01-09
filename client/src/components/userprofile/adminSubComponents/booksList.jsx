@@ -218,7 +218,6 @@ class booksList extends React.Component {
             <option value="allbooks">All books</option>
             <option value="booksreturned">Books Returned</option>
             <option value="pendingreturn">Pending Return</option>
-            <option value="mostborrowedbooks">Most Borrowed Books</option>
 
           </select>
       </div>

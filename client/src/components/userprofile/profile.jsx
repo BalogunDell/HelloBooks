@@ -233,7 +233,11 @@ class Profile extends React.Component {
                 }
                 {!this.state.editButton 
                 ?
-                  <button className="btn waves-ripple waves-effect modal-trigger" onClick={this.showInputHandler}>EDIT</button>
+                  <button 
+                    className="btn waves-ripple waves-effect modal-trigger" 
+                    onClick={this.showInputHandler}
+                    id="editProfile">EDIT
+                  </button>
                 : 
                   null
                 }
