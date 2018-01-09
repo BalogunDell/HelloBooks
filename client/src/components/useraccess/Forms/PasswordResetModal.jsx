@@ -83,6 +83,19 @@ export class PasswordResetModal extends React.Component {
     message.className="black-text center-align"
   }
 
+  componentDidMount() {
+    message.innerHTML = '';
+    this.setState({
+      disableBtn: false,
+      error: false
+    });
+    $('.modal').modal({
+      dismissible: false,
+      opacity: 0.3
+    });
+
+  }
+
   render() {
     return(
     <div className="modal passwordModal" id="passwordResetModal">
