@@ -26,7 +26,7 @@ export default function userAccessReducer(state = {}, action) {
       };
     case types.SEND_EMAIL:
       return {
-        ...state, ...action.serverResponse
+        ...state, ...action.serverRes
       };
     case types.RESET_PASS:
       return {

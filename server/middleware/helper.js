@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken';
 import nodeMailer from 'nodemailer';
 import model from '../models';
 import util from '../utils/limits';
+import emailTemplate from '../utils/emailTemplate';
 
 require('dotenv').config();
 
@@ -140,10 +141,8 @@ class Helper {
     const mailOptions = {
       from: 'delighteddell@gmail.com',
       to: userEmail,
-      subject: 'Password reset link',
-      html: `<h1>RESET YOUR PASSWORD</h1>
-      <p>You requested to reset your password</p>
-      <p><a href="https://hellobooksapp.herokuapp.com/resetpassword/${passwordUrl}">Click here to reset your password</a></p>`
+      subject: 'Password Reset',
+      html: emailTemplate(passwordUrl, userEmail)
     };
 
     const result = mailCourier.sendMail(mailOptions);
