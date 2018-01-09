@@ -92,7 +92,10 @@ const createBookForm = ({disableBtn, showHiddenBtns,loader,
               <select name="categoryid" value={initialData.categoryid} onChange={handleInput}>
                 <option value="...">Select a category</option>
                 { loadedCategories.map((val, key) => {                  
-                  return (<option key={val.id} value={val.id}>{val.category}</option>)
+                  return (<option key={val.id} 
+                      value={val.id} 
+                      id={`#${val.category}`}>{val.category}
+                    </option>)
                 })
                 }
               </select>
@@ -107,7 +110,7 @@ const createBookForm = ({disableBtn, showHiddenBtns,loader,
                 <input type="file" name="image" id="bookImage" accept=".jpg" onChange={imageUploadHandler} />
               </div>
               <div className="file-path-wrapper">
-                <input className="file-path validate" required type="text" placeholder="Upload book image"/>
+                <input className="file-path validate" required type="text" id="bookImageInput" placeholder="Upload book image"/>
               </div>
             </div>
           </div>
@@ -119,7 +122,7 @@ const createBookForm = ({disableBtn, showHiddenBtns,loader,
                 <input type="file" name="pdf" id="pdf" accept=".pdf" onChange={fileUploadHandler} />
               </div>
               <div className="file-path-wrapper">
-                <input className="file-path validate" required type="text" placeholder="Upload book file" />
+                <input className="file-path validate" required type="text" id="pdfInput" placeholder="Upload book file" />
               </div>
             </div>
           </div>
@@ -144,7 +147,7 @@ const createBookForm = ({disableBtn, showHiddenBtns,loader,
                   </div>
                 </div>
                 :
-                <input type="submit" className="submitBtn waves-effect waves-teal custom" 
+                <input type="submit" id="createBook" className="submitBtn waves-effect waves-teal custom" 
                 disabled= {disableBtn}/>
               }
             </div>

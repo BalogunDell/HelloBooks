@@ -16,13 +16,34 @@ const userLoginData = {
   fakeData4: {
     username: 'adminUsername22',
     password: 'password'
-}
-}
+  }
+};
+
 const userNavImage = 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507971952/hellobooks/hb-logo.png';
 const userEditData = {
   firstname: 'Fred',
   lastname: 'Hammond',
   username: 'Fred1'
+};
+
+const fakeBookData = {
+  isbn: 999999,
+  title: 'End to end test',
+  author: 'Franklin Chieze',
+  pages: 32,
+  year: 2017,
+  description: 'This is an end to end test book and really selenium is interesting to use',
+  quantity: 100,
+  categoryid: 2
+};
+
+const fakeEditBookData = {
+  title: 'React for Beginners',
+  author: 'Nelson Brook',
+  pages: 1080,
+  year: 2010,
+  description: 'the books does this and that',
+  quantity: 1
 }
 
 module.exports = {
@@ -30,5 +51,7 @@ module.exports = {
     hompageIntro,
     userLoginData,
     userNavImage,
-    userEditData
+    userEditData,
+    fakeBookData,
+    fakeEditBookData
 }
