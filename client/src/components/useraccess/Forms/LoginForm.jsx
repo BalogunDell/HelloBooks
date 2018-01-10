@@ -1,10 +1,19 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import 'jquery';
+import GoogleLogin from 'react-google-login';
 import PasswordResetModal from './PasswordResetModal';
 import Loader from '../../userprofile/adminSubComponents/loader';
 
-const LoginForm = ({ userData, handleLoginInput, loginHandler, error, isLoading }) => {
+require('dotenv').config();
+
+const LoginForm = ({ 
+  userData,
+  handleLoginInput,
+  loginHandler,
+  googleLoginHandler,
+  error,
+  isLoading }) => {
 
     // loader
     const isLoadingText = <h5>Loading...</h5>
@@ -82,7 +91,15 @@ const LoginForm = ({ userData, handleLoginInput, loginHandler, error, isLoading 
                 </form>
                 <h5><span>or</span></h5>
                    <div className="row">
-                    <button className="btn waves-effect waves-teal red">Signup with Google+ </button>
+                    {/* <button className="g-signin2 btn waves-effect waves-teal red" data-onsuccess="onSignIn">Signin with Google+ </button>
+                    <div className="g-signin2 btn waves-effect waves-teal red" data-onsuccess="onSignIn">Signin with Google</div> */}
+                    <GoogleLogin
+                      clientId = {process.env.GOOGLE_CLIENT_ID}
+                      buttonText = 'Signin with Google'
+                      onSuccess = {googleLoginHandler}
+                      onFailure = {googleLoginHandler}
+                      className = 'btn waves-effect waves-teal red'
+                    />
                   </div>
               </div>
             </div>
@@ -95,6 +112,7 @@ const LoginForm = ({ userData, handleLoginInput, loginHandler, error, isLoading 
 
 LoginForm.propTypes = {
  handleLoginInput: React.PropTypes.func.isRequired,
+ googleLoginHandler: React.PropTypes.func.isRequired,
  userData: React.PropTypes.object.isRequired,
  error: React.PropTypes.string.isRequired,
  isLoading: React.PropTypes.bool.isRequired

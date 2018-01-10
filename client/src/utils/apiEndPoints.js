@@ -9,3 +9,4 @@ export const newCategory = `${routeDefault}/newcategory`;
 export const categories = `${routeDefault}/categories`;
 export const newPassword = `${routeDefault}/resetpassword`;
 export const trending = `${routeDefault}/trendingbooks`;
+export const googleAccess = `${routeDefault}/googleuser`;

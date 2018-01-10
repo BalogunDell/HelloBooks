@@ -2,7 +2,7 @@ import React from 'react';
 import toastr from 'toastr';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-
+import jwt from 'jsonwebtoken';
 
 import Navbar from '../navbar/Navbar';
 import LoginForm from './Forms/LoginForm';
@@ -19,7 +19,7 @@ class Login extends React.Component {
     super(props);
 
     this.state =  {
-      userData: Object.assign({}, this.props.initialUserData),
+      userData: { ...this.props.initialUserData },
       loginError: '',
       isAuthenticated: false,
       isLoading: false,
@@ -28,6 +28,7 @@ class Login extends React.Component {
 
     this.handleLoginInput = this.handleLoginInput.bind(this);
     this.loginHandler = this.loginHandler.bind(this);
+    this.googleLoginHandler = this.googleLoginHandler.bind(this);
   }
 
 
@@ -43,14 +44,38 @@ class Login extends React.Component {
     const field = event.target.name;
 
     // copy userData a new object and assign to tempUserDataCont
-    let tempUserDataCont = Object.assign({}, this.state.userData)
+    let tempUserDataCont = { ...this.state.userData }
 
     // set the value typed in to the value of the corresponding key
     tempUserDataCont[field] = event.target.value;
 
     // return the new userData for comsumption
-    return this.setState({userData: tempUserDataCont})
+    return this.setState({ userData: tempUserDataCont })
 
+  }
+
+  googleLoginHandler(response) {
+    const googleId = response.profileObj.googleId[5];
+    const userData = {
+      firstname: response.profileObj.givenName,
+      lastname: response.profileObj.familyName,
+      username: `${response.profileObj.givenName}${googleId}`,
+      password: `${response.profileObj.familyName}${googleId}`,
+      email: response.profileObj.email,
+      image: response.profileObj.imageUrl
+    }
+    this.props.googleAccess(userData).then(() => {
+        this.setState({
+          isLoading: false,
+          isAuthenticated: true
+        });
+      })
+      .catch(error => {
+        this.setState({
+          isLoading:false,
+          loginError: error.response.data.message})
+
+      });
   }
 
 
@@ -62,8 +87,10 @@ class Login extends React.Component {
     this.setState({isLoading: false, isAuthenticated: true})
     })
     .catch(error => {
-      this.setState({isLoading:false, loginError: error.response.data.message})
-    })
+      this.setState({
+        isLoading:false,
+        loginError: error.response.data.message})
+    });
   }
   
   // ******************************************************//
@@ -76,6 +103,9 @@ componentDidMount() {
   });
 }
 
+componentWillReceiveProps(nextProps) {
+  console.log(this.state.isAuthenticated, "------");
+}
 
 // ******************************************************//
 // RENDER METHOD ***ANYTHING HERE SHOWS ON THE SCREEN*** //
@@ -92,7 +122,9 @@ componentDidMount() {
             handleLoginInput = {this.handleLoginInput}
             loginHandler = {this.loginHandler}
             error = {this.state.loginError}
-            isLoading = {this.state.isLoading}/>
+            isLoading = {this.state.isLoading}
+            googleLoginHandler = {this.googleLoginHandler}/>
+
           </Background>
       </div>
     );
@@ -108,18 +140,20 @@ componentDidMount() {
 // ******************************************************//
 // DEFINE CONNECT PARAMETERS: **THEY ARE BOTH FUNCTIONS**//
 // ******************************************************//
-function mapStateToProps(state, ownProps){
+const mapStateToProps = (state, ownProps) => {
     let initialUserData = { username:'' , password:'' }
   return {
-    initialUserData: initialUserData
+    initialUserData: initialUserData,
+    isAuthenticated: state.userAccess.isAuthenticated
 
   }
 }
 
 
-function mapDispatchToProps(dispatch) {
+const mapDispatchToProps = (dispatch) => {
   return {
-    userLogin: (loginData) => dispatch(UserAcessActions.userLogin(loginData))
+    userLogin: (loginData) => dispatch(UserAcessActions.userLogin(loginData)),
+    googleAccess: (userData) => dispatch(UserAcessActions.newGoogleAccess(userData))
   }
 }
 // ******************************************************//

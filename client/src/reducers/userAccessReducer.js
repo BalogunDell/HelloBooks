@@ -24,6 +24,13 @@ export default function userAccessReducer(state = {}, action) {
         userData: action.loginData,
         isAuthenticated: true
       };
+
+    case types.GOOGLE_ACCESS:
+      return {
+        userData: action.googleUserData,
+        isAuthenticated: true
+      };
+
     case types.SEND_EMAIL:
       return {
         ...state, ...action.serverRes

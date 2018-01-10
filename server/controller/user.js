@@ -51,6 +51,27 @@ class User {
       });
   }
 
+  /**
+   * @param { object } req
+   * @param { object} res
+   * @returns { object } response
+   */
+  static newGoogleAccess(req, res) {
+    userModel.findOne({ where:
+      {
+        email: req.body.email,
+      }
+    })
+      .then((response) => {
+        if (response !== null && bcrypt.compareSync(req.body.password, response.dataValues.password)) {
+          return User.signin(req, res);
+        }
+        return User.signup(req, res);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
 
   /**
    * @param { object } req
