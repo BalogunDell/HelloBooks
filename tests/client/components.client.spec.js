@@ -10,6 +10,8 @@ import LoginForm from '../../client/src/components/useraccess/Forms/LoginForm';
 import { PasswordResetModal } from '../../client/src/components/useraccess/Forms/PasswordResetModal';
 import * as mockData from './mockdata';
 
+import Notfound from '../../client/src/components/notFound/index';
+
 const expect = chai.expect;
 chai.use(jestSnapshot);
 configure({ adapter: new Adapter() });
@@ -22,28 +24,28 @@ jest.mock('react-router-dom');
 describe('component: Home', () => {
     it('renders Home component', () => {
         const wrapper = render(<Home />);
-        const testRender = renderer.create(<Home/>);
+        const testRender = renderer.create(<Home />);
       expect(testRender.toJSON()).to.matchSnapshot();
       expect(wrapper.find('.intro')).to.have.length(1);
       expect(wrapper.find('h1').text()).to.equal('Hellobooks Library');
       expect(wrapper.find('p').text()).to.equal(mockData.homeParagraph);
     });
 
-  // it('renders Login Form', () => {
-  //   const minProps = {
-  //     userData: {},
-  //     handleLoginInput: jest.fn(),
-  //     loginHandler: jest.fn(),
-  //     error: false,
-  //     isLoading: false
-  //   }
-  //   const wrapper = render(<LoginForm {...minProps}/>);
-  //   expect(wrapper.find('.user-login-form')).to.have.length(1);
-  // });
+  // // it('renders Login Form', () => {
+  // //   const minProps = {
+  // //     userData: {},
+  // //     handleLoginInput: jest.fn(),
+  // //     loginHandler: jest.fn(),
+  // //     error: false,
+  // //     isLoading: false
+  // //   }
+  // //   const wrapper = render(<LoginForm {...minProps}/>);
+  // //   expect(wrapper.find('.user-login-form')).to.have.length(1);
+  // // });
 
   // it('renders Password Reset Modal', () => {
-    
-  //   const testRender = renderer.create(<PasswordResetModal/>);
+  //   const message = `<h5>hello</h5>`
+  //   const testRender = renderer.create(<PasswordResetModal message/>);
   //   const wrapper = mount(<PasswordResetModal handleSubmit = {mockFunction} />);
   //   const mockFunction = wrapper.instance().handleSubmit;
   //   wrapper.find('button').simulate('click');
@@ -52,6 +54,11 @@ describe('component: Home', () => {
   //   expect(wrapper.find(PasswordResetModal)).to.have.length(1);
   //   expect(wrapper.find('.modal')).to.have.length(1);
   //   expect(wrapper.contains(<h5 className="center-align">Password reset</h5>)).to.equal(true);
+  // });
 
-  // })
+  it('should render NotFound page', () => {
+    const wrapper = shallow(<Notfound/>);
+    expect(wrapper.find('.notFoundContent')).to.have.length(1);
+    expect(wrapper.find('div')).to.have.length(2);
+  });
 });
