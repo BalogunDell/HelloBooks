@@ -1,5 +1,11 @@
-import { saveImage } from "../../client/src/Actions/booksAction";
 
+  export const userData = {
+    firstname: "Test",
+    lastname: "Test Lastname",
+    username: "TestUsername1",
+    email: "delighteddell@gmail.com",
+    password: "password"
+  }
 
   export const mocktrendingBook = [
   {
@@ -238,6 +244,40 @@ export const borrowedBook = {
   }
 }
 
+export const borrowedBookSample = [
+  {
+    id: 2,
+    userid: 2,
+    bookid: 2,
+    dateborrowed: "2017-12-24",
+    expectedreturndate: "2017-12-25",
+    returnstatus: false,
+    approvedreturn: false,
+    createdAt: "2017-12-24T12:26:07.401Z",
+    updatedAt: "2017-12-24T12:26:07.401Z",
+    book: {
+      id: 2,
+      isbn: "##7766",
+      pages: 100,
+      author: "Nelson Brook",
+      year: 2000,
+      title: "React for Beginners",
+      description: "the books does this and that",
+      quantity: 299,
+      category: {
+        id: 1,
+        category: 'Programmoing'
+      },
+      categoryid: 3,
+      visibility: false,
+      image: "https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg",
+      pdf: "https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg",
+      createdAt: "2017-12-23T11:13:07.025Z",
+      updatedAt: "2017-12-24T12:26:07.424Z"
+    }
+  }
+]
+
 export const unpublishedBooks = {
   id: 4,
   isbn: "#453576",
@@ -264,6 +304,10 @@ export const publishedBooks = {
   title: "Testing create",
   description: "Testing the application",
   quantity: 20,
+  category: {
+    id: 2,
+    category: 'Programming'
+  },
   categoryid: 2,
   visibility: true,
   image: "https://res.cloudinary.com/djvjxp2am/image/upload/v1513244706/inyec7xtzydiygdyalbb.jpg",
@@ -271,6 +315,25 @@ export const publishedBooks = {
   createdAt: "2017-12-14T09:45:43.174Z",
   updatedAt: "2017-12-18T10:55:35.375Z"
 }
+
+export const publishedBooksSample = [
+  {
+    id: 4,
+    isbn: "#453576",
+    pages: 12,
+    author: "Creator",
+    year: 1991,
+    title: "Testing create",
+    description: "Testing the application",
+    quantity: 20,
+    categoryid: 2,
+    visibility: true,
+    image: "https://res.cloudinary.com/djvjxp2am/image/upload/v1513244706/inyec7xtzydiygdyalbb.jpg",
+    pdf: "https://res.cloudinary.com/djvjxp2am/image/upload/v1513244742/tgwvlefw2p3mlutfhzgy.pdf",
+    createdAt: "2017-12-14T09:45:43.174Z",
+    updatedAt: "2017-12-18T10:55:35.375Z"
+  }
+]
 
 export const createdBookResponse = {
   message: "Book created",
@@ -292,6 +355,17 @@ export const createdBookResponse = {
   }
 }
 
+export const initialData = { 
+  isbn: '', 
+  title:'', 
+  author: '', 
+  pages: '', 
+  year: '', 
+  description: '', 
+  quantity: '',
+  categoryid: '', 
+  image: '',
+  pdf: '' }
 
 export const editBookResponse = {
   message: "Book modified",

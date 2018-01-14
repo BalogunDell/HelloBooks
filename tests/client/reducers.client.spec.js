@@ -58,7 +58,7 @@ import {
   updatedProfile,
   saveImagerResponse,
   categories
-} from './mockdata';
+} from './mocks/mockdata';
 
 import {
   createCategoryAction,

@@ -144,9 +144,7 @@ class User extends React.Component {
                   <div className="content-display">
                     <Route path="/user/dashboard" component={AuthenticateUser(UserDashboard)}/> 
                     <Route path="/user/profile" component={AuthenticateUser(Profile)}/>
-                    <Route path="/user/books" render={() =><Allbooks 
-                     books = {this.props.retrievedBooks} 
-                     path = {this.props.url}
+                    <Route path="/user/books" render={() =><Allbooks
                     getBookId = {this.getBookId}/>}/>  
                     <Route path="/user/bookdetails" render={() => <BookDetails book_id = {this.state.book_id}/>}/>
                     <Route path="/user/history" render ={()=> <UserHistory userID = {this.userID}/>}/> 
@@ -156,9 +154,7 @@ class User extends React.Component {
                   <div className="content-display">
                     {/* <h4>Welcome to Hello books</h4> */}
                     <Route path="/user/dashboard" component={AuthenticateUser(AdminDashboard)}/>
-                    <Route path="/user/books" render={() => <Allbooks 
-                     books = {this.props.retrievedBooks} 
-                     path = {this.props.url}
+                    <Route path="/user/books" render={() => <Allbooks  
                      getBookId = {this.getBookId}/>}/>
                     <Route path="/user/upload" component={AuthenticateUser(CreateBook)}/> 
                     <Route path="/user/bookdetails" render={() => <BookDetails book_id = {this.state.book_id}/>}/>

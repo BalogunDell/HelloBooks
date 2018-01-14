@@ -7,7 +7,7 @@ import * as bookActions from '../../Actions/booksAction';
 import * as messages from './messages';
 import AuthenticateUser from '../HOC/authenticate';
 
-class bookDetails extends React.Component {
+export class bookDetails extends React.Component {
   constructor(props){
     super(props);
 
@@ -29,7 +29,6 @@ class bookDetails extends React.Component {
 
 }
 
-
   handleBorrow(){
     this.setState({processingRequest: true})
     this.props.borrowBook({bookid:this.state.book_id})
@@ -47,7 +46,6 @@ class bookDetails extends React.Component {
       'blue rounded');
     })
     .catch(error => {
-      console.log(error);
       this.setState({
         processingRequest: false,
         borrowErrorStatus:true,
@@ -231,7 +229,7 @@ class bookDetails extends React.Component {
 } 
 
 
-function mapStateToProps (state, ownProps) {
+export function mapStateToProps (state, ownProps) {
   return {
     fetchedUserbooks: state.books.fetchedBooks,
     allbooks: state.books.books,
@@ -240,7 +238,7 @@ function mapStateToProps (state, ownProps) {
   }
 }
 
-function maptDispatchToProps(dispatch) {
+export function maptDispatchToProps(dispatch) {
   return {
     borrowBook: (bookDetails) => dispatch(bookActions.borrowBook(bookDetails)),
     userBooks: () => dispatch(bookActions.getUserBooks())

@@ -3,10 +3,10 @@ import { connect } from 'react-redux';
 import $ from 'jquery';
 
 import SummaryTable from '../adminSubComponents/summaryTable';
-import BooksList from '../adminSubComponents/booksList';
+import BooksList from '../adminSubComponents/BooksList';
 import * as bookActions from '../../../Actions/booksAction';
 
-class Dashboard extends React.Component {
+export class Dashboard extends React.Component {
   constructor(props) {
     super(props);
 
@@ -32,13 +32,13 @@ class Dashboard extends React.Component {
   }
 }
 
-const stateToProps = (state, ownProps) => {
+export const stateToProps = (state, ownProps) => {
   return {
     allbooks: state.books.books
   }
 }
 
-const dispatchToProps = (dispatch) => {
+export const dispatchToProps = (dispatch) => {
   return {
     getAllBooks: () => dispatch(bookActions.loadAllbooks()),
   }

@@ -5,14 +5,14 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import moxios from 'moxios';
 import chai from 'chai';
-import * as mockData from './mockdata';
+import * as mockData from './mocks/mockdata';
 import * as apiEndPoints from '../../client/src/utils/apiEndPoints.js';
 import * as cloundinaryKey from '../../client/src/utils/cloudinaryKeys';
 import getUserInfo from '../../client/src/utils/getUserInfo';
 
 // Import mock local storage
-import moclLocalStorage from './mockDataStorage';
-window.localStorage = moclLocalStorage;
+import mockLocalStorage from './mocks/mockDataStorage';
+window.localStorage = mockLocalStorage;
 
 
 const expect = chai.expect;

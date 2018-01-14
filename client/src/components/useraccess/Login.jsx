@@ -14,12 +14,12 @@ import * as UserAcessActions from '../../Actions/userAccessAction';
  * @class Register
  * @classdesc returns the component for user signin
  */
-class Login extends React.Component {
+export class Login extends React.Component {
   constructor(props) {
     super(props);
 
     this.state =  {
-      userData: Object.assign({}, this.props.initialUserData),
+      userData: {...this.props.initialUserData},
       loginError: '',
       isAuthenticated: false,
       isLoading: false,
@@ -43,7 +43,7 @@ class Login extends React.Component {
     const field = event.target.name;
 
     // copy userData a new object and assign to tempUserDataCont
-    let tempUserDataCont = Object.assign({}, this.state.userData)
+    let tempUserDataCont = {...this.state.userData}
 
     // set the value typed in to the value of the corresponding key
     tempUserDataCont[field] = event.target.value;
@@ -71,7 +71,7 @@ class Login extends React.Component {
 // ******************************************************//
 
 componentDidMount() {
-  $(document).ready(()=> {
+  $(document).ready(() => {
     $('.modal').modal();
   });
 }
@@ -108,7 +108,7 @@ componentDidMount() {
 // ******************************************************//
 // DEFINE CONNECT PARAMETERS: **THEY ARE BOTH FUNCTIONS**//
 // ******************************************************//
-function mapStateToProps(state, ownProps){
+export const mapStateToProps = (state, ownProps) => {
     let initialUserData = { username:'' , password:'' }
   return {
     initialUserData: initialUserData
@@ -117,7 +117,7 @@ function mapStateToProps(state, ownProps){
 }
 
 
-function mapDispatchToProps(dispatch) {
+export const mapDispatchToProps = (dispatch) => {
   return {
     userLogin: (loginData) => dispatch(UserAcessActions.userLogin(loginData))
   }
