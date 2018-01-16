@@ -1,0 +1,139 @@
+.home-bg {
+  font: 100% $font-stack;
+  color: $primary-color;
+  background-image: url('https://res.cloudinary.com/djvjxp2am/image/upload/v1510227221/newbg_c6e8fv.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  min-height: 100vh;
+  display: flex;
+  -webkit-display: flex;
+  flex-direction: row;
+  -webkit-flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+
+.form-holder {
+  min-width: 360px;
+  height: auto;
+  margin: auto;
+  margin-bottom: 35%;
+
+  .btn {
+    width: 100%;
+  }
+
+  .form-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    -webkit-flex-direction: row;
+    color: white;
+
+    h2 {
+      padding: 0;
+      margin: 0, 0,5px;
+    }
+
+    div {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+
+        a, p {
+          color: white;
+          margin-bottom: -5%; 
+        }
+        a:hover {
+          color: white;
+          text-decoration: underline;
+        }
+       
+    }
+
+  }
+
+  .user-form {
+    // background: #F9F9F9;
+    // margin: auto;
+    // padding-bottom: 30px;
+    // padding-top: 30px;
+    // padding-right: 20px;
+    // padding-left: 20px;
+    // border-bottom-left-radius: 5px;
+    // border-bottom-right-radius: 5px;
+    background: #F9F9F9;
+    padding-bottom: 50px;
+    padding-top: 30px;
+    max-width: 360px;
+    margin: 0 auto;
+    
+    
+    label {
+      span {
+        color: red;
+      }
+    
+      input {
+        color: black;
+      }
+    }
+
+      .forgotPass {
+        color: black;
+        font-size: 15px;
+        }
+      .forgotPass:hover {
+        text-decoration: underline;
+        }
+  }
+}
+
+.passwordModal {
+  button{
+    width: 50%;
+  }
+}
+
+
+
+}
+
+.intro {
+  margin: auto;
+	height: auto;
+  width: 80%;
+  text-align: center;
+  margin-bottom: 25%;
+
+  h1 {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 40px;
+    text-align: center;
+    color: white;
+  }
+  p {
+    font-family: Arial, Helvetica, sans-serif;
+    margin-top: 5%; 
+    color: white;
+    font-size: 18px;
+
+  }
+
+  .btn {
+    margin-top: 5%;
+    background:$custom-color;
+    padding-bottom: 20px;
+    padding-top: 20px;
+    line-height: 10px;
+    width: 250px;
+    -webkit-transition: background 1s;
+    -o-webkit-transition: background 0.5s;
+    -ms-webkit-transition: background 0.5s;
+  }
+
+  .btn:hover {
+    background: rgba(0,0,0,0.6);
+  }
+}
+

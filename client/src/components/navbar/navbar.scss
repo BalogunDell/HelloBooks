@@ -1,0 +1,42 @@
+ #sidenav-overlay {
+   background-color: rgba(0,0,0,0.0)
+    }
+
+img {
+  max-height: 75px;
+  max-width: auto;
+}
+nav {
+  background-color: rgba(0, 0, 0, 0.2);
+  border: 0;
+  box-shadow: none;
+
+  ul {
+    padding: 0;
+
+    a:hover {
+      background-color: white;;
+      color: $custom-color
+    }
+    .active {
+      background-color: white;;
+      color: $custom-color
+    }
+
+    #sideBarTrigger {
+      cursor: pointer;
+    }
+  }
+
+}
+
+#side_menu {
+  background:rgba(0,0, 0, 0.85%);
+  
+  li {
+    margin:5% 0 0 0;
+    a {
+      color: white;
+    }
+  }
+}
