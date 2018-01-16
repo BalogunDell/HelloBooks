@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 import { membershipIconCreator } from './messages';
 import ProfileInfo from './profileInfo';
-import ProfileUpdateForm from './ProfileUpdateForm';
+import ProfileUpdateForm from './profileUpdateForm';
 import ImageModal from './updateImageModal';
 import * as userActions from '../../Actions/userProfileAction';
 

@@ -2,8 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import $ from 'jquery';
 
-import SummaryTable from '../adminSubComponents/SummaryTable';
-import BooksList from '../adminSubComponents/BooksList';
+import SummaryTable from '../adminSubComponents/summaryTable';
+import BooksList from '../adminSubComponents/booksList';
 import * as bookActions from '../../../Actions/booksAction';
 
 export class Dashboard extends React.Component {
