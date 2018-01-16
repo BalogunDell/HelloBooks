@@ -44,6 +44,6 @@ describe('BorrowedBooksTable, Loader, PublishedBooks ', () => {
 
   it('should render the published books table without crashing', () => {
     const wrapper = shallow(<PublishedBooks {...minProps}/>)
-    expect(wrapper.find('div').length).toBe(8);
+    expect(wrapper.find('div').length).toBe(1);
   });
 });

@@ -8,7 +8,7 @@ import AuthenticateUser from '../HOC/authenticate';
 /* @class History
  * @classdesc returns the borrow history of the user
  */
-class History extends React.Component {
+export class History extends React.Component {
   constructor(props) {
     super(props);
 
@@ -104,9 +104,10 @@ class History extends React.Component {
     })
     .catch(error => {
     });
-
-    $('select').material_select();
-    $('select').change(e => this.handleSelectChange(e));
+    $(document).ready(() => {
+      $('select').material_select();
+      $('select').change(e => this.handleSelectChange(event));
+    });
   }
 
   
@@ -154,17 +155,16 @@ class History extends React.Component {
 }
 
 
-const mapStateToProps = (state, ownProps) => {
+export const mapStateToProps = (state, ownProps) => {
   return {
     fetchedBooks: state.books.fetchedBooks,
-    test: state
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
+export const mapDispatchToProps = (dispatch) => {
   return {
     getUserBooks: (userid) => dispatch(bookActions.getUserBooks(userid)),
     returnBook: (bookid) => dispatch(bookActions.returnBook(bookid))
   }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(AuthenticateUser(History));
+export default connect(mapStateToProps, mapDispatchToProps)(History);

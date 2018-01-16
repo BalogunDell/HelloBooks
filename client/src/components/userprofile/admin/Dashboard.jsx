@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import $ from 'jquery';
 
-import SummaryTable from '../adminSubComponents/summaryTable';
+import SummaryTable from '../adminSubComponents/SummaryTable';
 import BooksList from '../adminSubComponents/BooksList';
 import * as bookActions from '../../../Actions/booksAction';
 

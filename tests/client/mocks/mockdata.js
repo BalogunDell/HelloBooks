@@ -304,10 +304,6 @@ export const publishedBooks = {
   title: "Testing create",
   description: "Testing the application",
   quantity: 20,
-  category: {
-    id: 2,
-    category: 'Programming'
-  },
   categoryid: 2,
   visibility: true,
   image: "https://res.cloudinary.com/djvjxp2am/image/upload/v1513244706/inyec7xtzydiygdyalbb.jpg",
@@ -326,6 +322,10 @@ export const publishedBooksSample = [
     title: "Testing create",
     description: "Testing the application",
     quantity: 20,
+    category: {
+      id: 2,
+      category: 'Programming'
+    },
     categoryid: 2,
     visibility: true,
     image: "https://res.cloudinary.com/djvjxp2am/image/upload/v1513244706/inyec7xtzydiygdyalbb.jpg",
@@ -334,6 +334,32 @@ export const publishedBooksSample = [
     updatedAt: "2017-12-18T10:55:35.375Z"
   }
 ]
+
+
+export const publishedBooksSample2 = {
+  data: [
+    {
+      id: 4,
+      isbn: "#453576",
+      pages: 12,
+      author: "Creator",
+      year: 1991,
+      title: "Testing create",
+      description: "Testing the application",
+      quantity: 20,
+      category: {
+        id: 2,
+        category: 'Programming'
+      },
+      categoryid: 2,
+      visibility: true,
+      image: "https://res.cloudinary.com/djvjxp2am/image/upload/v1513244706/inyec7xtzydiygdyalbb.jpg",
+      pdf: "https://res.cloudinary.com/djvjxp2am/image/upload/v1513244742/tgwvlefw2p3mlutfhzgy.pdf",
+      createdAt: "2017-12-14T09:45:43.174Z",
+      updatedAt: "2017-12-18T10:55:35.375Z"
+    }
+  ]
+}
 
 export const createdBookResponse = {
   message: "Book created",
@@ -420,6 +446,26 @@ export const categories = [
     category: 'Self-Growth'
   }
 ]
+
+
+export const sampleCats = {
+categories: [
+  {
+    id: 1,
+    category: 'Programming'
+  },
+  {
+    id: 2,
+    category: 'Education'
+  },
+  {
+    id: 3,
+    category: 'Self-Growth'
+  }
+]
+}
+
+
 
 // COMPONENT DATA
 

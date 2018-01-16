@@ -13,10 +13,16 @@ import {
     mapDispatchToProps,
  } from '../../client/src/components/userprofile/Allbooks/Allbooks';
 
-import { mockBooks } from './mocks/mockdata';
+ import AllUserBooks from '../../client/src/components/userprofile/tableRows/allUserBooks';
+
+import { mockBooks, borrowedBookSample } from './mocks/mockdata';
 jest.mock('../../client/src/components/HOC/authenticate.jsx');
 jest.mock('react-router-dom');
 
+
+import mockStorage from './mocks/mockDataStorage';
+
+window.localStorage = mockStorage;
 
 configure({ adapter: new Adapter() });
 // Configure Juery for test 
@@ -93,5 +99,21 @@ describe('All Books', () => {
       }
     }
     expect(mapStateToProps(state)).toBeTruthy();
+  });
+});
+
+describe('All User Books', () => {
+  const minProps = {
+    allUserBooks: borrowedBookSample,
+    getRowKey: '',
+    tableHeader: '',
+    handleReturn: jest.fn(),
+    books: [],
+    bookLength: 0
+  }
+  const wrapper = shallow(<AllUserBooks {...minProps}/>)
+  it('renders the all userbooks component without crashing', () => {
+    expect(wrapper.find('div').length).toBe(2);
+    expect(wrapper.find('.custom-text').length).toBe(1);
   });
 });

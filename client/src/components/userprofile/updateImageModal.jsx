@@ -1,7 +1,7 @@
 import React from 'react';
 import LoaderText from './adminSubComponents/loader';
 
-const updateImageModal = ({
+const UpdateImageModal = ({
     imageUploadHandler, 
     handleImageEdit, 
     cancelEdit, 
@@ -75,7 +75,7 @@ const updateImageModal = ({
 );
 }
 
-updateImageModal.propTypes = {
+UpdateImageModal.propTypes = {
   imageUploadHandler:React.PropTypes.func,
   handleImageEdit: React.PropTypes.func,
   cancelEdit: React.PropTypes.func,
@@ -87,4 +87,4 @@ updateImageModal.propTypes = {
   disableUpdateBtn: React.PropTypes.bool
 }
 
-export default updateImageModal;
+export default UpdateImageModal;

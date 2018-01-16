@@ -50,5 +50,5 @@ export function mapDispatchToProps (dispatch) {
     getUserBooks: (userid) => dispatch(bookActions.getUserBooks(userid))
   }
 }
-AuthenticateUser(BorrowedBooks);
+AuthenticateUser(BorrowedBooks); 
 export default connect(null, mapDispatchToProps)(BorrowedBooks);

@@ -7,7 +7,7 @@ import * as bookActions from '../../Actions/booksAction';
 import * as messages from './messages';
 import AuthenticateUser from '../HOC/authenticate';
 
-export class bookDetails extends React.Component {
+export class BookDetails extends React.Component {
   constructor(props){
     super(props);
 
@@ -57,9 +57,11 @@ export class bookDetails extends React.Component {
     this.setState({dataReady:true,
       borrowErrorStatus: false,
       disableBtn: false,
-      borrowBookSuccess:false});    
-    let filteredBook = this.state.books.filter(book => book.id == this.state.book_id)
-    this.setState({book: filteredBook[0], dataReady:false});
+      borrowBookSuccess:false});
+      const filtered = JSON.parse(localStorage.getItem('book'));  
+      console.log(filtered);
+    // let filteredBook = this.state.books.filter(book => book.id == this.state.book_id)
+    this.setState({book: filtered[0], dataReady:false});
     this.props.userBooks();
 
     if(getUserDetails().userType === 'admin') {
@@ -67,10 +69,6 @@ export class bookDetails extends React.Component {
     } else {
       this.setState({ isAdmin: false });
     }
-  }
-
-  componentDidMount() {
-    
   }
 
   componentWillReceiveProps(nextProps) {
@@ -245,4 +243,4 @@ export function maptDispatchToProps(dispatch) {
   }
 }
 
-export default connect(mapStateToProps, maptDispatchToProps)(AuthenticateUser(bookDetails));
+export default connect(mapStateToProps, maptDispatchToProps)(BookDetails);

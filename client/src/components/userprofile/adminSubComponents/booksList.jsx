@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 
 import ConfirmationModal from './confirmationModal';
 import * as bookActions from '../../../Actions/booksAction';
-import selectFilterer from '../../../utils/selectFilterer';
 import BorrowedbookTable from './borrowedbooksTable';
 import PublishedBooks from './publishedBooks';
 
@@ -105,7 +104,7 @@ export class BooksList extends React.Component {
 
   /**
    * 
-   * @param {object} event 
+   * @param { object } event 
    * @return { object } component state
    */
   handleBookDelete(event) {
@@ -114,7 +113,7 @@ export class BooksList extends React.Component {
 
   /**
    * 
-   * @param {object} event 
+   * @param { object } event 
    * @return { object } component state
    */
   handleDeleteCancel() {

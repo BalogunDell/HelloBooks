@@ -8,7 +8,7 @@ import * as bookActions from '../../../Actions/booksAction';
 import AddCategoryModal from './createCategory';
 import LoaderText from './loader';
 
-class editBookForm extends React.Component {
+export class EditBookForm extends React.Component {
   constructor(props) {
     super(props);
 
@@ -28,7 +28,6 @@ class editBookForm extends React.Component {
       redirect: false,
       errorStatus: false,
       bookIndex : 0
-      
     }
 
     this.handleEditInput = this.handleEditInput.bind(this);
@@ -39,7 +38,7 @@ class editBookForm extends React.Component {
 
   handleEditInput(event) {
     let name = event.target.name;
-    let tempHolder =  Object.assign({}, this.state.book);
+    let tempHolder =  {...this.state.book};
     tempHolder[name] = event.target.value
     if(event.target.name == 'categoryid') {
       this.setState({ book:tempHolder});
@@ -193,11 +192,10 @@ class editBookForm extends React.Component {
 
 
   componentWillMount(){
-    const fetchedBook = JSON.parse(localStorage.getItem('index'));
-    this.setState({book: fetchedBook[0]});
     if(this.props.getBookToEdit) {
       this.setState({book: this.props.getBookToEdit[0]});
     } else {
+      const fetchedBook = JSON.parse(localStorage.getItem('index'));
       this.setState({book: fetchedBook[0]});
     }
   }
@@ -443,7 +441,7 @@ class editBookForm extends React.Component {
   }
 }
 
-function stateToProps(state, ownProps) {
+export function stateToProps(state, ownProps) {
   return {
     getBookToEdit: state.books.editBookID,
     books: state.books.books,
@@ -454,16 +452,14 @@ function stateToProps(state, ownProps) {
   }
 }
 
-function dispatchToProps(dispatch) {
+export function dispatchToProps(dispatch) {
   return {
     getCategories: () => dispatch(categoryActions.getCategories()),
     modifyBook: (bookData) => dispatch(bookActions.modifyBook(bookData)),
     saveImageToCloudinary: (image) => dispatch(bookActions.saveImageToCloudinary(image)),
     savePdfToCloudinary: (pdf) => dispatch(bookActions.savePdfToCloudinary(pdf))
-    
-    
   }
 }
 
 
-export default connect(stateToProps, dispatchToProps)(editBookForm);
+export default connect(stateToProps, dispatchToProps)(EditBookForm);

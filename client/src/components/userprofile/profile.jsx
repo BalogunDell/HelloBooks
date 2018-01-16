@@ -4,11 +4,11 @@ import { Link } from 'react-router-dom';
 
 import { membershipIconCreator } from './messages';
 import ProfileInfo from './profileInfo';
-import ProfileUpdateForm from './profileUpdateForm';
+import ProfileUpdateForm from './ProfileUpdateForm';
 import ImageModal from './updateImageModal';
 import * as userActions from '../../Actions/userProfileAction';
 
-class Profile extends React.Component {
+export class Profile extends React.Component {
   constructor(props) {
     super(props);
 
@@ -117,7 +117,6 @@ class Profile extends React.Component {
           // Close modal afer message has been displayed
         })
         .catch((error) => {
-          console.log(error);
         });
       })
       .catch((error) => {
@@ -166,7 +165,9 @@ class Profile extends React.Component {
   }
 
   componentDidMount() {
+    $(document).ready(() => {
       $('.modal').modal();
+    });
   }
 
   componentWillReceiveProps(nextProps) {
@@ -264,14 +265,14 @@ class Profile extends React.Component {
     )
   }
 }
-const mapStateToProps = (state, ownProps) => {
+export const mapStateToProps = (state, ownProps) => {
   return {
     userProfile: state.userProfile,
     newImageUrl: state.uploadFiles.image
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
+export const mapDispatchToProps = (dispatch) => {
   return {
     saveNewImage: (image) => dispatch(userActions.saveNewImage(image)),
     saveNewImageToDB: (newimage) => dispatch(userActions.saveNewImageToDB(newimage))

@@ -1,6 +1,5 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
-import { axios } from 'axios';
 import $ from 'jquery';
 import { Redirect, Link } from 'react-router-dom';
 import { connect } from 'react-redux'
@@ -14,7 +13,7 @@ import Borrowedbooks from './Borrowedbooks';
 import Profile from './profile';
 import AdminDashboard from './admin/Dashboard';
 import CreateBook from './admin/createBook';
-import EditBook from './adminSubComponents/editBook';
+import EditBook from './adminSubComponents/EditBook';
 import UnpublishedList from './adminSubComponents/unPublishedBooks';
 import * as userNavLinks from './userNavLinks';
 import Details from './Details';
@@ -25,7 +24,7 @@ import * as bookActions from '../../Actions/booksAction';
 
 
 
-class User extends React.Component {
+export class User extends React.Component {
   constructor(props) {
     super(props);
 
