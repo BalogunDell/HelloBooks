@@ -46,7 +46,7 @@ export class User extends React.Component {
 
 
     // Bind logout method to this
-    this.handleLogout = this.handleLogout.bind(this)
+    this.handleLogout = this.handleLogout.bind(this);
   }
 
 
@@ -68,12 +68,10 @@ export class User extends React.Component {
       return this.setState({isAuthenticated: false});
     }
 
-
      // Get user profile before mount
     this.props.userProfile(this.userID).then(() => {
       // Do some stuff
     })
-      
     .catch(error => {
       if(error) {
       // Do some stuff is error
@@ -100,7 +98,7 @@ export class User extends React.Component {
   componentWillReceiveProps(nextprops) {
     
      if (nextprops.userDetails) {
-      this.setState({dataReady:true, profileData: nextprops.userDetails})
+      this.setState({dataReady:true, profileData: nextprops.userDetails});
      }
     }
 
