@@ -50,6 +50,9 @@ export class BookDetails extends React.Component {
         processingRequest: false,
         borrowErrorStatus:true,
         borrowError: error.response.data.msg, disableBtn:true });
+        Materialize.toast('You have either exhausted your book limit or you still have this book with you',
+          4000,
+          'red rounded');
     });
   }
 
@@ -59,8 +62,6 @@ export class BookDetails extends React.Component {
       disableBtn: false,
       borrowBookSuccess:false});
       const filtered = JSON.parse(localStorage.getItem('book'));  
-      console.log(filtered);
-    // let filteredBook = this.state.books.filter(book => book.id == this.state.book_id)
     this.setState({book: filtered[0], dataReady:false});
     this.props.userBooks();
 
@@ -99,12 +100,9 @@ export class BookDetails extends React.Component {
 
   render() {
     const processing = <h6 className="center">Processing Request...</h6>
-    const successMessage = messages.successMessage('You have successfully borrowed this book')
-    const failureMessage = messages.failureMessage(this.state.borrowError);
-
     let showError = this.state.processingRequest ? processing : null
-    let success = this.state.borrowBookSuccess ? successMessage : null
-    let failure = this.state.borrowErrorStatus ? failureMessage : null
+    let success = this.state.borrowBookSuccess ? '' : null
+    let failure = this.state.borrowErrorStatus ? '' : null
 
     return (
       
