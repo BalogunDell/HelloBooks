@@ -111,7 +111,6 @@ export class User extends React.Component {
   });
   }
 
-
 //**************************************************************//
 //CONDITIONAL RENDERING BASED ON THE ROUTE, SUPPLY REQUIRED DATA//
 //**************************************************************//

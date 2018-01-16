@@ -71,9 +71,11 @@ export class EditBookForm extends React.Component {
             error: 'error',
             successStatus: false,
           redirect:false})
-        })
+        });
+
     // Check if a new image and and no pdf was selected, if !, save default values 
     } else if((this.state.tempImageName) && (!this.state.tempFileName)) {
+
         // Check image size
         if(this.state.imageHeight < 300 || this.state.imageWidth < 250) {
           this.setState({
@@ -103,6 +105,7 @@ export class EditBookForm extends React.Component {
             })
         }
       } else if((!this.state.tempImageName) && (this.state.tempFileName)) {
+
         // Check File size
           if(this.state.tempFileSize > 10485760) {
             this.setState({
@@ -127,7 +130,7 @@ export class EditBookForm extends React.Component {
                 });
               })
               .catch(error => {
-              })
+              });
             }
       } else {
         if(this.state.imageHeight < 300 || this.state.imageWidth < 250) {
@@ -153,10 +156,12 @@ export class EditBookForm extends React.Component {
               disableBtn:true });
 
               // Save image to cloudinary
-            this.props.saveImageToCloudinary(this.state.tempImageName).then(()=> {
+            this.props.saveImageToCloudinary(this.state.tempImageName).then(() => {
+              
               // Check if image url has been set before dispatching  save pdf action
               if(this.state.book.image) {
-                this.props.savePdfToCloudinary(this.state.tempFileName).then(() =>{
+                this.props.savePdfToCloudinary(this.state.tempFileName).then(() => {
+
                   if(this.state.book.pdf) {
                     // Save book details to database
                       this.props.modifyBook(this.state.book).then(() => {
@@ -179,13 +184,13 @@ export class EditBookForm extends React.Component {
                           errorStatus:true,
                           disableBtn:true,
                           error: error.response.data.message});
-                      })
+                      });
                   }
-                })
+                });
               }
             })
             .catch(error => {
-            })
+            });
           }
         }
   }
@@ -266,12 +271,8 @@ export class EditBookForm extends React.Component {
 
   
     render() {
-
     const success = <i>Book has been successfully updated<br/><br/>Redirecting to dashboard...</i>
-
-
       return (
-        
       <div>
         {this.state.redirect ? <Redirect to ="/user/dashboard"/> : 
           <div>
@@ -460,6 +461,5 @@ export function dispatchToProps(dispatch) {
     savePdfToCloudinary: (pdf) => dispatch(bookActions.savePdfToCloudinary(pdf))
   }
 }
-
 
 export default connect(stateToProps, dispatchToProps)(EditBookForm);
