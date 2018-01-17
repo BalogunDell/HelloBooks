@@ -4,7 +4,7 @@ import Spinner from './loader';
 
 import * as categoryActions from '../../../Actions/categoryAction';
 
-class CreateCategoryModal extends React.Component {
+export class CreateCategoryModal extends React.Component {
   constructor(props) {
     super(props);
 
@@ -131,7 +131,7 @@ class CreateCategoryModal extends React.Component {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
+export const mapDispatchToProps = (dispatch) => {
   return {
     createCategory: category => dispatch(categoryActions.createCategory(category))
   }

@@ -5,14 +5,14 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import moxios from 'moxios';
 import chai from 'chai';
-import * as mockData from './mockdata';
+import * as mockData from './mocks/mockdata';
 import * as apiEndPoints from '../../client/src/utils/apiEndPoints.js';
 import * as cloundinaryKey from '../../client/src/utils/cloudinaryKeys';
 import getUserInfo from '../../client/src/utils/getUserInfo';
 
 // Import mock local storage
-import moclLocalStorage from './mockDataStorage';
-window.localStorage = moclLocalStorage;
+import mockLocalStorage from './mocks/mockDataStorage';
+window.localStorage = mockLocalStorage;
 
 
 const expect = chai.expect;
@@ -24,11 +24,14 @@ import { shallow, mount, render } from 'enzyme';
 import * as userAcessActions from '../../client/src/Actions/userAccessAction';
 import * as bookActions from '../../client/src/Actions/booksAction';
 import * as userProfileAction from '../../client/src/Actions/userProfileAction';
+import * as categoryAction from '../../client/src/Actions/categoryAction';
 import * as actionTypes from '../../client/src/Actions/actionTypes'
 
 import Home from '../../client/src/components/home/Home';
 import Books from '../../client/src/components/books/Books';
 import Book from '../../client/src/components/books/book';
+import { expectation } from 'sinon';
+import { cloudinaryUrl } from '../../client/src/utils/cloudinaryKeys';
 
 
 const middleware = [thunk];
@@ -313,7 +316,6 @@ describe('THUNK FUNCTIONS', () => {
       done();
   });
 
-
   it('should create CREATE_BOOK when admin creates a book', async (done) => {
     
     const serverRes = mockData.createdBookResponse;
@@ -355,50 +357,185 @@ describe('THUNK FUNCTIONS', () => {
       done();
   });
 
-
-  // it('should create MODIFY_BOOK when admin edits a book', async(done) => {
+  it('should create CREATE_CATEGORY when admin creates a book', async (done) => {
     
-  //   const serverRes = mockData.editBookResponse;
-  //   const bookid = parseInt(2, 10);
-  //   moxios.stubRequest(`${apiEndPoints.books}/${bookid}`, {
+    const serverRes = 'Category created'
+
+    moxios.stubRequest(apiEndPoints.newCategory, {
+      status: 201,
+      response: serverRes
+    });
+     
+    const expectedAction = {
+      type: actionTypes.CREATE_CATEGORY,
+      bookData: serverRes
+    };
+    
+    await store.dispatch(categoryAction.createCategory({category: 'Programming'}))
+      .then(() => {
+        const actions = store.getActions();
+        expect(actions[11].type).to.equal('CREATE_CATEGORY');
+        expect(actions[11].category).to.equal('Category created');
+      });
+      done();
+  });
+
+
+  it('should create GET_CATEGORIES when admin tries to create a book', async (done) => {
+    
+    const serverRes = mockData.sampleCats
+
+    moxios.stubRequest(apiEndPoints.categories, {
+      status: 200,
+      response: serverRes
+    });
+     
+    const expectedAction = {
+      type: actionTypes.GET_CATEGORIES,
+      fetchedCategories: serverRes
+    };
+    
+    await store.dispatch(categoryAction.getCategories(serverRes))
+      .then(() => {
+        const actions = store.getActions();
+        expect(actions[12].type).to.equal('ET_CATEGORY');
+        expect(actions[12].fetchedCategories).to.equal(expectedAction.fetchedCategories.categories);
+      });
+      done();
+  });
+
+
+  it('should create MODIFY_BOOK when admin edits a book', async (done) => {
+    
+    const serverRes = mockData.publishedBooksSample2;
+    const bookid = parseInt(mockData.publishedBooksSample2.data.id, 10);
+    moxios.stubRequest(`${apiEndPoints.books}/${bookid}`, {
+      status: 201,
+      response: serverRes
+    });
+     
+    const expectedAction = {
+      type: actionTypes.MODIFY_BOOK,
+      bookData: serverRes
+    };
+    
+    await store.dispatch(bookActions.modifyBook({serverRes}))
+      .then(() => {
+        const actions = store.getActions();
+        expect(actions[13].type).to.equal(expectedAction.type);
+        expect(actions[13].bookData[0]).to.equal(expectedAction.bookData.data[0]);
+        expect(actions[13].bookData[0]).to.be.an('object');
+        expect(actions[13].bookData[0]).to.have.property('visibility');
+        expect(actions[13].bookData[0]).to.have.property('isbn');
+        expect(actions[13].bookData[0]).to.have.property('id');
+        expect(actions[13].bookData[0]).to.have.property('title');
+        expect(actions[13].bookData[0]).to.have.property('author');
+        expect(actions[13].bookData[0]).to.have.property('pages');
+        expect(actions[13].bookData[0]).to.have.property('year');
+        expect(actions[13].bookData[0]).to.have.property('description');
+        expect(actions[13].bookData[0]).to.have.property('quantity');
+        expect(actions[13].bookData[0]).to.have.property('categoryid');
+        expect(actions[13].bookData[0]).to.have.property('image');
+        expect(actions[13].bookData[0]).to.have.property('pdf');
+        expect(actions[13].bookData[0]).to.have.property('updatedAt');
+        expect(actions[13].bookData[0]).to.have.property('createdAt');
+      });
+      done();
+  });
+
+  it('should create EDIT PROFILE when user edits his profile', async (done) => {
+    
+    const serverRes = mockData.updatedProfile.user;
+    moxios.stubRequest(`${apiEndPoints.userProfile}/${serverRes.id}`, {
+      status: 201,
+      response: serverRes
+    });
+     
+    const expectedAction = {
+      type: actionTypes.EDIT_PROFILE,
+      newUserData: serverRes
+    };
+    
+    await store.dispatch(userProfileAction.editProfile(serverRes))
+      .then(() => {
+        const actions = store.getActions();
+        expect(actions[14].type).to.equal(expectedAction.type);
+        expect(actions[14].newUserData.id).to.equal(expectedAction.newUserData.id);
+        expect(actions[14].newUserData.firstname).to.equal(expectedAction.newUserData.firstname);
+        expect(actions[14].newUserData.lastname).to.equal(expectedAction.newUserData.lastname);
+        expect(actions[14].newUserData.username).to.equal(expectedAction.newUserData.username);
+        expect(actions[14].newUserData.email).to.equal(expectedAction.newUserData.email);
+        expect(actions[14].newUserData.membership).to.equal(expectedAction.newUserData.membership);
+        expect(actions[14].newUserData.role).to.equal(expectedAction.newUserData.role);
+        expect(actions[14].newUserData.image).to.equal(expectedAction.newUserData.image);
+        expect(actions[14].newUserData.passurl).to.equal(expectedAction.newUserData.passurl);
+        expect(actions[14].newUserData.password).to.equal(expectedAction.newUserData.password);
+        expect(actions[14].newUserData.createdAt).to.equal(expectedAction.newUserData.createdAt);
+        expect(actions[14].newUserData.updatedAt).to.equal(expectedAction.newUserData.updatedAt);
+      });
+      done();
+  });
+
+  // it('should create DELETE_BOOK when admin deletes a book', async (done) => {
+    
+  //   const serverRes = mockData.mocktrendingBook;
+  //   const bookId = 1
+  //   moxios.stubRequest(`${apiEndPoints.books}/${bookId}`, {
   //     status: 201,
   //     response: serverRes
   //   });
      
   //   const expectedAction = {
-  //     type: actionTypes.MODIFY_BOOK,
-  //     bookData: serverRes
+  //     type: actionTypes.DELETE_BOOK,
+  //     updatedBooks: serverRes
   //   };
-    
-  //   await store.dispatch(bookActions.modifyBook(serverRes))
+  //   // console.log(serverRes);
+  //   await store.dispatch(bookActions.deleteBook(serverRes))
   //     .then(() => {
   //       const actions = store.getActions();
-  //       console.log(actions);
-  //       // expect(actions[11].type).to.equal(expectedAction.type);
-  //       // expect(actions[11].bookData).to.equal(expectedAction.bookData);
-  //       // expect(actions[11].bookData).to.have.property('message');
-  //       // expect(actions[11].bookData.message).to.equal(expectedAction.bookData.message);
-  //       // expect(actions[11].bookData).to.have.property('data');
-  //       // expect(actions[11].bookData.data).to.be.an('object');
-  //       // expect(actions[11].bookData.data).to.have.property('visibility');
-  //       // expect(actions[11].bookData.data).to.have.property('isbn');
-  //       // expect(actions[11].bookData.data).to.have.property('id');
-  //       // expect(actions[11].bookData.data).to.have.property('title');
-  //       // expect(actions[11].bookData.data).to.have.property('author');
-  //       // expect(actions[11].bookData.data).to.have.property('pages');
-  //       // expect(actions[11].bookData.data).to.have.property('year');
-  //       // expect(actions[11].bookData.data).to.have.property('description');
-  //       // expect(actions[11].bookData.data).to.have.property('quantity');
-  //       // expect(actions[11].bookData.data).to.have.property('categoryid');
-  //       // expect(actions[11].bookData.data).to.have.property('image');
-  //       // expect(actions[11].bookData.data).to.have.property('pdf');
-  //       // expect(actions[11].bookData.data).to.have.property('updatedAt');
-  //       // expect(actions[11].bookData.data).to.have.property('createdAt');
+  //       console.log(actions[15]);
+  //       expect(actions[13].type).to.equal(expectedAction.type);
+  //       expect(actions[13].bookData[0]).to.equal(expectedAction.bookData.data[0]);
+  //       expect(actions[13].bookData[0]).to.be.an('object');
+  //       expect(actions[13].bookData[0]).to.have.property('visibility');
+  //       expect(actions[13].bookData[0]).to.have.property('isbn');
+  //       expect(actions[13].bookData[0]).to.have.property('id');
+  //       expect(actions[13].bookData[0]).to.have.property('title');
+  //       expect(actions[13].bookData[0]).to.have.property('author');
+  //       expect(actions[13].bookData[0]).to.have.property('pages');
+  //       expect(actions[13].bookData[0]).to.have.property('year');
+  //       expect(actions[13].bookData[0]).to.have.property('description');
+  //       expect(actions[13].bookData[0]).to.have.property('quantity');
+  //       expect(actions[13].bookData[0]).to.have.property('categoryid');
+  //       expect(actions[13].bookData[0]).to.have.property('image');
+  //       expect(actions[13].bookData[0]).to.have.property('pdf');
+  //       expect(actions[13].bookData[0]).to.have.property('updatedAt');
+  //       expect(actions[13].bookData[0]).to.have.property('createdAt');
   //     });
   //     done();
   // });
 });
 
+
+// describe('Cloudinary Actions', () => {
+//   it('should save pdf to cloudinary', async (done) => {
+//     const serverRes = mockData.saveImagerResponse;
+//     moxios.stubRequest(cloundinaryKey.cloudinaryUrl, {
+//       status: 201,
+//       response: serverRes
+//     });
+
+//     const expectedAction = {
+//       type: actionTypes.SAVE_PDF,
+//       pdf:serverRes
+//     };
+
+//     await store.dispatch(bookActions.savePdfToCloudinary(serverRes))
+//     .then(() => {
+//       console.log(store.actions[13]);
+//     });
+//   });
+// });
 
 
 // **************************** //
@@ -638,6 +775,36 @@ describe('Create Book Action', () => {
     expect(action.bookData.data).to.have.property('updatedAt');
     expect(action.bookData.data).to.have.property('createdAt');
 
+  });
+});
+
+describe('Create Book Action', () => {
+  it('should create a CREATE_CATEGORY', () =>  {
+    const serverRes ='Programming';
+
+    const expectedAction = {
+      type: actionTypes.CREATE_CATEGORY,
+      category: serverRes
+    };
+    const action = categoryAction.createCategoryAction({category: 'Programming'});
+    expect(action.type).to.equal(expectedAction.type);
+    expect(action.category.category).to.equal(expectedAction.category)
+
+  });
+});
+
+describe('Create Book Action', () => {
+  it('should create a CREATE_CATEGORY', () =>  {
+    const serverRes = mockData.categories
+
+    const expectedAction = {
+      type: actionTypes.GET_CATEGORIES,
+      fetchedCategories: serverRes
+    };
+    const action = categoryAction.getCategoriesAction(serverRes);
+    expect(action.type).to.equal('ET_CATEGORY');
+    expect(action.fetchedCategories).to.equal(serverRes);
+    expect(action.fetchedCategories[0].id).to.equal(serverRes[0].id);
   });
 });
 

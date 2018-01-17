@@ -4,7 +4,12 @@ import 'jquery';
 import PasswordResetModal from './PasswordResetModal';
 import Loader from '../../userprofile/adminSubComponents/loader';
 
-const LoginForm = ({ userData, handleLoginInput, loginHandler, error, isLoading }) => {
+const LoginForm = ({
+  userData,
+  handleLoginInput,
+  loginHandler,
+  error,
+  isLoading }) => {
 
     // loader
     const isLoadingText = <h5>Loading...</h5>
@@ -65,13 +70,15 @@ const LoginForm = ({ userData, handleLoginInput, loginHandler, error, isLoading 
                       <div className="center red-text">
                         {errorStatus}
                         {showIsLoading}
-                        </div>
+                      </div>
                     </div>  
                   </div>
 
-                  <div className="row resetPassBtn"><a href="#passwordResetModal" 
-                  className="button forgotPass modal-trigger">Forgot password
-                  </a></div>
+                  <div className="row resetPassBtn">
+                    <a href="#passwordResetModal" 
+                    className="button forgotPass modal-trigger">Forgot password
+                    </a>
+                  </div>
                   
                   {/* Signin button  */}
                   <div className="row">

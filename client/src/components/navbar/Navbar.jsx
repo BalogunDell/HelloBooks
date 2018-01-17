@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
   return (
@@ -10,38 +10,38 @@ const Navbar = () => {
         <a id="sideBarTrigger" data-activates="side_menu" className="button-collapse"><i className="material-icons">menu</i></a>
         <ul className="right hide-on-med-and-down">
         <li>
-            <NavLink activeClassName="active" exact to="/">Home</NavLink> 
+            <Link activeClassName="active" exact to="/">Home</Link> 
         </li>
 
         <li>
-            <NavLink activeClassName="active" to="/about">About</NavLink> 
+            <Link activeClassName="active" to="/about">About</Link> 
           </li>
 
           <li>
-            <NavLink activeClassName="active" to="/login">Login</NavLink> 
+            <Link activeClassName="active" to="/login">Login</Link> 
           </li>
           <li>
-            <NavLink activeClassName="active" to="/register">Create Account</NavLink> 
+            <Link activeClassName="active" to="/register">Create Account</Link> 
           </li>
         </ul>
 
         <ul className="side-nav" id="side_menu">
           <li>
-            <NavLink activeClassName="active" to="/">Home</NavLink> 
+            <Link activeClassName="active" to="/">Home</Link> 
         </li>
 
         <li>
-            <NavLink activeClassName="active" to="/about">About</NavLink> 
+            <Link activeClassName="active" to="/about">About</Link> 
         </li>
 
           <li>
-            <NavLink activeClassName="active" to="/books">Books</NavLink> 
+            <Link activeClassName="active" to="/books">Books</Link> 
           </li>
           <li>
-            <NavLink activeClassName="active" to="/login">Login</NavLink> 
+            <Link activeClassName="active" to="/login">Login</Link> 
           </li>
           <li>
-            <NavLink activeClassName="active" to="/register">Create Account</NavLink> 
+            <Link activeClassName="active" to="/register">Create Account</Link> 
           </li>
         </ul>
       </div>

@@ -1,9 +1,6 @@
 import React from 'react';
 import { NavLink , Link, Redirect} from 'react-router-dom';
 import { connect } from 'react-redux';
-import profileImage from '../../assets/images/abbey.jpg';
-import logo from '../../assets/images/hb-logo.png';
-
 
 const UserNav = ({ userType, navLinks, linkIcons, linkTexts, path, userDetails, handleLogout }) => {
   return(

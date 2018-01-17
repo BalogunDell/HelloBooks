@@ -8,7 +8,7 @@ import AuthenticateUser from '../HOC/authenticate';
 /* @class History
  * @classdesc returns the borrow history of the user
  */
-class History extends React.Component {
+export class History extends React.Component {
   constructor(props) {
     super(props);
 
@@ -17,7 +17,6 @@ class History extends React.Component {
       loading: false,
       selectedValue: '',
       allUserBooks: [],
-      filterable: [],
       bookToDisplay: '',
       allbooks: false,
       returnedBookDisplayStatus: false,
@@ -52,20 +51,20 @@ class History extends React.Component {
           tableHeader: event.target.value,
           loading: true
         });
-        this.props.getUserBooks().then(() => {
+        this.props.getUserBooks(this.state.userid).then(() => {
           const pending = this.props.fetchedBooks.response.filter(book => book.returnstatus == false);
           this.setState({
             allUserBooks: pending,
             loading: false
           });
-        });
+        })
       break;
       case 'Returned books':
       this.setState({
         tableHeader: event.target.value,
         loading: true
       });
-      this.props.getUserBooks().then(() => {
+      this.props.getUserBooks(this.state.userid).then(() => {
         const returned = this.props.fetchedBooks.response.filter(book => book.returnstatus == true);
         this.setState({
           allUserBooks: returned,
@@ -78,7 +77,7 @@ class History extends React.Component {
         tableHeader: event.target.value,
         loading: true
       });
-      this.props.getUserBooks().then(() => {
+      this.props.getUserBooks(this.state.userid).then(() => {
         this.setState({ 
           allUserBooks: this.props.fetchedBooks.response,
           loading: false
@@ -90,23 +89,23 @@ class History extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if(nextProps.fetchedBooks.response) {
-      let unreturned = nextProps.fetchedBooks.response.filter(book => book.returnstatus == false);
       this.setState({loading: false, 
-        allUserBooks: unreturned,
-        filterable: nextProps.fetchedBooks.response});
+        allUserBooks: nextProps.fetchedBooks.response,
+      });
   }
 }
 
   componentDidMount() {
     this.setState({loading: true})    
-    this.props.getUserBooks().then(() => {
+    this.props.getUserBooks(this.state.userid).then(() => {
       this.setState({loading:false})
     })
     .catch(error => {
     });
-
-    $('select').material_select();
-    $('select').change(e => this.handleSelectChange(e));
+    $(document).ready(() => {
+      $('select').material_select();
+      $('select').change(event => this.handleSelectChange(event));
+    });
   }
 
   
@@ -139,6 +138,10 @@ class History extends React.Component {
               ?
                 <h3>Loading books...</h3>
               :
+                this.state.allUserBooks == undefined
+              ?
+                <h3>You have no books yet</h3>
+              :
                 <AllUserBooksComp allUserBooks = {this.state.allUserBooks}
                 handleReturn= {this.handleReturn}
                 handleBorrow={this.handleBorrow}
@@ -154,17 +157,16 @@ class History extends React.Component {
 }
 
 
-const mapStateToProps = (state, ownProps) => {
+export const mapStateToProps = (state, ownProps) => {
   return {
     fetchedBooks: state.books.fetchedBooks,
-    test: state
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
+export const mapDispatchToProps = (dispatch) => {
   return {
     getUserBooks: (userid) => dispatch(bookActions.getUserBooks(userid)),
     returnBook: (bookid) => dispatch(bookActions.returnBook(bookid))
   }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(AuthenticateUser(History));
+export default connect(mapStateToProps, mapDispatchToProps)(History);

@@ -6,7 +6,7 @@ import * as booksAction from '../../../Actions/booksAction';
 import PublishBookModal from './publishBookModal';
 
 
-class unPublishedBooks extends React.Component {
+export class UnPublishedBooks extends React.Component {
   constructor(props){
     super(props);
 
@@ -78,7 +78,9 @@ class unPublishedBooks extends React.Component {
 
   componentDidMount(){
     this.setState({ loader: true });
-    $('.modal').modal();
+    $(document).ready(() => {
+      $('.modal').modal();
+    });
     this.props.adminGetAllBooks().then(() => {
       this.setState({ loader: false });
     })
@@ -159,16 +161,16 @@ class unPublishedBooks extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => {
+export const mapStateToProps = (state) => {
   return {
     allbooks: state.books.unpublishedbooks
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
+export const mapDispatchToProps = (dispatch) => {
   return {
     adminGetAllBooks: () => dispatch(booksAction.adminGetAllBooks()),
     publishBook: (id) => dispatch(booksAction.publishBook(id))
   }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(unPublishedBooks);
+export default connect(mapStateToProps, mapDispatchToProps)(UnPublishedBooks);

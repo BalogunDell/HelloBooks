@@ -89,11 +89,12 @@ export class PasswordResetModal extends React.Component {
       disableBtn: false,
       error: false
     });
-    $('.modal').modal({
-      dismissible: false,
-      opacity: 0.3
+    $(document).ready(() => {
+      $('.modal').modal({
+        dismissible: false,
+        opacity: 0.3
+      });
     });
-
   }
 
   render() {
@@ -134,7 +135,7 @@ export class PasswordResetModal extends React.Component {
 
 }
 
-const dispatchToProps = (dispatch) => {
+export const dispatchToProps = (dispatch) => {
   return {
     sendEmail: (email) => dispatch(userActions.sendEmail(email))
   }

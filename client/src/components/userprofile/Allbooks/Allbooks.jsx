@@ -10,8 +10,7 @@ import AuthenticateUser from '../../HOC/authenticate';
  * @classdesc returns the Books component
  */
 
-//  books, path, getBookId
-class Allbooks extends React.Component {
+export class Allbooks extends React.Component {
   constructor(props) {
     super(props);
 
@@ -28,6 +27,8 @@ class Allbooks extends React.Component {
 
   getBookId(event) {
     this.props.getCurrentBookId(event.target.value);
+    let currentBook = this.state.books.filter((book) => book.id == event.target.value);
+    localStorage.setItem('book', JSON.stringify(currentBook));
   }
 
   componentDidMount() {
@@ -107,20 +108,19 @@ class Allbooks extends React.Component {
   }
 }
 
-function mapStateToProps(state, ownProps) {
+export const mapStateToProps = (state, ownProps) => {
   return {
-    url: ownProps,
     retrievedBooks: state.books.books,
     currentBookId: state.books.currentBookId
     
   }
 }
 
-function mapDispatchToProps(dispatch) {
+export const mapDispatchToProps = (dispatch) => {
   return {
     loadAllbooks: () => dispatch(bookActions.loadAllbooks()),
     getCurrentBookId: (id) => dispatch(bookActions.getBookId(id))
   }
 }
 
-  export default connect(mapStateToProps, mapDispatchToProps)(AuthenticateUser(Allbooks));
+  export default connect(mapStateToProps, mapDispatchToProps)(Allbooks);

@@ -6,7 +6,7 @@ import Loading from '../../userprofile/adminSubComponents/loader';
 
 
 
-const RegistrationForm  = ({ userData, handleSubmit, handleUserInput, error, loading }) => {
+export const RegistrationForm  = ({ userData, handleSubmit, handleUserInput, error, loading }) => {
 
   return ( 
     <div className="row">
@@ -157,7 +157,6 @@ userData:React.PropTypes.object.isRequired,
 handleSubmit: React.PropTypes.func.isRequired,
 handleUserInput: React.PropTypes.func.isRequired,
 error: React.PropTypes.string.isRequired,
-// loading: React.PropTypes.bool.isRequired
 } 
 
 

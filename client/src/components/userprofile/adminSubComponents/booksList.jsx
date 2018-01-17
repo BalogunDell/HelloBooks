@@ -4,11 +4,10 @@ import { connect } from 'react-redux';
 
 import ConfirmationModal from './confirmationModal';
 import * as bookActions from '../../../Actions/booksAction';
-import selectFilterer from '../../../utils/selectFilterer';
 import BorrowedbookTable from './borrowedbooksTable';
 import PublishedBooks from './publishedBooks';
 
-class booksList extends React.Component {
+export class BooksList extends React.Component {
   constructor(props) {
     super(props);
 
@@ -105,7 +104,7 @@ class booksList extends React.Component {
 
   /**
    * 
-   * @param {object} event 
+   * @param { object } event 
    * @return { object } component state
    */
   handleBookDelete(event) {
@@ -114,7 +113,7 @@ class booksList extends React.Component {
 
   /**
    * 
-   * @param {object} event 
+   * @param { object } event 
    * @return { object } component state
    */
   handleDeleteCancel() {
@@ -180,13 +179,14 @@ class booksList extends React.Component {
   }
 
   componentDidMount() {
-    $('select').material_select();
-    $('select').change(e=>this.handleSelectChange(e));
-    $('.modal').modal({
-      dismissible: false,
-      opacity: 0.3
+    $(document).ready(() => {
+      $('select').material_select();
+      $('select').change(e=>this.handleSelectChange(e));
+      $('.modal').modal({
+        dismissible: false,
+        opacity: 0.3
+      });
     });
-
     // Fetch all borrowed books
     this.props.getAllBorrowedBooks();
 
@@ -252,14 +252,14 @@ class booksList extends React.Component {
 }
 }
 
-function stateToProps(state, ownProps) {
+export function stateToProps(state, ownProps) {
   return {
     loadAllbooks: state.books.books,
     borrowedBooks: state.books.allborrowedbooks
   }
 }
 
-function dispatchToProps(dispatch) {
+export function dispatchToProps(dispatch) {
   return {
     getAllBooks: () => dispatch(bookActions.loadAllbooks()),
     getAdminEditBookId: (id) => dispatch(bookActions.getAdminEditBookId(id)),
@@ -268,4 +268,4 @@ function dispatchToProps(dispatch) {
   }
 } 
 
-export default connect(stateToProps,dispatchToProps)(booksList);
+export default connect(stateToProps,dispatchToProps)(BooksList);

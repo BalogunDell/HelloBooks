@@ -11,7 +11,7 @@ import Loader from './adminSubComponents/loader';
  * @extends {React.Component}
  * @classdesc Creates form for profile edit
  */
-class profileUpdateForm extends React.Component {
+export class ProfileUpdateForm extends React.Component {
   constructor(props){
     super(props);
     this.state = {
@@ -32,7 +32,7 @@ class profileUpdateForm extends React.Component {
    * 
    * @param {object} event
    * @returns {object} updated state
-   * @memberof profileUpdateForm
+   * @memberof ProfileUpdateForm
    */
   handleUserInput(event) {
     let tempFileHolder = { ...this.state.userData};
@@ -196,16 +196,16 @@ class profileUpdateForm extends React.Component {
 }
 
 
-const stateToProps = (state, ownProps) => {
+export const stateToProps = (state, ownProps) => {
   return {
     newUserDetails: state.userProfile.data
   }
 }
 
-const dispatchToProps = (dispatch) => {
+export const dispatchToProps = (dispatch) => {
   return {
     updateProfile: (newData) => dispatch(userActions.editProfile(newData))
   }
 } 
 
-export default connect(stateToProps, dispatchToProps)(profileUpdateForm);
+export default connect(stateToProps, dispatchToProps)(ProfileUpdateForm);
