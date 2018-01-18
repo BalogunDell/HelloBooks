@@ -1,0 +1,42 @@
+{
+  "name": "HelloBooks",
+  "description": "",
+  "scripts": {
+  },
+  "env": {
+    "CHARACTERS": {
+      "required": true
+    },
+    "CLOUD_KEY": {
+      "required": true
+    },
+    "CLOUD_URL": {
+      "required": true
+    },
+    "DATABASE_URL": {
+      "required": true
+    },
+    "PASSWORD": {
+      "required": true
+    },
+    "PORT": {
+      "required": true
+    },
+    "SECRET": {
+      "required": true
+    }
+  },
+  "formation": {
+    "web": {
+      "quantity": 1
+    }
+  },
+  "addons": [
+
+  ],
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    }
+  ]
+}
