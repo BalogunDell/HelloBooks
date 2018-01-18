@@ -34,6 +34,7 @@ import Books from '../../client/src/components/books/Books';
 import Book from '../../client/src/components/books/book';
 import { expectation } from 'sinon';
 import { cloudinaryUrl } from '../../client/src/utils/cloudinaryKeys';
+import { userData } from './mocks/mockdata';
 
 
 const middleware = [thunk];
@@ -667,399 +668,36 @@ describe('THUNK FUNCTIONS', () => {
       });
       done();
   });
-});
 
-
-// describe('Cloudinary Actions', () => {
-//   it('should save pdf to cloudinary', async (done) => {
-//     const serverRes = mockData.saveImagerResponse;
-//     process.env.CLOUD_URL = 'https://api.cloudinary.com/v1_1/djvjxp2am/upload';
-//     const request = process.env.CLOUD_URL;
-//     moxios.stubRequest('https://api.cloudinary.com/v1_1/djvjxp2am/upload'), {
-//       status: 201,
-//       response: serverRes
-//     };
-
-//     const expectedAction = {
-//       type: actionTypes.SAVE_PDF,
-//       pdf: serverRes
-//     };
-
-//     const file = {
-//       name: "sample.pdf",
-//       lastModified: 1507123362000,
-//       size: 3158,
-//       type: "image/jpg",
-//       webkitRelativePath: ''
-//     };
-//     console.log(cloudinaryUrl)
-//  const res=   await store.dispatch(bookActions.saveImageToCloudinary(file))
-//  console.log('################', res);
-//     // .then(() => {
-//     //   console.log(store.actions[16]);
-//     // })
-//     // .catch((error) => {
-//     //   console.log(error);
-//     // })
-//   });
-// });
-
-
-// **************************** //
-// *****ACTION WRAPPER TEST**** //
-// **************************** //
-describe('Signup Action', () => {
-  it('should create an action for signup', () => {
-    const userSignupData = "Test this";
-    const expectedAction =  { 
-      type: actionTypes.ADD_USER,
-      userSignupData
-    }
-    expect(userAcessActions.userSignupSuccessAction(userSignupData));
-  });
-});
-
-describe('Signin Action', () => {
-  it('should create an action for signin', () => {
-
-    const userSigninData = mockData.signinMockData;
-    const expectedAction =  { 
-      type: actionTypes.LOGIN,
-      loginData: userSigninData
-    }
-    // Call action
-    const action = userAcessActions.userLoginSuccess(userSigninData);
-
-    // assertions
-    expect(action.type).to.equal(expectedAction.type);
-    expect(action.loginData).to.equal(expectedAction.loginData);
-    expect(action.loginData).to.have.property('responseData');
-    expect(action.loginData.responseData).to.have.property('username');
-    expect(action.loginData.responseData).to.have.property('message');
-    expect(action.loginData.responseData).to.have.property('token');
-    expect(action.loginData.responseData).to.have.property('userID');
-    expect(action.loginData.responseData).to.have.property('userRole');
-    expect(action.loginData.responseData).to.have.property('image');
-  });
-});
-
-describe('Send Email Action', () => {
-  it('should create a SEND_EMAIL when sending an email', () => {
-
-    const serverRes = mockData.resetPasswordResponse;
-    const expectedAction = {
-      type: actionTypes.SEND_EMAIL,
-      serverRes
-    };
-    // Call action
-    const action = userAcessActions.sendEmailAction(serverRes);
-
-    // assertions
-    expect(action.type).to.equal(expectedAction.type);
-    expect(action.serverRes).to.equal(expectedAction.serverRes);
-    expect(action.serverRes).to.have.property('message');
-    expect(action.serverRes).to.have.property('url');
-  });
-});
-
-describe('Change Password Action', () => {
-  it('should create a RESET_PASS when changing password', () => {
-
-    const serverRes = {
-      message: "Your password has been successfully updated"
-    };
+  it('should create GOOGLE_ACCESS when a user signs in', async (done) => {
+    const signinResponse = mockData.signupResponse
+    moxios.stubRequest(apiEndPoints.googleAccess, {
+      status: 200,
+      response: signinResponse
+    });
 
     const expectedAction = {
-      type: actionTypes.RESET_PASS,
-      newPassword: serverRes
+      type: actionTypes.GOOGLE_ACCESS,
+      googleUserData: signinResponse
     };
 
-    const action = userAcessActions.resetPasswordAction(serverRes);
-    expect(action.type).to.equal(expectedAction.type);
-    expect(action.newPassword).to.equal(expectedAction.newPassword);
-    expect(action.newPassword).to.have.property('message');
+    const thisstore = mockStore({});
+    // Dispatch
+    await store.dispatch(userAcessActions.newGoogleAccess(mockData.userData))
+      .then(() => {
+        const actions = store.getActions();
+        expect(actions[20].type).to.equal(expectedAction.type);
+        expect(actions[20].googleUserData.responseData).to.have.property('message');
+        expect(actions[20].googleUserData.responseData).to.have.property('username');
+        expect(actions[20].googleUserData.responseData).to.have.property('userID');
+        expect(actions[20].googleUserData.responseData).to.have.property('token');
+        expect(actions[20].googleUserData.responseData).to.have.property('userID');
+        expect(actions[20].googleUserData.responseData).to.have.property('userRole');
+        expect(actions[20].googleUserData.responseData).to.have.property('image');
+      });
+      done();
   });
 });
-
-describe('Fetch User Action', () => {
-  it('should create FETCH_USER action when a user signs in', () => {
-    const userID = 3;
-
-    // Define expected action
-    const expectedAction = {
-      type: actionTypes.FETCH_USER,
-      userID
-    };
-
-    // Call action
-    const action = userProfileAction.fetchUser(userID);
-    expect(action.type).to.equal(expectedAction.type);
-    expect(action.userID).to.equal(expectedAction.userID);
-  });
-});
-
-describe('Edit User Action', () => {
-  it('should create EDIT_USER action when a user edits his/her profile', () => {
-    const newUserData = mockData.newUserData;
-
-    const expectedAction = {
-      type: actionTypes.EDIT_PROFILE,
-      newUserData
-    };
-
-    const action = userProfileAction.editProfileAction(newUserData);
-    expect(action.type).to.equal(expectedAction.type);
-    expect(action.newUserData).to.have.property('firstname');
-    expect(action.newUserData).to.have.property('lastname');
-    expect(action.newUserData).to.have.property('username');
-  });
-});
-
-describe('Save Image Action', () => {
-  it('should create EDIT_IMAGE when a user edit his/her profile', () => {
-    const userImage = 'testimage.png';
-
-    const expectedAction = {
-      type: actionTypes.EDIT_IMAGE,
-      newImageUrl: userImage
-    };
-
-    const action = userProfileAction.saveImage(userImage);
-    expect(action.type).to.equal(expectedAction.type);
-    expect(action.newImageUrl).to.equal(expectedAction.newImageUrl);
-  });
-});
-
-describe('Get book by id', () => {
-  it('should create GET_BOOK_ID when a book is clicked', () => {
-    const bookid = 3
-    const expectedAction = {
-      type: actionTypes.GET_BOOK_ID,
-      bookid
-    };
-
-    const action = bookActions.getBookId(bookid);
-    expect(action.type).to.equal(expectedAction.type);
-    expect(action.bookid).to.equal(expectedAction.bookid);
-  });
-});
-
-describe('Borrow book', () => {
-  it('should create BORROW_BOOK when user borrows a book', () => {
-    const bookdetails = mockData.borrowBookResponse
-    const expectedAction = {
-      type: actionTypes.BORROW_BOOK,
-      bookDetails: bookdetails
-    };
-
-    const action = bookActions.borrowBookAction(bookdetails);
-    expect(action.type).to.equal(expectedAction.type);
-    expect(action.bookDetails).to.equal(expectedAction.bookDetails);
-    expect(action.bookDetails).to.have.property('message');
-    expect(action.bookDetails.message).to.equal(expectedAction.bookDetails.message);
-    expect(action.bookDetails).to.have.property('returnDate');
-    expect(action.bookDetails.returnDate).to.equal(expectedAction.bookDetails.returnDate)
-  });
-});
-
-describe('Fetch User Books', () => {
-  it('should create FETCTH_USER_BOOKS when user visits history page', () => {
-    const serverResponse = mockData.borrowedBook;
-    const expectedAction = {
-      type: actionTypes.FETCTH_USER_BOOKS,
-      fetchedBooks: serverResponse
-    };
-    const action = bookActions.userBooks(serverResponse);
-    expect(action.type).to.equal(expectedAction.type);
-    expect(action.fetchedBooks).to.equal(expectedAction.fetchedBooks);
-    expect(action.fetchedBooks).to.have.property('id');
-    expect(action.fetchedBooks).to.have.property('userid');
-    expect(action.fetchedBooks).to.have.property('bookid');
-    expect(action.fetchedBooks).to.have.property('dateborrowed');
-    expect(action.fetchedBooks).to.have.property('expectedreturndate');
-    expect(action.fetchedBooks).to.have.property('returnstatus');
-    expect(action.fetchedBooks).to.have.property('approvedreturn');
-    expect(action.fetchedBooks).to.have.property('book');
-    expect(action.fetchedBooks.id).to.equal(expectedAction.fetchedBooks.id);
-    expect(action.fetchedBooks.userid).to.equal(expectedAction.fetchedBooks.userid);
-    expect(action.fetchedBooks.bookid).to.equal(expectedAction.fetchedBooks.bookid);
-    expect(action.fetchedBooks.dateborrowed).to.equal(expectedAction.fetchedBooks.dateborrowed);
-    expect(action.fetchedBooks.expectedreturndate).to.equal(expectedAction.fetchedBooks.expectedreturndate);
-    expect(action.fetchedBooks.returnstatus).to.equal(expectedAction.fetchedBooks.returnstatus);
-    expect(action.fetchedBooks.approvedreturn).to.equal(expectedAction.fetchedBooks.approvedreturn);
-    expect(action.fetchedBooks.book).to.equal(expectedAction.fetchedBooks.book);
-    
-  });
-});
-
-describe('Return Book Action', () => {
-  it('should create RETURN_BOOK when a user returns a book', () => {
-    const serverRes = {
-      message: "Book has been returned"
-    };
-
-    const expectedAction = {
-      type: actionTypes.RETURN_BOOK,
-      bookid: serverRes
-    };
-
-    const action = bookActions.returnBookAction(serverRes);
-    expect(action.type).to.equal(expectedAction.type);
-    expect(action.bookid).to.equal(expectedAction.bookid);
-    expect(action.bookid).to.have.property('message');
-    expect(action.bookid.message).to.equal(expectedAction.bookid.message);
-  });
-});
-
-describe('Create Book Action', () => {
-  it('should create a CREATE_BOOK', () =>  {
-    const serverRes = mockData.createdBookResponse;
-
-    const expectedAction = {
-      type: actionTypes.CREATE_BOOK,
-      bookData: serverRes
-    };
-
-    const action = bookActions.createBookAction(serverRes);
-    expect(action.type).to.equal(expectedAction.type);
-    expect(action.bookData).to.equal(expectedAction.bookData);
-    expect(action.bookData).to.have.property('message');
-    expect(action.bookData.message).to.equal(expectedAction.bookData.message);
-    expect(action.bookData).to.have.property('data');
-    expect(action.bookData.data).to.be.an('object');
-    expect(action.bookData.data).to.have.property('visibility');
-    expect(action.bookData.data).to.have.property('isbn');
-    expect(action.bookData.data).to.have.property('id');
-    expect(action.bookData.data).to.have.property('title');
-    expect(action.bookData.data).to.have.property('author');
-    expect(action.bookData.data).to.have.property('pages');
-    expect(action.bookData.data).to.have.property('year');
-    expect(action.bookData.data).to.have.property('description');
-    expect(action.bookData.data).to.have.property('quantity');
-    expect(action.bookData.data).to.have.property('categoryid');
-    expect(action.bookData.data).to.have.property('image');
-    expect(action.bookData.data).to.have.property('pdf');
-    expect(action.bookData.data).to.have.property('updatedAt');
-    expect(action.bookData.data).to.have.property('createdAt');
-
-  });
-});
-
-describe('Create Book Action', () => {
-  it('should create a CREATE_CATEGORY', () =>  {
-    const serverRes ='Programming';
-
-    const expectedAction = {
-      type: actionTypes.CREATE_CATEGORY,
-      category: serverRes
-    };
-    const action = categoryAction.createCategoryAction({category: 'Programming'});
-    expect(action.type).to.equal(expectedAction.type);
-    expect(action.category.category).to.equal(expectedAction.category)
-
-  });
-});
-
-describe('Create Book Action', () => {
-  it('should create a CREATE_CATEGORY', () =>  {
-    const serverRes = mockData.categories
-
-    const expectedAction = {
-      type: actionTypes.GET_CATEGORIES,
-      fetchedCategories: serverRes
-    };
-    const action = categoryAction.getCategoriesAction(serverRes);
-    expect(action.type).to.equal('ET_CATEGORY');
-    expect(action.fetchedCategories).to.equal(serverRes);
-    expect(action.fetchedCategories[0].id).to.equal(serverRes[0].id);
-  });
-});
-
-
-describe('Save PDF Action', () => {
-  it('should create a SAVE_PDF', () =>  {
-    const serverRes = 'stringFromCloudinary';
-
-    const expectedAction = {
-      type: actionTypes.SAVE_PDF,
-      pdf: serverRes
-    };
-
-    const action = bookActions.savePdf(serverRes);
-    expect(action.type).to.equal(expectedAction.type);
-    expect(action.pdf).to.equal(expectedAction.pdf);
-
-  });
-});
-
-
-describe('Save Image Action', () => {
-  it('should create a SAVE_IMAGE', () =>  {
-    const serverRes = 'stringFromCloudinary';
-
-    const expectedAction = {
-      type: actionTypes.SAVE_IMAGE,
-      image: serverRes
-    };
-
-    const action = bookActions.saveImage(serverRes);
-    expect(action.type).to.equal(expectedAction.type);
-    expect(action.image).to.equal(expectedAction.image);
-
-  });
-});
-
-describe('Get Book Id', () => {
-  it('should create a EDIT_BOOK_ID when admin edits a book', () =>  {
-    const serverRes = 2;
-
-    const expectedAction = {
-      type: actionTypes.EDIT_BOOK_ID,
-      bookid: serverRes
-    };
-
-    const action = bookActions.getAdminEditBookId(serverRes);
-    expect(action.type).to.equal(expectedAction.type);
-    expect(action.bookid).to.equal(expectedAction.bookid);
-
-  });
-});
-
-describe('Modify a Book', () => {
-  it('should create a MODIFY_BOOK after admin edits a book', () =>  {
-    const serverRes = mockData.editBookResponse;
-
-    const expectedAction = {
-      type: actionTypes.MODIFY_BOOK,
-      bookData: serverRes
-    };
-
-    const action = bookActions.modifyBookAction(serverRes);
-    expect(action.type).to.equal(expectedAction.type);
-    expect(action.bookData).to.equal(expectedAction.bookData);
-    expect(action.bookData).to.have.property('message');
-    expect(action.bookData.message).to.equal(expectedAction.bookData.message);
-    expect(action.bookData).to.have.property('data');
-    expect(action.bookData.data).to.be.an('object');
-    expect(action.bookData.data).to.have.property('visibility');
-    expect(action.bookData.data).to.have.property('isbn');
-    expect(action.bookData.data).to.have.property('id');
-    expect(action.bookData.data).to.have.property('title');
-    expect(action.bookData.data).to.have.property('author');
-    expect(action.bookData.data).to.have.property('pages');
-    expect(action.bookData.data).to.have.property('year');
-    expect(action.bookData.data).to.have.property('description');
-    expect(action.bookData.data).to.have.property('quantity');
-    expect(action.bookData.data).to.have.property('categoryid');
-    expect(action.bookData.data).to.have.property('image');
-    expect(action.bookData.data).to.have.property('pdf');
-    expect(action.bookData.data).to.have.property('updatedAt');
-    expect(action.bookData.data).to.have.property('createdAt');
-
-  });
-});
-
-
 
 
 

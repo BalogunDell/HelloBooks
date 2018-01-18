@@ -19,7 +19,9 @@ import {
 
 import {
   userData,
-  signupResponse
+  signupResponse,
+  mockBooks,
+  profile
 } from './mocks/mockdata';
 
 jest.mock('../../client/src/components/HOC/authenticate.jsx');
@@ -108,5 +110,17 @@ describe('Register Component', () => {
     const dispatch = jest.fn();
     expect(mapDispatchToProps(dispatch).saveNewUser).toBeTruthy();
   });
-  
+
+  it('should contain the mapDispatchToProps method', () => {
+    const store = {
+      initialUserData: { username: '', firstname: '', lastname: '', email: '', password: '', confirmPassword: ''},
+      userAccess: {
+        isAuthenticated: false,
+        userData: profile
+      }
+    };
+    expect(mapStateToProps(store).authStatus).toExist;
+    expect(mapStateToProps(store).initialUserData).toExist;
+    expect(mapStateToProps(store).userType).toExist;
+  });
 });

@@ -141,7 +141,7 @@ componentDidMount() {
 // ******************************************************//
 // DEFINE CONNECT PARAMETERS: **THEY ARE BOTH FUNCTIONS**//
 // ******************************************************//
-const mapStateToProps = (state, ownProps) => {
+export const mapStateToProps = (state, ownProps) => {
     let initialUserData = { username:'' , password:'' }
   return {
     initialUserData: initialUserData,
@@ -151,7 +151,7 @@ const mapStateToProps = (state, ownProps) => {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
+export const mapDispatchToProps = (dispatch) => {
   return {
     userLogin: (loginData) => dispatch(UserAcessActions.userLogin(loginData)),
     googleAccess: (userData) => dispatch(UserAcessActions.newGoogleAccess(userData))

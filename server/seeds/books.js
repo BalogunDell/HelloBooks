@@ -69,7 +69,7 @@ const invalidBooks = [
     pages: 870,
     year: 2017,
     description: 'the books does this and that',
-    quantity: 0,
+    quantity: 3,
     categoryid: '3',
     image: 'images/andela.jpg',
     pdf: 'pdf6'

@@ -17,6 +17,7 @@ import {
   userLoginSuccess,
   sendEmailAction,
   resetPasswordAction,
+  newGoogleAccessAction
 } from '../../client/src/Actions/userAccessAction';
 
 import {
@@ -86,6 +87,18 @@ describe('User Access Reducer', () => {
   });
   
   it('should return a new state when user logs in', () => {
+    const newState = userAccessReducer(initialState, newGoogleAccessAction(signupResponse));
+    expect(newState.userData.responseData.message).to.equal( signupResponse.responseData.message );
+    expect(newState.isAuthenticated).to.equal(true);
+    expect(newState.userData.responseData.username).to.equal(signupResponse.responseData.username);
+    expect(newState.userData.responseData.userID).to.equal(signupResponse.responseData.userID);
+    expect(newState.userData.responseData.userRole).to.equal(signupResponse.responseData.userRole);
+    expect(newState.userData.responseData.image).to.equal(signupResponse.responseData.image);
+    expect(newState.userData.responseData.token).to.equal(signupResponse.responseData.token);
+  });
+
+
+  it('should return a new state when user logs in using google button', () => {
     const newState = userAccessReducer(initialState, userLoginSuccess(signupResponse));
     expect(newState.userData.responseData.message).to.equal( signupResponse.responseData.message );
     expect(newState.isAuthenticated).to.equal(true);

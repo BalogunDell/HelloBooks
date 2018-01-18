@@ -1180,6 +1180,19 @@ describe('Hellobooks API', () => {
       });
     })
   });
+
+  describe('Google User Login' , () => {
+    it('should log a new user in', (done) => {
+      request
+      .post(`${api}/googleuser`)
+      .accept('Content-Type', 'Application/json')
+      .send(mockdata.user1Login)
+      .end((err, res) => {
+        console.log(res.body);
+        done();
+      });
+    })
+  });
 });
 
   //***********************************//
@@ -1205,6 +1218,28 @@ describe('Hellobooks API', () => {
         expect(res.status).to.equal(401);
         expect(res.body).to.have.property('message');
         expect(res.body.message).to.equal('Unauthorized - Access Denied');
+        done();
+      });
+    });
+
+    it('should not allow users access these routes without token' , (done) => {
+      request
+      .post(`${api}/googleuser/dfgddfgd`)
+      .end((err, res) => {
+        expect(res.status).to.equal(404);
+        expect(res.body).to.have.property('message');
+        expect(res.body.message).to.equal('This is an invalid route');
+        done();
+      });
+    });
+
+    it('should not allow users access these routes without token' , (done) => {
+      request
+      .post(`${userAPI}/login/dfgddfgd`)
+      .end((err, res) => {
+        expect(res.status).to.equal(404);
+        expect(res.body).to.have.property('message');
+        expect(res.body.message).to.equal('This is an invalid route');
         done();
       });
     });

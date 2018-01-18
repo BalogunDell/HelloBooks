@@ -8,7 +8,7 @@ module.exports = {
         pages: 1080,
         year: 2010,
         description: 'the books does this and that',
-        quantity: 0,
+        quantity: 3,
         categoryid: 2,
         visibility: true,
         image: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',

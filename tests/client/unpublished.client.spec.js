@@ -64,7 +64,7 @@ describe('Unpublished Book Component', () => {
     expect(wrapper.find('.unpublished').length).toBe(1);
   });
 
-  it('should test the mothod: handlePublish', () => {
+  it('should test the method: handlePublish', () => {
     const spy = jest.spyOn(UnPublishedBooks.prototype, 'handlePublish');
     shallow(<UnPublishedBooks {...props} onClick = {spy}/>)
     .instance().handlePublish(event);
@@ -78,7 +78,7 @@ describe('Unpublished Book Component', () => {
       expect(wrapper.instance().state).toExist;
   });
 
-  it('should test the mothod: handlePublish', () => {
+  it('should test the method: handlePublish', () => {
     const spy = jest.spyOn(UnPublishedBooks.prototype, 'cancelPublish');
     shallow(<UnPublishedBooks {...props} onClick = {spy}/>)
     .instance().cancelPublish(event);
@@ -97,21 +97,21 @@ describe('Unpublished Book Component', () => {
       expect(wrapper.instance().state).toExist;
   });
 
-  it('should test the mothod: publishBookHander', () => {
+  it('should test the method: publishBookHander', () => {
     const spy = jest.spyOn(UnPublishedBooks.prototype, 'publishBookHander');
     shallow(<UnPublishedBooks {...props} onSubmit = {spy}/>)
     .instance().publishBookHander(event);
     expect(spy).toHaveBeenCalledTimes(1);
   });
 
-  it('should test the mothod: componentDidMount', () => {
+  it('should test the method: componentDidMount', () => {
     const spy = jest.spyOn(UnPublishedBooks.prototype, 'componentDidMount');
     shallow(<UnPublishedBooks {...props} componentDidMount = {spy}/>)
     .instance().componentDidMount;
     expect(spy).toHaveBeenCalledTimes(1);
   });
 
-  it('should test the mothod: componentWillReceiveProps', () => {
+  it('should test the method: componentWillReceiveProps when book length is more than one', () => {
     const nextProps = {
       allbooks: publishedBooksSample
     }
@@ -120,7 +120,17 @@ describe('Unpublished Book Component', () => {
     .instance().componentWillReceiveProps(nextProps);
     wrapper.setState({unpublishedBooksArray: nextProps.allbooks});
     wrapper.setState({ bookCountStatus: true});
-    expect(spy).toHaveBeenCalledTimes(1);
+  });
+
+  it('should test the method: componentWillReceiveProps when book length is less than one', () => {
+    const nextProps = {
+      allbooks: []
+    }
+    const spy = jest.spyOn(UnPublishedBooks.prototype, 'componentWillReceiveProps');
+    shallow(<UnPublishedBooks {...props} componentWillReceiveProps = {spy}/>)
+    .instance().componentWillReceiveProps(nextProps);
+    wrapper.setState({unpublishedBooksArray: nextProps.allbooks});
+    wrapper.setState({ bookCountStatus: true});
   });
 
   it('should test the method: mapDispatchToProps', () => {

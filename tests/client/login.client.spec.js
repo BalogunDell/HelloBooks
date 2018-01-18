@@ -60,7 +60,7 @@ describe('renders Login Form', () => {
     loginHandler: jest.fn(),
     error: '',
     isLoading: false,
-    isAuthenticated: false
+    isAuthenticated: false,
   }
   const wrapper = shallow(<LoginForm {...minProps}/>);
 
@@ -96,7 +96,16 @@ describe('Login Component', () => {
       username: 'Fred1',
       password: 'password'
     },
-    userLogin: jest.fn(() => Promise.resolve())
+    googleAuth: {
+      isAuthenticated: false
+    },
+    isAuthenticated: {
+      userAccess: {
+        isAuthenticated: false
+      }
+    },
+    userLogin: jest.fn(() => Promise.resolve()),
+    googleAccess: jest.fn(() => Promise.resolve())
   }
   it('renders the login component', () => {
     const wrapper = shallow(<Login {...props}/>);
@@ -114,15 +123,37 @@ describe('Login Component', () => {
     expect(loginHandlerspy).toHaveBeenCalledTimes(1);
   });
 
+  it('should contain the google login handler method', () => {
+    const wrapper = shallow(<Login {...props}/>);
+    const spy = jest.spyOn(Login.prototype, 'googleLoginHandler');
+    const response = {
+      profileObj: {
+        givenName: '',
+        familyName: '',
+        googleId: 3,
+        email: '',
+        imageUrl: ''
+      }
+    }
+    shallow(<Login { ...props } googleLoginHandler = {spy}/>)
+    .instance().googleLoginHandler(response);
+    expect(spy).toHaveBeenCalledTimes(1);
+  });
+
+
   it('should ensure mapDispatchToProps returns called methods', () => {
     const dispatch = jest.fn();
     expect(mapDispatchToProps(dispatch).userLogin).toBeTruthy();
+    expect(mapDispatchToProps(dispatch).googleAccess).toBeTruthy();
   });
 
   it('should ensure mapStateToProps returns prop from redux store', () => {
     const storeState = {
       userData: signupResponse,
-      isAuthenticated: true
+      isAuthenticated: true,
+      userAccess: {
+        isAuthenticated: true
+      }
     };
     expect(mapStateToProps(storeState)).toBeTruthy();
   });

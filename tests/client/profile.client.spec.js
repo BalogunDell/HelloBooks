@@ -240,4 +240,21 @@ describe('Profile Update Form', () => {
     const dispatch = jest.fn();
     expect(dispatchToProps(dispatch).updateProfile).toBeTruthy();
   });
+
+  it('should test the method: stateToProps', () => {
+    const state = {
+      userProfile: profile.user
+    };
+    expect(stateToProps(state).updateProfile).toExist;
+  });
 });
+
+describe('Profile Info Component', () => {
+  const props = {
+    userData: profile.user,
+    showInputHandler: jest.fn()
+  }
+  it('should render without crashing', () => {
+    const wrapper = shallow(<ProfileInfo {...props}/>)
+  });
+})

@@ -88,7 +88,7 @@ class User {
    */
   static signin(req, res) {
     if (!req.body.username || !req.body.password) {
-      res.status(400).json({ message: 'Provide your username and password to login' });
+      return res.status(400).json({ message: 'Provide your username and password to login' });
     }
     return userModel.findOne({ where: { username: req.body.username } })
       .then((user) => {

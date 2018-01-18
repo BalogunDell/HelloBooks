@@ -108,7 +108,7 @@ describe('All User Books', () => {
     getRowKey: '',
     tableHeader: '',
     handleReturn: jest.fn(),
-    books: [],
+    books: mockBooks.books,
     bookLength: 0
   }
   const wrapper = shallow(<AllUserBooks {...minProps}/>)
