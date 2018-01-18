@@ -64,6 +64,7 @@ import {
   createCategoryAction,
   getCategoriesAction
 } from '../../client/src/Actions/categoryAction';
+import updateImageModal from '../../client/src/components/userprofile/updateImageModal';
 
 // Configure necessary libs
 const expect = chai.expect;
@@ -235,18 +236,18 @@ describe('Books Reducer', () => {
   });
 
   it('should return a new state when DELETE BOOK action is dispatched', () => {
-    const newState = booksReducer(initialState, deleteBookAction(mockBooks));
-    expect(newState.updatedBooks.books[0].id).to.equal(mockBooks.books[0].id);
-    expect(newState.updatedBooks.books[0].author).to.equal(mockBooks.books[0].author);
-    expect(newState.updatedBooks.books[0].title).to.equal(mockBooks.books[0].title);
-    expect(newState.updatedBooks.books[0].isbn).to.equal(mockBooks.books[0].isbn);
-    expect(newState.updatedBooks.books[0].quantity).to.equal(mockBooks.books[0].quantity);
-    expect(newState.updatedBooks.books[0].id).to.equal(mockBooks.books[0].id);
-    expect(newState.updatedBooks.books[0].description).to.equal(mockBooks.books[0].description);
-    expect(newState.updatedBooks.books[0].pages).to.equal(mockBooks.books[0].pages);
-    expect(newState.updatedBooks.books[0].year).to.equal(mockBooks.books[0].year);
-    expect(newState.updatedBooks.books[0].image).to.equal(mockBooks.books[0].image);
-    expect(newState.updatedBooks.books[0].pdf).to.equal(mockBooks.books[0].pdf);
+    const newState = booksReducer(initialState, deleteBookAction({updatedBooks: mockBooks.books}));
+    expect(newState.updatedBooks[0].id).to.equal(mockBooks.books[0].id);
+    expect(newState.updatedBooks[0].author).to.equal(mockBooks.books[0].author);
+    expect(newState.updatedBooks[0].title).to.equal(mockBooks.books[0].title);
+    expect(newState.updatedBooks[0].isbn).to.equal(mockBooks.books[0].isbn);
+    expect(newState.updatedBooks[0].quantity).to.equal(mockBooks.books[0].quantity);
+    expect(newState.updatedBooks[0].id).to.equal(mockBooks.books[0].id);
+    expect(newState.updatedBooks[0].description).to.equal(mockBooks.books[0].description);
+    expect(newState.updatedBooks[0].pages).to.equal(mockBooks.books[0].pages);
+    expect(newState.updatedBooks[0].year).to.equal(mockBooks.books[0].year);
+    expect(newState.updatedBooks[0].image).to.equal(mockBooks.books[0].image);
+    expect(newState.updatedBooks[0].pdf).to.equal(mockBooks.books[0].pdf);
   });
 
   
@@ -324,6 +325,12 @@ describe('Books Reducer', () => {
     expect(newState.trendingBooks[0]).to.have.property('updatedAt');
     expect(newState.trendingBooks[0]).to.have.property('createdAt');
   });
+
+  it('should return the state when no action is passed', () => {
+    const newState = booksReducer(initialState, 'default');
+    expect(newState).to.be.an('object');
+    expect(newState).to.be.empty;
+  });
 });
 
 describe('User Profile Reducer', () => {
@@ -378,6 +385,12 @@ describe('User Profile Reducer', () => {
     expect(newState.secure_url).to.equal(saveImagerResponse.secure_url);
     expect(newState.original_filename).to.equal(saveImagerResponse.original_filename);
   });
+
+  it('should return the state when no action is passed', () => {
+    const newState = userProfile(initialState, 'default');
+    expect(newState).to.be.an('object');
+    expect(newState).to.be.empty;
+  });
 });
 
 describe('Category Reducer', () => {
@@ -386,9 +399,15 @@ describe('Category Reducer', () => {
     expect(newState.category.category).to.equal('People');
   });
 
-  it('should return a new state when FETCT_CATEGORY is triggered', () => {
+  it('should return the state when no action is passed', () => {
     const newState = categoryReducer(initialState, getCategoriesAction(categories));
     expect(newState.categories[0].id).to.equal(categories[0].id);
     expect(newState.categories[0].category).to.equal(categories[0].category);
+  });
+
+  it('should return the state when no action is passed', () => {
+    const newState = categoryReducer(initialState, 'default');
+    expect(newState).to.be.an('object');
+    expect(newState).to.be.empty;
   });
 });

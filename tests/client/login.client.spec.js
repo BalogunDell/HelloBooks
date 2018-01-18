@@ -33,12 +33,7 @@ configure({ adapter: new Adapter() });
 global.$ = global.jQuery = $;
 global.message = {
   message: ''
-}
-
-
-// ************************ //
-// *****COMPONENTS TEST**** //
-// ************************ //
+};
 
 
 const event = {
@@ -47,7 +42,7 @@ const event = {
     name: 'username',
     value: 'Test'
   }
-}
+};
 
 
 // **************************************** //
@@ -157,12 +152,60 @@ describe('Password Reset Modal', () => {
     expect(wrapper.find('button').length).toBe(1);
   });
 
-  it('ensure that it has the handleSubmit method', () => {
-    const spyHandleSubmit = jest.spyOn(PasswordResetModal.prototype, 'handleSubmit');
-    shallow(<PasswordResetModal {...minProps} onSubmit={spyHandleSubmit}/>)
-    .instance().handleSubmit(event);
-    expect(spyHandleSubmit).toHaveBeenCalledTimes(1);
+
+  it('ensure that it the handleSubmit method called', () => {
+    const setup = shallow(<PasswordResetModal {...minProps}/>);
+    const event = {
+      preventDefault: jest.fn()
+    };
+    const form = setup.find('#handleSubmit');
+    setup.setState({
+      email: 'sample@gmail.com'
+    });
+    form.simulate('submit', event);
   });
+
+  it('ensure that it the handleSubmit method called', () => {
+    const setup = shallow(<PasswordResetModal {...minProps}/>);
+    const event = {
+      preventDefault: jest.fn()
+    };
+    const form = setup.find('#handleSubmit');
+    setup.setState({
+      email: ''
+    });
+    form.simulate('submit', event);
+  });
+
+  it('ensure that it the handleSubmit method called', () => {
+    const setup = shallow(<PasswordResetModal {...minProps}/>);
+    const event = {
+      preventDefault: jest.fn()
+    };
+    const form = setup.find('#handleSubmit');
+    setup.setState({
+      email: ''
+    });
+    form.simulate('submit', event);
+  });
+
+  it('ensure that it the handleSubmit method called', () => {
+    const setup = shallow(<PasswordResetModal {...minProps}/>);
+    setup.instance.error = {
+      response: {
+        status: 501
+      }
+    }
+    const event = {
+      preventDefault: jest.fn()
+    };
+    const form = setup.find('#cancelPass');
+    setup.setState({
+      email: ''
+    });
+    form.simulate('click', event);
+  });
+
 
   it('ensure that it has the handleInput method', () => {
     const spyhandleInput = jest.spyOn(PasswordResetModal.prototype, 'handleInput');

@@ -28,7 +28,7 @@ export class Allbooks extends React.Component {
   getBookId(event) {
     this.props.getCurrentBookId(event.target.value);
     let currentBook = this.state.books.filter((book) => book.id == event.target.value);
-    localStorage.setItem('book', JSON.stringify(currentBook));
+    localStorage.setItem('book', JSON.stringify(currentBook[0]));
   }
 
   componentDidMount() {
