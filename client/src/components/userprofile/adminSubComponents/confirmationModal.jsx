@@ -34,11 +34,17 @@ const confirmationModal = ({
 
           <div className="row center">
             <div className="col s12 m12 l6">
-              <button className="btn green" disabled={disabled} onClick={deleteBookTrigger}>Delete</button>
+              <button className="btn green" 
+                id="delete" 
+                disabled={disabled} 
+                onClick={deleteBookTrigger}>Delete</button>
             </div>
 
             <div className="col s12 m12 l6">
-              <button className="btn red modal-close" onClick={handleDeleteCancel}>Cancel</button>
+              <button 
+                className="btn red modal-close" 
+                onClick={handleDeleteCancel}>Cancel
+              </button>
             </div>
           </div>
         </div> 

@@ -20,7 +20,12 @@ const createBookForm = ({disableBtn, showHiddenBtns,loader,
       </div>
 
       <div className="create-book">
-        <form onSubmit={createBookHandler} className="create-form" encType="multipart/form-data">
+        <form 
+          onSubmit={createBookHandler} 
+          id="handleSubmit" 
+          className="create-form" 
+          encType="multipart/form-data">
+          
           <div className="input-field">
             <input type="text" name="isbn"
               maxLength="6"

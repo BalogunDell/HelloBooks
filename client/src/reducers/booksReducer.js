@@ -39,7 +39,7 @@ const getAllBooks = (state = {}, action) => {
       };
     case types.DELETE_BOOK:
       return {
-        ...state, updatedBooks: action.updatedBooks
+        ...state, updatedBooks: action.updatedBooks.updatedBooks
       };
     case types.GET_BORROWED_BOOKS:
       return {

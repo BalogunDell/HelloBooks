@@ -12,7 +12,7 @@ import Loader from '../../client/src/components/userprofile/adminSubComponents/l
 import { borrowedBookSample, publishedBooksSample } from './mocks/mockdata';
 import mockLocalStorage from './mocks/mockDataStorage'
 import PublishedBooks from '../../client/src/components/userprofile/adminSubComponents/publishedBooks'
-
+import PublishBookModal from '../../client/src/components/userprofile/adminSubComponents/publishBookModal';
 jest.mock('../../client/src/components/HOC/authenticate.jsx');
 jest.mock('react-router-dom');
 
@@ -43,7 +43,32 @@ describe('BorrowedBooksTable, Loader, PublishedBooks ', () => {
   });
 
   it('should render the published books table without crashing', () => {
-    const wrapper = shallow(<PublishedBooks {...minProps}/>)
-    expect(wrapper.find('div').length).toBe(1);
-  });
+    const props = {
+      loader: true,
+      publishBookHander: '',
+      cancelPublish: jest.fn(),
+      errorStatus: '',
+      errorMessage: '',
+      successStatus: '',
+      successMessage: '',
+      modalHeader: ''
+    }
+    const wrapper = shallow(<PublishBookModal {...props}/>)
+    expect(wrapper.find('div').length).toBe(11);
+   });
+
+   it('should render the published books table without crashing', () => {
+    const props = {
+      loader: false,
+      publishBookHander: '',
+      cancelPublish: jest.fn(),
+      errorStatus: '',
+      errorMessage: '',
+      successStatus: '',
+      successMessage: '',
+      modalHeader: ''
+    }
+    const wrapper = shallow(<PublishBookModal {...props}/>)
+    expect(wrapper.find('div').length).toBe(11);
+   });
 });

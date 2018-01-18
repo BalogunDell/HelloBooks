@@ -4,16 +4,18 @@ import  Adapter from 'enzyme-adapter-react-15';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import moxios from 'moxios';
+import axios from 'axios';
 import chai from 'chai';
 import * as mockData from './mocks/mockdata';
 import * as apiEndPoints from '../../client/src/utils/apiEndPoints.js';
-import * as cloundinaryKey from '../../client/src/utils/cloudinaryKeys';
+import * as cloudKeys from '../../client/src/utils/cloudinaryKeys';
 import getUserInfo from '../../client/src/utils/getUserInfo';
 
 // Import mock local storage
 import mockLocalStorage from './mocks/mockDataStorage';
 window.localStorage = mockLocalStorage;
 
+require('dotenv').config();
 
 const expect = chai.expect;
 configure({ adapter: new Adapter() });
@@ -83,7 +85,7 @@ describe('THUNK FUNCTIONS', () => {
     };
 
     // Dispatch
-    await store.dispatch(userAcessActions.saveNewUser(signupResponse))
+    await store.dispatch(userAcessActions.saveNewUser())
       .then(() => {
         const actions = store.getActions();
         expect(actions[1].type).to.equal(expectedAction.type);
@@ -107,11 +109,12 @@ describe('THUNK FUNCTIONS', () => {
 
     const expectedAction = {
       type: actionTypes.LOGIN,
-      loginData:signinResponse
+      abbey:signinResponse
     };
 
+    const thisstore = mockStore({});
     // Dispatch
-    await store.dispatch(userAcessActions.userLogin(signinResponse))
+    await store.dispatch(userAcessActions.userLogin())
       .then(() => {
         const actions = store.getActions();
         expect(actions[2].type).to.equal(expectedAction.type);
@@ -141,7 +144,7 @@ describe('THUNK FUNCTIONS', () => {
     };
 
     // Dispatch
-    await store.dispatch(userAcessActions.sendEmail(resetPasswordResponse))
+    await store.dispatch(userAcessActions.sendEmail({email: 'delighteddellW@gmail'}))
       .then(() => {
         const actions = store.getActions();
         uniqueUrl = actions[3].serverRes.url;
@@ -307,7 +310,7 @@ describe('THUNK FUNCTIONS', () => {
       bookid: serverRes
     };
 
-    await store.dispatch(bookActions.returnBook(serverRes))
+    await store.dispatch(bookActions.returnBook({bookid: 3}))
       .then(() => {
         const actions = store.getActions();
         expect(actions[9].type).to.equal(expectedAction.type);
@@ -330,7 +333,7 @@ describe('THUNK FUNCTIONS', () => {
       bookData: serverRes
     };
     
-    await store.dispatch(bookActions.createBook(serverRes))
+    await store.dispatch(bookActions.createBook())
       .then(() => {
         const actions = store.getActions();
         expect(actions[10].type).to.equal(expectedAction.type);
@@ -395,7 +398,7 @@ describe('THUNK FUNCTIONS', () => {
       fetchedCategories: serverRes
     };
     
-    await store.dispatch(categoryAction.getCategories(serverRes))
+    await store.dispatch(categoryAction.getCategories())
       .then(() => {
         const actions = store.getActions();
         expect(actions[12].type).to.equal('ET_CATEGORY');
@@ -476,64 +479,228 @@ describe('THUNK FUNCTIONS', () => {
       done();
   });
 
-  // it('should create DELETE_BOOK when admin deletes a book', async (done) => {
+  it('should create DELETE_BOOK when admin deletes a book', async (done) => {
     
-  //   const serverRes = mockData.mocktrendingBook;
-  //   const bookId = 1
-  //   moxios.stubRequest(`${apiEndPoints.books}/${bookId}`, {
-  //     status: 201,
-  //     response: serverRes
-  //   });
+    const serverRes = mockData.mocktrendingBook;
+    const bookId = 1
+    moxios.stubRequest(`${apiEndPoints.books}/${1}`, {
+      status: 201,
+      response: mockData.mocktrendingBook
+    });
      
-  //   const expectedAction = {
-  //     type: actionTypes.DELETE_BOOK,
-  //     updatedBooks: serverRes
-  //   };
-  //   // console.log(serverRes);
-  //   await store.dispatch(bookActions.deleteBook(serverRes))
-  //     .then(() => {
-  //       const actions = store.getActions();
-  //       console.log(actions[15]);
-  //       expect(actions[13].type).to.equal(expectedAction.type);
-  //       expect(actions[13].bookData[0]).to.equal(expectedAction.bookData.data[0]);
-  //       expect(actions[13].bookData[0]).to.be.an('object');
-  //       expect(actions[13].bookData[0]).to.have.property('visibility');
-  //       expect(actions[13].bookData[0]).to.have.property('isbn');
-  //       expect(actions[13].bookData[0]).to.have.property('id');
-  //       expect(actions[13].bookData[0]).to.have.property('title');
-  //       expect(actions[13].bookData[0]).to.have.property('author');
-  //       expect(actions[13].bookData[0]).to.have.property('pages');
-  //       expect(actions[13].bookData[0]).to.have.property('year');
-  //       expect(actions[13].bookData[0]).to.have.property('description');
-  //       expect(actions[13].bookData[0]).to.have.property('quantity');
-  //       expect(actions[13].bookData[0]).to.have.property('categoryid');
-  //       expect(actions[13].bookData[0]).to.have.property('image');
-  //       expect(actions[13].bookData[0]).to.have.property('pdf');
-  //       expect(actions[13].bookData[0]).to.have.property('updatedAt');
-  //       expect(actions[13].bookData[0]).to.have.property('createdAt');
-  //     });
-  //     done();
-  // });
+    const expectedAction = {
+      type: actionTypes.DELETE_BOOK,
+      updatedBooks: mockData.mocktrendingBook[0]
+    };
+
+    await store.dispatch(bookActions.deleteBook(1))
+      .then(() => {
+        const actions = store.getActions();
+        expect(actions[15].type).to.equal(expectedAction.type);
+        expect(actions[15].updatedBooks[0]).to.equal(expectedAction.updatedBooks);
+        expect(actions[15].updatedBooks[0]).to.be.an('object');
+        expect(actions[15].updatedBooks[0]).to.have.property('visibility');
+        expect(actions[15].updatedBooks[0]).to.have.property('isbn');
+        expect(actions[15].updatedBooks[0]).to.have.property('id');
+        expect(actions[15].updatedBooks[0]).to.have.property('title');
+        expect(actions[15].updatedBooks[0]).to.have.property('author');
+        expect(actions[15].updatedBooks[0]).to.have.property('pages');
+        expect(actions[15].updatedBooks[0]).to.have.property('year');
+        expect(actions[15].updatedBooks[0]).to.have.property('description');
+        expect(actions[15].updatedBooks[0]).to.have.property('quantity');
+        expect(actions[15].updatedBooks[0]).to.have.property('categoryid');
+        expect(actions[15].updatedBooks[0]).to.have.property('image');
+        expect(actions[15].updatedBooks[0]).to.have.property('pdf');
+        expect(actions[15].updatedBooks[0]).to.have.property('updatedAt');
+        expect(actions[15].updatedBooks[0]).to.have.property('createdAt');
+      });
+      done();
+  });
+
+  it('should create GET_BORROWED_BOOKS when getAllBorrowedBooks is triggered', async (done) => {
+    
+    const serverRes = mockData.borrowedBookMirror;
+    moxios.stubRequest(`${apiEndPoints.books}/borrowedbooks`, {
+      status: 200,
+      response: serverRes
+    });
+     
+    const expectedAction = {
+      type: actionTypes.GET_BORROWED_BOOKS,
+      borrowedbooks: serverRes
+    };
+
+    await store.dispatch(bookActions.getAllBorrowedBooks())
+      .then(() => {
+        const actions = store.getActions();
+        expect(actions[16].type).to.equal(expectedAction.type);
+        expect(actions[16].borrowedbooks).to.equal(expectedAction.borrowedbooks.books);
+        expect(actions[16].borrowedbooks).to.equal(expectedAction.borrowedbooks.books);
+        expect(actions[16].borrowedbooks[0]).to.equal(expectedAction.borrowedbooks.books[0]);
+        expect(actions[16].borrowedbooks[0]).to.have.property('id');
+        expect(actions[16].borrowedbooks[0]).to.have.property('userid');
+        expect(actions[16].borrowedbooks[0]).to.have.property('bookid');
+        expect(actions[16].borrowedbooks[0]).to.have.property('dateborrowed');
+        expect(actions[16].borrowedbooks[0]).to.have.property('expectedreturndate');
+        expect(actions[16].borrowedbooks[0]).to.have.property('returnstatus');
+        expect(actions[16].borrowedbooks[0]).to.have.property('approvedreturn');
+        expect(actions[16].borrowedbooks[0]).to.have.property('book');
+        expect(actions[16].borrowedbooks[0].book).to.equal(expectedAction.borrowedbooks.books[0].book);
+        expect(actions[16].borrowedbooks[0].book).to.be.an('object');
+        expect(actions[16].borrowedbooks[0].book).to.have.property('visibility');
+        expect(actions[16].borrowedbooks[0].book).to.have.property('isbn');
+        expect(actions[16].borrowedbooks[0].book).to.have.property('id');
+        expect(actions[16].borrowedbooks[0].book).to.have.property('title');
+        expect(actions[16].borrowedbooks[0].book).to.have.property('author');
+        expect(actions[16].borrowedbooks[0].book).to.have.property('pages');
+        expect(actions[16].borrowedbooks[0].book).to.have.property('year');
+        expect(actions[16].borrowedbooks[0].book).to.have.property('description');
+        expect(actions[16].borrowedbooks[0].book).to.have.property('quantity');
+        expect(actions[16].borrowedbooks[0].book).to.have.property('categoryid');
+        expect(actions[16].borrowedbooks[0].book).to.have.property('image');
+        expect(actions[16].borrowedbooks[0].book).to.have.property('pdf');
+        expect(actions[16].borrowedbooks[0].book).to.have.property('updatedAt');
+        expect(actions[16].borrowedbooks[0].book).to.have.property('createdAt');
+      });
+      done();
+  });
+
+  it('should create ADMIN_GET_ALLBOOKS on a successful fetch of all unpublished library books', async (done) => {
+    
+    const serverRes = mockData.mockBooks;
+    moxios.stubRequest(`${apiEndPoints.books}/all`, {
+      status: 200,
+      response: serverRes
+    });
+     
+    const expectedAction = {
+      type: actionTypes.ADMIN_GET_ALLBOOKS,
+      unpublishedbooks: serverRes
+    };
+
+    await store.dispatch(bookActions.adminGetAllBooks())
+      .then(() => {
+        const actions = store.getActions();
+        expect(actions[17].type).to.equal(expectedAction.type);
+        expect(actions[17].unpublishedbooks[0]).to.equal(expectedAction.unpublishedbooks.books[0]);
+        expect(actions[17].unpublishedbooks[0].id).to.equal(expectedAction.unpublishedbooks.books[0].id);
+        expect(actions[17].unpublishedbooks[0].author).to.equal(expectedAction.unpublishedbooks.books[0].author);
+        expect(actions[17].unpublishedbooks[0].visibility).to.equal(expectedAction.unpublishedbooks.books[0].visibility);
+        expect(actions[17].unpublishedbooks[0].isbn).to.equal(expectedAction.unpublishedbooks.books[0].isbn);
+        expect(actions[17].unpublishedbooks[0].pages).to.equal(expectedAction.unpublishedbooks.books[0].pages);
+        expect(actions[17].unpublishedbooks[0].year).to.equal(expectedAction.unpublishedbooks.books[0].year);
+        expect(actions[17].unpublishedbooks[0].description).to.equal(expectedAction.unpublishedbooks.books[0].description);
+        expect(actions[17].unpublishedbooks[0].quantity).to.equal(expectedAction.unpublishedbooks.books[0].quantity);
+        expect(actions[17].unpublishedbooks[0].image).to.equal(expectedAction.unpublishedbooks.books[0].image);
+        expect(actions[17].unpublishedbooks[0].pdf).to.equal(expectedAction.unpublishedbooks.books[0].pdf);
+        expect(actions[17].unpublishedbooks[0].categoryid).to.equal(expectedAction.unpublishedbooks.books[0].categoryid);
+      });
+      done();
+  });
+
+
+  it('should create PUBLISH_BOOK on a successful fetch of all published library books', async (done) => {
+    
+    const serverRes = mockData.mockBooks.books[0];
+    const bookData = 1
+    moxios.stubRequest(`${apiEndPoints.books}/${bookData}`, {
+      status: 201,
+      response: serverRes
+    });
+     
+    const expectedAction = {
+      type: actionTypes.PUBLISH_BOOK,
+      bookData: serverRes
+    };
+
+    await store.dispatch(bookActions.publishBook(bookData))
+      .then(() => {
+        const actions = store.getActions();
+        console.log(actions[18]);
+        expect(actions[18].type).to.equal(expectedAction.type);
+        expect(actions[18].bookData).to.equal(expectedAction.bookData);
+        expect(actions[18].bookData.id).to.equal(expectedAction.bookData.id);
+        expect(actions[18].bookData.author).to.equal(expectedAction.bookData.author);
+        expect(actions[18].bookData.visibility).to.equal(expectedAction.bookData.visibility);
+        expect(actions[18].bookData.isbn).to.equal(expectedAction.bookData.isbn);
+        expect(actions[18].bookData.pages).to.equal(expectedAction.bookData.pages);
+        expect(actions[18].bookData.year).to.equal(expectedAction.bookData.year);
+        expect(actions[18].bookData.description).to.equal(expectedAction.bookData.description);
+        expect(actions[18].bookData.quantity).to.equal(expectedAction.bookData.quantity);
+        expect(actions[18].bookData.image).to.equal(expectedAction.bookData.image);
+        expect(actions[18].bookData.pdf).to.equal(expectedAction.bookData.pdf);
+        expect(actions[18].bookData.categoryid).to.equal(expectedAction.bookData.categoryid);
+      });
+      done();
+  });
+
+
+  it('should create TRENDING_BOOKS when the app loads', async (done) => {
+    
+    const serverRes = mockData.mockBooks.books;
+    moxios.stubRequest(apiEndPoints.trending, {
+      status: 200,
+      response: serverRes
+    });
+     
+    const expectedAction = {
+      type: actionTypes.TRENDING_BOOKS,
+      books: serverRes
+    };
+
+    await store.dispatch(bookActions.trendingBooks())
+      .then(() => {
+        const actions = store.getActions();
+        expect(actions[19].type).to.equal(expectedAction.type);
+        expect(actions[19].books[0]).to.equal(expectedAction.books[0]);
+        expect(actions[19].books[0].id).to.equal(expectedAction.books[0].id);
+        expect(actions[19].books[0].author).to.equal(expectedAction.books[0].author);
+        expect(actions[19].books[0].visibility).to.equal(expectedAction.books[0].visibility);
+        expect(actions[19].books[0].isbn).to.equal(expectedAction.books[0].isbn);
+        expect(actions[19].books[0].pages).to.equal(expectedAction.books[0].pages);
+        expect(actions[19].books[0].year).to.equal(expectedAction.books[0].year);
+        expect(actions[19].books[0].description).to.equal(expectedAction.books[0].description);
+        expect(actions[19].books[0].quantity).to.equal(expectedAction.books[0].quantity);
+        expect(actions[19].books[0].image).to.equal(expectedAction.books[0].image);
+        expect(actions[19].books[0].pdf).to.equal(expectedAction.books[0].pdf);
+        expect(actions[19].books[0].categoryid).to.equal(expectedAction.books[0].categoryid);
+      });
+      done();
+  });
 });
 
 
 // describe('Cloudinary Actions', () => {
 //   it('should save pdf to cloudinary', async (done) => {
 //     const serverRes = mockData.saveImagerResponse;
-//     moxios.stubRequest(cloundinaryKey.cloudinaryUrl, {
+//     process.env.CLOUD_URL = 'https://api.cloudinary.com/v1_1/djvjxp2am/upload';
+//     const request = process.env.CLOUD_URL;
+//     moxios.stubRequest('https://api.cloudinary.com/v1_1/djvjxp2am/upload'), {
 //       status: 201,
 //       response: serverRes
-//     });
+//     };
 
 //     const expectedAction = {
 //       type: actionTypes.SAVE_PDF,
-//       pdf:serverRes
+//       pdf: serverRes
 //     };
 
-//     await store.dispatch(bookActions.savePdfToCloudinary(serverRes))
-//     .then(() => {
-//       console.log(store.actions[13]);
-//     });
+//     const file = {
+//       name: "sample.pdf",
+//       lastModified: 1507123362000,
+//       size: 3158,
+//       type: "image/jpg",
+//       webkitRelativePath: ''
+//     };
+//     console.log(cloudinaryUrl)
+//  const res=   await store.dispatch(bookActions.saveImageToCloudinary(file))
+//  console.log('################', res);
+//     // .then(() => {
+//     //   console.log(store.actions[16]);
+//     // })
+//     // .catch((error) => {
+//     //   console.log(error);
+//     // })
 //   });
 // });
 

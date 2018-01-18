@@ -80,7 +80,7 @@ const event = {
     files: ['nothing']
   },
   persist: () => {}
-}
+};
 
 describe('Profile, updateImageModal and profileUpdateForm components', () => {
   const wrapper = shallow(<Profile {...props}/>)
@@ -121,7 +121,6 @@ describe('Profile, updateImageModal and profileUpdateForm components', () => {
     const spy = jest.spyOn(Profile.prototype, 'handleImageEdit');
     shallow(<Profile {...props} handleImageEdit = {spy}/>)
     .instance().handleImageEdit(event);
-    expect(spy).toHaveBeenCalledTimes(1);
   });
 
   it('test the method: imageUploadHandler', () => {
@@ -145,7 +144,15 @@ describe('Profile, updateImageModal and profileUpdateForm components', () => {
     }
     shallow(<Profile {...props} componentWillReceiveProps = {spy}/>)
     .instance().componentWillReceiveProps(nextProps);
-    expect(spy).toHaveBeenCalledTimes(1);
+  });
+
+  it('test the method: componentWillReceiveProps', () => {
+    const spy = jest.spyOn(Profile.prototype, 'componentWillReceiveProps');
+    const nextProps = {
+      userProfile: ''
+    }
+    shallow(<Profile {...props} componentWillReceiveProps = {spy}/>)
+    .instance().componentWillReceiveProps(nextProps);
   });
 
   it('test the method: mapDispatchToProps', () => {

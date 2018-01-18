@@ -9,6 +9,7 @@ import expect, { spyOn } from 'expect'
 
 import Background from '../../client/src/components/Background/Background';
 
+import Navbar from '../../client/src/components/navbar/Navbar';
 import { publishedBooksSample } from './mocks/mockdata';
 
 jest.mock('../../client/src/components/HOC/authenticate.jsx');
@@ -23,4 +24,11 @@ describe('Background Component', () => {
   it('renders the Background component without crashing', () => {
     expect(wrapper.find('div').length).toBe(2);
   });
-})
+});
+
+describe('Navbar Component', () => {
+  it('should render without exploding', () => {
+    const wrapper = shallow(<Navbar/>);
+    expect(wrapper.find('div').length).toBe(1);
+  });
+});

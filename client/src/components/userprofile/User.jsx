@@ -16,7 +16,6 @@ import CreateBook from './admin/createBook';
 import EditBook from './adminSubComponents/EditBook';
 import UnpublishedList from './adminSubComponents/unPublishedBooks';
 import * as userNavLinks from './userNavLinks';
-import Details from './Details';
 import UserNav from './Usernav';
 import AuthenticateUser from '../HOC/authenticate';
 import * as UserActions from '../../Actions/userProfileAction';
@@ -67,7 +66,8 @@ export class User extends React.Component {
     if(localStorage.getItem('Access-Token') === null) {
       return this.setState({isAuthenticated: false});
     }
-
+    
+    this.setState({isAuthenticated: true});
      // Get user profile before mount
     this.props.userProfile(this.userID).then(() => {
       // Do some stuff
@@ -84,7 +84,6 @@ export class User extends React.Component {
     })
 
     // Set all values needed
-    this.setState({isAuthenticated: true});
     this.userID = getUserDetails().userId;
     this.userType = getUserDetails().userType;
 

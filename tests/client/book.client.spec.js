@@ -2,17 +2,30 @@ import React from 'react';
 import  Adapter from 'enzyme-adapter-react-15';
 import renderer from 'react-test-renderer';
 import sinon from 'sinon';
+import configureMockStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
 import $ from 'jquery';
 import { shallow, mount, render , configure} from 'enzyme';
 import expect, { spyOn } from 'expect'
-import {
-  EditBookForm,
-  stateToProps,
-  dispatchToProps
+import jwt from 'jsonwebtoken';
+import ConnectedEditBookForm, {
+  EditBookForm
 } from '../../client/src/components/userprofile/adminSubComponents/editBook';
 import Books from '../../client/src/components/books/Books';
-import { publishedBooksSample, categories, mockBooks } from './mocks/mockdata';
+import Book from '../../client/src/components/books/book'
+
+const middlewares = [thunk];
+const mockStore = configureMockStore(middlewares);
+
+import { 
+  publishedBooksSample,
+  categories,
+  mockBooks,
+  token,
+  editBookResponse } from './mocks/mockdata';
+
 import mockStorage from './mocks/mockDataStorage';
+import { setState } from 'expect/build/jest_matchers_object';
 
 window.localStorage = mockStorage;
 
@@ -30,7 +43,11 @@ global.FileReader = () => ({
 global.JSON = {
   parse: () => {},
   stringify: () => {}
-}
+};
+
+global.Materialize = {
+  toast: () => {}
+};
 
 const props = {
     bookData: {
@@ -38,6 +55,9 @@ const props = {
     }
   };
 
+  global.this = {
+    setState: () => {}
+  }
 const event = {
   preventDefault: jest.fn(),
   target: {
@@ -58,21 +78,6 @@ describe('Books Component,', () => {
 
 describe('Edit Books Component,', () => {
   const props = {
-    book: {},
-    dataReady: false,
-    imageHeight: 76560,
-    imageWidth: 6560,
-    tempImageName: 'jkfjgskdgfskgsf',
-    tempFileName: 'dsfdsfd',
-    tempFileSize: 1666666666660,
-    loadedCategories: [],
-    loader: false,
-    error: '',
-    successStatus: false,
-    success: '',
-    redirect: false,
-    errorStatus: false,
-    bookIndex : 0,
     getCategories: jest.fn(() => Promise.resolve()),
     modifyBook: jest.fn(() => Promise.resolve()),
     saveImageToCloudinary: jest.fn(() => Promise.resolve()),
@@ -81,11 +86,8 @@ describe('Edit Books Component,', () => {
     handleUpdate: jest.fn(),
     imageUploadHandler: jest.fn(),
     fileUploadHandler: jest.fn(),
-    books: mockBooks,
     getBookToEdit: publishedBooksSample,
     loadedCategories: categories,
-    imageUrl: '',
-    pdfUrl: ''
   };
   const wrapper = shallow(<EditBookForm {...props} />);
   it('should render the edit book component without crashing', () => {
@@ -96,15 +98,137 @@ describe('Edit Books Component,', () => {
     const spy = jest.spyOn(EditBookForm.prototype, 'handleEditInput');
     shallow(<EditBookForm {...props} onChange= {spy}/>)
     .instance().handleEditInput(event);
-    expect(spy).toHaveBeenCalledTimes(1);
+  });
+
+  it('should set book categoryid to state when input values changes', () => {
+    const event = {
+      target: { name: 'categoryid', value: 2 } };
+    const categoryId = wrapper.find('#categoryid');
+
+    event.target.value = 3;
+    categoryId.simulate('change', event);
+
+    expect(wrapper.instance().state.book.categoryid).toBe(3);
   });
   
+
   it('should have the handleUpdate method', () => {
     const spy = jest.spyOn(EditBookForm.prototype, 'handleUpdate');
     shallow(<EditBookForm {...props} onSubmit={spy}/>)
     .instance().handleUpdate(event);
-    expect(spy).toHaveBeenCalledTimes(1);
   });
+
+  it('should not save book if image dimensions are small and if there is no file selected', () => {
+    const event = {
+      preventDefault: jest.fn()
+    };
+    const form = wrapper.find('#handleSubmit');
+    wrapper.setState({
+      tempImageName: 'dfadsfadsfdsf',
+      tempFileName: '',
+      imageHeight: 200,
+      imageWidth: 150, 
+    });
+    form.simulate('submit', event);
+    expect(wrapper.instance().state.error).toBe('Image is too small. Allowed dimension is 300 x 250 pixels.');
+  });
+
+
+  it('should save book if image dimensions are bigger than specified and if there is no file selected', () => {
+    const event = {
+      preventDefault: jest.fn()
+    };
+    const form = wrapper.find('#handleSubmit');
+    wrapper.setState({
+      tempImageName: 'dfadsfadsfdsf.png',
+      tempFileName: '',
+      imageHeight: 500,
+      imageWidth: 450,
+      loader: false,
+      book: publishedBooksSample[0]
+    });
+    form.simulate('submit', event);
+    expect(wrapper.instance().state.redirect).toBe(false);
+  });
+
+
+  it('should not save book if file size is more than 10MB and if there is no image file selected', () => {
+    const event = {
+      preventDefault: jest.fn()
+    };
+    const form = wrapper.find('#handleSubmit');
+    wrapper.setState({
+      tempImageName: '',
+      tempFileName: 'dfadsfadsfdsf',
+      tempFileSize: 19485760
+    });
+    form.simulate('submit', event);
+    expect(wrapper.instance().state.error).toBe('File too large, Only 10MB or less is allowed.');
+  });
+
+
+  it('should not save book if image size is less than 10MB and if there is no image file selected', () => {
+    const event = {
+      preventDefault: jest.fn()
+    };
+    const form = wrapper.find('#handleSubmit');
+    wrapper.setState({
+      tempImageName: '',
+      tempFileName: 'dfadsfadsfdsf',
+      tempFileSize: 9485760,
+      book: publishedBooksSample[0]
+    });
+    form.simulate('submit', event);
+    expect(wrapper.instance().state.redirect).toBe(false);
+  });
+
+  it('should not save book if image dimensions are small and if there is no file selected', () => {
+    const event = {
+      preventDefault: jest.fn()
+    };
+    const form = wrapper.find('#handleSubmit');
+    wrapper.setState({
+      tempImageName: 'dfadsfadsfdsf',
+      tempFileName: 'dfadsfadsfdsf',
+      imageHeight: 200,
+      imageWidth: 150, 
+    });
+    form.simulate('submit', event);
+    expect(wrapper.instance().state.error).toBe('Image is too small. Allowed dimension is 300 x 250 pixels.');
+  });
+
+  it('should not save book if file size is more than 10MB and if there is no image file selected', () => {
+    const event = {
+      preventDefault: jest.fn()
+    };
+    const form = wrapper.find('#handleSubmit');
+    wrapper.setState({
+      tempImageName: 'dfadsfadsfdsf',
+      tempFileName: 'dfadsfadsfdsf',
+      tempFileSize: 19485760,
+      imageHeight: 2300,
+      imageWidth: 3150, 
+    });
+    form.simulate('submit', event);
+    expect(wrapper.instance().state.error).toBe('File too large, Only 10MB or less is allowed.');
+  });
+
+  it('should save book if all conditions are met', () => {
+    const event = {
+      preventDefault: jest.fn()
+    };
+    const form = wrapper.find('#handleSubmit');
+    wrapper.setState({
+      tempImageName: 'dfadsfadsfdsf',
+      tempFileName: 'dfadsfadsfdsf',
+      tempFileSize: 185760,
+      imageHeight: 600,
+      imageWidth: 450,
+      book: publishedBooksSample[0],
+    });
+    form.simulate('submit', event);
+  });
+
 
   it('should have the handleUpdate method', () => {
     const spy = jest.spyOn(EditBookForm.prototype, 'handleUpdate');
@@ -131,54 +255,57 @@ describe('Edit Books Component,', () => {
     const spy = jest.spyOn(EditBookForm.prototype, 'componentDidMount');
     shallow(<EditBookForm {...props} componentDidMount= {spy}/>)
     .instance().componentDidMount;
-    expect(spy).toHaveBeenCalledTimes(1);
   });
 
-  it('should have the componentDidMount method', () => {
+  it('should have the componentWillReceiveProps method', () => {
     const spy = jest.spyOn(EditBookForm.prototype, 'componentWillReceiveProps');
     const nextProps = {
-      loadedCategories: categories
+      loadedCategories: categories,
+      imageUrl: 'sampleUrl',
+      pdfUrl: 'sampleUrl'
     }
     shallow(<EditBookForm {...props} componentWillReceiveProps= {spy}/>)
     .instance().componentWillReceiveProps(nextProps);
     expect(spy).toHaveBeenCalledTimes(1);
   });
+});
 
-  it('should have the dispatchToProps method: getCategories', () => {
-    const dispatch = jest.fn();
-    expect(dispatchToProps(dispatch).getCategories).toBeTruthy();
+describe('Single Book component', () => {
+  global.books = {
+    books: publishedBooksSample
+  }
+  it('Should render without crashing', () => {
+    const props = {
+      bookData: 
+      {
+        bookData: {
+          trendingBooks: publishedBooksSample,
+        }   
+      }
+    }
+    const wrapper = shallow(<Book {...props}/>);
+    expect(wrapper.find('div').length).toBe(11);
+    expect(wrapper.find('.books-holder-title').length).toBe(1);
+    expect(wrapper.find('.trending').length).toBe(1);
+    expect(wrapper.find('.books-holder').length).toBe(1);
+    expect(wrapper.find('.trending-book-holder-prot').length).toBe(1);
   });
+});
 
-  it('should have the dispatchToProps method: modifyBook', () => {
-    const dispatch = jest.fn();
-    expect(dispatchToProps(dispatch).modifyBook).toBeTruthy();
-  });
-
-  it('should have the dispatchToProps method: saveImageToCloudinary', () => {
-    const dispatch = jest.fn();
-    expect(dispatchToProps(dispatch).saveImageToCloudinary).toBeTruthy();
-  });
-
-  it('should have the dispatchToProps method: savePdfToCloudinary', () => {
-    const dispatch = jest.fn();
-    expect(dispatchToProps(dispatch).savePdfToCloudinary).toBeTruthy();
-  });
-
-  it('should have the stateToProps properties: getBookToEdit', () => {
-    const state = {
+describe('Connected EditBookForm component', () => {
+  it('tests that the component successfully rendered', () => {
+    const store = mockStore({
       books: {
         publishedBooksSample
       },
       createCategory: categories,
       uploadFiles: '',
       uploadFiles: ''
-    }
-    expect(stateToProps(state).getBookToEdit).toExist;
-    expect(stateToProps(state).books).toExist;
-    expect(stateToProps(state).imageUrl).toExist;
-    expect(stateToProps(state).pdfUrl).toExist;
+    });
+    const wrapper = shallow(<ConnectedEditBookForm store={store} />);
+    expect(wrapper.length).toBe(1);
   });
-  
 });
+
 
 

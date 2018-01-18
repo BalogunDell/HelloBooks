@@ -281,7 +281,7 @@ export class EditBookForm extends React.Component {
                 <div className="row">
                   <h5 className="center">Edit book</h5>
                 </div>
-              <form className="create-form" onSubmit={this.handleUpdate} encType="multipart/form-data">
+              <form className="create-form" id="handleSubmit" onSubmit={this.handleUpdate} encType="multipart/form-data">
                 <div className="input-field">
                   <input placeholder ={this.state.book.isbn} type="text" name="isbn" id="isbn"
                   maxLength="6"
@@ -365,8 +365,14 @@ export class EditBookForm extends React.Component {
                   </div>
 
                   <div className="input-field col s12 m12 l6">
-                  <select name="categoryid" value={this.state.book.category.category} onChange={this.handleEditInput}>
-                    <option value={this.state.book.categoryid}>{this.state.book.category.category}</option>
+                  <select 
+                    name="categoryid" 
+                    id="categoryid" 
+                    value={this.state.book.category.category} 
+                    onChange={this.handleEditInput}>
+                    <option value={this.state.book.categoryid}>
+                      {this.state.book.category.category}
+                    </option>
                     { this.state.loadedCategories.map((val, key) => {                  
                       return (<option key={val.id} value={val.id}>{val.category}</option>)
                     })
@@ -442,7 +448,7 @@ export class EditBookForm extends React.Component {
   }
 }
 
-export function stateToProps(state, ownProps) {
+function stateToProps(state, ownProps) {
   return {
     getBookToEdit: state.books.editBookID,
     books: state.books.books,
@@ -453,7 +459,7 @@ export function stateToProps(state, ownProps) {
   }
 }
 
-export function dispatchToProps(dispatch) {
+function dispatchToProps(dispatch) {
   return {
     getCategories: () => dispatch(categoryActions.getCategories()),
     modifyBook: (bookData) => dispatch(bookActions.modifyBook(bookData)),

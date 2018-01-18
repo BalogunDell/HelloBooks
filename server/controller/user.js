@@ -51,6 +51,35 @@ class User {
       });
   }
 
+  /**
+   * @param { object } req
+   * @param { object} res
+   * @returns { object } response
+   */
+  static newGoogleAccess(req, res) {
+    userModel.findOne({ where:
+      {
+        email: req.body.email,
+      }
+    })
+      .then((response) => {
+        if (response) {
+          const token = helper.generateToken(response.dataValues);
+          const responseData = {
+            message: 'signed in',
+            token,
+            username: response.dataValues.username,
+            userID: response.dataValues.id,
+            userRole: response.dataValues.role,
+            image: response.dataValues.image };
+          return res.status(200).json({ responseData });
+        }
+        return User.signup(req, res);
+      })
+      .catch((error) => {
+        return error;
+      });
+  }
 
   /**
    * @param { object } req
@@ -63,7 +92,9 @@ class User {
     }
     return userModel.findOne({ where: { username: req.body.username } })
       .then((user) => {
-        if (user !== null && bcrypt.compareSync(req.body.password, user.dataValues.password)) {
+        if (user !== null
+          &&
+          bcrypt.compareSync(req.body.password, user.dataValues.password)) {
           const token = helper.generateToken(user.dataValues);
           const responseData = {
             message: 'signed in',
@@ -72,13 +103,12 @@ class User {
             userID: user.id,
             userRole: user.role,
             image: user.image };
-          res.status(200).json({ responseData });
-        } else {
-          res.status(404).json({ message: 'Invalid username or password' });
+          return res.status(200).json({ responseData });
         }
+        return res.status(404).json({ message: 'Invalid username or password' });
       })
       .catch(() => {
-        res.status(404).json({ message: 'Invalid username or password' });
+        res.status(501).json({ message: 'Invalid username or password' });
       });
   }
 

@@ -56,6 +56,9 @@ Router.route('/users/:userId/')
 // Fetch trending books
 Router.get('/trendingbooks', bookController.fetchTrendingBooks);
 
+// Google user
+Router.post('/googleuser', userController.newGoogleAccess);
+
 // redirect every other address
 Router.route('*')
   .post((req, res) => {

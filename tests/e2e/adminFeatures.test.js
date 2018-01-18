@@ -15,7 +15,7 @@ const {
     'It should display login page': (client) => {
       client
         .url('http://localhost:3003/login')
-        .waitForElementVisible('body', 2000)
+        .waitForElementVisible('body', 3000)
         .assert.visible('div.home-bg')
         .pause(2000)
     },

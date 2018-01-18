@@ -57,14 +57,16 @@ export class BookDetails extends React.Component {
   }
 
   componentWillMount() {
+
     this.setState({dataReady:true,
       borrowErrorStatus: false,
       disableBtn: false,
       borrowBookSuccess:false});
-      const filtered = JSON.parse(localStorage.getItem('book'));  
-    this.setState({book: filtered[0], dataReady:false});
-    this.props.userBooks();
+      const filtered = JSON.parse(localStorage.getItem('book'));
+    this.setState({book: filtered, dataReady:false});
+  }
 
+  componentDidMount() {
     if(getUserDetails().userType === 'admin') {
       this.setState({ isAdmin: true });
     } else {
@@ -139,7 +141,7 @@ export class BookDetails extends React.Component {
                     </tr>
 
                     <tr>
-                      <td>Catergory</td>
+                      <td>Category</td>
                        <td>{this.state.book.category.category}</td> 
                     </tr>
 

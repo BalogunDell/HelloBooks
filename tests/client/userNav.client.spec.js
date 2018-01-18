@@ -6,33 +6,26 @@ import $ from 'jquery';
 import jwt from 'jsonwebtoken';
 import { shallow, mount, render , configure} from 'enzyme';
 import expect, { spyOn } from 'expect'
-// import {
-//   User
-// } from '../../client/src/components/userprofile/User';
+
+
 import UserNav from '../../client/src/components/userprofile/Usernav';
-
 import Footer from '../../client/src/components/footer/Footer';
-
 import { 
   successMessage ,
   failureMessage,
   membershipIconCreator
 } from '../../client/src/components/userprofile/messages';
+
 import {
   Main,
   mapDispatchToProps,
-  mapStateToProps } from '../../client/src/components/Main';
+  mapStateToProps} from '../../client/src/components/Main';
 
-// user
-// usernav
-// Main
-import { publishedBooksSample, categories, mockBooks, profile } from './mocks/mockdata';
+import { publishedBooksSample, categories, mockBooks, profile, token } from './mocks/mockdata';
+
 import mockStorage from './mocks/mockDataStorage';
 
-window.localStorage = mockStorage;
 
-
-jest.mock('../../client/src/utils/getUserInfo.js');
 jest.mock('react-router-dom');
 
 configure({ adapter: new Adapter() });
@@ -43,7 +36,6 @@ global.$ = global.jQuery = $;
 global.FileReader = () => ({
   readAsDataURL: () => {}
 });
-
 
 
 const props = {
@@ -63,29 +55,7 @@ const event = {
   persist: () => {}
 }
 
-describe('User Component', () => {
-  const props = {
-    isAuthenticated: false,
-    redirect: false,
-    userData: profile,
-    dataReady: true,
-    navLinks: [],
-    linkIcons :[],
-    linkTexts:[],
-    userID: '',
-    userType: '',
-    handleLogout: jest.fn(),
-    userProfile: jest.fn(() => Promise.resolve()),
-    getUserDetails: () => ({
-      userId: 2,
-      userType: ''
-    })
-  }
-  // const wrapper = shallow(<User {...props}/>)
-  it('should render these components successfully', () => {
-  
-  });
-});
+
 
 describe('UserNav Component', () => {
   const props = {
@@ -133,7 +103,18 @@ describe('UserNav Component', () => {
     const spy = jest.spyOn(Main.prototype, 'componentWillReceiveProps');
     shallow(<Main {...props} componentWillReceiveProps = {spy}/>)
     .instance().componentWillReceiveProps(nextProps);
-    expect(spy).toHaveBeenCalledTimes(1);
+  });
+
+
+  it('should call componentWillReceiveProps method', () => {
+    const nextProps = {
+      books: {
+        books_trending: ''
+      }
+    }
+    const spy = jest.spyOn(Main.prototype, 'componentWillReceiveProps');
+    shallow(<Main {...props} componentWillReceiveProps = {spy}/>)
+    .instance().componentWillReceiveProps(nextProps);
   });
 
   it('should ensure that mapDispatchToProps is called', () => {
