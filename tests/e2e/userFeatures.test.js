@@ -226,6 +226,12 @@ module.exports = {
       .assert.visible('option#allbooks')
       .assert.containsText('option#allbooks', 'All books')
       .assert.visible('button.btn.btn-small.waves-effect.waves-teal.custom')
+      .pause(2000)
+      .click('.btn.btn-small.waves-effect.waves-teal.custom')
+      .waitForElementVisible('div.toast.blue.rounded', 3000)
+      .assert.visible('div.toast.blue.rounded')
+      .assert.containsText('div.toast.blue.rounded', 'Book has been successfully returned')
+
       .pause(3000)
       .click('input.select-dropdown')
       .click('#returned')

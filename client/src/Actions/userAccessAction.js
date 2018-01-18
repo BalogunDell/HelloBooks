@@ -140,3 +140,36 @@ export function resetPassword(newPassword, uniqueUrl) {
   };
 }
 
+
+// *********************************************************** //
+// DEFINE ACTION CREATOR AND MAKE API CALL FOR GOOGLE ACCESS** //
+// *********************************************************** //
+/**
+ * @export newGoogleAccessAction
+ * @param { object } googleUserData
+ * @returns { object } type of action and payload
+ */
+export function newGoogleAccessAction(googleUserData) {
+  return {
+    type: types.GOOGLE_ACCESS,
+    googleUserData
+  };
+}
+
+/**
+ * @export newGoogleAccess
+ * @param { object } googleUserData
+ * @returns { object } server response
+ */
+export function newGoogleAccess(googleUserData) {
+  return (dispatch) => {
+    return axios.post(`${apiRoutes.googleAccess}`, googleUserData)
+      .then((response) => {
+        localStorage.setItem('Access-Token', response.data.responseData.token); // eslint-disable-line
+        dispatch(newGoogleAccessAction(response.data));
+      })
+      .catch((error) => {
+        throw (error);
+      });
+  };
+}
