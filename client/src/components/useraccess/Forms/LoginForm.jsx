@@ -91,8 +91,6 @@ const LoginForm = ({
                 </form>
                 <h5><span>or</span></h5>
                    <div className="row">
-                    {/* <button className="g-signin2 btn waves-effect waves-teal red" data-onsuccess="onSignIn">Signin with Google+ </button>
-                    <div className="g-signin2 btn waves-effect waves-teal red" data-onsuccess="onSignIn">Signin with Google</div> */}
                     <GoogleLogin
                       clientId = {process.env.GOOGLE_CLIENT_ID}
                       buttonText = 'Signin with Google'
