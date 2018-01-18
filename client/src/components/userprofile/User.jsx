@@ -16,7 +16,6 @@ import CreateBook from './admin/createBook';
 import EditBook from './adminSubComponents/EditBook';
 import UnpublishedList from './adminSubComponents/unPublishedBooks';
 import * as userNavLinks from './userNavLinks';
-import Details from './Details';
 import UserNav from './Usernav';
 import AuthenticateUser from '../HOC/authenticate';
 import * as UserActions from '../../Actions/userProfileAction';

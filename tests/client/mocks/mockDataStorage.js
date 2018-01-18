@@ -1,6 +1,4 @@
-let localStorage = {};
-
-export default {
+ let localStorage = {
   setItem(key, value) {
     return Object.assign(localStorage, { [key]: value });
   },
@@ -14,3 +12,4 @@ export default {
     localStorage = {};
   }
 };
+export default localStorage;

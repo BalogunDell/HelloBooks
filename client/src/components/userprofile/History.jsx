@@ -123,7 +123,10 @@ export class History extends React.Component {
         
         <div className="row">
           <div className="input-field col s12 m12 l3 offset-l1 filter-table">
-            <select value={this.state.selectedValue} onChange={this.handleSelectChange}>
+            <select 
+              value={this.state.selectedValue} 
+              onChange={this.handleSelectChange}
+              id= "handleSelectInput">
             <option id="pending" value="Pending Returns">Pending returns</option>
             <option id="returned" value="Returned books">Returned books</option>
               <option id="allbooks" value="All Books"> All books</option>

@@ -34,13 +34,13 @@ const publishedBooks = ({books, handleBookDelete, handleBookEdit}) => {
               value={book.id}
               data-index = {id}
               onClick={handleBookEdit}
-              className="material-icons green-text">edit</button>
+              className="material-icons green-text" id="edit">edit</button>
                 </Link>
                <a href="#confirmationModal" className="modal-trigger"> 
                   <button value={book.id}
                   data-index = {id}
                   onClick={handleBookDelete} 
-                  className="material-icons red-text">delete</button>
+                  className="material-icons red-text" >delete</button>
               </a>
               </td>
             </tr>

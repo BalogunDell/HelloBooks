@@ -1,3 +1,5 @@
+import jwt from 'jsonwebtoken';
+
 
   export const userData = {
     firstname: "Test",
@@ -244,6 +246,38 @@ export const borrowedBook = {
   }
 }
 
+
+export const borrowedBookMirror = {
+  books: [{
+    id: 2,
+    userid: 2,
+    bookid: 2,
+    dateborrowed: "2017-12-24",
+    expectedreturndate: "2017-12-25",
+    returnstatus: false,
+    approvedreturn: false,
+    createdAt: "2017-12-24T12:26:07.401Z",
+    updatedAt: "2017-12-24T12:26:07.401Z",
+    book: {
+        id: 2,
+        isbn: "##7766",
+        pages: 100,
+        author: "Nelson Brook",
+        year: 2000,
+        title: "React for Beginners",
+        description: "the books does this and that",
+        quantity: 299,
+        categoryid: 3,
+        visibility: false,
+        image: "https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg",
+        pdf: "https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg",
+        createdAt: "2017-12-23T11:13:07.025Z",
+        updatedAt: "2017-12-24T12:26:07.424Z"
+      }
+    }]
+}
+
+
 export const borrowedBookSample = [
   {
     id: 2,
@@ -414,12 +448,13 @@ export const editBookResponse = {
 }
 
 export const saveImagerResponse = {
+  data: {
     public_id: 'qpzstpk6hpkljrg1t9vt',
     version: 1515674221,
     signature: 'c8878bc1123fa6af91729b89f6195412f295c6ad',
     width: 960,
     height: 960,
-    format: 'jpg',
+    format: 'pdf',
     resource_type: 'image',
     created_at: '2018-01-11T12:37:01Z',
     tags: [],
@@ -427,9 +462,10 @@ export const saveImagerResponse = {
     type: 'upload',
     etag: '76c617e26159bf44a40aabaf9ed7844c',
     placeholder: false,
-    url: 'http://res.cloudinary.com/djvjxp2am/image/upload/v1515674221/qpzstpk6hpkljrg1t9vt.jpg',
-    secure_url: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1515674221/qpzstpk6hpkljrg1t9vt.jpg',
-    original_filename: 'IMG_8191-X2'
+    url: 'http://res.cloudinary.com/djvjxp2am/image/upload/v1515674221/sample.pdf',
+    secure_url: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1515674221/sample.pdf',
+    original_filename: 'sample.pdf'
+  }
 }
 
 export const categories = [
@@ -465,7 +501,14 @@ categories: [
 ]
 }
 
-
+export const token = jwt.sign({
+  id: 5,
+  email: 'example@example.com',
+  membership: 'bronze',
+  role: 'user'
+},
+'abcdsefd', 
+{ expiresIn: 24 * 60 * 60} );
 
 // COMPONENT DATA
 

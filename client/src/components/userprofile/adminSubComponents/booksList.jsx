@@ -181,7 +181,7 @@ export class BooksList extends React.Component {
   componentDidMount() {
     $(document).ready(() => {
       $('select').material_select();
-      $('select').change(e=>this.handleSelectChange(e));
+      $('select').change(event=>this.handleSelectChange(event));
       $('.modal').modal({
         dismissible: false,
         opacity: 0.3
@@ -214,7 +214,10 @@ export class BooksList extends React.Component {
     <div>
       <div className=" row selectFilter">
           <label>Filter table</label>
-          <select>
+          <select 
+            id="booksToDisplay" 
+            onChange = {this.handleSelectChange}
+            value={this.state.selectedValue}>
             <option value="allbooks">All books</option>
             <option value="booksreturned">Books Returned</option>
             <option value="pendingreturn">Pending Return</option>
