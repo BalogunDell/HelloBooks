@@ -2,8 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 
-
-class summaryTable extends React.Component {
+export class SummaryTable extends React.Component {
   constructor(props){
     super(props);
     
@@ -14,11 +13,7 @@ class summaryTable extends React.Component {
     bookCount: 0,
     borrowed: []
   }
-  }
-
-  componentDidMount() {
-
-  }
+}
 
   componentWillReceiveProps(nextProps){
     if(nextProps.allbooks) {
@@ -79,10 +74,10 @@ class summaryTable extends React.Component {
   } 
 }
 
-const stateToProps = (state) => {
+export const stateToProps = (state) => {
   return {
     allbooks: state.books.books,
     borrowedBooks: state.books.allborrowedbooks
   }
 }
-export default connect(stateToProps, null)(summaryTable);
+export default connect(stateToProps, null)(SummaryTable);

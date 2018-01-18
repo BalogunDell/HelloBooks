@@ -12,6 +12,7 @@ const LoginForm = ({
   handleLoginInput,
   loginHandler,
   googleLoginHandler,
+
   error,
   isLoading }) => {
 
@@ -74,13 +75,15 @@ const LoginForm = ({
                       <div className="center red-text">
                         {errorStatus}
                         {showIsLoading}
-                        </div>
+                      </div>
                     </div>  
                   </div>
 
-                  <div className="row resetPassBtn"><a href="#passwordResetModal" 
-                  className="button forgotPass modal-trigger">Forgot password
-                  </a></div>
+                  <div className="row resetPassBtn">
+                    <a href="#passwordResetModal" 
+                    className="button forgotPass modal-trigger">Forgot password
+                    </a>
+                  </div>
                   
                   {/* Signin button  */}
                   <div className="row">

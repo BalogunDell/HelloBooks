@@ -1,6 +1,5 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
-import { axios } from 'axios';
 import $ from 'jquery';
 import { Redirect, Link } from 'react-router-dom';
 import { connect } from 'react-redux'
@@ -14,10 +13,9 @@ import Borrowedbooks from './Borrowedbooks';
 import Profile from './profile';
 import AdminDashboard from './admin/Dashboard';
 import CreateBook from './admin/createBook';
-import EditBook from './adminSubComponents/editBook';
+import EditBook from './adminSubComponents/EditBook';
 import UnpublishedList from './adminSubComponents/unPublishedBooks';
 import * as userNavLinks from './userNavLinks';
-import Details from './Details';
 import UserNav from './Usernav';
 import AuthenticateUser from '../HOC/authenticate';
 import * as UserActions from '../../Actions/userProfileAction';
@@ -25,7 +23,7 @@ import * as bookActions from '../../Actions/booksAction';
 
 
 
-class User extends React.Component {
+export class User extends React.Component {
   constructor(props) {
     super(props);
 
@@ -47,7 +45,7 @@ class User extends React.Component {
 
 
     // Bind logout method to this
-    this.handleLogout = this.handleLogout.bind(this)
+    this.handleLogout = this.handleLogout.bind(this);
   }
 
 
@@ -68,13 +66,12 @@ class User extends React.Component {
     if(localStorage.getItem('Access-Token') === null) {
       return this.setState({isAuthenticated: false});
     }
-
+    
     this.setState({isAuthenticated: true});
      // Get user profile before mount
     this.props.userProfile(this.userID).then(() => {
       // Do some stuff
     })
-      
     .catch(error => {
       if(error) {
       // Do some stuff is error
@@ -100,7 +97,7 @@ class User extends React.Component {
   componentWillReceiveProps(nextprops) {
     
      if (nextprops.userDetails) {
-      this.setState({dataReady:true, profileData: nextprops.userDetails})
+      this.setState({dataReady:true, profileData: nextprops.userDetails});
      }
     }
 
@@ -112,7 +109,6 @@ class User extends React.Component {
     });
   });
   }
-
 
 //**************************************************************//
 //CONDITIONAL RENDERING BASED ON THE ROUTE, SUPPLY REQUIRED DATA//
@@ -143,9 +139,7 @@ class User extends React.Component {
                   <div className="content-display">
                     <Route path="/user/dashboard" component={AuthenticateUser(UserDashboard)}/> 
                     <Route path="/user/profile" component={AuthenticateUser(Profile)}/>
-                    <Route path="/user/books" render={() =><Allbooks 
-                     books = {this.props.retrievedBooks} 
-                     path = {this.props.url}
+                    <Route path="/user/books" render={() =><Allbooks
                     getBookId = {this.getBookId}/>}/>  
                     <Route path="/user/bookdetails" render={() => <BookDetails book_id = {this.state.book_id}/>}/>
                     <Route path="/user/history" render ={()=> <UserHistory userID = {this.userID}/>}/> 
@@ -155,9 +149,7 @@ class User extends React.Component {
                   <div className="content-display">
                     {/* <h4>Welcome to Hello books</h4> */}
                     <Route path="/user/dashboard" component={AuthenticateUser(AdminDashboard)}/>
-                    <Route path="/user/books" render={() => <Allbooks 
-                     books = {this.props.retrievedBooks} 
-                     path = {this.props.url}
+                    <Route path="/user/books" render={() => <Allbooks  
                      getBookId = {this.getBookId}/>}/>
                     <Route path="/user/upload" component={AuthenticateUser(CreateBook)}/> 
                     <Route path="/user/bookdetails" render={() => <BookDetails book_id = {this.state.book_id}/>}/>

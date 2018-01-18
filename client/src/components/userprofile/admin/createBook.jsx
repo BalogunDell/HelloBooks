@@ -5,7 +5,7 @@ import * as bookActions from '../../../Actions/booksAction';
 import * as categoryActions from '../../../Actions/categoryAction';
 import CreateBookForm from '../adminSubComponents/createBookForm';
 
-class CreateBook extends React.Component {
+export class CreateBook extends React.Component {
   constructor(props) {
     super(props);
 
@@ -146,8 +146,9 @@ class CreateBook extends React.Component {
       $('select').material_select();
       $('select').change(e => this.handleInput(e));
     });
-   
+   $(document).ready(() => {
     $('.modal').modal();
+   })
   }
   
   componentWillReceiveProps(nextProps) {
@@ -195,7 +196,7 @@ class CreateBook extends React.Component {
   }
 }
 
-function mapStateToProps(state, ownProps) {
+export const mapStateToProps = (state, ownProps) => {
 
   let initialData = { 
     isbn: '', 
@@ -217,7 +218,7 @@ function mapStateToProps(state, ownProps) {
   }
 }
 
-function mapDispatchToProps(dispatch) {
+export const mapDispatchToProps =(dispatch) => {
   return {
     createBook: data => dispatch(bookActions.createBook(data)),
     getCategories: () => dispatch(categoryActions.getCategories()),

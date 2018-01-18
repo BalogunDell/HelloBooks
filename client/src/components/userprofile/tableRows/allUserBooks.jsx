@@ -54,7 +54,6 @@ const allUserBooksComp = ({allUserBooks, getRowKey, tableHeader, handleReturn}) 
                   data-id={id}
 							    onClick={handleReturn}>Return
 							</button>
-              {/* <button className="btn waves-effect waves-teal custom">Read</button> */}
 							</td>
               }
 						</tr>)

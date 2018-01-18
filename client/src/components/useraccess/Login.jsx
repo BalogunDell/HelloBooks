@@ -14,12 +14,13 @@ import * as UserAcessActions from '../../Actions/userAccessAction';
  * @class Register
  * @classdesc returns the component for user signin
  */
-class Login extends React.Component {
+export class Login extends React.Component {
   constructor(props) {
     super(props);
 
     this.state =  {
       userData: { ...this.props.initialUserData },
+
       loginError: '',
       isAuthenticated: false,
       isLoading: false,
@@ -93,7 +94,7 @@ class Login extends React.Component {
 // ******************************************************//
 
 componentDidMount() {
-  $(document).ready(()=> {
+  $(document).ready(() => {
     $('.modal').modal();
   });
 
@@ -149,7 +150,6 @@ const mapStateToProps = (state, ownProps) => {
 
   }
 }
-
 
 const mapDispatchToProps = (dispatch) => {
   return {

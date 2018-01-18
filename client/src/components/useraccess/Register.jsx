@@ -13,7 +13,7 @@ import * as UserAcessActions from '../../Actions/userAccessAction';
  * @class Register
  * @classdesc returns the component for user signup
  */
-class Register extends React.Component {
+export class Register extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
@@ -78,7 +78,7 @@ class Register extends React.Component {
 
 
 //  Define the mapStateToProps function for connect
-function mapStateToProps(state, ownProps) {
+export const mapStateToProps = (state, ownProps) => {
   let initialUserData = { username: '', firstname: '', lastname: '', email: '', password: '', confirmPassword: ''}
   return {
     initialUserData: initialUserData,
@@ -89,9 +89,9 @@ function mapStateToProps(state, ownProps) {
 
 
 //  Define the mapDispatchToProps function for connect
-function mapDispatchToProps(dispatch) {
+export const mapDispatchToProps = (dispatch) => {
   return {
-    saveNewUser: userRegObject => dispatch(UserAcessActions.saveNewUser(userRegObject))
+    saveNewUser: (userRegObject) => dispatch(UserAcessActions.saveNewUser(userRegObject))
   }
 }
 

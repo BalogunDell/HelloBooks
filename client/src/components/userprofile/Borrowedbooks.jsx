@@ -7,7 +7,7 @@ import AuthenticateUser from '../HOC/authenticate';
  * @class History
  * @classdesc returns the borrow history of the user
  */
-class History extends React.Component {
+export class BorrowedBooks extends React.Component {
   constructor(props) {
     super(props);
 
@@ -36,7 +36,6 @@ class History extends React.Component {
               <option value="">Filter here</option>
               <option value="All books">All books</option>
               <option value="Returned books">Returned books</option>
-              <option value="Books Awaiting return confirmation">Books Awaiting return confirmation</option>
               <option value="Pending Returns">Pending returns</option> 
             </select>
           </div>
@@ -46,16 +45,10 @@ class History extends React.Component {
   }
 }
 
-
-function mapStateToProps(state, ownProps) {
-  return {
-    fetchedUserBooks: state.books.fetchedUserBooks
-  }
-}
-
-function mapDispatchToProps (dispatch) {
+export function mapDispatchToProps (dispatch) {
   return {
     getUserBooks: (userid) => dispatch(bookActions.getUserBooks(userid))
   }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(AuthenticateUser(History));
+AuthenticateUser(BorrowedBooks); 
+export default connect(null, mapDispatchToProps)(BorrowedBooks);

@@ -8,7 +8,7 @@ import * as bookActions from '../../../Actions/booksAction';
 import AddCategoryModal from './createCategory';
 import LoaderText from './loader';
 
-class editBookForm extends React.Component {
+export class EditBookForm extends React.Component {
   constructor(props) {
     super(props);
 
@@ -28,7 +28,6 @@ class editBookForm extends React.Component {
       redirect: false,
       errorStatus: false,
       bookIndex : 0
-      
     }
 
     this.handleEditInput = this.handleEditInput.bind(this);
@@ -39,7 +38,7 @@ class editBookForm extends React.Component {
 
   handleEditInput(event) {
     let name = event.target.name;
-    let tempHolder =  Object.assign({}, this.state.book);
+    let tempHolder =  {...this.state.book};
     tempHolder[name] = event.target.value
     if(event.target.name == 'categoryid') {
       this.setState({ book:tempHolder});
@@ -72,9 +71,11 @@ class editBookForm extends React.Component {
             error: 'error',
             successStatus: false,
           redirect:false})
-        })
+        });
+
     // Check if a new image and and no pdf was selected, if !, save default values 
     } else if((this.state.tempImageName) && (!this.state.tempFileName)) {
+
         // Check image size
         if(this.state.imageHeight < 300 || this.state.imageWidth < 250) {
           this.setState({
@@ -104,6 +105,7 @@ class editBookForm extends React.Component {
             })
         }
       } else if((!this.state.tempImageName) && (this.state.tempFileName)) {
+
         // Check File size
           if(this.state.tempFileSize > 10485760) {
             this.setState({
@@ -128,7 +130,7 @@ class editBookForm extends React.Component {
                 });
               })
               .catch(error => {
-              })
+              });
             }
       } else {
         if(this.state.imageHeight < 300 || this.state.imageWidth < 250) {
@@ -154,10 +156,12 @@ class editBookForm extends React.Component {
               disableBtn:true });
 
               // Save image to cloudinary
-            this.props.saveImageToCloudinary(this.state.tempImageName).then(()=> {
+            this.props.saveImageToCloudinary(this.state.tempImageName).then(() => {
+              
               // Check if image url has been set before dispatching  save pdf action
               if(this.state.book.image) {
-                this.props.savePdfToCloudinary(this.state.tempFileName).then(() =>{
+                this.props.savePdfToCloudinary(this.state.tempFileName).then(() => {
+
                   if(this.state.book.pdf) {
                     // Save book details to database
                       this.props.modifyBook(this.state.book).then(() => {
@@ -180,24 +184,23 @@ class editBookForm extends React.Component {
                           errorStatus:true,
                           disableBtn:true,
                           error: error.response.data.message});
-                      })
+                      });
                   }
-                })
+                });
               }
             })
             .catch(error => {
-            })
+            });
           }
         }
   }
 
 
   componentWillMount(){
-    const fetchedBook = JSON.parse(localStorage.getItem('index'));
-    this.setState({book: fetchedBook[0]});
     if(this.props.getBookToEdit) {
       this.setState({book: this.props.getBookToEdit[0]});
     } else {
+      const fetchedBook = JSON.parse(localStorage.getItem('index'));
       this.setState({book: fetchedBook[0]});
     }
   }
@@ -268,12 +271,8 @@ class editBookForm extends React.Component {
 
   
     render() {
-
     const success = <i>Book has been successfully updated<br/><br/>Redirecting to dashboard...</i>
-
-
       return (
-        
       <div>
         {this.state.redirect ? <Redirect to ="/user/dashboard"/> : 
           <div>
@@ -282,7 +281,7 @@ class editBookForm extends React.Component {
                 <div className="row">
                   <h5 className="center">Edit book</h5>
                 </div>
-              <form className="create-form" onSubmit={this.handleUpdate} encType="multipart/form-data">
+              <form className="create-form" id="handleSubmit" onSubmit={this.handleUpdate} encType="multipart/form-data">
                 <div className="input-field">
                   <input placeholder ={this.state.book.isbn} type="text" name="isbn" id="isbn"
                   maxLength="6"
@@ -366,8 +365,14 @@ class editBookForm extends React.Component {
                   </div>
 
                   <div className="input-field col s12 m12 l6">
-                  <select name="categoryid" value={this.state.book.category.category} onChange={this.handleEditInput}>
-                    <option value={this.state.book.categoryid}>{this.state.book.category.category}</option>
+                  <select 
+                    name="categoryid" 
+                    id="categoryid" 
+                    value={this.state.book.category.category} 
+                    onChange={this.handleEditInput}>
+                    <option value={this.state.book.categoryid}>
+                      {this.state.book.category.category}
+                    </option>
                     { this.state.loadedCategories.map((val, key) => {                  
                       return (<option key={val.id} value={val.id}>{val.category}</option>)
                     })
@@ -460,10 +465,7 @@ function dispatchToProps(dispatch) {
     modifyBook: (bookData) => dispatch(bookActions.modifyBook(bookData)),
     saveImageToCloudinary: (image) => dispatch(bookActions.saveImageToCloudinary(image)),
     savePdfToCloudinary: (pdf) => dispatch(bookActions.savePdfToCloudinary(pdf))
-    
-    
   }
 }
 
-
-export default connect(stateToProps, dispatchToProps)(editBookForm);
+export default connect(stateToProps, dispatchToProps)(EditBookForm);

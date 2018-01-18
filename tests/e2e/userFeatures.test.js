@@ -231,6 +231,7 @@ module.exports = {
       .waitForElementVisible('div.toast.blue.rounded', 3000)
       .assert.visible('div.toast.blue.rounded')
       .assert.containsText('div.toast.blue.rounded', 'Book has been successfully returned')
+
       .pause(3000)
       .click('input.select-dropdown')
       .click('#returned')

@@ -13,7 +13,7 @@ import Books from './books/Books';
  * @class Main 
  * @classdesc returns the main wrapper of the app
  */
-class Main extends React.Component {
+export class Main extends React.Component {
   constructor(props){
     super(props);
 
@@ -55,13 +55,13 @@ class Main extends React.Component {
   }
 };
 
-const mapStateToProps = (state, ownProps) => {
+export const mapStateToProps = (state, ownProps) => {
   return {
     books: state.books.trendingBooks
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
+export const mapDispatchToProps = (dispatch) => {
   return {
     trendingBooks: () => dispatch(bookActions.trendingBooks())
   }

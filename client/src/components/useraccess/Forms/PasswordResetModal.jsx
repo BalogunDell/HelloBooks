@@ -89,11 +89,12 @@ export class PasswordResetModal extends React.Component {
       disableBtn: false,
       error: false
     });
-    $('.modal').modal({
-      dismissible: false,
-      opacity: 0.3
+    $(document).ready(() => {
+      $('.modal').modal({
+        dismissible: false,
+        opacity: 0.3
+      });
     });
-
   }
 
   render() {
@@ -114,7 +115,7 @@ export class PasswordResetModal extends React.Component {
                 :
                 null
               }
-            <form className="col s6 offset-s3" onSubmit={this.handleSubmit}>
+            <form className="col s6 offset-s3" id ="handleSubmit" onSubmit={this.handleSubmit}>
               <div className="input-field">
                 <label htmlFor="email">Email</label>
                 <input type="email" className="validate" value={this.state.email} onChange={this.handleInput}/>
@@ -122,7 +123,7 @@ export class PasswordResetModal extends React.Component {
 
               <div className="input-field">
                 <button className="btn waves-effect waves-ripple green" disabled= {this.state.disableBtn}>Reset</button>
-                <div className="btn waves-effect modal-close modal-action" onClick={this.cancelPassReset}>Cancel</div>
+                <div className="btn waves-effect modal-close modal-action" id="cancelPass" onClick={this.cancelPassReset}>Cancel</div>
               </div>
             </form>
           </div>   
@@ -134,7 +135,7 @@ export class PasswordResetModal extends React.Component {
 
 }
 
-const dispatchToProps = (dispatch) => {
+export const dispatchToProps = (dispatch) => {
   return {
     sendEmail: (email) => dispatch(userActions.sendEmail(email))
   }

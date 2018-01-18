@@ -205,7 +205,6 @@ export function savePdf(pdf) {
  * @returns { object } axios responsee
  */
 export function savePdfToCloudinary(pdf) {
-  
   const formData = new FormData();
   formData.append('file', pdf);
   formData.append('upload_preset', cloudKeys.cloudinaryPreset);
@@ -248,7 +247,7 @@ export function saveImageToCloudinary(image) {
   formData.append('upload_preset', cloudKeys.cloudinaryPreset);
 
   return (dispatch) => {
-    return axios.post(cloudKeys.cloudinaryUrl,
+    return axios.post('https://api.cloudinary.com/v1_1/djvjxp2am/upload',
       formData, {
         headers: { 'Content-Type': cloudKeys.requestHeader } })
       .then((response) => {
@@ -340,7 +339,7 @@ export function deleteBook(bookId) {
       headers: { Authorization: getUserDetails().savedToken }
     })
       .then((response) => {
-        dispatch(deleteBookAction(response.data.updatedBooks));
+        dispatch(deleteBookAction(response.data));
       })
       .catch((error) => {
         throw (error);

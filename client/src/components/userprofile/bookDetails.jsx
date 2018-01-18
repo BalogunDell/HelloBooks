@@ -7,7 +7,7 @@ import * as bookActions from '../../Actions/booksAction';
 import * as messages from './messages';
 import AuthenticateUser from '../HOC/authenticate';
 
-class bookDetails extends React.Component {
+export class BookDetails extends React.Component {
   constructor(props){
     super(props);
 
@@ -29,7 +29,6 @@ class bookDetails extends React.Component {
 
 }
 
-
   handleBorrow(){
     this.setState({processingRequest: true})
     this.props.borrowBook({bookid:this.state.book_id})
@@ -47,32 +46,32 @@ class bookDetails extends React.Component {
       'blue rounded');
     })
     .catch(error => {
-      console.log(error);
       this.setState({
         processingRequest: false,
         borrowErrorStatus:true,
         borrowError: error.response.data.msg, disableBtn:true });
+        Materialize.toast('You have either exhausted your book limit or you still have this book with you',
+          4000,
+          'red rounded');
     });
   }
 
   componentWillMount() {
+
     this.setState({dataReady:true,
       borrowErrorStatus: false,
       disableBtn: false,
-      borrowBookSuccess:false});    
-    let filteredBook = this.state.books.filter(book => book.id == this.state.book_id)
-    this.setState({book: filteredBook[0], dataReady:false});
-    this.props.userBooks();
+      borrowBookSuccess:false});
+      const filtered = JSON.parse(localStorage.getItem('book'));
+    this.setState({book: filtered, dataReady:false});
+  }
 
+  componentDidMount() {
     if(getUserDetails().userType === 'admin') {
       this.setState({ isAdmin: true });
     } else {
       this.setState({ isAdmin: false });
     }
-  }
-
-  componentDidMount() {
-    
   }
 
   componentWillReceiveProps(nextProps) {
@@ -103,12 +102,9 @@ class bookDetails extends React.Component {
 
   render() {
     const processing = <h6 className="center">Processing Request...</h6>
-    const successMessage = messages.successMessage('You have successfully borrowed this book')
-    const failureMessage = messages.failureMessage(this.state.borrowError);
-
     let showError = this.state.processingRequest ? processing : null
-    let success = this.state.borrowBookSuccess ? successMessage : null
-    let failure = this.state.borrowErrorStatus ? failureMessage : null
+    let success = this.state.borrowBookSuccess ? '' : null
+    let failure = this.state.borrowErrorStatus ? '' : null
 
     return (
       
@@ -145,7 +141,7 @@ class bookDetails extends React.Component {
                     </tr>
 
                     <tr>
-                      <td>Catergory</td>
+                      <td>Category</td>
                        <td>{this.state.book.category.category}</td> 
                     </tr>
 
@@ -231,7 +227,7 @@ class bookDetails extends React.Component {
 } 
 
 
-function mapStateToProps (state, ownProps) {
+export function mapStateToProps (state, ownProps) {
   return {
     fetchedUserbooks: state.books.fetchedBooks,
     allbooks: state.books.books,
@@ -240,11 +236,11 @@ function mapStateToProps (state, ownProps) {
   }
 }
 
-function maptDispatchToProps(dispatch) {
+export function maptDispatchToProps(dispatch) {
   return {
     borrowBook: (bookDetails) => dispatch(bookActions.borrowBook(bookDetails)),
     userBooks: () => dispatch(bookActions.getUserBooks())
   }
 }
 
-export default connect(mapStateToProps, maptDispatchToProps)(AuthenticateUser(bookDetails));
+export default connect(mapStateToProps, maptDispatchToProps)(BookDetails);
