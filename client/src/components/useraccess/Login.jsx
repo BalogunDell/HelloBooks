@@ -23,6 +23,7 @@ class Login extends React.Component {
       loginError: '',
       isAuthenticated: false,
       isLoading: false,
+      googleAuthenticated: true
 
     }
 
@@ -65,17 +66,11 @@ class Login extends React.Component {
       image: response.profileObj.imageUrl
     }
     this.props.googleAccess(userData).then(() => {
-        this.setState({
-          isLoading: false,
-          isAuthenticated: true
-        });
-      })
-      .catch(error => {
-        this.setState({
-          isLoading:false,
-          loginError: error.response.data.message})
-
+      this.setState({
+        isLoading: false,
+        isAuthenticated: true
       });
+    })
   }
 
 
@@ -101,11 +96,16 @@ componentDidMount() {
   $(document).ready(()=> {
     $('.modal').modal();
   });
+
+  if(this.props.googleAuth.isAuthenticated
+    &&
+    localStorage.getItem('Access-Token')) {
+    this.setState({
+      isAuthenticated: true
+    });
+  }
 }
 
-componentWillReceiveProps(nextProps) {
-  console.log(this.state.isAuthenticated, "------");
-}
 
 // ******************************************************//
 // RENDER METHOD ***ANYTHING HERE SHOWS ON THE SCREEN*** //
@@ -144,7 +144,8 @@ const mapStateToProps = (state, ownProps) => {
     let initialUserData = { username:'' , password:'' }
   return {
     initialUserData: initialUserData,
-    isAuthenticated: state.userAccess.isAuthenticated
+    isAuthenticated: state.userAccess.isAuthenticated,
+    googleAuth: state.userAccess
 
   }
 }

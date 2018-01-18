@@ -69,7 +69,7 @@ class User extends React.Component {
       return this.setState({isAuthenticated: false});
     }
 
-
+    this.setState({isAuthenticated: true});
      // Get user profile before mount
     this.props.userProfile(this.userID).then(() => {
       // Do some stuff
@@ -87,7 +87,6 @@ class User extends React.Component {
     })
 
     // Set all values needed
-    this.setState({isAuthenticated: true});
     this.userID = getUserDetails().userId;
     this.userType = getUserDetails().userType;
 

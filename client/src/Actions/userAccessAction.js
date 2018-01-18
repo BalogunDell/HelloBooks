@@ -165,6 +165,7 @@ export function newGoogleAccess(googleUserData) {
   return (dispatch) => {
     return axios.post(`${apiRoutes.googleAccess}`, googleUserData)
       .then((response) => {
+        localStorage.setItem('Access-Token', response.data.responseData.token); // eslint-disable-line
         dispatch(newGoogleAccessAction(response.data));
       })
       .catch((error) => {

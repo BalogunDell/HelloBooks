@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink , Link, Redirect} from 'react-router-dom';
+import { Link, Redirect} from 'react-router-dom';
 import { connect } from 'react-redux';
 import profileImage from '../../assets/images/abbey.jpg';
 import logo from '../../assets/images/hb-logo.png';
@@ -26,25 +26,24 @@ const UserNav = ({ userType, navLinks, linkIcons, linkTexts, path, userDetails, 
         </li>
         <li></li>
         <li>
-          <NavLink activeClassName="active" to={`${path}/${linkTexts[0]}`} id="firstLink">
-          {navLinks[0]}
-          <i className="material-icons white-text">{linkIcons[0]}</i>
-          </NavLink>
+          <Link to={`${path}/${linkTexts[0]}`} id="firstLink">
+          {navLinks[0]}<i className="material-icons white-text">{linkIcons[0]}</i>
+          </Link>
         </li>
         <li>
-          <NavLink activeClassName="active" to={`${path}/${linkTexts[1]}`} id="secondLink">
+          <Link to={`${path}/${linkTexts[1]}`} id="secondLink">
           {navLinks[1]}<i className="material-icons white-text">{linkIcons[1]}</i>
-          </NavLink>
+          </Link>
         </li>
         <li>
-          <NavLink activeClassName="active" to={`${path}/${linkTexts[2]}`} id="thirdLink">
+          <Link to={`${path}/${linkTexts[2]}`} id="thirdLink">
           {navLinks[2]}<i className="material-icons white-text">{linkIcons[2]}</i>
-          </NavLink>
+          </Link>
         </li>
         <li>
-          <NavLink activeClassName="active" to={`${path}/${linkTexts[3]}`} id="fourthLink">
+          <Link to={`${path}/${linkTexts[3]}`} id="fourthLink">
           {navLinks[3]}<i className="material-icons white-text">{linkIcons[3]}</i>
-          </NavLink>
+          </Link>
         </li> 
         <li id="dashboard"><div className="settings white-text">SETTINGS</div></li>
         
