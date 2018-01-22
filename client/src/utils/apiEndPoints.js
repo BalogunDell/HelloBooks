@@ -1,12 +1,24 @@
 const routeDefault = '/api/v1';
 
 //  Export Routes
-export const signup = `${routeDefault}/users/signup`;
-export const signin = `${routeDefault}/users/signin`;
-export const userProfile = `${routeDefault}/users`;
-export const books = `${routeDefault}/books`;
-export const newCategory = `${routeDefault}/newcategory`;
-export const categories = `${routeDefault}/categories`;
-export const newPassword = `${routeDefault}/resetpassword`;
-export const trending = `${routeDefault}/trendingbooks`;
-export const googleAccess = `${routeDefault}/googleuser`;
+const signup = `${routeDefault}/users/signup`;
+const signin = `${routeDefault}/users/signin`;
+const userProfile = `${routeDefault}/users`;
+const userbooks = `${routeDefault}/books`;
+const newCategory = `${routeDefault}/newcategory`;
+const categories = `${routeDefault}/categories`;
+const newPasswordUrl = `${routeDefault}/resetpassword`;
+const trending = `${routeDefault}/trendingbooks`;
+const googleAccess = `${routeDefault}/googleuser`;
+
+export {
+  signup,
+  signin,
+  userProfile,
+  userbooks,
+  newCategory,
+  categories,
+  newPasswordUrl,
+  trending,
+  googleAccess
+};

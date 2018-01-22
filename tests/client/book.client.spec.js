@@ -9,8 +9,8 @@ import { shallow, mount, render , configure} from 'enzyme';
 import expect, { spyOn } from 'expect'
 import jwt from 'jsonwebtoken';
 import ConnectedEditBookForm, {
-  EditBookForm
-} from '../../client/src/components/userprofile/adminSubComponents/editBook';
+  EditBook
+} from '../../client/src/components/userprofile/adminSubComponents/EditBook';
 import Books from '../../client/src/components/books/Books';
 import Book from '../../client/src/components/books/book'
 
@@ -89,14 +89,14 @@ describe('Edit Books Component,', () => {
     getBookToEdit: publishedBooksSample,
     loadedCategories: categories,
   };
-  const wrapper = shallow(<EditBookForm {...props} />);
+  const wrapper = shallow(<EditBook {...props} />);
   it('should render the edit book component without crashing', () => {
     expect(wrapper.find('div').length).toBe(31);
   });
 
   it('should have the handleEditInput method', () => {
-    const spy = jest.spyOn(EditBookForm.prototype, 'handleEditInput');
-    shallow(<EditBookForm {...props} onChange= {spy}/>)
+    const spy = jest.spyOn(EditBook.prototype, 'handleEditInput');
+    shallow(<EditBook {...props} onChange= {spy}/>)
     .instance().handleEditInput(event);
   });
 
@@ -113,8 +113,8 @@ describe('Edit Books Component,', () => {
   
 
   it('should have the handleUpdate method', () => {
-    const spy = jest.spyOn(EditBookForm.prototype, 'handleUpdate');
-    shallow(<EditBookForm {...props} onSubmit={spy}/>)
+    const spy = jest.spyOn(EditBook.prototype, 'handleUpdate');
+    shallow(<EditBook {...props} onSubmit={spy}/>)
     .instance().handleUpdate(event);
   });
 
@@ -231,40 +231,40 @@ describe('Edit Books Component,', () => {
 
 
   it('should have the handleUpdate method', () => {
-    const spy = jest.spyOn(EditBookForm.prototype, 'handleUpdate');
-    shallow(<EditBookForm {...props} onSubmit= {spy}/>)
+    const spy = jest.spyOn(EditBook.prototype, 'handleUpdate');
+    shallow(<EditBook {...props} onSubmit= {spy}/>)
     .instance().handleUpdate(event);
     expect(spy).toHaveBeenCalledTimes(2);
   });
 
   it('should have the imageUploadHandler method', () => {
-    const spy = jest.spyOn(EditBookForm.prototype, 'imageUploadHandler');
-    shallow(<EditBookForm {...props} imageUploadHandler= {spy}/>)
+    const spy = jest.spyOn(EditBook.prototype, 'imageUploadHandler');
+    shallow(<EditBook {...props} imageUploadHandler= {spy}/>)
     .instance().imageUploadHandler(event);
     expect(spy).toHaveBeenCalledTimes(1);
   });
 
   it('should have the fileUploadHandler method', () => {
-    const spy = jest.spyOn(EditBookForm.prototype, 'fileUploadHandler');
-    shallow(<EditBookForm {...props} fileUploadHandler= {spy}/>)
+    const spy = jest.spyOn(EditBook.prototype, 'fileUploadHandler');
+    shallow(<EditBook {...props} fileUploadHandler= {spy}/>)
     .instance().fileUploadHandler(event);
     expect(spy).toHaveBeenCalledTimes(1);
   });
 
   it('should have the componentDidMount method', () => {
-    const spy = jest.spyOn(EditBookForm.prototype, 'componentDidMount');
-    shallow(<EditBookForm {...props} componentDidMount= {spy}/>)
+    const spy = jest.spyOn(EditBook.prototype, 'componentDidMount');
+    shallow(<EditBook {...props} componentDidMount= {spy}/>)
     .instance().componentDidMount;
   });
 
   it('should have the componentWillReceiveProps method', () => {
-    const spy = jest.spyOn(EditBookForm.prototype, 'componentWillReceiveProps');
+    const spy = jest.spyOn(EditBook.prototype, 'componentWillReceiveProps');
     const nextProps = {
       loadedCategories: categories,
       imageUrl: 'sampleUrl',
       pdfUrl: 'sampleUrl'
     }
-    shallow(<EditBookForm {...props} componentWillReceiveProps= {spy}/>)
+    shallow(<EditBook {...props} componentWillReceiveProps= {spy}/>)
     .instance().componentWillReceiveProps(nextProps);
     expect(spy).toHaveBeenCalledTimes(1);
   });

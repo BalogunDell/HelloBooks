@@ -1,7 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
  
-const allUserBooksComp = ({allUserBooks, getRowKey, tableHeader, handleReturn}) => {
+const allUserBooks = ({
+	allUserBooks,
+	getRowKey,
+	tableHeader,
+	handleReturn}) => {
 	const books = allUserBooks.filter((book) => {
 		return book.book.visibility === true
 	});
@@ -10,7 +14,9 @@ const allUserBooksComp = ({allUserBooks, getRowKey, tableHeader, handleReturn}) 
 			<div>
 
 				<div>
-					<h6 className="right custom-text">{`Currently showing: ${tableHeader}`}</h6>
+					<h6 
+						className="right custom-text">{`Currently showing: ${tableHeader}`}
+					</h6>
 				</div>
 
 
@@ -36,7 +42,8 @@ const allUserBooksComp = ({allUserBooks, getRowKey, tableHeader, handleReturn}) 
               :
 							books.map((book, id) =>
 						<tr key={id}>
-							<td><img src={book.book.image} alt="Book cover"/></td>
+							<td>
+								<img src={book.book.image} alt="Book cover"/></td>
 							<td>{book.book.title}</td>
 							<td>{book.book.author}</td>
 							<td>{book.dateborrowed}</td>
@@ -44,7 +51,10 @@ const allUserBooksComp = ({allUserBooks, getRowKey, tableHeader, handleReturn}) 
 							{book.returnstatus 
 								? 
 							<td>
-                <button className="btn waves-effect waves-teal custom" disabled={true}>Return</button>
+                <button
+									className="btn waves-effect waves-teal custom"
+									disabled={true}>Return
+								</button>
               </td>
               
                 :
@@ -64,4 +74,4 @@ const allUserBooksComp = ({allUserBooks, getRowKey, tableHeader, handleReturn}) 
 	);
 }
 
-export default allUserBooksComp;
+export default allUserBooks;

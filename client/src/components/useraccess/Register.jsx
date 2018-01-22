@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import Navbar from '../navbar/Navbar';
 import RegistrationForm from './Forms/RegistrationForm';
 import Background from '../Background/Background';
-import * as UserAcessActions from '../../Actions/userAccessAction';
+import { saveNewUser } from '../../Actions/userAccessAction';
 
 
 
@@ -91,7 +91,7 @@ export const mapStateToProps = (state, ownProps) => {
 //  Define the mapDispatchToProps function for connect
 export const mapDispatchToProps = (dispatch) => {
   return {
-    saveNewUser: (userRegObject) => dispatch(UserAcessActions.saveNewUser(userRegObject))
+    saveNewUser: (userRegObject) => dispatch(saveNewUser(userRegObject))
   }
 }
 

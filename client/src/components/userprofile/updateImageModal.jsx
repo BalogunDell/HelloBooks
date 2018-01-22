@@ -1,7 +1,7 @@
 import React from 'react';
 import LoaderText from './adminSubComponents/loader';
 
-const UpdateImageModal = ({
+const updateImageModal = ({
     imageUploadHandler, 
     handleImageEdit, 
     cancelEdit, 
@@ -49,11 +49,17 @@ const UpdateImageModal = ({
 
                 <div className="row center">
                 <div className="col s12 m12 l6">
-                  <input className="btn green" onClick={handleImageEdit} readOnly disabled={disableUpdateBtn} value="Update"/>
+                  <input className="btn green" 
+                    onClick={handleImageEdit}
+                    readOnly disabled={disableUpdateBtn}
+                    value="Update"/>
                 </div>
 
                 <div className="col s12 m12 l6">
-                  <input className="btn red modal-close" onClick={cancelEdit} readOnly value="Cancel"/>
+                  <input className="btn red modal-close"
+                    onClick={cancelEdit}
+                    readOnly
+                    value="Cancel"/>
                 </div>
               </div>
               </form>
@@ -75,7 +81,7 @@ const UpdateImageModal = ({
 );
 }
 
-UpdateImageModal.propTypes = {
+updateImageModal.propTypes = {
   imageUploadHandler:React.PropTypes.func,
   handleImageEdit: React.PropTypes.func,
   cancelEdit: React.PropTypes.func,
@@ -87,4 +93,4 @@ UpdateImageModal.propTypes = {
   disableUpdateBtn: React.PropTypes.bool
 }
 
-export default UpdateImageModal;
+export default updateImageModal;

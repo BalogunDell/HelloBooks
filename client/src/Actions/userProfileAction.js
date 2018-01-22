@@ -1,6 +1,11 @@
 import axios from 'axios';
 
-import * as types from '../Actions/actionTypes';
+import {
+  FETCH_USER,
+  SAVE_IMAGE,
+  EDIT_PROFILE,
+  EDIT_IMAGE,
+} from '../Actions/actionTypes';
 import * as apiRoutes from '../utils/apiEndPoints';
 import * as cloudKeys from '../utils/cloudinaryKeys';
 import getUserDetails from '../utils/getUserInfo';
@@ -15,12 +20,12 @@ import getUserDetails from '../utils/getUserInfo';
  * @param { integer } userID 
  * @returns { object } returns action type and integer, user id
  */
-export function fetchUser(userID) {
+const fetchUser = (userID) => {
   return {
-    type: types.FETCH_USER,
+    type: FETCH_USER,
     userID
   };
-}
+};
 
 /**
  * 
@@ -28,7 +33,7 @@ export function fetchUser(userID) {
  * @export fetchUserTrigger
  * @returns { object } axios response
  */
-export function fetchUserTrigger() {
+const fetchUserTrigger = () => {
   return (dispatch) => {
     return axios.get(`${apiRoutes.userProfile}/${getUserDetails().userId}`,
       {
@@ -39,7 +44,7 @@ export function fetchUserTrigger() {
         throw (error);
       });
   };
-}
+};
 
 
 // *********************************************** //
@@ -51,12 +56,12 @@ export function fetchUserTrigger() {
  * @param { object } newUserData 
  * @returns { object } action type and newUserData objet
  */
-export function editProfileAction(newUserData) {
+const editProfileAction = (newUserData) => {
   return {
-    type: types.EDIT_PROFILE,
+    type: EDIT_PROFILE,
     newUserData
   };
-}
+};
 
 /**
  * 
@@ -64,7 +69,7 @@ export function editProfileAction(newUserData) {
  * @param { object } newUserData 
  * @returns { object } axios response
  */
-export function editProfile(newUserData) {
+const editProfile = (newUserData) => {
   return (dispatch) => {
     return axios.put(`${apiRoutes.userProfile}/${newUserData.id}`,
       newUserData,
@@ -76,7 +81,7 @@ export function editProfile(newUserData) {
         throw (error);
       });
   };
-}
+};
 
 // ****************************************************** //
 // *DEFINE ACTION CREATOR FOR USER EDIT PROFIL IMAGEE**** //
@@ -89,18 +94,20 @@ export function editProfile(newUserData) {
  * @param { object } image 
  * @returns { object } action type and payload (image)
  */
-export function saveImageToCloud(image) {
+const saveImageToCloud = (image) => {
   return {
-    type: types.SAVE_IMAGE,
+    type: SAVE_IMAGE,
     image
   };
-}
+};
+
+
 /**
  * @export saveNewImage
  * @param { object } image 
  * @returns { object } action type and newImage url (from cloudinary)
  */
-export function saveNewImage(image) {
+const saveNewImage = (image) => {
   const formdata = new FormData();
   formdata.append('file', image);
   formdata.append('upload_preset', cloudKeys.cloudinaryPreset);
@@ -114,24 +121,24 @@ export function saveNewImage(image) {
         throw (error);
       });
   };
-}
+};
 
 
 // ****************************************************** //
 // *DEFINE ACTION CREATOR FOR USER EDIT PROFIL IMAGEE**** //
-
+// ****************************************************** //
 
 /**
  * @export
  * @param { object } newImage 
  * @returns { object } action type and newImage url (from cloudinary)
  */
-export function saveImage(newImage) {
+const saveImage = (newImage) => {
   return {
-    type: types.EDIT_IMAGE,
+    type: EDIT_IMAGE,
     newImageUrl: newImage
   };
-}
+};
 
 
 /**
@@ -139,7 +146,7 @@ export function saveImage(newImage) {
  * @param { object } newImage 
  * @returns { object } action type and newImage url (from cloudinary)
  */
-export function saveNewImageToDB(newImage) {
+const saveNewImageToDB = (newImage) => {
   return (dispatch) => {
     return axios.put(`${apiRoutes.userProfile}/${getUserDetails().userId}`,
       newImage, {
@@ -153,4 +160,15 @@ export function saveNewImageToDB(newImage) {
         throw (error);
       });
   };
-}
+};
+
+export {
+  fetchUser,
+  fetchUserTrigger,
+  editProfileAction,
+  editProfile,
+  saveImageToCloud,
+  saveNewImage,
+  saveImage,
+  saveNewImageToDB
+};

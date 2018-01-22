@@ -1,7 +1,10 @@
 import React from 'react';
 import { Link, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
-import * as bookActions from '../../../Actions/booksAction';
+import {
+  loadAllbooks,
+  getBookId
+} from '../../../Actions/booksAction';
 import Loader from '../adminSubComponents/loader';
 import AuthenticateUser from '../../HOC/authenticate';
 
@@ -118,8 +121,8 @@ export const mapStateToProps = (state, ownProps) => {
 
 export const mapDispatchToProps = (dispatch) => {
   return {
-    loadAllbooks: () => dispatch(bookActions.loadAllbooks()),
-    getCurrentBookId: (id) => dispatch(bookActions.getBookId(id))
+    loadAllbooks: () => dispatch(loadAllbooks()),
+    getCurrentBookId: (id) => dispatch(getBookId(id))
   }
 }
 

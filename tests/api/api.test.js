@@ -3,7 +3,7 @@ process.env.NODE_ENV = 'test'
 import chai from 'chai';
 import supertest from 'supertest';
 import app from '../../server/index';
-import mockdata from '../../server/utils/mockdata';
+import mockdata from './mockData';
 import jwt from 'jsonwebtoken';
 import fakeUsers from '../../server/seeds/users';
 import fakeBooks from '../../server/seeds/books';
@@ -1353,7 +1353,6 @@ describe('Hellobooks API', () => {
         done();
       });
     });
-    
   });
 
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import * as bookActions from '../../Actions/booksAction';
+import { getUserBooks } from '../../Actions/booksAction';
 import AuthenticateUser from '../HOC/authenticate';
 /**
  * @class History
@@ -47,8 +47,8 @@ export class BorrowedBooks extends React.Component {
 
 export function mapDispatchToProps (dispatch) {
   return {
-    getUserBooks: (userid) => dispatch(bookActions.getUserBooks(userid))
+    getUserBooks: (userid) => dispatch(getUserBooks(userid))
   }
 }
-AuthenticateUser(BorrowedBooks); 
+
 export default connect(null, mapDispatchToProps)(BorrowedBooks);

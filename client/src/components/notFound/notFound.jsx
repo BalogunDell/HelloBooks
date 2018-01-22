@@ -2,7 +2,7 @@ import React from 'react';
 import Navbar from '../navbar/Navbar';
 import Background from '../Background/Background';
 
-const pageNotFound = () => {
+const notFound = () => {
   const notFoundImage = 'https://res.cloudinary.com/djvjxp2am/image/upload/v1513510837/404-error_tzmwfb.gif';
   return (
     <div>
@@ -19,4 +19,4 @@ const pageNotFound = () => {
   );
 }
 
-export default pageNotFound;
+export default notFound;

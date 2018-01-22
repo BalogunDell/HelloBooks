@@ -7,8 +7,18 @@ import moxios from 'moxios';
 import axios from 'axios';
 import chai from 'chai';
 import * as mockData from './mocks/mockdata';
-import * as apiEndPoints from '../../client/src/utils/apiEndPoints.js';
-import * as cloudKeys from '../../client/src/utils/cloudinaryKeys';
+import {
+  signup,
+  signin,
+  userProfile,
+  userbooks,
+  newCategory,
+  categories,
+  newPasswordUrl,
+  trending,
+  googleAccess
+} from '../../client/src/utils/apiEndPoints.js';
+
 import getUserInfo from '../../client/src/utils/getUserInfo';
 
 // Import mock local storage
@@ -23,10 +33,64 @@ configure({ adapter: new Adapter() });
 import { shallow, mount, render } from 'enzyme';
 
 // Import actions and action types
-import * as userAcessActions from '../../client/src/Actions/userAccessAction';
-import * as bookActions from '../../client/src/Actions/booksAction';
-import * as userProfileAction from '../../client/src/Actions/userProfileAction';
-import * as categoryAction from '../../client/src/Actions/categoryAction';
+import {
+  userSignupSuccessAction,
+  saveNewUser,
+  userLoginSuccess,
+  userLogin,
+  sendEmailAction,
+  sendEmail,
+  resetPasswordAction,
+  resetPassword,
+  newGoogleAccessAction,
+  newGoogleAccess
+} from '../../client/src/Actions/userAccessAction';
+import {
+  getAllBooks,
+  loadAllbooks,
+  getBookId,
+  borrowBookAction,
+  borrowBook,
+  userBooks,
+  getUserBooks,
+  returnBookAction,
+  returnBook,
+  createBookAction,
+  createBook,
+  savePdf,
+  savePdfToCloudinary,
+  saveImage,
+  saveImageToCloudinary,
+  getAdminEditBookId,
+  modifyBookAction,
+  modifyBook,
+  deleteBookAction,
+  deleteBook,
+  getborrowedbooksAction,
+  getAllBorrowedBooks,
+  adminGetAllBooksAction,
+  adminGetAllBooks,
+  publishBookAction,
+  publishBook,
+  trendingBooksAction,
+  trendingBooks
+} from '../../client/src/Actions/booksAction';
+import {
+  userSignupSuccessAction,
+  saveNewUser,
+  userLoginSuccess,
+  userLogin,
+  sendEmailAction,
+  sendEmail,
+  resetPasswordAction,
+  resetPassword,
+  newGoogleAccessAction,
+  newGoogleAccess
+} from '../../client/src/Actions/userProfileAction';
+import {
+  createCategory,
+  getCategories
+} from '../../client/src/Actions/categoryAction';
 import * as actionTypes from '../../client/src/Actions/actionTypes'
 
 import Home from '../../client/src/components/home/Home';
@@ -64,7 +128,7 @@ describe('THUNK FUNCTIONS', () => {
         type: actionTypes.GET_ALL_BOOKS,
         data: mockData.mocktrendingBook
       }];
-       await store.dispatch(bookActions.loadAllbooks())
+       await store.dispatch(loadAllbooks())
         .then(() => {
           const actions = store.getActions();
           expect(actions[0].type).to.equal(expectedAction[0].type);
@@ -75,7 +139,7 @@ describe('THUNK FUNCTIONS', () => {
 
   it('should create ADD_USER when a user signs up', async (done) => {
     const signupResponse = mockData.signupResponse
-    moxios.stubRequest(apiEndPoints.signup, {
+    moxios.stubRequest(signup, {
       status: 201,
       response: signupResponse
     });
@@ -86,7 +150,7 @@ describe('THUNK FUNCTIONS', () => {
     };
 
     // Dispatch
-    await store.dispatch(userAcessActions.saveNewUser())
+    await store.dispatch(saveNewUser())
       .then(() => {
         const actions = store.getActions();
         expect(actions[1].type).to.equal(expectedAction.type);
@@ -103,7 +167,7 @@ describe('THUNK FUNCTIONS', () => {
 
   it('should create LOGIN when a user signs in', async (done) => {
     const signinResponse = mockData.signupResponse
-    moxios.stubRequest(apiEndPoints.signin, {
+    moxios.stubRequest(signin, {
       status: 200,
       response: signinResponse
     });
@@ -115,7 +179,7 @@ describe('THUNK FUNCTIONS', () => {
 
     const thisstore = mockStore({});
     // Dispatch
-    await store.dispatch(userAcessActions.userLogin())
+    await store.dispatch(userLogin())
       .then(() => {
         const actions = store.getActions();
         expect(actions[2].type).to.equal(expectedAction.type);
@@ -134,7 +198,7 @@ describe('THUNK FUNCTIONS', () => {
     const resetPasswordResponse = mockData.resetPasswordResponse;
 
     // Simulate and intercept call to endpoint
-    moxios.stubRequest(apiEndPoints.newPassword, {
+    moxios.stubRequest(newPasswordUrl, {
       status: 200, 
       response: resetPasswordResponse
     });
@@ -145,7 +209,7 @@ describe('THUNK FUNCTIONS', () => {
     };
 
     // Dispatch
-    await store.dispatch(userAcessActions.sendEmail({email: 'delighteddellW@gmail'}))
+    await store.dispatch(sendEmail({email: 'delighteddellW@gmail'}))
       .then(() => {
         const actions = store.getActions();
         uniqueUrl = actions[3].serverRes.url;
@@ -160,7 +224,7 @@ describe('THUNK FUNCTIONS', () => {
     const serverRes = { message: "Your password has been successfully updated" };
 
     // Simulate and intercept call to endpoint
-    moxios.stubRequest(`${apiEndPoints.newPassword}/${uniqueUrl}`,
+    moxios.stubRequest(`${newPasswordUrl}/${uniqueUrl}`,
     {
       status: 201,
       response: serverRes
@@ -172,7 +236,7 @@ describe('THUNK FUNCTIONS', () => {
     };
 
     // Dispatch
-    await store.dispatch(userAcessActions.resetPassword(serverRes, uniqueUrl))
+    await store.dispatch(resetPassword(serverRes, uniqueUrl))
       .then(() => {
         const actions = store.getActions(); 
         expect(actions[4].type).to.equal(expectedAction.type);
@@ -183,7 +247,7 @@ describe('THUNK FUNCTIONS', () => {
 
   it('should create a EDIT_IMAGE when users edit profile image', async (done) => {
     const serverRes = mockData.profile;
-    moxios.stubRequest(`${apiEndPoints.userProfile}/${getUserInfo().userId}`, {
+    moxios.stubRequest(`${userProfile}/${getUserInfo().userId}`, {
       status: 201,
       response: serverRes
     }); 
@@ -193,7 +257,7 @@ describe('THUNK FUNCTIONS', () => {
       type: actionTypes.EDIT_IMAGE,
       newImageUrl: serverRes
     }
-    await store.dispatch(userProfileAction.saveNewImageToDB(serverRes))
+    await store.dispatch(saveNewImageToDB(serverRes))
       .then(() => {
         const actions = store.getActions();
         expect(actions[5].type).to.equal(expectedAction.type);
@@ -206,7 +270,7 @@ describe('THUNK FUNCTIONS', () => {
   it('should create FETCH_USER when a user logs in', async (done) => {
     const fetchedUser = mockData.profile.user;
 
-    moxios.stubRequest(`${apiEndPoints.userProfile}/${getUserInfo().userId}`, {
+    moxios.stubRequest(`${userProfile}/${getUserInfo().userId}`, {
       status: 200,
       response:fetchedUser
     });
@@ -216,7 +280,7 @@ describe('THUNK FUNCTIONS', () => {
       userID: fetchedUser
     };
 
-    await store.dispatch(userProfileAction.fetchUserTrigger())
+    await store.dispatch(fetchUserTrigger())
       .then(() => {
         const actions = store.getActions();
         expect(actions[6].type).to.equal(expectedAction.type);
@@ -234,7 +298,7 @@ describe('THUNK FUNCTIONS', () => {
   it('should create BORROW_BOOK when a user borrows a book', async (done) => {
     const serverResponse = mockData.borrowBookResponse;
 
-    moxios.stubRequest(`${apiEndPoints.userProfile}/${getUserInfo().userId}/books`, {
+    moxios.stubRequest(`${userProfile}/${getUserInfo().userId}/books`, {
       status: 201,
       response: serverResponse
     });
@@ -244,7 +308,7 @@ describe('THUNK FUNCTIONS', () => {
       bookDetails: serverResponse 
     };
 
-    await store.dispatch(bookActions.borrowBook(serverResponse))
+    await store.dispatch(borrowBook(serverResponse))
       .then(() => {
         const actions = store.getActions();
         expect(actions[7].type).to.equal(expectedAction.type);
@@ -260,7 +324,7 @@ describe('THUNK FUNCTIONS', () => {
   it('should create FETCH_USER_BOOKS when user visits history component', async (done) => {
     const serverResponse = mockData.borrowedBook;
 
-    moxios.stubRequest(`${apiEndPoints.userProfile}/${getUserInfo().userId}/books`, {
+    moxios.stubRequest(`${userProfile}/${getUserInfo().userId}/books`, {
       status: 200,
       response: serverResponse
     })
@@ -269,7 +333,7 @@ describe('THUNK FUNCTIONS', () => {
       fetchedBooks: serverResponse
     };
 
-    await store.dispatch(bookActions.getUserBooks(serverResponse))
+    await store.dispatch(getUserBooks(serverResponse))
       .then(() => {
         const actions = store.getActions();
         expect(actions[8].type).to.equal(expectedAction.type);
@@ -300,7 +364,7 @@ describe('THUNK FUNCTIONS', () => {
       message: "Book has been returned"
     };
 
-    moxios.stubRequest(`${apiEndPoints.userProfile}/${getUserInfo().userId}/books`, {
+    moxios.stubRequest(`${userProfile}/${getUserInfo().userId}/books`, {
       status: 201,
       response: serverRes
     });
@@ -311,7 +375,7 @@ describe('THUNK FUNCTIONS', () => {
       bookid: serverRes
     };
 
-    await store.dispatch(bookActions.returnBook({bookid: 3}))
+    await store.dispatch(returnBook({bookid: 3}))
       .then(() => {
         const actions = store.getActions();
         expect(actions[9].type).to.equal(expectedAction.type);
@@ -324,7 +388,7 @@ describe('THUNK FUNCTIONS', () => {
     
     const serverRes = mockData.createdBookResponse;
 
-    moxios.stubRequest(apiEndPoints.books, {
+    moxios.stubRequest(userbooks, {
       status: 201,
       response: serverRes
     });
@@ -334,7 +398,7 @@ describe('THUNK FUNCTIONS', () => {
       bookData: serverRes
     };
     
-    await store.dispatch(bookActions.createBook())
+    await store.dispatch(createBook())
       .then(() => {
         const actions = store.getActions();
         expect(actions[10].type).to.equal(expectedAction.type);
@@ -365,7 +429,7 @@ describe('THUNK FUNCTIONS', () => {
     
     const serverRes = 'Category created'
 
-    moxios.stubRequest(apiEndPoints.newCategory, {
+    moxios.stubRequest(newCategoryUrl, {
       status: 201,
       response: serverRes
     });
@@ -375,7 +439,7 @@ describe('THUNK FUNCTIONS', () => {
       bookData: serverRes
     };
     
-    await store.dispatch(categoryAction.createCategory({category: 'Programming'}))
+    await store.dispatch(createCategory({category: 'Programming'}))
       .then(() => {
         const actions = store.getActions();
         expect(actions[11].type).to.equal('CREATE_CATEGORY');
@@ -389,7 +453,7 @@ describe('THUNK FUNCTIONS', () => {
     
     const serverRes = mockData.sampleCats
 
-    moxios.stubRequest(apiEndPoints.categories, {
+    moxios.stubRequest(categories, {
       status: 200,
       response: serverRes
     });
@@ -399,7 +463,7 @@ describe('THUNK FUNCTIONS', () => {
       fetchedCategories: serverRes
     };
     
-    await store.dispatch(categoryAction.getCategories())
+    await store.dispatch(getCategories())
       .then(() => {
         const actions = store.getActions();
         expect(actions[12].type).to.equal('ET_CATEGORY');
@@ -413,7 +477,7 @@ describe('THUNK FUNCTIONS', () => {
     
     const serverRes = mockData.publishedBooksSample2;
     const bookid = parseInt(mockData.publishedBooksSample2.data.id, 10);
-    moxios.stubRequest(`${apiEndPoints.books}/${bookid}`, {
+    moxios.stubRequest(`${userbooks}/${bookid}`, {
       status: 201,
       response: serverRes
     });
@@ -423,7 +487,7 @@ describe('THUNK FUNCTIONS', () => {
       bookData: serverRes
     };
     
-    await store.dispatch(bookActions.modifyBook({serverRes}))
+    await store.dispatch(modifyBook({serverRes}))
       .then(() => {
         const actions = store.getActions();
         expect(actions[13].type).to.equal(expectedAction.type);
@@ -450,7 +514,7 @@ describe('THUNK FUNCTIONS', () => {
   it('should create EDIT PROFILE when user edits his profile', async (done) => {
     
     const serverRes = mockData.updatedProfile.user;
-    moxios.stubRequest(`${apiEndPoints.userProfile}/${serverRes.id}`, {
+    moxios.stubRequest(`${userProfile}/${serverRes.id}`, {
       status: 201,
       response: serverRes
     });
@@ -460,7 +524,7 @@ describe('THUNK FUNCTIONS', () => {
       newUserData: serverRes
     };
     
-    await store.dispatch(userProfileAction.editProfile(serverRes))
+    await store.dispatch(editProfile(serverRes))
       .then(() => {
         const actions = store.getActions();
         expect(actions[14].type).to.equal(expectedAction.type);
@@ -484,7 +548,7 @@ describe('THUNK FUNCTIONS', () => {
     
     const serverRes = mockData.mocktrendingBook;
     const bookId = 1
-    moxios.stubRequest(`${apiEndPoints.books}/${1}`, {
+    moxios.stubRequest(`${userbooks}/${1}`, {
       status: 201,
       response: mockData.mocktrendingBook
     });
@@ -494,7 +558,7 @@ describe('THUNK FUNCTIONS', () => {
       updatedBooks: mockData.mocktrendingBook[0]
     };
 
-    await store.dispatch(bookActions.deleteBook(1))
+    await store.dispatch(deleteBook(1))
       .then(() => {
         const actions = store.getActions();
         expect(actions[15].type).to.equal(expectedAction.type);
@@ -521,7 +585,7 @@ describe('THUNK FUNCTIONS', () => {
   it('should create GET_BORROWED_BOOKS when getAllBorrowedBooks is triggered', async (done) => {
     
     const serverRes = mockData.borrowedBookMirror;
-    moxios.stubRequest(`${apiEndPoints.books}/borrowedbooks`, {
+    moxios.stubRequest(`${userbooks}/borrowedbooks`, {
       status: 200,
       response: serverRes
     });
@@ -531,7 +595,7 @@ describe('THUNK FUNCTIONS', () => {
       borrowedbooks: serverRes
     };
 
-    await store.dispatch(bookActions.getAllBorrowedBooks())
+    await store.dispatch(getAllBorrowedBooks())
       .then(() => {
         const actions = store.getActions();
         expect(actions[16].type).to.equal(expectedAction.type);
@@ -569,7 +633,7 @@ describe('THUNK FUNCTIONS', () => {
   it('should create ADMIN_GET_ALLBOOKS on a successful fetch of all unpublished library books', async (done) => {
     
     const serverRes = mockData.mockBooks;
-    moxios.stubRequest(`${apiEndPoints.books}/all`, {
+    moxios.stubRequest(`${userbooks}/all`, {
       status: 200,
       response: serverRes
     });
@@ -579,7 +643,7 @@ describe('THUNK FUNCTIONS', () => {
       unpublishedbooks: serverRes
     };
 
-    await store.dispatch(bookActions.adminGetAllBooks())
+    await store.dispatch(adminGetAllBooks())
       .then(() => {
         const actions = store.getActions();
         expect(actions[17].type).to.equal(expectedAction.type);
@@ -604,7 +668,7 @@ describe('THUNK FUNCTIONS', () => {
     
     const serverRes = mockData.mockBooks.books[0];
     const bookData = 1
-    moxios.stubRequest(`${apiEndPoints.books}/${bookData}`, {
+    moxios.stubRequest(`${userbooks}/${bookData}`, {
       status: 201,
       response: serverRes
     });
@@ -614,10 +678,9 @@ describe('THUNK FUNCTIONS', () => {
       bookData: serverRes
     };
 
-    await store.dispatch(bookActions.publishBook(bookData))
+    await store.dispatch(publishBook(bookData))
       .then(() => {
         const actions = store.getActions();
-        console.log(actions[18]);
         expect(actions[18].type).to.equal(expectedAction.type);
         expect(actions[18].bookData).to.equal(expectedAction.bookData);
         expect(actions[18].bookData.id).to.equal(expectedAction.bookData.id);
@@ -639,7 +702,7 @@ describe('THUNK FUNCTIONS', () => {
   it('should create TRENDING_BOOKS when the app loads', async (done) => {
     
     const serverRes = mockData.mockBooks.books;
-    moxios.stubRequest(apiEndPoints.trending, {
+    moxios.stubRequest(trending, {
       status: 200,
       response: serverRes
     });
@@ -649,7 +712,7 @@ describe('THUNK FUNCTIONS', () => {
       books: serverRes
     };
 
-    await store.dispatch(bookActions.trendingBooks())
+    await store.dispatch(trendingBooks())
       .then(() => {
         const actions = store.getActions();
         expect(actions[19].type).to.equal(expectedAction.type);
@@ -671,7 +734,7 @@ describe('THUNK FUNCTIONS', () => {
 
   it('should create GOOGLE_ACCESS when a user signs in', async (done) => {
     const signinResponse = mockData.signupResponse
-    moxios.stubRequest(apiEndPoints.googleAccess, {
+    moxios.stubRequest(googleAccess, {
       status: 200,
       response: signinResponse
     });
@@ -683,7 +746,7 @@ describe('THUNK FUNCTIONS', () => {
 
     const thisstore = mockStore({});
     // Dispatch
-    await store.dispatch(userAcessActions.newGoogleAccess(mockData.userData))
+    await store.dispatch(newGoogleAccess(mockData.userData))
       .then(() => {
         const actions = store.getActions();
         expect(actions[20].type).to.equal(expectedAction.type);

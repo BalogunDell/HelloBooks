@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Loader from '../../userprofile/adminSubComponents/loader';
-import * as userActions from '../../../Actions/userAccessAction';
+import { sendEmail } from '../../../Actions/userAccessAction';
 
 /**
  * @class PasswordResetModal
@@ -137,7 +137,7 @@ export class PasswordResetModal extends React.Component {
 
 export const dispatchToProps = (dispatch) => {
   return {
-    sendEmail: (email) => dispatch(userActions.sendEmail(email))
+    sendEmail: (email) => dispatch(sendEmail(email))
   }
 }
 

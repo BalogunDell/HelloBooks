@@ -150,11 +150,6 @@ const Book = (sequelize, DataTypes) => {
   }, {
     hooks: {
       beforeCreate: (bookInstance) => {
-        // if (bookInstance.isbn.indexOf('#') !== -1) {
-        //   bookInstance = bookInstance.isbn.substring(1);
-        //   bookInstance.isbn = `#${bookInstance.isbn}`;
-        //   return bookInstance;
-        // }
         bookInstance.isbn = `#${bookInstance.isbn}`;
         return bookInstance;
       },

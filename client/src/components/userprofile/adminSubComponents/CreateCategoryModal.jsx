@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Spinner from './loader';
 
-import * as categoryActions from '../../../Actions/categoryAction';
+import { createCategory, getCategories } from '../../../Actions/categoryAction';
 
 export class CreateCategoryModal extends React.Component {
   constructor(props) {
@@ -44,6 +44,8 @@ export class CreateCategoryModal extends React.Component {
     this.setState({loader: true, disableSubmit:true})
     this.props.createCategory({category: this.state.newCategory})
     .then(()=>{
+      // Get the updated categories
+      this.props.getCategories();
       this.setState({loader:false, 
         newCategoryError: '', 
         disableSubmit: true, 
@@ -54,7 +56,7 @@ export class CreateCategoryModal extends React.Component {
     .catch(error => {
       this.setState({
         loader:false, 
-        newCategoryError: error.response.data.message, 
+        newCategoryError: error.response.data.error, 
         disableSubmit: false,
         newCategorySuccessStatus: false,
         newCategoryErrorStatus: true });
@@ -74,10 +76,17 @@ export class CreateCategoryModal extends React.Component {
                 <form onSubmit={this.saveCategory}>
                   <div className="row">
                     <div className="input-field">
-                      <input type="text" name="newCategory" value={this.state.newCategory}
-                      onChange={this.handleInput}
-                      className="validate" required/>
-                      <label htmlFor="isbn" data-error="" data-success="">New Category<span>*</span></label>
+                      <input 
+                        type="text" name="newCategory" 
+                        value={this.state.newCategory}
+                        onChange={this.handleInput}
+                        className="validate"
+                        required
+                        />
+                      <label 
+                        htmlFor="isbn"
+                        data-error=""
+                        data-success="">New Category<span>*</span></label>
                     </div>
                   </div>
       
@@ -112,7 +121,9 @@ export class CreateCategoryModal extends React.Component {
 
                   <div className="row">
                     <div className="input-field center">
-                      <input type="submit" className="btn waves-effect waves-teal" disabled={this.state.disableSubmit}/>
+                      <input type="submit" 
+                        className="btn waves-effect waves-teal" 
+                        disabled={this.state.disableSubmit}/>
                     </div>
                   </div>
                 </form>
@@ -120,7 +131,10 @@ export class CreateCategoryModal extends React.Component {
 
               <div className="modal-footer">
                 <div className="input-field center">
-                  <button className="btn waves-effect waves-teal red modal-action modal-close">Close</button>
+                  <button
+                    className="btn waves-effect waves-teal red modal-action modal-close"
+                    onClick ={this.closeModal}>Close
+                  </button>
                 </div>
               </div>
             </div>
@@ -131,10 +145,16 @@ export class CreateCategoryModal extends React.Component {
   }
 }
 
+export const mapStateToProps = (state) => {
+  return {
+    getCategories: state
+  }
+}
 export const mapDispatchToProps = (dispatch) => {
   return {
-    createCategory: category => dispatch(categoryActions.createCategory(category))
+    createCategory: category => dispatch(createCategory(category)),
+    getCategories: () => dispatch(getCategories())
   }
 }
 
-export default connect(null, mapDispatchToProps)(CreateCategoryModal);
+export default connect(mapStateToProps, mapDispatchToProps)(CreateCategoryModal);

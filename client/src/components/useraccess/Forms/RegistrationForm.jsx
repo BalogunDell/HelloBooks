@@ -6,7 +6,12 @@ import Loading from '../../userprofile/adminSubComponents/loader';
 
 
 
-export const RegistrationForm  = ({ userData, handleSubmit, handleUserInput, error, loading }) => {
+export const RegistrationForm  = ({
+  userData,
+  handleSubmit,
+  handleUserInput,
+  error,
+  loading }) => {
 
   return ( 
     <div className="row">

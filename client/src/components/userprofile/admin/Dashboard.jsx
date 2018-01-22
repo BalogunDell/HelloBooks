@@ -2,9 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import $ from 'jquery';
 
-import SummaryTable from '../adminSubComponents/summaryTable';
-import BooksList from '../adminSubComponents/booksList';
-import * as bookActions from '../../../Actions/booksAction';
+import SummaryTable from '../adminSubComponents/SummaryTable';
+import BooksList from '../adminSubComponents/BooksList';
+import { loadAllbooks } from '../../../Actions/booksAction';
 
 export class Dashboard extends React.Component {
   constructor(props) {
@@ -40,7 +40,7 @@ export const stateToProps = (state, ownProps) => {
 
 export const dispatchToProps = (dispatch) => {
   return {
-    getAllBooks: () => dispatch(bookActions.loadAllbooks()),
+    getAllBooks: () => dispatch(loadAllbooks()),
   }
 } 
 

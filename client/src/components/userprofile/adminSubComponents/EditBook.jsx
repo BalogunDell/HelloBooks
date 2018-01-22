@@ -3,12 +3,16 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
-import * as categoryActions from '../../../Actions/categoryAction';
-import * as bookActions from '../../../Actions/booksAction';
-import AddCategoryModal from './createCategory';
+import { getCategories } from '../../../Actions/categoryAction';
+import {
+  modifyBook,
+  saveImageToCloudinary,
+  savePdfToCloudinary
+} from '../../../Actions/booksAction';
+import AddCategoryModal from './CreateCategoryModal';
 import LoaderText from './loader';
 
-export class EditBookForm extends React.Component {
+export class EditBook extends React.Component {
   constructor(props) {
     super(props);
 
@@ -211,7 +215,7 @@ export class EditBookForm extends React.Component {
     });
     this.props.getCategories().then(() => {
       $('select').material_select();
-      $('select').change(e => this.handleEditInput(e));
+      $('select').change(event => this.handleEditInput(event));
     });
   }
 
@@ -222,14 +226,16 @@ export class EditBookForm extends React.Component {
 
     if(nextProps.imageUrl) {
       this.setState({book: {
-        ...this.state.book, image: nextProps.imageUrl.secure_url
+        ...this.state.book,
+        image: nextProps.imageUrl.secure_url
       }
     });
     } else {
     }
     if(nextProps.pdfUrl) {
       this.setState({book: {
-        ...this.state.book, pdf: nextProps.pdfUrl.secure_url
+        ...this.state.book,
+        pdf: nextProps.pdfUrl.secure_url
       }
     });
     }
@@ -260,7 +266,9 @@ export class EditBookForm extends React.Component {
     event.preventDefault();
     let fileInput = event.target.files[0];
     let fileReader = new FileReader();
-    this.setState({ tempFileName: fileInput, tempFileSize: fileInput.size});
+    this.setState({
+      tempFileName: fileInput,
+      tempFileSize: fileInput.size});
     if(fileInput) {
     fileReader.onload = () => {
       const newUpload = new File([''], fileInput.name);
@@ -271,7 +279,9 @@ export class EditBookForm extends React.Component {
 
   
     render() {
-    const success = <i>Book has been successfully updated<br/><br/>Redirecting to dashboard...</i>
+    const success = <i>Book has been successfully updated<br/>
+                      <br/>Redirecting to dashboard...
+                      </i>
       return (
       <div>
         {this.state.redirect ? <Redirect to ="/user/dashboard"/> : 
@@ -281,51 +291,85 @@ export class EditBookForm extends React.Component {
                 <div className="row">
                   <h5 className="center">Edit book</h5>
                 </div>
-              <form className="create-form" id="handleSubmit" onSubmit={this.handleUpdate} encType="multipart/form-data">
+              <form 
+                className="create-form" 
+                id="handleSubmit" 
+                onSubmit={this.handleUpdate} 
+                encType="multipart/form-data">
                 <div className="input-field">
-                  <input placeholder ={this.state.book.isbn} type="text" name="isbn" id="isbn"
-                  maxLength="6"
-                  value={this.state.book.isbn}
-                   onChange={this.handleEditInput}
-                  disabled
-                  className="validate"
+                  <input 
+                    placeholder ={this.state.book.isbn} 
+                    type="text" 
+                    name="isbn" 
+                    id="isbn"
+                    maxLength="6"
+                    value={this.state.book.isbn}
+                    onChange={this.handleEditInput}
+                    disabled
+                    className="validate"
                   />
-                  <label className="active" htmlFor="isbn" data-error="isbn must be numbers" data-success="">ISBN <span>*</span></label>
+                  <label 
+                    className="active"
+                    htmlFor="isbn"
+                    data-error="isbn must be numbers"
+                    data-success="">ISBN <span>*</span>
+                  </label>
                 </div>
 
                 <div className="row">
                   <div className="input-field col s12 m12 l12">
-                    <input type="text" placeholder={this.state.book.title} id="title" className="validate"
-                    name="title"
-                    minLength="3"
-                    value={this.state.book.title}
-                    onChange={this.handleEditInput}
-                    required />
-                    <label htmlFor="title" data-error="Input is not valid" data-success="">Title<span>*</span></label>
+                    <input 
+                      type="text"
+                      placeholder={this.state.book.title} 
+                      id="title" 
+                      className="validate"
+                      name="title"
+                      minLength="3"
+                      value={this.state.book.title}
+                      onChange={this.handleEditInput}
+                      required />
+                    <label 
+                      htmlFor="title" 
+                      data-error="Input is not valid" 
+                      data-success="">Title<span>*</span>
+                    </label>
                   </div>
                 </div>
 
                 <div className="row">
                   <div className="input-field col s12 m12 l12">
-                    <input type="text" className="validate" placeholder={this.state.author} id="author"
-                    name="author"
-                    minLength="3"
-                    value={this.state.book.author}
-                    onChange={this.handleEditInput}
-                    required />
-                    <label htmlFor="author" data-error="Input is not valid" data-success="">Author<span>*</span></label>
+                    <input 
+                      type="text"
+                      className="validate"
+                      placeholder={this.state.author}
+                      id="author"
+                      name="author"
+                      minLength="3"
+                      value={this.state.book.author}
+                      onChange={this.handleEditInput}
+                      required />
+                    <label
+                      htmlFor="author"
+                      data-error="Input is not valid"
+                      data-success="">Author<span>*</span>
+                    </label>
                   </div>
                 </div>
 
                 <div className="row">
                   <div className="input-field col s12 m12 l6">
                     <label htmlFor="pages">Pages<span>*</span></label>
-                    <input type="number" className="validate" id="Pages" placeholder={this.state.book.pages}
-                    name="pages"
-                    maxLength="4"
-                    value={this.state.book.pages}
-                    onChange={this.handleEditInput}
-                    required />
+                    <input 
+                      type="number"
+                      className="validate"
+                      id="Pages"
+                      placeholder={this.state.book.pages}
+                      name="pages"
+                      maxLength="4"
+                      value={this.state.book.pages}
+                      onChange={this.handleEditInput}
+                      required
+                    />
                   </div>
 
                   <div className="input-field col s12 m12 l6">
@@ -374,11 +418,18 @@ export class EditBookForm extends React.Component {
                       {this.state.book.category.category}
                     </option>
                     { this.state.loadedCategories.map((val, key) => {                  
-                      return (<option key={val.id} value={val.id}>{val.category}</option>)
+                      return (<option 
+                                key={val.id}
+                                value={val.id}>{val.category}
+                              </option>)
                     })
                     }
                   </select>
-                  <a id="newCategory" href="#addCategory" className="modal-trigger">Add new category</a>
+                  <a 
+                    id="newCategory" 
+                    href="#addCategory"
+                    className="modal-trigger">Add new category
+                  </a>
                   </div>
                 </div>
 
@@ -394,7 +445,10 @@ export class EditBookForm extends React.Component {
                       
                     </div>
                     <div className="file-path-wrapper">
-                      <input className="file-path" type="text" placeholder="Upload book image"/>           
+                      <input 
+                        className="file-path"
+                        type="text"
+                        placeholder="Upload book image"/>           
                     </div>
                   </div>
                 </div>
@@ -411,7 +465,10 @@ export class EditBookForm extends React.Component {
                       
                     </div>
                     <div className="file-path-wrapper">
-                      <input className="file-path" type="text" placeholder="Upload book file"/>
+                      <input
+                        className="file-path"
+                        type="text"
+                        placeholder="Upload book file"/>
                     </div>
                   </div>
                 </div>
@@ -420,8 +477,18 @@ export class EditBookForm extends React.Component {
                 <div className="row">
                   <div className="input-field center">
                     { this.state.loader ? <LoaderText/> : null }
-                    { this.state.errorStatus ? <h6 className="red-text">{this.state.error}</h6>: null }
-                    { this.state.successStatus ? <h6 className="green-text">{success}</h6>: null }
+                    { this.state.errorStatus 
+                      ?
+                      <h6 className="red-text">{this.state.error}</h6>
+                      : 
+                      null
+                      }
+                    { this.state.successStatus
+                      ?
+                      <h6 className="green-text">{success}</h6>
+                      :
+                      null
+                      }
                   </div>
                 </div>
               
@@ -461,11 +528,11 @@ function stateToProps(state, ownProps) {
 
 function dispatchToProps(dispatch) {
   return {
-    getCategories: () => dispatch(categoryActions.getCategories()),
-    modifyBook: (bookData) => dispatch(bookActions.modifyBook(bookData)),
-    saveImageToCloudinary: (image) => dispatch(bookActions.saveImageToCloudinary(image)),
-    savePdfToCloudinary: (pdf) => dispatch(bookActions.savePdfToCloudinary(pdf))
+    getCategories: () => dispatch(getCategories()),
+    modifyBook: (bookData) => dispatch(modifyBook(bookData)),
+    saveImageToCloudinary: (image) => dispatch(saveImageToCloudinary(image)),
+    savePdfToCloudinary: (pdf) => dispatch(savePdfToCloudinary(pdf))
   }
 }
 
-export default connect(stateToProps, dispatchToProps)(EditBookForm);
+export default connect(stateToProps, dispatchToProps)(EditBook);

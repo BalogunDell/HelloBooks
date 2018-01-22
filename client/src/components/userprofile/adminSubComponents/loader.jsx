@@ -1,6 +1,6 @@
 import React from 'react';
 
-const loaderText = () => {
+const loader = () => {
   return (
     <div className="preloader-wrapper small active">
       <div className="spinner-layer spinner-green-only">
@@ -17,4 +17,4 @@ const loaderText = () => {
 );
 }
 
-export default loaderText
+export default loader

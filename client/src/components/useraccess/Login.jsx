@@ -7,8 +7,9 @@ import jwt from 'jsonwebtoken';
 import Navbar from '../navbar/Navbar';
 import LoginForm from './Forms/LoginForm';
 import Background from '../Background/Background';
-// import PasswordResetModal from './Forms/PasswordResetModal';
-import * as UserAcessActions from '../../Actions/userAccessAction'; 
+import { 
+  userLogin,
+  newGoogleAccess} from '../../Actions/userAccessAction'; 
 
 /**
  * @class Register
@@ -153,8 +154,8 @@ export const mapStateToProps = (state, ownProps) => {
 
 export const mapDispatchToProps = (dispatch) => {
   return {
-    userLogin: (loginData) => dispatch(UserAcessActions.userLogin(loginData)),
-    googleAccess: (userData) => dispatch(UserAcessActions.newGoogleAccess(userData))
+    userLogin: (loginData) => dispatch(userLogin(loginData)),
+    googleAccess: (userData) => dispatch(newGoogleAccess(userData))
   }
 }
 // ******************************************************//

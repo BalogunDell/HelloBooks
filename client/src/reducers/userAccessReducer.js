@@ -1,8 +1,12 @@
-import * as types from '../Actions/actionTypes';
+import {
+  ADD_USER,
+  LOGIN,
+  SEND_EMAIL,
+  GOOGLE_ACCESS,
+  RESET_PASS
+} from '../Actions/actionTypes';
 
-// reducer for registering users
 /**
- * 
  * 
  * @export userAccessReducer
  * @param { object } [state={}] inital state
@@ -11,31 +15,31 @@ import * as types from '../Actions/actionTypes';
  */
 export default function userAccessReducer(state = {}, action) {
   switch (action.type) {
-    case types.ADD_USER:
+    case ADD_USER:
       return {
         ...state,
         userData: action.userSignupData,
         isAuthenticated: true
       };
     
-    case types.LOGIN:
+    case LOGIN:
       return {
         ...state,
         userData: action.loginData,
         isAuthenticated: true
       };
 
-    case types.GOOGLE_ACCESS:
+    case GOOGLE_ACCESS:
       return {
         userData: action.googleUserData,
         isAuthenticated: true
       };
 
-    case types.SEND_EMAIL:
+    case SEND_EMAIL:
       return {
         ...state, ...action.serverRes
       };
-    case types.RESET_PASS:
+    case RESET_PASS:
       return {
         ...state, ...action.newPassword
       };

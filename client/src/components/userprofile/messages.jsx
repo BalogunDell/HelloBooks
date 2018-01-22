@@ -1,7 +1,7 @@
 import React from 'react';
 
 
-export function successMessage(message){
+const successMessage = (message) => {
   return (
     <div className="successMessage">
     <center>
@@ -14,7 +14,7 @@ export function successMessage(message){
 }
 
 
-export function failureMessage(message) {
+const failureMessage = (message) => {
   return (
   <div className="failureMessage">
     <center>
@@ -27,7 +27,7 @@ export function failureMessage(message) {
   )
 }
 
-export function membershipIconCreator(membershipLevel) {
+const membershipIconCreator = (membershipLevel) => {
   if(!membershipLevel) {
     membershipLevel == 'null'
   }
@@ -54,4 +54,10 @@ export function membershipIconCreator(membershipLevel) {
     default: 
       return 'Not a member'
   }
+}
+
+export {
+  successMessage,
+  failureMessage,
+  membershipIconCreator
 }

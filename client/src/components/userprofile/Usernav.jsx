@@ -2,16 +2,27 @@ import React from 'react';
 import { Link, Redirect} from 'react-router-dom';
 import { connect } from 'react-redux';
 
-const UserNav = ({ userType, navLinks, linkIcons, linkTexts, path, userDetails, handleLogout }) => {
+const UserNav = ({
+  userType,
+  navLinks,
+  linkIcons,
+  linkTexts,
+  path,
+  userDetails,
+  handleLogout }) => {
   return(
     <div>
 
-      <ul className="side-nav fixed" id="userprofile">
+      <ul 
+        className="side-nav fixed" 
+        id="userprofile">
         {/* SHOW APP LOGO AND WELCOME MESSAGE  */}
         <li>
           <div className="user-view">
-            <img src='https://res.cloudinary.com/djvjxp2am/image/upload/v1507971952/hellobooks/hb-logo.png' 
-            className="responsive-img center" alt=""/>
+            <img 
+              src='https://res.cloudinary.com/djvjxp2am/image/upload/v1507971952/hellobooks/hb-logo.png' 
+              className="responsive-img center" alt=""
+            />
           </div>
         </li>
 
@@ -23,26 +34,47 @@ const UserNav = ({ userType, navLinks, linkIcons, linkTexts, path, userDetails, 
         </li>
         <li></li>
         <li>
-          <Link to={`${path}/${linkTexts[0]}`} id="firstLink">
-          {navLinks[0]}<i className="material-icons white-text">{linkIcons[0]}</i>
+          <Link 
+            to={`${path}/${linkTexts[0]}`} 
+            id="firstLink">
+            {navLinks[0]}
+            <i 
+              className="material-icons white-text">{linkIcons[0]}
+            </i>
           </Link>
         </li>
         <li>
-          <Link to={`${path}/${linkTexts[1]}`} id="secondLink">
-          {navLinks[1]}<i className="material-icons white-text">{linkIcons[1]}</i>
+          <Link 
+          to={`${path}/${linkTexts[1]}`} 
+          id="secondLink">{navLinks[1]}
+          <i 
+            className="material-icons white-text">{linkIcons[1]}
+          </i>
           </Link>
         </li>
         <li>
-          <Link to={`${path}/${linkTexts[2]}`} id="thirdLink">
-          {navLinks[2]}<i className="material-icons white-text">{linkIcons[2]}</i>
+          <Link 
+            to={`${path}/${linkTexts[2]}`}
+            id="thirdLink">{navLinks[2]}
+            <i className="material-icons white-text">
+              {linkIcons[2]}
+            </i>
           </Link>
         </li>
         <li>
-          <Link to={`${path}/${linkTexts[3]}`} id="fourthLink">
-          {navLinks[3]}<i className="material-icons white-text">{linkIcons[3]}</i>
+          <Link
+            to={`${path}/${linkTexts[3]}`}
+            id="fourthLink">{navLinks[3]}
+            <i className="material-icons white-text">{linkIcons[3]}
+            </i>
           </Link>
         </li> 
-        <li id="dashboard"><div className="settings white-text">SETTINGS</div></li>
+        <li 
+          id="dashboard">
+          <div 
+            className="settings white-text">INFO
+          </div>
+        </li>
         
         {/* SHOW USER IMAGE, USERNAME AND MEMBERSHIP LEVEL */}
         <li>
@@ -51,20 +83,38 @@ const UserNav = ({ userType, navLinks, linkIcons, linkTexts, path, userDetails, 
             </div>
 
             
-              <span className="white-text username password">Password:*****<i className="material-icons editPass">edit</i></span>
-            <span className="white-text username">Username: {userDetails.username}</span>
+              <span 
+                className="white-text username password">Password:*****
+              </span>
+            <span 
+              className="white-text username">Username: {userDetails.username}
+            </span>
             {userType === 'user'
             ?
-              <span className="white-text email">Membership: {userDetails.membership}</span>
+              <span 
+                className="white-text email">Membership: {userDetails.membership}
+              </span>
               :
               ''
             }
           </div>
         </li>
-        <li><Link to='/login' className="red-text" onClick={handleLogout}><i className="material-icons red-text">logout</i>Logout</Link></li>
+        <li>
+          <Link 
+            to='/login'
+            className="red-text"
+            onClick={handleLogout}>
+            <i className="material-icons red-text">logout
+            </i>Logout
+          </Link>
+        </li>
       </ul>
 
-      <button data-activates="userprofile" className="button-collapse toggle-nav"><i className="material-icons">menu</i></button>
+      <button
+        data-activates="userprofile"
+        className="button-collapse toggle-nav">
+        <i className="material-icons">menu</i>
+      </button>
     </div>
   );
 }

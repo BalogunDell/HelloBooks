@@ -1,5 +1,5 @@
 
-const categoryModel = (sequelize, DataTypes) => {
+const CategoryModel = (sequelize, DataTypes) => {
   const category = sequelize.define('category', {
     category: {
       type: DataTypes.STRING,
@@ -37,4 +37,4 @@ const categoryModel = (sequelize, DataTypes) => {
 
   return category;
 };
-export default categoryModel;
+export default CategoryModel;

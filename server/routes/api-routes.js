@@ -1,8 +1,8 @@
 import express from 'express';
-import userController from '../controller/user';
-import bookController from '../controller/book';
-import Auth from '../middleware/auth';
-import helper from '../middleware/helper';
+import userController from '../controller/User';
+import bookController from '../controller/Book';
+import Auth from '../middleware/Authentication';
+import helper from '../middleware/Helper';
 
 const Router = express.Router();
 

@@ -8,7 +8,7 @@ import jestSnapshot from 'chai-jest-snapshot';
 import expect, { createSpy, spyOn, isSpy } from 'expect'
 import {
     CreateCategoryModal,
-    mapDispatchToProps } from '../../client/src/components/userprofile/adminSubComponents/createCategory';
+    mapDispatchToProps } from '../../client/src/components/userprofile/adminSubComponents/CreateCategoryModal';
 import { initialData, categories } from './mocks/mockdata';
 
 jest.mock('../../client/src/components/HOC/authenticate.jsx');

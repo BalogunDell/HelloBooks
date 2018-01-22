@@ -11,7 +11,7 @@ import {
   UnPublishedBooks,
   mapStateToProps,
   mapDispatchToProps 
-} from '../../client/src/components/userprofile/adminSubComponents/unPublishedBooks';
+} from '../../client/src/components/userprofile/adminSubComponents/UnPublishedBooks';
 
 import { mockBooks, categories, publishedBooksSample } from './mocks/mockdata';
 

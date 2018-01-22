@@ -4,7 +4,7 @@ import { Redirect } from 'react-router-dom';
 
 require('dotenv').config();
 
-export default function authenticateUser(BasicComponent){
+const authenticate = (BasicComponent) => {
 /**
  * 
  * @class authenticate
@@ -52,4 +52,5 @@ export default function authenticateUser(BasicComponent){
   }
 };
 
+export default authenticate;
 

@@ -10,7 +10,7 @@ import expect, { spyOn } from 'expect'
 import {
     SummaryTable,
     stateToProps
-} from '../../client/src/components/userprofile/adminSubComponents/summaryTable';
+} from '../../client/src/components/userprofile/adminSubComponents/SummaryTable';
 
 import { mockBooks , borrowedBookSample } from './mocks/mockdata';
 

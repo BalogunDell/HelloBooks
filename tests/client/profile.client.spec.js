@@ -9,13 +9,13 @@ import {
   Profile,
   mapStateToProps,
   mapDispatchToProps
-} from '../../client/src/components/userprofile/profile';
+} from '../../client/src/components/userprofile/Profile';
 import ProfileInfo from '../../client/src/components/userprofile/profileInfo';
 import { 
   ProfileUpdateForm,
   dispatchToProps,
   stateToProps
- } from '../../client/src/components/userprofile/profileUpdateForm';
+ } from '../../client/src/components/userprofile/ProfileUpdateForm';
 import UpdateImageModal from '../../client/src/components/userprofile/updateImageModal';
 
 import { profile, categories, mockBooks } from './mocks/mockdata';

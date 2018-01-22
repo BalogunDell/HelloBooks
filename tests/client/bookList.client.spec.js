@@ -11,7 +11,7 @@ import {
   BooksList,
   stateToProps,
   dispatchToProps 
-} from '../../client/src/components/userprofile/adminSubComponents/booksList';
+} from '../../client/src/components/userprofile/adminSubComponents/BooksList';
 
 import { 
   mockBooks,

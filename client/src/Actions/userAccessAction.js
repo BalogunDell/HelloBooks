@@ -1,6 +1,17 @@
 import axios from 'axios';
-import * as types from './actionTypes';
-import * as apiRoutes from '../utils/apiEndPoints';
+import {
+  ADD_USER,
+  LOGIN,
+  GOOGLE_ACCESS,
+  RESET_PASS,
+  SEND_EMAIL
+} from './actionTypes';
+import {
+  signup,
+  signin,
+  newPasswordUrl,
+  googleAccess
+} from '../utils/apiEndPoints';
 
 
 // *********************************************************** //
@@ -12,21 +23,21 @@ import * as apiRoutes from '../utils/apiEndPoints';
  * @param { object } userSignupData
  * @returns { object } action type and payload => userSignupData
  */
-export function userSignupSuccessAction(userSignupData) {
+const userSignupSuccessAction = (userSignupData) => {
   return {
-    type: types.ADD_USER,
+    type: ADD_USER,
     userSignupData
   };
-}
+};
 
 /**
  * @export saveNewUser
  * @param { object } userSignupData
  * @returns { object } action type and payload => userSignupData
  */
-export function saveNewUser(userSignupData) {
+const saveNewUser = (userSignupData) => {
   return (dispatch) => {
-    return axios.post(apiRoutes.signup, userSignupData)
+    return axios.post(signup, userSignupData)
       .then((response) => {
         localStorage.setItem('Access-Token', response.data.responseData.token); // eslint-disable-line
         dispatch(userSignupSuccessAction(response.data.responseData));
@@ -35,7 +46,7 @@ export function saveNewUser(userSignupData) {
         throw (errors);
       });
   };
-}
+};
 
 // *********************************************************** //
 // DEFINE ACTION CREATOR AND MAKE API CALL FOR USER SIGNIN**** //
@@ -46,21 +57,21 @@ export function saveNewUser(userSignupData) {
  * @param { object } loginData
  * @returns { object } action type and payload => loginData
  */
-export function userLoginSuccess(loginData) {
+const userLoginSuccess = (loginData) => {
   return {
-    type: types.LOGIN,
+    type: LOGIN,
     loginData
   };
-}
+};
 
 /**
  * @export userLogin
  * @param { object } loginData 
  * @returns { object } axios response
  */
-export function userLogin(loginData) {
+const userLogin = (loginData) => {
   return (dispatch) => {
-    return axios.post(apiRoutes.signin, loginData)
+    return axios.post(signin, loginData)
       .then((response) => {
         localStorage.setItem('Access-Token', response.data.responseData.token); // eslint-disable-line
         dispatch(userLoginSuccess(response.data.responseData));
@@ -69,7 +80,7 @@ export function userLogin(loginData) {
         throw (error);
       });
   };
-}
+};
 
 
 // *********************************************************** //
@@ -81,12 +92,12 @@ export function userLogin(loginData) {
  * @returns { object } type of action and the 
  * payload sending reset password link
  */
-export function sendEmailAction(serverRes) {
+const sendEmailAction = (serverRes) => {
   return {
-    type: types.SEND_EMAIL,
+    type: SEND_EMAIL,
     serverRes
   };
-}
+};
 
 /**
  * 
@@ -94,9 +105,9 @@ export function sendEmailAction(serverRes) {
  * @param { object } userEmail 
  * @returns { object } response reset password link from the server
  */
-export function sendEmail(userEmail) {
+const sendEmail = (userEmail) => {
   return (dispatch) => {
-    return axios.post(`${apiRoutes.newPassword}`, userEmail)
+    return axios.post(`${newPasswordUrl}`, userEmail)
       .then((response) => {
         dispatch(sendEmailAction(response.data));
       })
@@ -104,7 +115,7 @@ export function sendEmail(userEmail) {
         throw (error);
       });
   };
-}
+};
 
 // *********************************************************** //
 // DEFINE ACTION CREATOR AND MAKE API CALL FOR RESET PASSWORD* //
@@ -115,12 +126,12 @@ export function sendEmail(userEmail) {
  * @param { object } uniqueUrl
  * @returns { object } type of action and payload
  */
-export function resetPasswordAction(newPassword) {
+const resetPasswordAction = (newPassword) => {
   return {
-    type: types.RESET_PASS,
+    type: RESET_PASS,
     newPassword
   };
-}
+};
 
 /**
  * @export resetPassword
@@ -128,9 +139,9 @@ export function resetPasswordAction(newPassword) {
  * @param { object } uniqueUrl
  * @returns { object } server response
  */
-export function resetPassword(newPassword, uniqueUrl) {
+const resetPassword = (newPassword, uniqueUrl) => {
   return (dispatch) => {
-    return axios.put(`${apiRoutes.newPassword}/${uniqueUrl}`, newPassword)
+    return axios.put(`${newPasswordUrl}/${uniqueUrl}`, newPassword)
       .then((response) => {
         dispatch(resetPasswordAction(response.data));
       })
@@ -138,7 +149,7 @@ export function resetPassword(newPassword, uniqueUrl) {
         throw (error);
       });
   };
-}
+};
 
 
 // *********************************************************** //
@@ -149,21 +160,21 @@ export function resetPassword(newPassword, uniqueUrl) {
  * @param { object } googleUserData
  * @returns { object } type of action and payload
  */
-export function newGoogleAccessAction(googleUserData) {
+const newGoogleAccessAction = (googleUserData) => {
   return {
-    type: types.GOOGLE_ACCESS,
+    type: GOOGLE_ACCESS,
     googleUserData
   };
-}
+};
 
 /**
  * @export newGoogleAccess
  * @param { object } googleUserData
  * @returns { object } server response
  */
-export function newGoogleAccess(googleUserData) {
+const newGoogleAccess = (googleUserData) => {
   return (dispatch) => {
-    return axios.post(`${apiRoutes.googleAccess}`, googleUserData)
+    return axios.post(`${googleAccess}`, googleUserData)
       .then((response) => {
         localStorage.setItem('Access-Token', response.data.responseData.token); // eslint-disable-line
         dispatch(newGoogleAccessAction(response.data));
@@ -172,4 +183,17 @@ export function newGoogleAccess(googleUserData) {
         throw (error);
       });
   };
-}
+};
+
+export {
+  userSignupSuccessAction,
+  saveNewUser,
+  userLoginSuccess,
+  userLogin,
+  sendEmailAction,
+  sendEmail,
+  resetPasswordAction,
+  resetPassword,
+  newGoogleAccessAction,
+  newGoogleAccess
+};

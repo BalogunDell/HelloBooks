@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const Userdashboard = () => {
+const Dashboard = () => {
     return(
       <div>
         <div className="row">
@@ -23,7 +23,9 @@ const Userdashboard = () => {
             <div>
               <div className="card grey darken-1">
                 <div className="card-content white-text">
-                  <span className="card-title">Total number of books borrowed</span>
+                  <span
+                    className="card-title">Total number of books borrowed
+                  </span>
                  
                     <ul>
                       <li>Last borrowed book</li>
@@ -33,7 +35,8 @@ const Userdashboard = () => {
                     </ul>
                 </div>
                 <div className="card-action black white-text">
-                  <Link to='/user/:id/borrowedbooks'>View all borrowed books</Link>
+                  <Link to='/user/:id/borrowedbooks'>View all borrowed books
+                  </Link>
                 </div>
               </div> 
             </div>
@@ -43,4 +46,4 @@ const Userdashboard = () => {
     );
   }
 
-export default Userdashboard;
+export default Dashboard;

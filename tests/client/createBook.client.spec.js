@@ -11,15 +11,15 @@ import {
   CreateBook,
   mapDispatchToProps,
   mapStateToProps 
-} from '../../client/src/components/userprofile/admin/createBook';
+} from '../../client/src/components/userprofile/admin/CreateBook';
 
 import CreateBookForm from '../../client/src/components/userprofile/adminSubComponents/createBookForm';
 
-import { CreateCategoryModal } from '../../client/src/components/userprofile/adminSubComponents/createCategory';
+import { CreateCategoryModal } from '../../client/src/components/userprofile/adminSubComponents/CreateCategoryModal';
 import { initialData, categories } from './mocks/mockdata';
 
 jest.mock('../../client/src/components/HOC/authenticate.jsx');
-jest.mock('../../client/src/components/userprofile/adminSubComponents/createCategory.jsx');
+jest.mock('../../client/src/components/userprofile/adminSubComponents/CreateCategoryModal.jsx');
 jest.mock('react-router-dom');
 
 

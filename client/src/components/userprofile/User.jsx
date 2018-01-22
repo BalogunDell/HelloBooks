@@ -8,18 +8,24 @@ import getUserDetails from '../../utils/getUserInfo';
 import Allbooks from './Allbooks/Allbooks';
 import UserDashboard from './Dashboard';
 import UserHistory from './History';
-import BookDetails from './bookDetails';
+import BookDetails from './BookDetails';
 import Borrowedbooks from './Borrowedbooks';
-import Profile from './profile';
+import Profile from './Profile';
 import AdminDashboard from './admin/Dashboard';
-import CreateBook from './admin/createBook';
+import CreateBook from './admin/CreateBook';
 import EditBook from './adminSubComponents/EditBook';
-import UnpublishedList from './adminSubComponents/unPublishedBooks';
-import * as userNavLinks from './userNavLinks';
+import UnpublishedList from './adminSubComponents/UnPublishedBooks';
+import {
+  userLinks,
+  userLinkIcons,
+  userLinkText,
+  adminLinks,
+  adminLinkIcons,
+  adminLinkText
+} from './userNavLinks';
 import UserNav from './Usernav';
 import AuthenticateUser from '../HOC/authenticate';
-import * as UserActions from '../../Actions/userProfileAction';
-import * as bookActions from '../../Actions/booksAction';
+import { fetchUserTrigger } from '../../Actions/userProfileAction';
 
 
 
@@ -88,9 +94,9 @@ export class User extends React.Component {
     this.userType = getUserDetails().userType;
 
     // Assign link values based on usertype
-    this.navLinks = this.userType === 'user' ?  userNavLinks.userLinks: userNavLinks.adminLinks
-    this.linkIcons = this.userType === 'user' ? userNavLinks.userLinkIcons: userNavLinks.adminLinkIcons
-    this.linkTexts = this.userType === 'user' ? userNavLinks.userLinkText: userNavLinks.adminLinkText
+    this.navLinks = this.userType === 'user' ?  userLinks : adminLinks
+    this.linkIcons = this.userType === 'user' ? userLinkIcons: adminLinkIcons
+    this.linkTexts = this.userType === 'user' ? userLinkText: adminLinkText
 
   }
 
@@ -137,24 +143,60 @@ export class User extends React.Component {
               <div className="col s12 m12 l12 offset-l1">
                 {this.userType == 'user' ?
                   <div className="content-display">
-                    <Route path="/user/dashboard" component={AuthenticateUser(UserDashboard)}/> 
-                    <Route path="/user/profile" component={AuthenticateUser(Profile)}/>
-                    <Route path="/user/books" render={() =><Allbooks
-                    getBookId = {this.getBookId}/>}/>  
-                    <Route path="/user/bookdetails" render={() => <BookDetails book_id = {this.state.book_id}/>}/>
-                    <Route path="/user/history" render ={()=> <UserHistory userID = {this.userID}/>}/> 
-                    <Route path="/user/borrowedbooks" render={() => <Borrowedbooks userID ={this.userID}/> }/>
+                    <Route 
+                      path="/user/dashboard"
+                      component={AuthenticateUser(UserDashboard)}
+                    /> 
+                    <Route 
+                      path="/user/profile"
+                      component={AuthenticateUser(Profile)}
+                    />
+                    <Route
+                      path="/user/books"
+                      render={() =><Allbooks
+                        getBookId = {this.getBookId}/>}
+                      />  
+                    <Route
+                      path="/user/bookdetails"
+                      render={() => <BookDetails book_id = {this.state.book_id}/>}
+                    />
+                    <Route
+                      path="/user/history"
+                      render ={()=> <UserHistory userID = {this.userID}/>}
+                    /> 
+                    <Route 
+                      path="/user/borrowedbooks"
+                      render={() => <Borrowedbooks userID ={this.userID}/> }
+                    />
                   </div>
                 :
                   <div className="content-display">
                     {/* <h4>Welcome to Hello books</h4> */}
-                    <Route path="/user/dashboard" component={AuthenticateUser(AdminDashboard)}/>
-                    <Route path="/user/books" render={() => <Allbooks  
-                     getBookId = {this.getBookId}/>}/>
-                    <Route path="/user/upload" component={AuthenticateUser(CreateBook)}/> 
-                    <Route path="/user/bookdetails" render={() => <BookDetails book_id = {this.state.book_id}/>}/>
-                    <Route path="/user/editbook" component={AuthenticateUser(EditBook)}/>
-                    <Route path="/user/deletedbooks" component={AuthenticateUser(UnpublishedList)}/>
+                    <Route
+                      path="/user/dashboard" 
+                      component={AuthenticateUser(AdminDashboard)}
+                    />
+                    <Route
+                      path="/user/books"
+                      render={() => <Allbooks  
+                        getBookId = {this.getBookId}/>}
+                    />
+                    <Route
+                      path="/user/upload"
+                      component={AuthenticateUser(CreateBook)}
+                    /> 
+                    <Route
+                      path="/user/bookdetails"
+                      render={() => <BookDetails book_id = {this.state.book_id}/>}
+                    />
+                    <Route
+                      path="/user/editbook"
+                      component={AuthenticateUser(EditBook)}
+                    />
+                    <Route
+                      path="/user/deletedbooks"
+                      component={AuthenticateUser(UnpublishedList)}
+                    />
                   </div>
                 }
               </div>
@@ -180,7 +222,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    userProfile: (userID) => dispatch(UserActions.fetchUserTrigger(userID)),
+    userProfile: (userID) => dispatch(fetchUserTrigger(userID)),
   }
 }
 

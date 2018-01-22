@@ -2,7 +2,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import $ from 'jquery';
 
-import * as bookActions from '../../Actions/booksAction';
+import {
+  getUserBooks,
+  returnBook
+} from '../../Actions/booksAction';
 import AllUserBooksComp from './tableRows/allUserBooks';
 import AuthenticateUser from '../HOC/authenticate';
 /* @class History
@@ -168,8 +171,8 @@ export const mapStateToProps = (state, ownProps) => {
 
 export const mapDispatchToProps = (dispatch) => {
   return {
-    getUserBooks: (userid) => dispatch(bookActions.getUserBooks(userid)),
-    returnBook: (bookid) => dispatch(bookActions.returnBook(bookid))
+    getUserBooks: (userid) => dispatch(getUserBooks(userid)),
+    returnBook: (bookid) => dispatch(returnBook(bookid))
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(History);

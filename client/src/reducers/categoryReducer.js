@@ -1,4 +1,7 @@
-import * as types from '../Actions/actionTypes';
+import {
+  CREATE_CATEGORY,
+  GET_CATEGORIES,
+} from '../Actions/actionTypes';
 
 /**
  * @export createCategoryReducer
@@ -8,11 +11,11 @@ import * as types from '../Actions/actionTypes';
  */
 export default function createCategoryReducer(state = {}, action) {
   switch (action.type) {
-    case types.CREATE_CATEGORY:
+    case CREATE_CATEGORY:
       return {
         ...state, category: action.category
       };
-    case types.GET_CATEGORIES:
+    case GET_CATEGORIES:
       return {
         ...state, categories: action.fetchedCategories
       };
