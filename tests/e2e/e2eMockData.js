@@ -10,11 +10,11 @@ const userLoginData = {
       password: 'fakePassword'
   },
   fakeData3: {
-      username: 'Fred1',
+      username: 'abbey3',
       password: 'password'
   },
   fakeData4: {
-    username: 'adminUsername22',
+    username: 'adminusername',
     password: 'password'
   }
 };

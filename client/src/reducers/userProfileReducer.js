@@ -8,11 +8,13 @@ import {
  * 
  * 
  * @export fetchUserReducer
- * @param { object } [state={}] inital state
+ * 
+ * @param { object } state inital state
  * @param { object } action action type and payload
+ * 
  * @returns { object } action performed and payload of the action
  */
-export default function fetchUserReducer(state = {}, action) {
+const fetchUserReducer = (state = {}, action) => {
   switch (action.type) {
     case FETCH_USER:
       return {
@@ -29,4 +31,7 @@ export default function fetchUserReducer(state = {}, action) {
     default:
       return state;
   }
-}
+};
+
+export default fetchUserReducer;
+

@@ -11,7 +11,7 @@ import {
   UnPublishedBooks,
   mapStateToProps,
   mapDispatchToProps 
-} from '../../client/src/components/userprofile/adminSubComponents/UnPublishedBooks';
+} from '../../client/src/components/Userprofile/AdminSubComponents/UnPublishedBooks';
 
 import { mockBooks, categories, publishedBooksSample } from './mocks/mockdata';
 
@@ -61,7 +61,6 @@ describe('Unpublished Book Component', () => {
   it('should render without crashing', () => {
     expect(wrapper.find('.books-holder-title').length).toBe(1);
     expect(wrapper.find('div').length).toBe(7);
-    expect(wrapper.find('.unpublished').length).toBe(1);
   });
 
   it('should test the method: handlePublish', () => {

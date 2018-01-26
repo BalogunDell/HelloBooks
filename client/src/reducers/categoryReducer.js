@@ -11,10 +11,11 @@ import {
  */
 export default function createCategoryReducer(state = {}, action) {
   switch (action.type) {
-    case CREATE_CATEGORY:
+    case CREATE_CATEGORY: {
       return {
-        ...state, category: action.category
+        ...state, categories: [{ ...action.category.payload }]
       };
+    }
     case GET_CATEGORIES:
       return {
         ...state, categories: action.fetchedCategories

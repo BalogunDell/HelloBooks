@@ -54,11 +54,13 @@ import {
   editBookResponse,
   unpublishedBooks,
   publishedBooks,
-  mocktrendingBook,
+  mocktrendingBooks,
   profile,
   updatedProfile,
   saveImagerResponse,
-  categories
+  categories,
+  sampleCats,
+  trendingBooksMock
 } from './mocks/mockdata';
 
 import {
@@ -226,26 +228,19 @@ describe('Books Reducer', () => {
   });
 
   it('should return a new state when EDIT BOOK action is dispatched', () => {
-    const newState = booksReducer(initialState, modifyBookAction(editBookResponse));
-    expect(newState.modifiedBook).to.equal(editBookResponse);
-    expect(newState.modifiedBook).to.have.property('message');
-    expect(newState.modifiedBook.message).to.equal(editBookResponse.message);
-    expect(newState.modifiedBook).to.have.property('data');
-    expect(newState.modifiedBook.data).to.be.an('object');
-    expect(newState.modifiedBook.data).to.have.property('visibility');
-    expect(newState.modifiedBook.data).to.have.property('isbn');
-    expect(newState.modifiedBook.data).to.have.property('id');
-    expect(newState.modifiedBook.data).to.have.property('title');
-    expect(newState.modifiedBook.data).to.have.property('author');
-    expect(newState.modifiedBook.data).to.have.property('pages');
-    expect(newState.modifiedBook.data).to.have.property('year');
-    expect(newState.modifiedBook.data).to.have.property('description');
-    expect(newState.modifiedBook.data).to.have.property('quantity');
-    expect(newState.modifiedBook.data).to.have.property('categoryid');
-    expect(newState.modifiedBook.data).to.have.property('image');
-    expect(newState.modifiedBook.data).to.have.property('pdf');
-    expect(newState.modifiedBook.data).to.have.property('updatedAt');
-    expect(newState.modifiedBook.data).to.have.property('createdAt');
+    const newState = booksReducer(mockBooks, modifyBookAction(publishedBooks));
+    expect(newState.books[0].id).to.equal(publishedBooks.id);
+    expect(newState.books[0].author).to.equal(publishedBooks.author);
+    expect(newState.books[0].pages).to.equal(publishedBooks.pages);
+    expect(newState.books[0].title).to.equal(publishedBooks.title);
+    expect(newState.books[0].quantity).to.equal(publishedBooks.quantity);
+    expect(newState.books[0].visibility).to.equal(publishedBooks.visibility);
+    expect(newState.books[0].categoryid).to.equal(publishedBooks.categoryid);
+    expect(newState.books[0].description).to.equal(publishedBooks.description);
+    expect(newState.books[0].image).to.equal(publishedBooks.image);
+    expect(newState.books[0].pdf).to.equal(publishedBooks.pdf);
+    expect(newState.books[0].isbn).to.equal(publishedBooks.isbn);
+    expect(newState.books[0].updatedAt).to.equal(publishedBooks.updatedAt);
   });
 
   it('should return a new state when DELETE BOOK action is dispatched', () => {
@@ -323,20 +318,18 @@ describe('Books Reducer', () => {
   });
 
   it('should return a new state with TRENDING_BOOKS action', () => {
-    const newState = booksReducer(initialState, trendingBooksAction(mocktrendingBook));
-    expect(newState.trendingBooks[0]).to.have.property('isbn');
-    expect(newState.trendingBooks[0]).to.have.property('id');
-    expect(newState.trendingBooks[0]).to.have.property('title');
-    expect(newState.trendingBooks[0]).to.have.property('author');
-    expect(newState.trendingBooks[0]).to.have.property('pages');
-    expect(newState.trendingBooks[0]).to.have.property('year');
-    expect(newState.trendingBooks[0]).to.have.property('description');
-    expect(newState.trendingBooks[0]).to.have.property('quantity');
-    expect(newState.trendingBooks[0]).to.have.property('categoryid');
-    expect(newState.trendingBooks[0]).to.have.property('image');
-    expect(newState.trendingBooks[0]).to.have.property('pdf');
-    expect(newState.trendingBooks[0]).to.have.property('updatedAt');
-    expect(newState.trendingBooks[0]).to.have.property('createdAt');
+    const newState = booksReducer(initialState, trendingBooksAction(trendingBooksMock));
+    expect(newState.books[0]).to.have.property('isbn');
+    expect(newState.books[0]).to.have.property('id');
+    expect(newState.books[0]).to.have.property('title');
+    expect(newState.books[0]).to.have.property('author');
+    expect(newState.books[0]).to.have.property('pages');
+    expect(newState.books[0]).to.have.property('description');
+    expect(newState.books[0]).to.have.property('quantity');
+    expect(newState.books[0]).to.have.property('categoryid');
+    expect(newState.books[0]).to.have.property('image');
+    expect(newState.books[0]).to.have.property('updatedAt');
+    expect(newState.books[0]).to.have.property('createdAt');
   });
 
   it('should return the state when no action is passed', () => {
@@ -401,25 +394,6 @@ describe('User Profile Reducer', () => {
 
   it('should return the state when no action is passed', () => {
     const newState = userProfile(initialState, 'default');
-    expect(newState).to.be.an('object');
-    expect(newState).to.be.empty;
-  });
-});
-
-describe('Category Reducer', () => {
-  it('should return a new state when CREATE_CATEGORY is triggered', () => {
-    const newState = categoryReducer(initialState, createCategoryAction({category: 'People'}));
-    expect(newState.category.category).to.equal('People');
-  });
-
-  it('should return the state when no action is passed', () => {
-    const newState = categoryReducer(initialState, getCategoriesAction(categories));
-    expect(newState.categories[0].id).to.equal(categories[0].id);
-    expect(newState.categories[0].category).to.equal(categories[0].category);
-  });
-
-  it('should return the state when no action is passed', () => {
-    const newState = categoryReducer(initialState, 'default');
     expect(newState).to.be.an('object');
     expect(newState).to.be.empty;
   });

@@ -11,15 +11,14 @@ import {
   CreateBook,
   mapDispatchToProps,
   mapStateToProps 
-} from '../../client/src/components/userprofile/admin/CreateBook';
+} from '../../client/src/components/Userprofile/Admin/CreateBook';
 
-import CreateBookForm from '../../client/src/components/userprofile/adminSubComponents/createBookForm';
+import CreateBookForm from '../../client/src/components/Userprofile/AdminSubComponents/CreateBookForm';
 
-import { CreateCategoryModal } from '../../client/src/components/userprofile/adminSubComponents/CreateCategoryModal';
+jest.mock('../../client/src/components/Userprofile/AdminSubComponents/CreateCategoryModal');
 import { initialData, categories } from './mocks/mockdata';
 
 jest.mock('../../client/src/components/HOC/authenticate.jsx');
-jest.mock('../../client/src/components/userprofile/adminSubComponents/CreateCategoryModal.jsx');
 jest.mock('react-router-dom');
 
 
@@ -134,7 +133,7 @@ describe('renders Create Book Component and create category', () => {
       imageWidth: 150, 
     });
     form.simulate('submit', event);
-    expect(wrapper.instance().state.error).toBe('Image is too small. Allowed dimension is 300 x 250 pixels.');
+    expect(wrapper.instance().state.errorMessage).toBe('Image is too small. it should 300 x 250 pixels.');
   });
 
   it('should not save book if the image size is higher than expected', () => {
@@ -151,7 +150,7 @@ describe('renders Create Book Component and create category', () => {
       imageWidth: 150
     });
     form.simulate('submit', event);
-    expect(wrapper.instance().state.error).toBe('Image is too small. Allowed dimension is 300 x 250 pixels.');
+    expect(wrapper.instance().state.errorMessage).toBe('Image is too small. it should 300 x 250 pixels.');
   });
 
 
@@ -169,7 +168,7 @@ describe('renders Create Book Component and create category', () => {
       imageWidth: 450
     });
     form.simulate('submit', event);
-    expect(wrapper.instance().state.error).toBe('File too large, Only 10MB or less is allowed.');
+    expect(wrapper.instance().state.errorMessage).toBe('File too large, Only 10MB or less is allowed.');
   });
   
   it('should pass on to the next condition if the main conditions are met', () => {
@@ -234,7 +233,7 @@ describe('renders Create Book Component and create category', () => {
   it('ensures that mapStateToProps dispatches the specified actions', () => {
     const state = {
     initialData,
-    createCategory: {},
+    loadedCategories: {},
     uploadFiles: '',
     uploadFiles: '',
     }
@@ -265,7 +264,7 @@ describe('Create Book Form', () => {
   }
   it('renders the create book form without crashing', () => {
     const wrapper = shallow(<CreateBookForm { ...props }/>);
-    expect(wrapper.find('div').length).toBe(26);
+    expect(wrapper.find('div').length).toBe(25);
     expect(wrapper.find('.createBookForm').length).toBe(1);
     expect(wrapper.find('.create-book').length).toBe(1);
     expect(wrapper.find('.create-form').length).toBe(1);

@@ -11,9 +11,9 @@ import {
     Allbooks,
     mapStateToProps,
     mapDispatchToProps,
- } from '../../client/src/components/userprofile/Allbooks/Allbooks';
+ } from '../../client/src/components/Userprofile/Allbooks/Allbooks';
 
- import AllUserBooks from '../../client/src/components/userprofile/tableRows/allUserBooks';
+ import UserBooks from '../../client/src/components/Userprofile/TableRows/UserBooks';
 
 import { mockBooks, borrowedBookSample } from './mocks/mockdata';
 jest.mock('../../client/src/components/HOC/authenticate.jsx');
@@ -55,10 +55,8 @@ const wrapper = shallow(<Allbooks {...minProps}/>);
 describe('All Books', () => {
   it('should render without crashing', () => {
     const wrapper = shallow(<Allbooks {...minProps}/>);
-    expect(wrapper.find('div').length).toBe(7);
+    expect(wrapper.find('div').length).toBe(3);
     expect(wrapper.find('h1').length).toBe(1);
-    expect(wrapper.find('h4').length).toBe(1);
-    expect(wrapper.find('h6').length).toBe(1);
   });
 
   it('should test getbookid method', () => {
@@ -102,7 +100,7 @@ describe('All Books', () => {
   });
 });
 
-describe('All User Books', () => {
+describe('User Books', () => {
   const minProps = {
     allUserBooks: borrowedBookSample,
     getRowKey: '',
@@ -111,9 +109,8 @@ describe('All User Books', () => {
     books: mockBooks.books,
     bookLength: 0
   }
-  const wrapper = shallow(<AllUserBooks {...minProps}/>)
+  const wrapper = shallow(<UserBooks {...minProps}/>)
   it('renders the all userbooks component without crashing', () => {
-    expect(wrapper.find('div').length).toBe(2);
-    expect(wrapper.find('.custom-text').length).toBe(1);
+    expect(wrapper.find('div').length).toBe(1);
   });
 });

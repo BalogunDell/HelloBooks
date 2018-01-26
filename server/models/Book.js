@@ -119,7 +119,7 @@ const Book = (sequelize, DataTypes) => {
       allowNull: false,
       defaultValue: true
     },
-    image: {
+    imageUrl: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
@@ -133,7 +133,7 @@ const Book = (sequelize, DataTypes) => {
         }
       }
     },
-    pdf: {
+    pdfUrl: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {

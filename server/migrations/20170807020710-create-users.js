@@ -39,11 +39,11 @@ module.exports = {
         defaultValue: 'user'
       },
 
-      image: {
+      imageUrl: {
         type: Sequelize.STRING
       },
 
-      passurl: {
+      passwordReseturl: {
         type: Sequelize.STRING,
         allowNull: true
       },

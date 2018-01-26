@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import ConfirmationModal from './confirmationModal';
+import ConfirmationModal from './ConfirmationModal';
 import {
   loadAllbooks,
   getAdminEditBookId,
@@ -10,9 +10,16 @@ import {
   getAllBorrowedBooks
 
 } from '../../../Actions/booksAction';
-import BorrowedbookTable from './borrowedbooksTable';
-import PublishedBooks from './publishedBooks';
+import BorrowedbookTable from './BorrowedbooksTable';
+import PublishedBooks from './PublishedBooks';
 
+/**
+  * @class BooksList
+ * 
+ *  @export BooksList Component
+ * 
+ * @extends {React.Component}
+ */
 export class BooksList extends React.Component {
   constructor(props) {
     super(props);
@@ -55,23 +62,28 @@ export class BooksList extends React.Component {
     
   }
 
-  /**
-   * 
-   * @param {object} event 
-   * @return { object } component state
-   */
+/**
+ * handleBookEdit
+ * 
+ * @param {object} event 
+ * 
+ * @return { object } component state
+ */
   handleBookEdit(event) {
     event.persist();
-    let filteredBook = this.state.allbooks.filter((book, index) => index == event.target.dataset.index);
+    let filteredBook = this.state.allbooks
+      .filter((book, index) => index == event.target.dataset.index);
     
     localStorage.setItem('index', JSON.stringify(filteredBook));
     this.props.getAdminEditBookId(filteredBook);
   }
-  /**
-   * 
-   * @param {any} event 
-   * @returns event value
-   */
+/**
+ * handleSelectChange
+ * 
+ * @param {object} event
+ * 
+ * @returns event value
+ */
   handleSelectChange(event) {
     this.setState({selectedValue: event.target.value});
     
@@ -86,8 +98,11 @@ export class BooksList extends React.Component {
     });
     
     } else if(this.state.selectedValue === 'booksreturned') {
-      this.setState({fetchedborrowedbooks: this.state.borrowedBooksFilterable});
-      let returnedbooks = this.state.borrowedBooksFilterable.filter(book=> book.returnstatus === true);
+      this.setState({
+        fetchedborrowedbooks: this.state.borrowedBooksFilterable
+      });
+      let returnedbooks = this.state.borrowedBooksFilterable
+        .filter(book=> book.returnstatus === true);
       this.setState({fetchedborrowedbooks: returnedbooks,
       all: false,
       mostRead: false,
@@ -97,7 +112,8 @@ export class BooksList extends React.Component {
       });
     } else if(this.state.selectedValue === 'pendingreturn') {
       this.setState({fetchedborrowedbooks: this.state.borrowedBooksFilterable});
-      let unreturned = this.state.borrowedBooksFilterable.filter(book=> book.returnstatus === false);
+      let unreturned = this.state.borrowedBooksFilterable
+        .filter(book=> book.returnstatus === false);
       this.setState({fetchedborrowedbooks: unreturned,
       all: false,
       mostRead: false,
@@ -108,22 +124,24 @@ export class BooksList extends React.Component {
     }
   }
 
-  /**
-   * 
-   * @param { object } event 
-   * @return { object } component state
-   */
+/**
+ * handleBookDelete
+ * 
+ * @param { object } event 
+ * 
+ * @return { object } component state
+ */
   handleBookDelete(event) {
    this.setState({
      bookId: event.target.value,
       bookIndex: event.target.dataset.index});
   }
 
-  /**
-   * 
-   * @param { object } event 
-   * @return { object } component state
-   */
+/**
+ * handleDeleteCancel
+ * 
+ * @return { object } component state
+ */
   handleDeleteCancel() {
     this.setState({
       error: '',
@@ -135,13 +153,15 @@ export class BooksList extends React.Component {
       disabled: false,
     });
   }
-  /**
-   * 
-   * 
-   * @returns an object which is the state
-   */
+ 
+/**
+ * deleteBookTrigger
+ * 
+ * @memberof BooksList
+ * 
+ * @returns {object}
+ */
   deleteBookTrigger() {
-     // Set neccessary state before action
      this.setState({
         loader:true,
         disabled: false,
@@ -149,10 +169,10 @@ export class BooksList extends React.Component {
         deleteErrorSuccess: false,
         errorMessage: ''});
 
-    // Make call to api, delete book and update interface
     this.props.deleteBook(this.state.bookId)
     .then(() => {
-      const result = this.state.allbooks.filter(book => book.id != this.state.bookId );
+      const result = this.state.allbooks
+        .filter(book => book.id != this.state.bookId );
       this.setState({allbooks: result,
         deleteErrorSuccess: true,
         deleteErrorStatus: false,
@@ -186,6 +206,13 @@ export class BooksList extends React.Component {
     })
   }
 
+/**
+ * componentDidMount
+ * 
+ * @memberof BooksList
+ * 
+ * @returns {object}
+ */
   componentDidMount() {
     $(document).ready(() => {
       $('select').material_select();
@@ -195,11 +222,19 @@ export class BooksList extends React.Component {
         opacity: 0.3
       });
     });
-    // Fetch all borrowed books
     this.props.getAllBorrowedBooks();
 
   }
 
+/**
+ * componentWillReceiveProps
+ * 
+ * @param {object} nextProps
+ * 
+ * @memberof BooksList
+ * 
+ * @returns {object}
+ */
   componentWillReceiveProps(nextProps) {
     if(nextProps.loadAllbooks) {
       this.setState({
@@ -215,22 +250,27 @@ export class BooksList extends React.Component {
     }
   }
 
-
-  render() {
-
+/**
+ * Render method 
+ * 
+ * @memberof BooksList
+ * 
+ * @returns {JSX}
+ */
+render() {
   return(
     <div>
       <div className=" row selectFilter">
-          <label>Filter table</label>
-          <select 
-            id="booksToDisplay" 
-            onChange = {this.handleSelectChange}
-            value={this.state.selectedValue}>
-            <option value="allbooks">All books</option>
-            <option value="booksreturned">Books Returned</option>
-            <option value="pendingreturn">Pending Return</option>
+        <label>Filter table</label>
+        <select 
+          id="booksToDisplay" 
+          onChange = {this.handleSelectChange}
+          value={this.state.selectedValue}>
+          <option value="allbooks">All books</option>
+          <option value="booksreturned">Books Returned</option>
+          <option value="pendingreturn">Pending Return</option>
 
-          </select>
+        </select>
       </div>
       
       <div className="bookslist">
@@ -263,14 +303,14 @@ export class BooksList extends React.Component {
 }
 }
 
-export function stateToProps(state, ownProps) {
+export const stateToProps = (state, ownProps) => {
   return {
     loadAllbooks: state.books.books,
     borrowedBooks: state.books.allborrowedbooks
   }
 }
 
-export function dispatchToProps(dispatch) {
+export const dispatchToProps = (dispatch) => {
   return {
     getAllBooks: () => dispatch(loadAllbooks()),
     getAdminEditBookId: (id) => dispatch(getAdminEditBookId(id)),

@@ -9,17 +9,19 @@ require('dotenv').config();
 const userModel = model.user;
 const borrowedBookModel = model.borrowedbook;
 const bookModel = model.book;
-
+ 
 
 /**
  * @class User
- *@classdesc creates a class User
+ * 
+ * @classdesc creates a class User
  */
 class User {
   /**
-   * @param { object } req
-   * @param { object } res
-   * @returns { void }
+   * @param { object } req - request object
+   * @param { object } res - response object
+   * 
+   * @returns { object } server response 
    */
   static signup(req, res) {
     userModel.create(req.body)
@@ -27,11 +29,13 @@ class User {
         const token = helper.generateToken(user.dataValues);
         res.status(201).json({ responseData: {
           message: 'User created',
-          username: user.username,
-          userID: user.id,
-          userRole: user.role,
-          image: user.image,
-          token
+          token,
+          user: {
+            username: user.username,
+            userID: user.id,
+            userRole: user.role,
+            imageUrl: user.imageUrl,
+          }
         }
         });
       })
@@ -45,15 +49,18 @@ class User {
             res.status(400).json({ error: messageObject.error });
             break;
           default:
-            res.status(501).json({ error: messageObject.error });
+            res.status(501).json({
+              error: 'The server could not process your request at this time'
+            });
         }
       });
   }
 
   /**
-   * @param { object } req
-   * @param { object} res
-   * @returns { object } response
+   * @param { object } req - request object
+   * @param { object} res  - response object
+   * 
+   * @returns { object } user data with token
    */
   static newGoogleAccess(req, res) {
     userModel.findOne({ where:
@@ -67,29 +74,35 @@ class User {
           const responseData = {
             message: 'signed in',
             token,
-            username: response.dataValues.username,
-            userID: response.dataValues.id,
-            userRole: response.dataValues.role,
-            image: response.dataValues.image };
+            user: {
+              username: response.dataValues.username,
+              userID: response.dataValues.id,
+              userRole: response.dataValues.role,
+              imageUrl: response.dataValues.imageUrl
+            } };
           return res.status(200).json({ responseData });
         }
         return User.signup(req, res);
       })
-      .catch((error) => {
-        return error;
+      .catch(() => {
+        return res.status(500)
+          .json({
+            error: 'Internal server error'
+          });
       });
   }
 
   /**
-   * @param { object } req
-   * @param { object} res
-   * @returns { object } response
+   * @param { object } req - request object
+   * @param { object} res  - response object
+   * 
+   * @returns { object } user data with token 
    */
   static signin(req, res) {
-    if (!req.body.username || !req.body.password) {
-      return res.status(400).json({ message: 'Provide your username and password to login' });
+    return userModel.findOne({ where: {
+      username: req.body.username
     }
-    return userModel.findOne({ where: { username: req.body.username } })
+    })
       .then((user) => {
         if (user !== null
           &&
@@ -98,111 +111,130 @@ class User {
           const responseData = {
             message: 'signed in',
             token,
-            username: user.username,
-            userID: user.id,
-            userRole: user.role,
-            image: user.image };
+            user: {
+              username: user.username,
+              userID: user.id,
+              userRole: user.role,
+              imageUrl: user.imageUrl
+            }
+          };
           return res.status(200).json({ responseData });
         }
-        return res.status(404).json({ message: 'Invalid username or password' });
+        return res.status(401).json({
+          message: 'Invalid username or password'
+        });
       })
-      .catch(() => {
-        res.status(501).json({ message: 'Invalid username or password' });
+      .catch((error) => {
+        const messageObject = errorMessages(error);
+        switch (messageObject.type) {
+          case 'validationError':
+            res.status(400).json({
+              error: messageObject.error
+            });
+            break;
+          default:
+            res.status(500).json({
+              error: 'Internal server error'
+            });
+        }
       });
   }
 
   /**
-   * @param { object } req
-   * @param { object } res
-   * @returns { object } generated url for password reset
+   * @param { object } req  - request object
+   * @param { object } res  - response object
+   * 
+   * @returns { object }  - generated url for password reset
    */
   static generateResetPassUrl(req, res) {
-    if (!req.body.email) {
-      res.status(400).json({ message: 'Your registered email is required' });
-    } else {
-      const lastWord = req.body.email.substring(req.body.email.lastIndexOf('.') + 1);
-      const dotPosition = req.body.email.lastIndexOf('.');
-      const atPosition = req.body.email.indexOf('@');
-      if (lastWord.length < 2 || dotPosition < atPosition || atPosition === -1) {
-        res.status(400).json({ message: 'Invalid email' });
-      } else {
-        userModel.findOne({ where: { email: req.body.email } })
-          .then((response) => {
-            if (response) {
-              const resetPassUrl = helper.urlGenerator(12, process.env.CHARACTERS);
-              userModel.update({ passurl: resetPassUrl }, { where:
-                { email: req.body.email } })
-                .then(() => {
-                  helper.generateMail(req.body.email, resetPassUrl)
-                    .then((mailerResponse) => {
-                      if (mailerResponse.accepted[0] === req.body.email) {
-                        res.status(201).json({
-                          message: 'A link for password reset has been sent to your email',
-                          url: resetPassUrl });
-                      }
-                    })
-                    .catch((mailerError) => {
-                      res.status(501).json({ message: mailerError });
-                    });
+    userModel.findOne({ where: { email: req.body.email } })
+      .then((response) => {
+        if (response) {
+          const resetPassUrl = helper.urlGenerator(12, process.env.CHARACTERS);
+          userModel.update({ passwordReseturl: resetPassUrl }, { where:
+            { email: req.body.email } })
+            .then(() => {
+              helper.generateMail(req.body.email, resetPassUrl)
+                .then((mailerResponse) => {
+                  if (mailerResponse.accepted[0] === req.body.email) {
+                    res.status(201).json({
+                      message: 'A password reset link has been sent to your email',
+                      url: resetPassUrl });
+                  }
                 })
-                .catch((error) => {
-                  res.status(501).json({ error });
+                .catch((mailerError) => {
+                  res.status(500).json({ message: mailerError });
                 });
-            } else {
-              res.status(404).json({ message: 'This email does not exist in our database' });
-            }
-          })
-          .catch((error) => {
-            res.status(501).json({ message: error });
+            })
+            .catch((error) => {
+              res.status(501).json({ error });
+            });
+        } else {
+          res.status(404).json({
+            message: 'This email does not exist in our database'
           });
-      }
-    }
+        }
+      })
+      .catch((error) => {
+        res.status(501).json({ message: error });
+      });
   }
 
 
   /**
-   * @param { object } req
-   * @param { object } res
+   * @param { object } req request object
+   * @param { object } res response object
+   * 
    * @returns { object } message that password has been changed
    */
   static resetPassword(req, res) {
-    const resetUrl = req.params.resetUrl;
-    const newPassword = req.body.password;
-    if ((!newPassword) || (newPassword === '')) {
-      res.status(400).json({ message: 'Please type in your new password' });
-    } else if (newPassword.length < 6) {
-      res.status(400).json({ message: 'Password should not be less than 5 characters' });
-    } else {
-      const hashP = bcrypt.hashSync(newPassword, bcrypt.genSaltSync(10));
-      userModel.update({ password: hashP }, { where: { passurl: resetUrl },
-        individualHooks: true },
-      { fields: ['password'] })
-        .then(() => {
-          userModel.update({ passurl: '' }, { where: { passurl: resetUrl } })
-            .then(() => {
-              res.status(201).json({ message: 'Your password has been updated' });
-            })
-            .catch((err) => {
-              res.status(500).json({ err });
-            });
+    const {
+      password,
+      passwordReseturl
+    } = req.body;
+
+    userModel.update({
+      password }, { where: { passwordReseturl },
+      individualHooks: true },
+    { fields: ['password'] })
+      .then(() => {
+        userModel.update({
+          passwordReseturl: ''
+        }, { where: {
+          passwordReseturl
+        }
         })
-        .catch((error) => {
-          res.status(500).json({ error });
+          .then(() => {
+            res.status(200).json({
+              message: 'Your password has been updated'
+            });
+          })
+          .catch(() => {
+            res.status(500).json({
+              error: 'Internal server error'
+            });
+          });
+      })
+      .catch(() => {
+        res.status(500).json({
+          error: 'Internal server error'
         });
-    }
+      });
   }
 
   /**
-   * @param { object } req
-   * @param { object } res
-   * @returns { void }
+   * @param {object} req request object
+   * @param {object} res response object
+   * 
+   * @returns {object} user books as response
    */
   static getUserBooks(req, res) {
-    const returnStatus = req.query.returned;
+    const { returned: returnStatus } = req.query;
+    const { userid } = req.body;
     const query = {};
     if (returnStatus === undefined) {
       query.where = {
-        userid: req.body.userid
+        userid
       };
     } else if (returnStatus === 'false') {
       query.where = {
@@ -220,49 +252,58 @@ class User {
       };
     }
 
-    borrowedBookModel.findAll({ where: query.where, include: [{ model: bookModel }] })
+    borrowedBookModel.findAll({
+      where: query.where,
+      include: [{ model: bookModel }]
+    })
       .then((response) => {
         if (response.length < 1) {
           res.status(200).json({ message: 'You have no books yet' });
         } else {
           res.status(200).json({ response });
         }
-      }).catch((error) => {
-        res.status(404).json({ message: error.errors[0].message });
+      }).catch(() => {
+        res.status(500).json({
+          message: 'Internal server error'
+        });
       });
   }
   /**
    * 
-   * @param { object } req
-   * @param { object } res
-   * @returns { object } user detail
+   * @param {object} req request object
+   * @param {object} res response object
+   * 
+   * @returns {object} user details
    */
   static profilePage(req, res) {
-    if (!req.headers.authorization) {
-      res.status(401)
+    const { authorization } = req.headers;
+    if (!authorization) {
+      res.status(403)
         .json({ message: 'Invalid/Expired token' });
-      // other implementations
     } else {
       const userid = parseInt(req.params.userId, 10);
       userModel.findById(userid)
         .then((user) => {
           if (user) {
-            res.status(200).json({ user });
-          } else {
-            res.status(404).json({ message: 'User not found' });
+            return res.status(200).json({ user });
           }
+          return res.status(404).json({ message: 'User not found' });
         })
         .catch(() => {
-          res.status(501).json({ message: 'Cannot implement request now, please try again' });
+          res.status(500)
+            .json({
+              message: 'Internal server error'
+            });
         });
     }
   }
 
   /**
    * 
-   * @param { object } req
-   * @param { object } res
-   * @returns {object} object
+   * @param { object } req requet object
+   * @param { object } res response object
+   * 
+   * @returns {object} edited user profile
    */
   static editProfile(req, res) {
     const userData = {
@@ -271,10 +312,16 @@ class User {
       username: req.body.username,
       image: req.body.image
     };
-    const fieldsToUpdate = ['firstname', 'lastname', 'username', 'image'];
-    userModel.update(userData, { where: { id: req.body.userid }, individualHooks: true },
+    const fieldsToUpdate = ['firstname', 'lastname', 'username', 'imageUrl'];
+    userModel.update(userData,
+      {
+        where: {
+          id: req.body.userid
+        },
+        individualHooks: true
+      },
       { fields: fieldsToUpdate }).then((response) => {
-      res.status(201).json({ user: response[1][0] });
+      res.status(200).json({ user: response[1][0] });
     })
       .catch((error) => {
         const messageObject = errorMessages(error);
@@ -286,7 +333,9 @@ class User {
             res.status(400).json({ error: messageObject.error });
             break;
           default:
-            res.status(501).json({ error: messageObject.error });
+            res.status(500).json({
+              error: 'Internal server error'
+            });
         }
       });
   }

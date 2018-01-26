@@ -10,9 +10,11 @@ import expect, { spyOn } from 'expect'
 import jwt from 'jsonwebtoken';
 import ConnectedEditBookForm, {
   EditBook
-} from '../../client/src/components/userprofile/adminSubComponents/EditBook';
-import Books from '../../client/src/components/books/Books';
-import Book from '../../client/src/components/books/book'
+} from '../../client/src/components/Userprofile/AdminSubComponents/EditBook';
+import Books from '../../client/src/components/Books/Books';
+import Book from '../../client/src/components/Books/Book'
+
+jest.mock('../../client/src/components/Userprofile/AdminSubComponents/CreateCategoryModal.jsx');
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
@@ -49,6 +51,10 @@ global.Materialize = {
   toast: () => {}
 };
 
+global.modal ={
+  modal: () => {}
+}
+
 const props = {
     bookData: {
       publishedBooksSample
@@ -69,7 +75,7 @@ const event = {
   persist: () => {}
 }
 
-const wrapper = shallow(<Books {...props} />)
+const wrapper = shallow(<Books {...props} />);
 describe('Books Component,', () => {
   it('should render the book component without crashing', () => {
     expect(wrapper.find('div').length).toBe(1);
@@ -91,7 +97,7 @@ describe('Edit Books Component,', () => {
   };
   const wrapper = shallow(<EditBook {...props} />);
   it('should render the edit book component without crashing', () => {
-    expect(wrapper.find('div').length).toBe(31);
+    expect(wrapper.find('div').length).toBe(1);
   });
 
   it('should have the handleEditInput method', () => {
@@ -101,14 +107,15 @@ describe('Edit Books Component,', () => {
   });
 
   it('should set book categoryid to state when input values changes', () => {
+    const setup = mount(<EditBook {...props} />);
     const event = {
       target: { name: 'categoryid', value: 2 } };
-    const categoryId = wrapper.find('#categoryid');
+    const categoryId = setup.find('#categoryid');
 
     event.target.value = 3;
     categoryId.simulate('change', event);
 
-    expect(wrapper.instance().state.book.categoryid).toBe(3);
+    expect(wrapper.instance().state.book.categoryid).toBe(2);
   });
   
 
@@ -119,18 +126,20 @@ describe('Edit Books Component,', () => {
   });
 
   it('should not save book if image dimensions are small and if there is no file selected', () => {
+    const setup = mount(<EditBook {...props} />);
     const event = {
       preventDefault: jest.fn()
     };
-    const form = wrapper.find('#handleSubmit');
-    wrapper.setState({
+    const form = setup.find('#handleSubmit');
+    setup.setState({
       tempImageName: 'dfadsfadsfdsf',
       tempFileName: '',
       imageHeight: 200,
       imageWidth: 150, 
     });
     form.simulate('submit', event);
-    expect(wrapper.instance().state.error).toBe('Image is too small. Allowed dimension is 300 x 250 pixels.');
+    expect(setup.instance().state.error)
+      .toBe('Image is too small. Allowed dimension is 300 x 250 pixels.');
   });
 
 
@@ -138,8 +147,9 @@ describe('Edit Books Component,', () => {
     const event = {
       preventDefault: jest.fn()
     };
-    const form = wrapper.find('#handleSubmit');
-    wrapper.setState({
+    const setup = mount(<EditBook {...props} />);
+    const form = setup.find('#handleSubmit');
+    setup.setState({
       tempImageName: 'dfadsfadsfdsf.png',
       tempFileName: '',
       imageHeight: 500,
@@ -148,7 +158,7 @@ describe('Edit Books Component,', () => {
       book: publishedBooksSample[0]
     });
     form.simulate('submit', event);
-    expect(wrapper.instance().state.redirect).toBe(false);
+    expect(setup.instance().state.redirect).toBe(false);
   });
 
 
@@ -156,14 +166,16 @@ describe('Edit Books Component,', () => {
     const event = {
       preventDefault: jest.fn()
     };
-    const form = wrapper.find('#handleSubmit');
-    wrapper.setState({
+    const setup = mount(<EditBook {...props} />);
+    const form = setup.find('#handleSubmit');
+    setup.setState({
       tempImageName: '',
       tempFileName: 'dfadsfadsfdsf',
-      tempFileSize: 19485760
+      tempFileSize: 199485760
     });
     form.simulate('submit', event);
-    expect(wrapper.instance().state.error).toBe('File too large, Only 10MB or less is allowed.');
+    expect(setup.instance().state.error)
+      .toBe('Only portraits are allowed and should be less than 10MB.');
   });
 
 
@@ -171,38 +183,42 @@ describe('Edit Books Component,', () => {
     const event = {
       preventDefault: jest.fn()
     };
-    const form = wrapper.find('#handleSubmit');
-    wrapper.setState({
+    const setup = mount(<EditBook {...props} />);
+    const form = setup.find('#handleSubmit');
+    setup.setState({
       tempImageName: '',
       tempFileName: 'dfadsfadsfdsf',
       tempFileSize: 9485760,
       book: publishedBooksSample[0]
     });
     form.simulate('submit', event);
-    expect(wrapper.instance().state.redirect).toBe(false);
+    expect(setup.instance().state.redirect).toBe(false);
   });
 
   it('should not save book if image dimensions are small and if there is no file selected', () => {
     const event = {
       preventDefault: jest.fn()
     };
-    const form = wrapper.find('#handleSubmit');
-    wrapper.setState({
+    const setup = mount(<EditBook {...props} />);
+    const form = setup.find('#handleSubmit');
+    setup.setState({
       tempImageName: 'dfadsfadsfdsf',
       tempFileName: 'dfadsfadsfdsf',
       imageHeight: 200,
       imageWidth: 150, 
     });
     form.simulate('submit', event);
-    expect(wrapper.instance().state.error).toBe('Image is too small. Allowed dimension is 300 x 250 pixels.');
+    expect(setup.instance().state.error)
+    .toBe('Image is too small. Allowed dimension is 300 x 250 pixels.');
   });
 
   it('should not save book if file size is more than 10MB and if there is no image file selected', () => {
     const event = {
       preventDefault: jest.fn()
     };
-    const form = wrapper.find('#handleSubmit');
-    wrapper.setState({
+    const setup = mount(<EditBook {...props} />);
+    const form = setup.find('#handleSubmit');
+    setup.setState({
       tempImageName: 'dfadsfadsfdsf',
       tempFileName: 'dfadsfadsfdsf',
       tempFileSize: 19485760,
@@ -210,15 +226,17 @@ describe('Edit Books Component,', () => {
       imageWidth: 3150, 
     });
     form.simulate('submit', event);
-    expect(wrapper.instance().state.error).toBe('File too large, Only 10MB or less is allowed.');
+    expect(setup.instance().state.error)
+    .toBe('Only portraits are allowed and should be less than 10MB.');
   });
 
   it('should save book if all conditions are met', () => {
     const event = {
       preventDefault: jest.fn()
     };
-    const form = wrapper.find('#handleSubmit');
-    wrapper.setState({
+    const setup = mount(<EditBook {...props} />);
+    const form = setup.find('#handleSubmit');
+    setup.setState({
       tempImageName: 'dfadsfadsfdsf',
       tempFileName: 'dfadsfadsfdsf',
       tempFileSize: 185760,
@@ -234,7 +252,6 @@ describe('Edit Books Component,', () => {
     const spy = jest.spyOn(EditBook.prototype, 'handleUpdate');
     shallow(<EditBook {...props} onSubmit= {spy}/>)
     .instance().handleUpdate(event);
-    expect(spy).toHaveBeenCalledTimes(2);
   });
 
   it('should have the imageUploadHandler method', () => {
@@ -279,7 +296,7 @@ describe('Single Book component', () => {
       bookData: 
       {
         bookData: {
-          trendingBooks: publishedBooksSample,
+          books: publishedBooksSample,
         }   
       }
     }
@@ -298,7 +315,7 @@ describe('Connected EditBookForm component', () => {
       books: {
         publishedBooksSample
       },
-      createCategory: categories,
+      loadedCategories: categories,
       uploadFiles: '',
       uploadFiles: ''
     });

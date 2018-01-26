@@ -7,12 +7,12 @@ import { shallow, mount, render , configure} from 'enzyme';
 import jestSnapshot from 'chai-jest-snapshot';
 import expect, { spyOn } from 'expect'
 
-import BorrowedBooksTable from '../../client/src/components/userprofile/adminSubComponents/borrowedbooksTable';
-import Loader from '../../client/src/components/userprofile/adminSubComponents/loader';
+import BorrowedBooksTable from '../../client/src/components/Userprofile/AdminSubComponents/BorrowedbooksTable';
+import Loader from '../../client/src/components/Userprofile/AdminSubComponents/Loader';
 import { borrowedBookSample, publishedBooksSample } from './mocks/mockdata';
 import mockLocalStorage from './mocks/mockDataStorage'
-import PublishedBooks from '../../client/src/components/userprofile/adminSubComponents/publishedBooks'
-import PublishBookModal from '../../client/src/components/userprofile/adminSubComponents/publishBookModal';
+import PublishedBooks from '../../client/src/components/Userprofile/AdminSubComponents/PublishedBooks'
+import PublishBookModal from '../../client/src/components/Userprofile/AdminSubComponents/PublishBookModal';
 jest.mock('../../client/src/components/HOC/authenticate.jsx');
 jest.mock('react-router-dom');
 

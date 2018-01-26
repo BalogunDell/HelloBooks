@@ -14,40 +14,50 @@ const bookModel = model.book;
 
 /**
  * 
- * @param {object} req -Request object 
- * @param {object} res - Response object
+ * @param {object} req - request object 
+ * @param {object} res - response object
+ * 
  * @returns { object} - returns an object
  */
 class Helper {
-  /** 
- * @param { object } req request object
- * @param { object } res response object
- * @param { object } next passes action to following controller
- * @returns { object } books with count and rows
+/** 
+ * @param { object } req - request object
+ * @param { object } res - response object
+ * @param { object } next - passes action to following controller
+ * 
+ * @returns { object } - books with count and rows
  */
   static checkBook(req, res, next) {
     bookModel.findById(parseInt(req.body.bookid, 10))
       .then((book) => {
-        if (!book) return res.status(404).send({ msg: 'Book not found' });
-        if (!book.dataValues.quantity) return res.status('403').json({ msg: 'This book is currently unavailable' });
+        if (!book) return res.status(404).json({ message: 'Book not found' });
+        if (!book.dataValues.quantity) {
+          return res.status(200).json({
+            message: 'This book is currently unavailable'
+          });
+        }
         req.book = book;
         next();
       })
-      .catch(error => res.status(500).json({ msg: error }));
+      .catch(() => res.status(500).json({
+        message: 'Internal server error'
+      }));
   }
 
   /** 
- * @param { object } req 
- * @param { object } res
- * @param { object } next
- * @returns { object } books with count and rows
+ * @param { object } req  - request object
+ * @param { object } res  - response object 
+ * @param { object } next - passes action to following controller
+ * 
+ * @returns { object } - books with count and rows
  * 
  */
   static verify(req, res, next) {
+    const { bookid, userid } = req.body;
     const query = {
       where: {
         $and: [
-          { userid: req.body.userid },
+          { userid },
           { returnstatus: false }
         ]
       }
@@ -57,12 +67,13 @@ class Helper {
         const userBooklimit = util[req.membership.toLowerCase()].limit;
         if (response.count < userBooklimit
             &&
-          !response.rows.find(book => book.dataValues.bookid === parseInt(req.body.bookid, 10))) {
+          !response.rows
+            .find(book => book.dataValues.bookid === parseInt(bookid, 10))) {
           req.body = Helper.composeRequest(req);
           next();
         } else {
-          res.status(403).json({
-            msg: 'You have either exhausted your book limit or you still have this book with you'
+          res.status(401).json({
+            message: 'You have either exhausted your book limit or you still have this book with you'
           });
         }
       }).catch((error) => {
@@ -73,12 +84,14 @@ class Helper {
   }
 
   /**
-   * @param { object} req
-   * @param { object} res
-   * @returns { object } body
+   * @param { object} req - request object
+   * @param { object} res - response object
+   * 
+   * @returns { object } request body
    */
   static composeRequest(req, res) {
-    if (!req.body.bookid) return res.status(400).json({ message: 'provide a book id' });
+    const { bookid } = req.body;
+    if (!bookid) return res.status(400).json({ message: 'Provide a book id' });
     const body = {
       bookid: req.body.bookid,
       userid: req.body.userid,
@@ -91,8 +104,9 @@ class Helper {
 
   /**
    * 
-   * @param { Object } user
-   * @returns { string } tokens
+   * @param { Object } user - user payload
+   * 
+   * @returns { string }  - generated token
    */
   static generateToken(user) {
     const token = jwt.sign({
@@ -108,8 +122,9 @@ class Helper {
 
   /**
    * 
-   * @param { number } arg
-   * @param { string } characters
+   * @param { number } arg - the number of characters
+   * @param { string } characters - the actual characters
+   * 
    * @returns { string } urlstring
    */
   static urlGenerator(arg, characters) {
@@ -123,9 +138,10 @@ class Helper {
 
   /**
    * 
-   * @param { string } userEmail
-   * @param { string } passwordUrl
-   * @returns { string } email
+   * @param { string } userEmail  - email destination
+   * @param { string } passwordUrl - generated url
+   * 
+   * @returns { Function } sendMail method
    */
   static generateMail(userEmail, passwordUrl) {
     // Define email transporter

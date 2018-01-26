@@ -9,8 +9,11 @@ import {
 /**
  * 
  * @export userAccessReducer
- * @param { object } [state={}] inital state
+ * 
+ * @param { object } state inital state
+ * 
  * @param { object } action action type and payload
+ * 
  * @returns { object } action performed and payload of the action
  */
 export default function userAccessReducer(state = {}, action) {
@@ -37,7 +40,7 @@ export default function userAccessReducer(state = {}, action) {
 
     case SEND_EMAIL:
       return {
-        ...state, ...action.serverRes
+        ...state, ...action.serverResponse
       };
     case RESET_PASS:
       return {

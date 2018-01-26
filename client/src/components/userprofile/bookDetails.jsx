@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-
 import getUserDetails from '../../utils/getUserInfo';
+import BookInfo from './BookInfo';
 import {
   userBooks,
   borrowBook
@@ -32,7 +32,7 @@ export class BookDetails extends React.Component {
       isAdmin: false
     }
 
-    this.handleBorrow = this.handleBorrow.bind(this)
+    this.handleBorrow = this.handleBorrow.bind(this);
 
 }
 
@@ -56,8 +56,9 @@ export class BookDetails extends React.Component {
       this.setState({
         processingRequest: false,
         borrowErrorStatus:true,
-        borrowError: error.response.data.msg, disableBtn:true });
-        Materialize.toast('You have either exhausted your book limit or you still have this book with you',
+        borrowError: error.response.data.errorMessage, disableBtn:true });
+        Materialize.toast(
+          'You have either exhausted your book limit or you still have this book with you',
           4000,
           'red rounded');
     });
@@ -70,7 +71,20 @@ export class BookDetails extends React.Component {
       disableBtn: false,
       borrowBookSuccess:false});
       const filtered = JSON.parse(localStorage.getItem('book'));
-    this.setState({book: filtered, dataReady:false});
+      if(filtered.quantity === 0) {
+        this.setState({
+          disableBtn: true,
+          book: filtered,
+          dataReady:false
+        });
+      } else {
+        this.setState({
+          book: filtered,
+          dataReady:false,
+          disableBtn: false
+        });
+      }
+    
   }
 
   componentDidMount() {
@@ -125,124 +139,15 @@ export class BookDetails extends React.Component {
               <h3 className="center">Book Details</h3>
             </div>
           </div>
-          <div className="row">
-            <div className="col s12 m12 l6 offset-4 center">
-               <img
-                src= {this.state.book.image} alt={this.state.book.title} 
-                className="responsive-img"/>  
-            </div>
-
-            <div className="col s12 m12 l3 offset-9">
-              <div className="bookInfo">
-                <table>
-                  <thead>
-                    <tr>
-                      <th>
-                         {this.state.book.title} 
-                      </th>
-                    </tr>
-                  </thead>
-
-                  <tbody>
-                    <tr>
-                      <td>Author</td>
-                       <td>{this.state.book.author}</td> 
-                    </tr>
-
-                    <tr>
-                      <td>Category</td>
-                       <td>{this.state.book.category.category}</td> 
-                    </tr>
-
-                    <tr>
-                      <td>ISBN</td>
-                       <td>{this.state.book.isbn}</td> 
-                    </tr>
-
-                    <tr>
-                      <td>Year</td>
-                       <td>{this.state.book.year}</td> 
-                    </tr>
-
-                    <tr>
-                      <td>Pages</td>
-                       <td>{this.state.book.pages}</td> 
-                    </tr>
-
-                    <tr>
-                      <td>Quantity Available</td>
-                       <td>{this.state.book.quantity}</td> 
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-
-              <hr/>
-
-                <div>
-                   <p>{this.state.book.description}</p> 
-                </div>
-
-              <hr/>
-
-                <div>
-                  <table>
-                    <tbody>
-                      <tr>
-                        <td>
-                          { this.state.isAdmin 
-                          ?
-                          <Link 
-                            to="/user/books"
-                            className="btn waves-teal waves-effect">Back
-                          </Link>
-                          :
-                          <button
-                            className="btn waves-teal waves-effect" 
-                            onClick={this.handleBorrow}
-                            disabled={this.state.disableBtn}>BORROW
-                          </button>
-
-                          }
-                        </td>
-                      </tr>
-                      <tr
-                        className="red-text">
-                        <td>{this.state.borrowedMessage}</td>
-                      </tr>
-                      {this.state.borrowErrorStatus 
-                      ? <tr>
-                          <td>
-                            <button className="btn waves-teal waves-effect">
-                              <Link
-                                to="/user/books">Back to library
-                              </Link>
-                            </button>
-                          </td>
-                        </tr> 
-                      :
-                      null 
-                      }
-                      
-                      {this.state.borrowSuccessStatus
-                        ?
-                        <tr>
-                          <td>
-                            <button className="btn waves-teal waves-effect">
-                              <Link 
-                                to="/user/history">View history
-                              </Link>
-                            </button>
-                          </td>
-                        </tr>
-                        :
-                        null
-                      }
-                    </tbody>
-                  </table>
-                </div>
-            </div>
-          </div>
+          <BookInfo
+          book = {this.state.book}
+          isAdmin = {this.state.isAdmin}
+          disableBtn = {this.state.disableBtn}
+          handleBorrow = {this.handleBorrow}
+          borrowedMessage= {this.state.borrowedMessage}
+          borrowErrorStatus = {this.state.borrowErrorStatus}
+          borrowSuccessStatus = {this.state.borrowSuccessStatus}
+          />
 
           {/* ERROR OR SUCCESS MESSAGE HERE */}
           {showError}

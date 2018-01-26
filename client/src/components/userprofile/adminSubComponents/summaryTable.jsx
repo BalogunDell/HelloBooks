@@ -44,7 +44,7 @@ export class SummaryTable extends React.Component {
         </div>
 
         <div className="row">
-          <table className="summary-table">
+          <table className="summary-table styledUserBooksTable">
             <thead>
               <tr>
                 <th>SUMMARY</th>

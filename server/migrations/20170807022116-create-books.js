@@ -45,11 +45,11 @@ module.exports = {
         type: Sequelize.BOOLEAN,
         allowNull: false,
       },
-      image: {
+      imageUrl: {
         type: Sequelize.STRING,
         allowNull: false
       },
-      pdf: {
+      pdfUrl: {
         type: Sequelize.STRING,
         allowNull: false
       },

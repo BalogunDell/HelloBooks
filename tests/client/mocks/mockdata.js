@@ -9,7 +9,77 @@ import jwt from 'jsonwebtoken';
     password: "password"
   }
 
-  export const mocktrendingBook = [
+  
+
+  export const trendingBooksMock = {
+  trendingBooks: [
+    {
+      id: 14,
+      isbn: "#949586",
+      pages: 4,
+      author: "f narar",
+      year: 3450,
+      title: "ratj rr art",
+      description: "fna dfadsfds adf",
+      quantity: 342,
+      categoryid: 4,
+      visibility: true,
+      image: "https://res.cloudinary.com/djvjxp2am/image/upload/v1513678579/ma2vpijr4kawokqynuty.jpg",
+      pdf: "https://res.cloudinary.com/djvjxp2am/image/upload/v1513678580/ytn1ckngz46h4uvatfxy.pdf",
+      createdAt: "2017-12-19T10:16:20.630Z",
+      updatedAt: "2017-12-19T10:16:20.630Z"
+    },
+    {
+        id: 13,
+        isbn: "#999900",
+        pages: 4,
+        author: "dsfuadsufadsad",
+        year: 4385,
+        title: "jsadfnsd ",
+        description: "fjnadn adsfadf n asdf",
+        quantity: 3,
+        categoryid: 4,
+        visibility: true,
+        image: "https://res.cloudinary.com/djvjxp2am/image/upload/v1513675078/uadujqhe4gowckqvpb6v.jpg",
+        pdf: "https://res.cloudinary.com/djvjxp2am/image/upload/v1513675079/gsstrjoqekidcmtgw3bv.pdf",
+        createdAt: "2017-12-19T09:17:58.139Z",
+        updatedAt: "2017-12-19T09:17:58.139Z"
+    },
+    {
+        id: 12,
+        isbn: "#978676",
+        pages: 343,
+        author: "thfggdh",
+        year: 3535,
+        title: "ryhrhygtt",
+        description: "ghdgvbghjfbv",
+        quantity: 43,
+        categoryid: 3,
+        visibility: true,
+        image: "https://res.cloudinary.com/djvjxp2am/image/upload/v1513600279/lv4ql887pytvljhib0wa.jpg",
+        pdf: "https://res.cloudinary.com/djvjxp2am/image/upload/v1513600280/wdbtujra487dbn8mujnu.pdf",
+        createdAt: "2017-12-18T12:31:20.887Z",
+        updatedAt: "2017-12-18T12:31:20.887Z"
+    },
+    {
+        id: 11,
+        isbn: "#453576",
+        pages: 12,
+        author: "Creator",
+        year: 1991,
+        title: "Testing create",
+        description: "Testing the application",
+        quantity: 20,
+        categoryid: 2,
+        visibility: true,
+        image: "https://res.cloudinary.com/djvjxp2am/image/upload/v1513244706/inyec7xtzydiygdyalbb.jpg",
+        pdf: "https://res.cloudinary.com/djvjxp2am/image/upload/v1513244742/tgwvlefw2p3mlutfhzgy.pdf",
+        createdAt: "2017-12-14T09:45:43.174Z",
+        updatedAt: "2017-12-18T10:55:35.375Z"
+    }
+  ]
+}
+  export const mocktrendingBooks = [
   {
     id: 14,
     isbn: "#949586",
@@ -330,14 +400,14 @@ export const unpublishedBooks = {
 }
 
 export const publishedBooks = {
-  id: 4,
+  id: 1,
   isbn: "#453576",
   pages: 12,
   author: "Creator",
-  year: 1991,
+  year: 6000,
   title: "Testing create",
   description: "Testing the application",
-  quantity: 20,
+  quantity: 20000,
   categoryid: 2,
   visibility: true,
   image: "https://res.cloudinary.com/djvjxp2am/image/upload/v1513244706/inyec7xtzydiygdyalbb.jpg",
@@ -512,4 +582,4 @@ export const token = jwt.sign({
 
 // COMPONENT DATA
 
-export const homeParagraph = `Hello books allows you to borrow books that have been gathered from different part of the  world. Finding books of your choice just got easier with us`
+export const homeParagraph = `Hello books allows you to borrow books that have been gathered from different part of the  world. Finding books of your choice just got easier with us.`

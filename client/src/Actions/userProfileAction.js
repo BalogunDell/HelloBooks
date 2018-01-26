@@ -20,7 +20,7 @@ import getUserDetails from '../utils/getUserInfo';
  * @param { integer } userID 
  * @returns { object } returns action type and integer, user id
  */
-const fetchUser = (userID) => {
+export const fetchUser = (userID) => {
   return {
     type: FETCH_USER,
     userID
@@ -33,7 +33,7 @@ const fetchUser = (userID) => {
  * @export fetchUserTrigger
  * @returns { object } axios response
  */
-const fetchUserTrigger = () => {
+export const fetchUserTrigger = () => {
   return (dispatch) => {
     return axios.get(`${apiRoutes.userProfile}/${getUserDetails().userId}`,
       {
@@ -56,7 +56,7 @@ const fetchUserTrigger = () => {
  * @param { object } newUserData 
  * @returns { object } action type and newUserData objet
  */
-const editProfileAction = (newUserData) => {
+export const editProfileAction = (newUserData) => {
   return {
     type: EDIT_PROFILE,
     newUserData
@@ -69,7 +69,7 @@ const editProfileAction = (newUserData) => {
  * @param { object } newUserData 
  * @returns { object } axios response
  */
-const editProfile = (newUserData) => {
+export const editProfile = (newUserData) => {
   return (dispatch) => {
     return axios.put(`${apiRoutes.userProfile}/${newUserData.id}`,
       newUserData,
@@ -94,7 +94,7 @@ const editProfile = (newUserData) => {
  * @param { object } image 
  * @returns { object } action type and payload (image)
  */
-const saveImageToCloud = (image) => {
+export const saveImageToCloud = (image) => {
   return {
     type: SAVE_IMAGE,
     image
@@ -107,7 +107,7 @@ const saveImageToCloud = (image) => {
  * @param { object } image 
  * @returns { object } action type and newImage url (from cloudinary)
  */
-const saveNewImage = (image) => {
+export const saveNewImage = (image) => {
   const formdata = new FormData();
   formdata.append('file', image);
   formdata.append('upload_preset', cloudKeys.cloudinaryPreset);
@@ -133,7 +133,7 @@ const saveNewImage = (image) => {
  * @param { object } newImage 
  * @returns { object } action type and newImage url (from cloudinary)
  */
-const saveImage = (newImage) => {
+export const saveImage = (newImage) => {
   return {
     type: EDIT_IMAGE,
     newImageUrl: newImage
@@ -146,7 +146,7 @@ const saveImage = (newImage) => {
  * @param { object } newImage 
  * @returns { object } action type and newImage url (from cloudinary)
  */
-const saveNewImageToDB = (newImage) => {
+export const saveNewImageToDB = (newImage) => {
   return (dispatch) => {
     return axios.put(`${apiRoutes.userProfile}/${getUserDetails().userId}`,
       newImage, {
@@ -160,15 +160,4 @@ const saveNewImageToDB = (newImage) => {
         throw (error);
       });
   };
-};
-
-export {
-  fetchUser,
-  fetchUserTrigger,
-  editProfileAction,
-  editProfile,
-  saveImageToCloud,
-  saveNewImage,
-  saveImage,
-  saveNewImageToDB
 };

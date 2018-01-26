@@ -47,10 +47,18 @@ const getAllBooks = (state = {}, action) => {
       return {
         ...state, editBookID: action.bookid
       };
-    case MODIFY_BOOK:
+    case MODIFY_BOOK: {
+      const newBookArray = [];
+      state.books.map((book) => {
+        if (book.id === action.bookData.id) {
+          newBookArray.push(action.bookData);
+        } else {
+          newBookArray.push(book);
+        }
+      });
       return {
-        ...state, modifiedBook: action.bookData
-      };
+        ...state, books: newBookArray };
+    }
     case DELETE_BOOK:
       return {
         ...state, updatedBooks: action.updatedBooks.updatedBooks
@@ -69,7 +77,7 @@ const getAllBooks = (state = {}, action) => {
       };
     case TRENDING_BOOKS:
       return {
-        ...state, trendingBooks: action.books
+        ...state, books: action.books.trendingBooks
       };
     default:
       return state;

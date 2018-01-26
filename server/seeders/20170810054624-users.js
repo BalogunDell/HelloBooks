@@ -7,7 +7,7 @@ module.exports = {
         firstname: 'admin',
         lastname: 'admin',
         email: 'admin@mail.com',
-        username: 'adminUsername12',
+        username: 'adminusername',
         password: bcrypt.hashSync('password', bcrypt.genSaltSync(10)),
         role: 'admin',
         membership: '',
@@ -22,7 +22,7 @@ module.exports = {
         password: bcrypt.hashSync('password', bcrypt.genSaltSync(10)),
         role: 'user',
         membership: 'gold',
-        passurl: 'uFUhdjHDJjdf',
+        passwordReseturl: 'uFUhdjHDJjdf',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -34,7 +34,7 @@ module.exports = {
         password: bcrypt.hashSync('password', bcrypt.genSaltSync(10)),
         role: 'user',
         membership: 'silver',
-        passurl: 'uFUhdjHDJjGf',
+        passwordReseturl: 'uFUhdjHDJjGf',
         createdAt: new Date(),
         updatedAt: new Date()
       }

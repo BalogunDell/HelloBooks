@@ -1,7 +1,8 @@
 /**
  * 
- * @param { object } error sequelize generated errors
- * @return { object } messages to display
+ * @param { object } error  - sequelize generated errors
+ * 
+ * @return { object } - error message and type
  */
 const errorMessages = (error) => {
   if (error.name === 'SequelizeUniqueConstraintError') {

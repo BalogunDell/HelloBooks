@@ -8,13 +8,13 @@ import { shallow, mount, render , configure} from 'enzyme';
 import expect, { spyOn } from 'expect'
 
 
-import UserNav from '../../client/src/components/userprofile/Usernav';
-import Footer from '../../client/src/components/footer/Footer';
+import UserNav from '../../client/src/components/Userprofile/Usernav';
+import Footer from '../../client/src/components/Footer/Footer';
 import { 
   successMessage ,
   failureMessage,
   membershipIconCreator
-} from '../../client/src/components/userprofile/messages';
+} from '../../client/src/components/Userprofile/messages';
 
 import {
   Main,
@@ -86,10 +86,10 @@ describe('UserNav Component', () => {
     expect(wrapper.find('div').length).toBe(1);
   });
 
-  it('should call componentWillMount method', () => {
-    const spy = jest.spyOn(Main.prototype, 'componentWillMount');
-    shallow(<Main {...props} componentWillMount = {spy}/>)
-    .instance().componentWillMount;
+  it('should call componentDidMount method', () => {
+    const spy = jest.spyOn(Main.prototype, 'componentDidMount');
+    shallow(<Main {...props} componentDidMount = {spy}/>)
+    .instance().componentDidMount;
     expect(spy).toHaveBeenCalledTimes(1);
     expect(props.trendingBooks).toHaveBeenCalledTimes(2);
   });

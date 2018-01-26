@@ -3,14 +3,21 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import { membershipIconCreator } from './messages';
-import ProfileInfo from './profileInfo';
+import ProfileInfo from './ProfileInfo';
 import ProfileUpdateForm from './ProfileUpdateForm';
-import ImageModal from './updateImageModal';
+import ImageModal from './UpdateImageModal';
 import {
   saveNewImage,
   saveNewImageToDB
 } from '../../Actions/userProfileAction';
 
+/**
+ * @export Profile
+ * 
+ * @class Profile to show user details
+ * 
+ * @extends {React.Component}
+ */
 export class Profile extends React.Component {
   constructor(props) {
     super(props);
@@ -42,29 +49,36 @@ export class Profile extends React.Component {
     
   }
 
-  /**
-   * @returns changed state of viewprofile and editButton
-   * @memberof Profile
-   */
-  showProfile() {
+ /**
+  * @method showProfile
+  * 
+  * @returns {object} updated state
+  *
+  * @memberof Profile
+  */
+ showProfile() {
     this.setState({viewProfile:true, editButton: false});
   } 
   
-  /**
-   * 
-   * 
-   * @param { object } event 
-   * @memberof Profile
-   */
+/**
+  * @method hideChangeForm
+  * 
+  * @returns {object} updated state
+  *
+  * @memberof Profile
+  */
   hideChangeForm(event) {
     this.setState({viewProfile:false});
     event.target.value = ''
   }
 
-   /**
-   * @returns changed state of showInput and editButton
-   * @memberof Profile
-   */
+  /**
+  * @method showInputHandler
+  * 
+  * @returns {object} updated state
+  *
+  * @memberof Profile
+  */
   showInputHandler() {
     this.setState({showInput: true, editButton: true,});
     const info = JSON.stringify(this.state.userData);
@@ -73,7 +87,9 @@ export class Profile extends React.Component {
  
    /**
    * @method cancelEdit
+   * 
    *  @returns a new state with cancelEditStatus set to false
+   * 
    * @memberof profileUpdateForm
    */
   cancelEdit() {
@@ -92,9 +108,12 @@ export class Profile extends React.Component {
     });
   }
 
-  /**
+   /**
+   * @method handleImageEdit
    * 
-   * @memberof Profile
+   *  @returns {object} a new state with cancelEditStatus set to false
+   * 
+   * @memberof profileUpdateForm
    */
   handleImageEdit(event) {
     event.preventDefault();
@@ -109,7 +128,10 @@ export class Profile extends React.Component {
           image: this.props.newImageUrl.secure_url } });
       this.props.saveNewImageToDB(this.state.userData)
         .then(() => {
-          Materialize.toast('Profile image has been updated', 3000, 'blue rounded');
+          Materialize.toast(
+            'Profile image has been updated',
+            3000,
+            'blue rounded');
           // Close modal afer message has been displayed
         })
         .catch((error) => {
@@ -130,7 +152,9 @@ export class Profile extends React.Component {
   /**
    * 
    * @param {object} event
+   * 
    * @returns { object } updated state
+   * 
    * @memberof profileUpdateForm
    */
   imageUploadHandler(event) {
@@ -160,12 +184,26 @@ export class Profile extends React.Component {
     imageReader.readAsDataURL(imageInput);
   }
 
+  /**
+   * 
+   * React lifecycle hook - componentDidMount
+   * 
+   * @memberof profileUpdateForm
+   */
   componentDidMount() {
     $(document).ready(() => {
       $('.modal').modal();
     });
   }
 
+  /**
+   * 
+   * React lifecycle hook - componentWillReceiveProps
+   * 
+   * @param {object} nextProps
+   * 
+   * @memberof profileUpdateForm
+   */
   componentWillReceiveProps(nextProps) {
     if(nextProps.userProfile) {
       this.setState({ userData: nextProps.userProfile });
@@ -174,6 +212,14 @@ export class Profile extends React.Component {
     }
   }
 
+   /**
+   * 
+   * React render method - render
+   * 
+   * @memberof profileUpdateForm
+   * 
+   * @returns {JSX} JSX representation of the DOM
+   */
   render() {
     return (
       <div className="center profile">
@@ -205,8 +251,6 @@ export class Profile extends React.Component {
                 </a>
               </div>
               
-              {/* User details */}
-
               <div className="userInfoDisplay">
                 <h4>{`${this.state.userData.firstname} ${this.state.userData.lastname}`}</h4>
                 <p>Joined: {this.state.userData.createdAt} | {this.state.userData.email}</p>
@@ -224,7 +268,6 @@ export class Profile extends React.Component {
                 </div>
               </div>
 
-              {/* Form for profile update  */}
               {this.state.viewProfile 
               ?
               <div>
@@ -270,6 +313,15 @@ export class Profile extends React.Component {
     )
   }
 }
+
+ /**
+ *  HOC - Redux Connect method parameter
+ *
+ * @param {Object} state
+ *
+ * @returns {object} action creators
+ */
+
 export const mapStateToProps = (state, ownProps) => {
   return {
     userProfile: state.userProfile,
@@ -277,6 +329,14 @@ export const mapStateToProps = (state, ownProps) => {
   }
 }
 
+
+ /**
+ *  HOC - Redux Connect method parameter
+ *
+ * @param {Object} dispatch
+ *
+ * @returns {object} action creators
+ */
 export const mapDispatchToProps = (dispatch) => {
   return {
     saveNewImage: (image) => dispatch(saveNewImage(image)),

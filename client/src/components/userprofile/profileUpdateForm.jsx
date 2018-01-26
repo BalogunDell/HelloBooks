@@ -2,13 +2,15 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { editProfile } from '../../Actions/userProfileAction';
-import Loader from './adminSubComponents/loader';
+import Loader from './AdminSubComponents/Loader';
 
 
 /**
  * 
  * @class profileUpdateForm
+ * 
  * @extends {React.Component}
+ * 
  * @classdesc Creates form for profile edit
  */
 export class ProfileUpdateForm extends React.Component {
@@ -31,7 +33,9 @@ export class ProfileUpdateForm extends React.Component {
   /**
    * 
    * @param {object} event
+   * 
    * @returns {object} updated state
+   * 
    * @memberof ProfileUpdateForm
    */
   handleUserInput(event) {
@@ -40,15 +44,9 @@ export class ProfileUpdateForm extends React.Component {
     tempFileHolder[name] = event.target.value;
     this.setState({userData: tempFileHolder});
   }
-
   handleProfileUpdate(event) {
     event.preventDefault();
-    
-    // Set loader to true
     this.setState({loader: true});
-
-    // Check if there is a new image selected
-    // Save edit update
     this.props.updateProfile(this.state.userData)
     .then(() => {
       this.setState({
@@ -68,16 +66,30 @@ export class ProfileUpdateForm extends React.Component {
       this.setState({
         errorStatus: true,
         disable: false,
-        errorMessage: error.response.data.message,
+        errorMessage: error.response.data.error,
         loader: false});
     });
   }
 
+  /**
+   * React lifecycle method - componentWillMount
+   * 
+   * @memberof ProfileUpdateForm
+   * 
+   * @returns {object} updated state
+   */
   componentWillMount() {
     const userData = JSON.parse(localStorage.getItem('info'));
     this.setState({userData: { ...userData } });
   }
 
+  /**
+   * React lifecycle method - componentWillMount
+   * 
+   * @memberof ProfileUpdateForm
+   * 
+   * @returns {object} updated state
+   */
   componentDidMount() {
     $(document).ready(() => {
       Materialize.updateTextFields();
@@ -97,7 +109,8 @@ export class ProfileUpdateForm extends React.Component {
             <div className="input-field col s6">
               <input 
                 type="text" 
-                required 
+                required
+                minLength="2"
                 id="firstname" 
                 name="firstname"
                 className="validate"
@@ -118,7 +131,7 @@ export class ProfileUpdateForm extends React.Component {
                 type="text" 
                 id="lastname" 
                 required
-                minLength="4"
+                minLength="2"
                 name="lastname" 
                 value= {this.state.userData.lastname} 
                 onChange= {this.handleUserInput}
@@ -134,6 +147,7 @@ export class ProfileUpdateForm extends React.Component {
                   id="username" 
                   name="username" 
                   className="validate" 
+                  required
                   value = {this.state.userData.username}
                   onChange= {this.handleUserInput}
                 />
@@ -149,7 +163,9 @@ export class ProfileUpdateForm extends React.Component {
               { 
                 this.state.errorStatus 
                 ?
-                  <h6 className="red-text center">{this.state.errorMessage}</h6>
+                  <h6 className="red-text center">
+                    {this.state.errorMessage}
+                  </h6>
                 : 
                 null
               }
@@ -165,7 +181,9 @@ export class ProfileUpdateForm extends React.Component {
               { 
                 this.state.successStatus 
                 ?
-                  <h6 className="green-text center">{this.state.successMessage}</h6>
+                  <h6 className="green-text center">
+                  {this.state.successMessage}
+                  </h6>
                 : 
                 null
               }

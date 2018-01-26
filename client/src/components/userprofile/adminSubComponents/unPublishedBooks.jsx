@@ -1,12 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import Loader from '../adminSubComponents/loader';
+import Loader from '../AdminSubComponents/Loader';
 import {
   adminGetAllBooks,
   publishBook
 } from '../../../Actions/booksAction';
-import PublishBookModal from './publishBookModal';
+import PublishBookModal from './PublishBookModal';
 
 
 export class UnPublishedBooks extends React.Component {
@@ -62,7 +62,8 @@ export class UnPublishedBooks extends React.Component {
       modalHeader: 'Publishing book...'});
     this.props.publishBook(this.state.bookId)
     .then(response => {
-      let updatedArray = this.state.unpublishedBooksArray.filter(book => book.id != this.state.bookId);
+      let updatedArray = this.state.unpublishedBooksArray
+        .filter(book => book.id != this.state.bookId);
       this.setState({
         unpublishedBooksArray: updatedArray,
         loader: false, 
@@ -108,22 +109,22 @@ export class UnPublishedBooks extends React.Component {
       <div>
         <div className="row">
           <div className="col s12 books-holder-title center">
-            <h1>Unpublished Books</h1>
+            <h1>Deleted Books</h1>
           </div>
         <div className="row">
-          <div className="col s12 m12 l10 offset-l2">
-            <div className="unpublished">
+          <div className="col s12 m12 l12">
+            <div className="styledUserBooksTable">
               <div className="center">{ 
                 this.state.loader 
                 ? 
                   <Loader/>
                 : null }
               </div>
-            <table className="centered highlight responsive-table">
+            <table className="centered">
               <thead>
                   <tr>
                     <th>ISBN</th>
-                    <th>Book Cover</th>
+                    <th className ="hide-on-small-only">Book Cover</th>
                     <th>Book Title</th>
                     <th>Author</th>
                     <th>Category</th>
@@ -138,7 +139,12 @@ export class UnPublishedBooks extends React.Component {
                   this.state.unpublishedBooksArray.map((book, id) => 
                       <tr key={book.id}>
                         <td>{book.isbn}</td>
-                        <td><img src={book.image}/></td>
+                        <td className ="hide-on-small-only">
+                          <img 
+                            src={book.imageUrl}
+                            className="responsive-image regulate-size"
+                          />
+                        </td>
                         <td>{book.title}</td>
                         <td>{book.author}</td>
                         <td>{book.category.category}</td>
@@ -152,7 +158,7 @@ export class UnPublishedBooks extends React.Component {
                             data-index = {id}
                             value={book.id}
                             className="btn waves-effect waves-teal custom"
-                            onClick={this.handlePublish}>Publish
+                            onClick={this.handlePublish}>Restore
                           </button>
                           </a>
                         </td>
@@ -160,7 +166,7 @@ export class UnPublishedBooks extends React.Component {
                     )
                     :
                     <tr>
-                      <td>No book has been deleted/unpublished</td>
+                      <td>No book has been deleted</td>
                     </tr>
                     }
             </tbody>

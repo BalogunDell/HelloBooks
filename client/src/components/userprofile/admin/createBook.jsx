@@ -1,14 +1,21 @@
 import React from 'react';
 import { connect } from 'react-redux';
-
 import {
   createBook,
   saveImageToCloudinary,
   savePdfToCloudinary
 } from '../../../Actions/booksAction';
 import { getCategories } from '../../../Actions/categoryAction';
-import CreateBookForm from '../adminSubComponents/createBookForm';
+import CreateBookForm from '../AdminSubComponents/CreateBookForm';
 
+
+/**
+ * CreateBook
+ * 
+ * @class CreateBook
+ * 
+ * @extends {Component}
+ */
 export class CreateBook extends React.Component {
   constructor(props) {
     super(props);
@@ -18,16 +25,17 @@ export class CreateBook extends React.Component {
       loadedCategories: [],
       imageHeight: 0,
       imageWidth: 0,
-      error: '',
+      errorMessage: '',
       errorStatus: false,
-      success: '',
+      successMessage: '',
       successStatus: false,
       loader: false,
       disableBtn: false,
       showHiddinBtns: false,
       tempImageName: '',
       tempFileName: '',
-      tempFileSize: 0
+      tempFileSize: 0,
+      redirect: false
 
       }
 
@@ -38,6 +46,15 @@ export class CreateBook extends React.Component {
     this.fileUploadHandler = this.fileUploadHandler.bind(this);
   }
 
+  /**
+   * Handles user input - handleInput
+   * 
+   * @param {object} event
+   * 
+   * @memberof CreateBook
+   * 
+   * @returns {object} updated state user data
+   */
   handleInput(event) {
     let name = event.target.name;
     let tempBookData = { ...this.state.bookData };
@@ -45,13 +62,22 @@ export class CreateBook extends React.Component {
     this.setState({ bookData: tempBookData });
   }
 
+  /**
+   * Handles book creation - createBookHandler
+   * 
+   * @param {object} event
+   * 
+   * @memberof CreateBook
+   * 
+   * @returns {object} updated state and success message
+   */
   createBookHandler(event) {
     event.preventDefault();
     this.setState({loader:true, disableBtn:true});
     if(this.state.imageHeight < 300 || this.state.imageWidth < 250) {
       this.setState({
         loader: false, 
-        error: "Image is too small. Allowed dimension is 300 x 250 pixels.",
+        errorMessage: "Image is too small. it should 300 x 250 pixels.",
         errorStatus: true,
         successStatus: false,
         disableBtn:false });
@@ -59,36 +85,49 @@ export class CreateBook extends React.Component {
     else if(this.state.tempFileSize > 10485760) {
       this.setState({
         loader: false, 
-        error: "File too large, Only 10MB or less is allowed.",
+        errorMessage: "File too large, Only 10MB or less is allowed.",
         errorStatus: true,
         successStatus: false,
         disableBtn:false });
+    } else if (this.state.imageHeight <= this.state.imageWidth) {
+        this.setState({
+          loader: false, 
+          errorMessage: "Only portraits are allowed",
+          errorStatus: true,
+          successStatus: false,
+          disableBtn:false });
     } else {
       this.setState({
         loader: true, 
-        error: "",
+        errorMessage: "",
         errorStatus: false,
         successStatus: false,
-        disableBtn:false });
+        disableBtn:true });
         
-        // Save image to cloudinary
         this.props.saveImageToCloudinary(this.state.tempImageName)
         .then(()=> {
-          // Check if image url has been set before dispatching  save pdf action
-          if(this.state.bookData.image) {
+          if(this.state.bookData.imageUrl) {
             this.props.savePdfToCloudinary(this.state.tempFileName)
             .then(() =>{
-              if(this.state.bookData.pdf) {
-                // Save book details to database
+              if(this.state.bookData.pdfUrl) {
                   this.props.createBook(this.state.bookData).then(() => {
-                    this.setState({loader: false,
+                    this.setState({
+                      loader: false,
                       successStatus:true,
                       disableBtn:true,
                       errorStatus:false,
                       showHiddinBtns:true,
-                      error: '',
-                      success: "Book has been created."});
-                      Materialize.toast(this.state.success, 4000, 'blue rounded');
+                      errorMessage: '',
+                      successMessage: "Book has been created."});
+                      setTimeout(() => {
+                        this.setState({
+                          redirect: true
+                        });
+                      }, 3000);
+                      Materialize.toast(
+                        'Book has been created',
+                        3000,
+                        'blue rounded');
             
                   })
                   .catch(error => {
@@ -97,19 +136,24 @@ export class CreateBook extends React.Component {
                       successStatus:false,
                       errorStatus:true,
                       disableBtn:true,
-                      error: error.response.data.message});
+                      errorMessage: error.response.data.errorMessage});
                   })
               }
             })
-          } else {
           }
-          
-        })
-        .catch(error => {
         })
     }
   }
 
+  /**
+   * Handles image upload - imageUploadHandler
+   * 
+   * @param {object} event
+   * 
+   * @memberof CreateBook
+   * 
+   * @returns {object} selected file
+   */
   imageUploadHandler(event) {
     event.preventDefault();
     let imageInput = event.target.files[0];
@@ -129,6 +173,15 @@ export class CreateBook extends React.Component {
 
   }
 
+   /**
+   * Handles image upload - fileUploadHandler
+   * 
+   * @param {object} event
+   * 
+   * @memberof CreateBook
+   * 
+   * @returns {object} selected file
+   */
   fileUploadHandler(event) {
     event.preventDefault();
     let fileInput = event.target.files[0];
@@ -145,21 +198,35 @@ export class CreateBook extends React.Component {
 
   }
 
+  /**
+   * React lifecycle hook - componentDidMount
+   * 
+   * @memberof CreateBook
+   * 
+   * @returns {object} updated state
+   */
   componentDidMount() {
-    this.props.getCategories().then(() => {
-      $('select').material_select();
-      $('select').change(e => this.handleInput(e));
-    });
+    this.props.getCategories()
    $(document).ready(() => {
     $('.modal').modal();
    })
   }
+
   
+  /**
+   * React lifecycle hook - componentWillReceiveProps
+   * 
+   * @param {object} nextProps
+   * 
+   * @memberof CreateBook
+   * 
+   * @returns {object} updated state
+   */
   componentWillReceiveProps(nextProps) {
     if(nextProps.imageUrl) {
       this.setState({bookData: {
         ...this.state.bookData,
-        image: nextProps.imageUrl.secure_url
+        imageUrl: nextProps.imageUrl.secure_url
       }
     });
     } else {
@@ -167,42 +234,64 @@ export class CreateBook extends React.Component {
     if(nextProps.loadedCategories[0].id) {
       this.setState({loadedCategories: nextProps.loadedCategories});
     }
-    console.log(nextProps);
 
     if(nextProps.pdfUrl) {
       this.setState({bookData: {
-        ...this.state.bookData, pdf: nextProps.pdfUrl.secure_url
+        ...this.state.bookData, pdfUrl: nextProps.pdfUrl.secure_url
       }
     });
     }
   }
 
+  /**
+   * React render method - render
+   * 
+   * @memberof CreateBook
+   * 
+   * @returns {JSX} JSX representation of DOM
+   */
   render() {
+
     return(
       <div>
-        <div className="container">
-            <div>
-              <CreateBookForm handleInput = {this.handleInput}
-              createBookHandler = {this.createBookHandler}
-              initialData = {this.state.bookData}
-              loadedCategories = {this.state.loadedCategories}
-              imageUploadHandler = {this.imageUploadHandler}
-              fileUploadHandler={this.fileUploadHandler}
-              error= {this.state.error}
-              success= {this.state.success}
-              loader={this.state.loader}
-              successStatus ={this.state.successStatus}
-              errorStatus = {this.state.errorStatus}
-              showHiddinBtns={this.state.showHiddinBtns}
-              disableBtn= {this.disableBtn}/>
+        {
+            this.state.redirect
+          ?
+          <Redirect to="/user/dashboard"/>
+          :
+          <div className="container">
+                <div>
+                  <CreateBookForm handleInput = {this.handleInput}
+                  createBookHandler = {this.createBookHandler}
+                  initialData = {this.state.bookData}
+                  loadedCategories = {this.state.loadedCategories}
+                  imageUploadHandler = {this.imageUploadHandler}
+                  fileUploadHandler={this.fileUploadHandler}
+                  errorMessage= {this.state.errorMessage}
+                  successMessage= {this.state.successMessage}
+                  loader={this.state.loader}
+                  successStatus ={this.state.successStatus}
+                  errorStatus = {this.state.errorStatus}
+                  showHiddinBtns={this.state.showHiddinBtns}
+                  disableBtn= {this.disableBtn}/>
+                </div>
+
             </div>
-        </div>
+        }
       </div>
     );
   }
 }
 
-export const mapStateToProps = (state, ownProps) => {
+
+/**
+ * Redux connect parameter - mapStateToProps
+ * 
+ * @param {object} state
+ * 
+ * @returns {object} mapped state of the store
+ */
+export const mapStateToProps = (state) => {
 
   let initialData = { 
     isbn: '', 
@@ -213,18 +302,25 @@ export const mapStateToProps = (state, ownProps) => {
     description: '', 
     quantity: '',
     categoryid: '', 
-    image: '',
-    pdf: '' }
+    imageUrl: '',
+    pdfUrl: '' }
 
   return {
     initialData,
-    loadedCategories: state.createCategory.categories,
-    imageUrl: state.uploadFiles.image,
-    pdfUrl: state.uploadFiles.pdf
+    loadedCategories: state.loadedCategories.categories,
+    imageUrl: state.uploadFiles.imageUrl,
+    pdfUrl: state.uploadFiles.pdfUrl
   }
 }
 
-export const mapDispatchToProps =(dispatch) => {
+/**
+ * Redux connect parameter - mapDispatchToProps
+ * 
+ * @param {object} dispatch
+ * 
+ * @returns {object} dispatched actions
+ */
+export const mapDispatchToProps = (dispatch) => {
   return {
     createBook: data => dispatch(createBook(data)),
     getCategories: () => dispatch(getCategories()),

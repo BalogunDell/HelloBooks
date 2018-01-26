@@ -8,8 +8,8 @@ const books = [
     description: 'the books does this and that',
     quantity: 6,
     categoryid: 1,
-    image: 'images/andela.jpg',
-    pdf: 'pdf2'
+    imageUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
+    pdfUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
   },
   {
     isbn: '#111112',
@@ -20,8 +20,9 @@ const books = [
     description: 'the books does this and that',
     quantity: 0,
     categoryid: 2,
-    image: 'images/andela.jpg',
-    pdf: 'pdf1'
+    imageUrl: 'http://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book22_ase4mm.jpg',
+    pdfUrl: 'http://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book22_ase4mm.jpg',
+
   },
   {
     isbn: '#111113',
@@ -32,8 +33,8 @@ const books = [
     description: 'the books does this and that',
     quantity: 32,
     categoryid: 3,
-    image: 'images/andela.jpg',
-    pdf: 'pdf3'
+    imageUrl: 'http://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book5_zyqyv1.jpg',
+    pdfUrl: 'http://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book5_zyqyv1.jpg',
   },
   {
     isbn: '#111114',
@@ -44,8 +45,9 @@ const books = [
     description: 'the books does this and that',
     quantity: 15,
     categoryid: 4,
-    image: 'images/andela.jpg',
-    pdf: 'pdf4'
+    imageUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book4_pfdh3s.jpg',
+    pdfUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book4_pfdh3s.jpg',
+
   },
   {
     isbn: '#111115',
@@ -56,8 +58,9 @@ const books = [
     description: 'the books does this and that',
     quantity: 5,
     categoryid: 5,
-    image: 'images/andela.jpg',
-    pdf: 'pdf5'
+    imageUrl: 'http://res.cloudinary.com/djvjxp2am/image/upload/v1507295977/book3_thj6nk.jpg',
+    pdfUrl: 'http://res.cloudinary.com/djvjxp2am/image/upload/v1507295977/book3_thj6nk.jpg',
+
   }
 ];
 
@@ -71,8 +74,9 @@ const invalidBooks = [
     description: 'the books does this and that',
     quantity: 3,
     categoryid: '3',
-    image: 'images/andela.jpg',
-    pdf: 'pdf6'
+    imageUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295977/book1_mjwwlq.jpg',
+    pdfUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295977/book1_mjwwlq.jpg',
+
   },
   {
     isbn: '#111117s',
@@ -83,8 +87,8 @@ const invalidBooks = [
     description: 'the books does this and that',
     quantity: 6,
     categoryid: 2,
-    image: 'images/andela.jpg',
-    pdf: 'pdf7'
+    imageUrl: 'images/andela.jpg',
+    pdfUrl: 'pdf7'
   }
 ];
 

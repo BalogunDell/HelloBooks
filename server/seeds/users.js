@@ -4,22 +4,22 @@ const users = [
   {
     firstname: 'admin',
     lastname: 'admin',
-    username: 'adminUsername12',
+    username: 'adminusername',
     email: 'admin@mail.com',
     password: 'password',
     role: 'admin',
     membership: '',
-    passurl: 'uFUhdjHDJjdt',
+    passwordReseturl: 'uFUhdjHDJjdt',
   },
   {
     firstname: 'david',
     lastname: 'brook',
     email: 'david@mail.com',
-    username: 'username22',
+    username: 'username',
     password: 'password',
     role: 'user',
     membership: 'bronze',
-    passurl: 'uFUhdjHDJjdg',
+    passwordReseturl: 'uFUhdjHDJjdg',
   },
   {
     firstname: 'daniel',
@@ -29,7 +29,7 @@ const users = [
     password: 'password',
     role: 'user',
     membership: 'silver',
-    passurl: 'uFUhdjHDJjdf'
+    passwordReseturl: 'uFUhdjHDJjdf'
   },
 ];
 

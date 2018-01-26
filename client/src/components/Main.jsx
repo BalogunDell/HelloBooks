@@ -3,17 +3,27 @@ import { connect } from 'react-redux';
 import { trendingBooks } from '../Actions/booksAction';
 
 // import components
-import Navbar from './navbar/Navbar';
-import Footer from './footer/Footer';
-import Home from './home/Home';
+import Navbar from './Navbar/Navbar';
+import Footer from './Footer/Footer';
+import Home from './Home/Home';
 import Background from './Background/Background';
-import Books from './books/Books';
+import Books from './Books/Books';
 
 /**
- * @class Main 
- * @classdesc returns the main wrapper of the app
+ * @class Main
+ * 
+ * @classdesc Main component 
+ * 
  */
 export class Main extends React.Component {
+  /**	
+	* @description constructor - class constructor
+	*
+	* @param  {object} props the properties of the class component
+	*
+	* @return {void} no return or void
+	*
+	*/
   constructor(props){
     super(props);
 
@@ -24,14 +34,37 @@ export class Main extends React.Component {
     }
   }
 
-  componentWillMount() {
-    this.props.trendingBooks();
+  /**
+  * React Lifecycle hook - componentDidMount
+  *
+  * @returns {object} - Updated state
+  *
+  */
+  componentDidMount() {
+    this.setState({
+      loading: true
+    })
+    this.props.trendingBooks()
+      .then(() => {
+        this.setState({
+          loading: false
+        })
+      })
   }
 
+  /** 
+  * React Lifecycle hook - componentWillReceiveProps
+  * 
+  * @param {object}      - nextProps
+  *
+  * @returns {object}    - Updated state
+  *
+  *@memberof Main
+  */
   componentWillReceiveProps( nextProps) {
-    if (nextProps.books.books_trending) {
+    if (nextProps.books) {
       this.setState({
-        trendingBooks: nextProps.books.books_trending,
+        trendingBooks: nextProps.books,
         loading: false
       });
     } else {
@@ -39,6 +72,13 @@ export class Main extends React.Component {
     }
   }
 
+  /**
+   * React method - render
+   * 
+   * @returns {JSX} JSX representation of DOM
+   * 
+   * @memberof Main
+   */
   render() {
     return (
       <div>
@@ -46,21 +86,41 @@ export class Main extends React.Component {
           <Navbar/>
           <Home/>
         </Background>
+        {this.state.loading
+        ?
+        <h4>Loading trending books...</h4>
+        :
         <Books
-          bookData = {this.state}
+          bookData = {this.state.trendingBooks}
         />
+        }
         <Footer/>
       </div>
     );
   }
 };
 
-export const mapStateToProps = (state, ownProps) => {
+
+/**
+ * Redux Connect parameter - mapStateToProps
+ * 
+ * @param {object} state - state of the store
+ * 
+ * @returns {object}  - mapped store to state
+ */
+export const mapStateToProps = (state) => {
   return {
-    books: state.books.trendingBooks
+    books: state.books
   }
 }
 
+/**
+ * Redux Connect parameter  - mapDispatchToProps
+ * 
+ * @param {object} dispatch - dispatches actions
+ * 
+ * @returns {object} - functions to dispatch
+ */
 export const mapDispatchToProps = (dispatch) => {
   return {
     trendingBooks: () => dispatch(trendingBooks())

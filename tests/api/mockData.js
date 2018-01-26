@@ -5,6 +5,14 @@ const mockData = {
     firstname: 'janet',
     lastname: 'teddy',
     email: 'jane5@mail.com',
+    username: 'abbey',
+    password: 'abbey2',
+  },
+
+  user1InvalidDataFirstname: {
+    firstname: 1223,
+    lastname: 'teddy',
+    email: 'jane5@mail.com',
     username: 'abbey33',
     password: 'abbey2',
     role: 'user',
@@ -12,10 +20,63 @@ const mockData = {
     image: 'image2'
   },
 
-  user1InvalidDataFirstname: {
-    firstname: 1223,
+  user1InvalidDataFirstnameEmpty: {
+    firstname: '',
     lastname: 'teddy',
     email: 'jane5@mail.com',
+    username: 'abbey33',
+    password: 'abbey2',
+    role: 'user',
+    membership: 'silver',
+    image: 'image2'
+  },
+
+  user1InvalidDataFirstnamellength: {
+    firstname: 'r',
+    lastname: 'teddy',
+    email: 'jane5@mail.com',
+    username: 'abbey33',
+    password: 'abbey2',
+    role: 'user',
+    membership: 'silver',
+    image: 'image2'
+  },
+
+  user1InvalidDataLastnamellength: {
+    firstname: 'rfwdf',
+    lastname: 'y',
+    email: 'jane5@mail.com',
+    username: 'abbey33',
+    password: 'abbey2',
+    role: 'user',
+    membership: 'silver',
+    image: 'image2'
+  },
+
+  user1InvalidDataNoEmail: {
+    firstname: 'rfwdf',
+    lastname: 'ydfdfd',
+    username: 'abbey33',
+    password: 'abbey2',
+    role: 'user',
+    membership: 'silver',
+    image: 'image2'
+  },
+
+  user1InvalidEmail: {
+    firstname: 'Ola',
+    lastname: 'teddy',
+    email: 'janemail.com',
+    username: 'abbey33',
+    password: 'abbey2',
+    role: 'user',
+    membership: 'silver',
+    image: 'image2'
+  },
+
+  user1EmptyEmail: {
+    firstname: 'Ola',
+    lastname: 'teddy',
     username: 'abbey33',
     password: 'abbey2',
     role: 'user',
@@ -37,6 +98,17 @@ const mockData = {
   user1InvalidDataDigitLastname: {
     firstname: 'George',
     lastname: 123,
+    email: 'jane5@mail.com',
+    username: 'abbey33',
+    password: 'abbey2',
+    role: 'user',
+    membership: 'silver',
+    image: 'image2'
+  },
+
+  user1InvalidDataLastnameLen: {
+    firstname: 'George',
+    lastname:'r',
     email: 'jane5@mail.com',
     username: 'abbey33',
     password: 'abbey2',
@@ -99,6 +171,16 @@ const mockData = {
     image: 'image2'
   },
 
+  user1IncompleteDataMissingUsername: {
+    firstname: 'Shola',
+    lastname: 'Abbey',
+    email: 'deli@gmail.com',
+    password: 'abbey2',
+    role: 'user',
+    membership: 'silver',
+    image: 'image2'
+  },
+
   user1IncompleteData5: {
     firstname: 'Shola',
     lastname: 'Abbey',
@@ -114,7 +196,7 @@ const mockData = {
     firstname: 'Shola',
     lastname: 'Abbey',
     email: 'deli@gmail.com',
-    username: 'abbey33',
+    username: 'adminusername',
     password: 'abbey2',
     role: 'user',
     membership: 'silver',
@@ -145,6 +227,17 @@ const mockData = {
     image: 'image2'
   },
 
+
+  user1IncompleteDataMissingPass: {
+    firstname: 'Shola',
+    lastname: 'Abbey',
+    email: 'deli@gmail.com',
+    username: 'mathew234',
+    role: 'user',
+    membership: 'silver',
+    image: 'image2'
+  },
+
   // Valid user data
   userEdit: {
     firstname: 'Biodun',
@@ -168,7 +261,7 @@ const mockData = {
   },
 
   adminSigninData: {
-    username: 'adminUsername12',
+    username: 'adminusername',
     password: 'password',
   },
 
@@ -182,7 +275,7 @@ const mockData = {
   },
 
   user1Login: {
-    username: 'abbey33',
+    username: 'abbey',
     password: 'abbey2',
   },
 
@@ -212,7 +305,7 @@ const mockData = {
 
 
   bookdata: {
-    isbn: '111111',
+    isbn: 545674,
     title: 'React for Beginners',
     author: 'Nelson Brook',
     pages: 1080,
@@ -221,8 +314,8 @@ const mockData = {
     quantity: 3,
     categoryid: 2,
     visibility: true,
-    image: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
-    pdf: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
+    imageUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
+    pdfUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
   },
 
   editBookdata: {
@@ -236,9 +329,178 @@ const mockData = {
     quantity: 300,
     categoryid: 5,
     visibility: true,
-    image: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
-    pdf: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
+    imageUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
+    pdfUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
   },
+
+  editBookdataAuthorError: {
+    id: 2,
+    title: 'React for Beginners',
+    author: '',
+    pages: 100,
+    year: 2000,
+    description: 'the books does this and that',
+    quantity: 300,
+    categoryid: 5,
+    visibility: true,
+    imageUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
+    pdfUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
+  },
+
+  editBookdataAuthorformat: {
+    id: 2,
+    title: 'React for Beginners',
+    author: 'gf   dfgf  df',
+    pages: 100,
+    year: 2000,
+    description: 'the books does this and that',
+    quantity: 300,
+    categoryid: 5,
+    visibility: true,
+    imageUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
+    pdfUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
+  },
+
+  editBookdataTitleError: {
+    id: 2,
+    title: '',
+    author: 'Test Author',
+    pages: 100,
+    year: 2000,
+    description: 'the books does this and that',
+    quantity: 300,
+    categoryid: 5,
+    visibility: true,
+    imageUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
+    pdfUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
+  },
+
+  editBookdataPageError: {
+    id: 2,
+    title: 'Test Title',
+    author: 'Test Author',
+    pages: '',
+    year: 2000,
+    description: 'the books does this and that',
+    quantity: 300,
+    categoryid: 5,
+    visibility: true,
+    imageUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
+    pdfUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
+  },
+
+  editBookdataYearError: {
+    id: 2,
+    title: 'Test Title',
+    author: 'Test Author',
+    pages: 4039,
+    year: '',
+    description: 'the books does this and that',
+    quantity: 300,
+    categoryid: 5,
+    visibility: true,
+    imageUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
+    pdfUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
+  },
+
+  editBookdataDescriptionError: {
+    id: 2,
+    title: 'Test Title',
+    author: 'Test Author',
+    pages: 4039,
+    year: 5634,
+    description: '',
+    quantity: 300,
+    categoryid: 5,
+    visibility: true,
+    imageUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
+    pdfUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
+  },
+
+  editBookdataDescriptionFormat: {
+    id: 2,
+    title: 'Test Title',
+    author: 'Test Author',
+    pages: 4039,
+    year: 5634,
+    description: 'gdf  dgdg  gdfg  ',
+    quantity: 300,
+    categoryid: 5,
+    visibility: true,
+    imageUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
+    pdfUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
+  },
+
+  editBookdataQty: {
+    id: 2,
+    title: 'Test Title',
+    author: 'Test Author',
+    pages: 4039,
+    year: 5634,
+    description: 'gdgdggdfg',
+    quantity: '',
+    categoryid: 5,
+    visibility: true,
+    imageUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
+    pdfUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
+  },
+
+  editBookdataImageUrlFormatError: {
+    id: 2,
+    title: 'Test Title',
+    author: 'Test Abbey',
+    pages: 4039,
+    year: 5634,
+    description: 'gdgdggdfg',
+    quantity: 56,
+    categoryid: 5,
+    visibility: true,
+    imageUrl: 'https:/ /res.cloudina  ry.com/djvjx p2am/image/upload/v1507295978/book8_yy9efp.jpg',
+    pdfUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
+  },
+
+  editBookdataPdfUrlFormatError: {
+    id: 2,
+    title: 'Test Title',
+    author: 'Test Ola',
+    pages: 4039,
+    year: 5634,
+    description: 'gdgdggdfg',
+    quantity: 56,
+    categoryid: 5,
+    visibility: true,
+    imageUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
+    pdfUrl: 'https://res.cloudin  ary.com/djv jxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
+  },
+
+  editBookdataYearlengthError: {
+    id: 2,
+    title: 'Testitle',
+    author: 'Test Author',
+    pages: 4039,
+    year: 997347,
+    description: 'the books does this and that',
+    quantity: 300,
+    categoryid: 5,
+    visibility: true,
+    imageUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
+    pdfUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
+  },
+
+  editBookdata2: {
+    id: 2,
+    title: 'React for Beginners',
+    author: 'Nelson Brook',
+    pages: 100,
+    year: 2000,
+    description: 'the books does this and that',
+    quantity: 300,
+    categoryid: 5,
+    visibility: true,
+    imageUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
+    pdfUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
+  },
+
 
   //  Invalid book data isbn
   invalidBookdata1: {
@@ -270,6 +532,33 @@ const mockData = {
     pdf: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
   },
 
+  invalidBookdataInvalidAuthor: {
+    isbn: 123456,
+    title: 'rgergerg',
+    author: 'rrtrt     ttttt',
+    pages: 1080,
+    year: 2010,
+    description: 'the books does this and that',
+    quantity: 3,
+    categoryid: 2,
+    visibility: true,
+    imageUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
+    pdfUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
+  },
+
+  invalidBookdataInvalidIsbn: {
+    isbn: 1456,
+    title: '',
+    author: 'Nelson Brook',
+    pages: 1080,
+    year: 2010,
+    description: 'the books does this and that',
+    quantity: 3,
+    categoryid: 2,
+    visibility: true,
+    image: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
+    pdf: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
+  },
   // Invalid book data author
   invalidBookdata3: {
     isbn: 123456,
@@ -289,7 +578,7 @@ const mockData = {
   invalidBookdata4: {
     isbn: 123456,
     title: 'React for beginners',
-    author: '',
+    author: 'sdgsdgs',
     pages: '',
     year: 2010,
     description: 'the books does this and that',
@@ -313,6 +602,118 @@ const mockData = {
     visibility: true,
     image: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
     pdf: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
+  },
+
+  invalidBookdataYearLength: {
+    isbn: 123456,
+    title: 'React for beginners',
+    author: 'Dennis',
+    pages: 1223,
+    year: '9999999999',
+    description: 'the books does this and that',
+    quantity: 3,
+    categoryid: 2,
+    visibility: true,
+    image: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
+    pdf: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
+  },
+
+  tooManySpaceDescription: {
+    isbn: 123456,
+    title: 'React for beginners',
+    author: 'Dennis',
+    pages: 1223,
+    year: 6775,
+    description: 'ffe   erefdf  dfef  ',
+    quantity: 3,
+    categoryid: 2,
+    visibility: true,
+    image: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
+    pdf: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
+  },
+
+  emptyDescription: {
+    isbn: 123456,
+    title: 'React for beginners',
+    author: 'Dennis',
+    pages: 1223,
+    year: 6775,
+    description: '',
+    quantity: 3,
+    categoryid: 2,
+    visibility: true,
+    image: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
+    pdf: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
+  },
+
+  emptyQty: {
+    isbn: 123456,
+    title: 'React for beginners',
+    author: 'Dennis',
+    pages: 1223,
+    year: 6775,
+    description: 'sffgfgsfg sfd',
+    quantity: '',
+    categoryid: 2,
+    visibility: true,
+    image: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
+    pdf: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
+  },
+
+  emptyImageUrl: {
+    isbn: 123456,
+    title: 'React for beginners',
+    author: 'Dennis',
+    pages: 1223,
+    year: 6775,
+    description: 'sffgfgsfg',
+    quantity: 3,
+    categoryid: 2,
+    visibility: true,
+    imageUrl: '',
+    pdf: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
+  },
+
+  invalidImageUrl: {
+    isbn: 123456,
+    title: 'React for beginners',
+    author: 'Dennis',
+    pages: 1223,
+    year: 6775,
+    description: 'sffgfgsfg',
+    quantity: 3,
+    categoryid: 2,
+    visibility: true,
+    imageUrl: 'fdfd   dfdfdf   ddff',
+    pdf: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
+  },
+ 
+  emptyPdfUrl: {
+    isbn: 123456,
+    title: 'React for beginners',
+    author: 'Dennis',
+    pages: 1223,
+    year: 6775,
+    description: 'sffgfgsfg',
+    quantity: 3,
+    categoryid: 2,
+    visibility: true,
+    imageUrl: 'fdfddfdfdfddff',
+    pdfUrl: '',
+  },
+
+  invalidPdfUrl: {
+    isbn: 123456,
+    title: 'React for beginners',
+    author: 'Dennis',
+    pages: 1223,
+    year: 6775,
+    description: 'sffgfgsfg',
+    quantity: 3,
+    categoryid: 2,
+    visibility: true,
+    imageUrl: 'fdfdddff',
+    pdfUrl: 'fdfd  dfdfdf  ddff',
   },
   invalidBookdata: {
     isbn: '11164',

@@ -24,7 +24,6 @@ const authenticate = (BasicComponent) => {
  * @memberof Authenticate
  */
     componentWillMount() {
-      // console.log(localStorage.getItem('Access-Token'));
       jwt.verify(localStorage.getItem('Access-Token'), process.env.SECRET, (err, decoded) => {
         if(err) {
           localStorage.clear();

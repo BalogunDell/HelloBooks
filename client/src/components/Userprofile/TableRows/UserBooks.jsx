@@ -1,26 +1,25 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
- 
-const allUserBooks = ({
+
+/**
+ * Renders User books
+ * 
+ * @param {object} allUserBooks
+ * @param {Function} handleReturn
+ * 
+ * @method UserBooks
+ */
+const UserBooks = ({
 	allUserBooks,
-	getRowKey,
-	tableHeader,
-	handleReturn}) => {
+  handleReturn
+  }) => {
 	const books = allUserBooks.filter((book) => {
 		return book.book.visibility === true
 	});
 	const bookLength = books.length;
     return (
-			<div>
-
-				<div>
-					<h6 
-						className="right custom-text">{`Currently showing: ${tableHeader}`}
-					</h6>
-				</div>
-
-
-				<table className="highlight centered">
+			<div className= "styledUserBooksTable">
+				<table className="centered">
 					<thead>
 						<tr>
 							<th>Book image</th>
@@ -28,7 +27,7 @@ const allUserBooks = ({
 							<th>Author</th>
 							<th>Date Borrowed</th>
 							<th>Expected Return Date</th>
-							<th>Action</th>
+							{handleReturn === undefined ? null : <th>Action</th>}
 
 						</tr>
 					</thead>
@@ -37,26 +36,30 @@ const allUserBooks = ({
               bookLength == 0 
               ?
               <tr className="center">
-                <td>You have no book pending return</td>
+                <td>There are no books here</td>
                 </tr>
               :
 							books.map((book, id) =>
 						<tr key={id}>
 							<td>
-								<img src={book.book.image} alt="Book cover"/></td>
+								<img src={book.book.imageUrl} alt="Book cover"/></td>
 							<td>{book.book.title}</td>
 							<td>{book.book.author}</td>
 							<td>{book.dateborrowed}</td>
 							<td>{book.expectedreturndate}</td>
-							{book.returnstatus 
+							{
+              handleReturn === undefined 
+              ?
+              null
+              :
+                book.returnstatus 
 								? 
 							<td>
                 <button
 									className="btn waves-effect waves-teal custom"
 									disabled={true}>Return
 								</button>
-              </td>
-              
+              </td>          
                 :
               <td>  
 							  <button className="btn btn-small waves-effect waves-teal custom" 
@@ -74,4 +77,4 @@ const allUserBooks = ({
 	);
 }
 
-export default allUserBooks;
+export default UserBooks;

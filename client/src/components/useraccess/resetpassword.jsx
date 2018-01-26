@@ -2,16 +2,19 @@ import React, {PropTypes} from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import Navbar from '../navbar/Navbar';
+import Navbar from '../Navbar/Navbar';
 import Background from '../Background/Background';
-import Loader from '../userprofile/adminSubComponents/loader';
+import Loader from '../Userprofile/AdminSubComponents/Loader';
 import { resetPassword } from '../../Actions/userAccessAction';
 
 
 
 /**
- * @class Register
- * @classdesc returns the component for user signup
+ * @class ResetPassword
+ * 
+ * @classdesc the component for ResetPassword
+ * 
+ * @returns {object} JSX representation of DOM
  */
 class ResetPassword extends React.Component {
   constructor(props) {
@@ -35,7 +38,9 @@ class ResetPassword extends React.Component {
   /**
    * 
    * @param { object } event 
+   * 
    * @memberof ResetPassword
+   * 
    * @returns { object } new state for new password and confirm new password 
    */
   handleInput(event) {
@@ -46,9 +51,10 @@ class ResetPassword extends React.Component {
 
   /**
    * 
-   * 
    * @param { object } event 
+   * 
    * @memberof ResetPassword
+   * 
    * @returns { object } respose from api call 
    */
   handleSubmit(event) {
@@ -72,8 +78,9 @@ class ResetPassword extends React.Component {
         disableSubmitBtn: false});
     } else {
       this.setState({ loader: true, disableSubmitBtn: true }); 
-      // API call
-      this.props.saveNewPassword({password: this.state.newPassword}, this.props.url)
+      this.props.saveNewPassword({
+        password: this.state.newPassword},
+        this.props.url)
       .then(() => {
         this.setState({
           errorMessage: '',
@@ -99,6 +106,14 @@ class ResetPassword extends React.Component {
     }
   }
 
+  /**
+   * 
+   * React Lifecycle hook - componentWillMount
+   * 
+   * @memberof ResetPassword
+   * 
+   * @returns { object } updated state 
+   */
   componentWillMount() {
     this.props.saveNewPassword(null, this.props.url)
     .then((response)=> {
@@ -113,16 +128,18 @@ class ResetPassword extends React.Component {
 
 
 
-/**
- * 
- * 
- * @returns { jsx } a change password screen
- * @memberof ResetPassword
- */
-render() {
-  return( 
-    <div>
-      {
+  /**
+   * 
+   * React render method - componentWillMount
+   * 
+   * @memberof ResetPassword
+   * 
+   * @returns { JSX } JSX representation of DOM 
+   */
+  render() {
+    return( 
+      <div>
+        {
         this.state.redirectOnExpiredUrl 
         ?
           <Redirect to ="/login"/>
@@ -131,7 +148,8 @@ render() {
             <Navbar/>
               <div className="resetPassword">
                 <div className="container">
-                  <form className="col s6 offset-s3" onSubmit={this.handleSubmit}>
+                  <form className="col s6 offset-s3"
+                    onSubmit={this.handleSubmit}>
                     <h5>Password Reset Form</h5>
                     <div className="input-field">
                       <label htmlFor="password">New Password</label>
@@ -141,11 +159,15 @@ render() {
                     </div>
 
                     <div className="input-field">
-                      <label htmlFor="confirmPassword">Confirm New Password</label>
+                      <label htmlFor="confirmPassword">
+                        Confirm New Password
+                      </label>
                       <input type="password"
-                      name="confirmNewPassword"
-                      className="validate" value={this.state.email} 
-                      onChange={this.handleInput}/>
+                        name="confirmNewPassword"
+                        className="validate"
+                        value={this.state.email} 
+                        onChange={this.handleInput}
+                      />
                     </div>
                     
                     <div className="row center-align">
@@ -157,13 +179,17 @@ render() {
                         }
                       { this.state.errorStatus
                         ?
-                        <h6 className="red-text">{this.state.errorMessage}</h6>
+                        <h6 className="red-text">
+                          {this.state.errorMessage}
+                        </h6>
                         : 
                         null 
                         }
                       { this.state.successMessage 
                         ? 
-                        <h6 className="green-text">{this.state.successMessage}</h6> 
+                        <h6 className="green-text">
+                        {this.state.successMessage}
+                        </h6> 
                         : 
                         null 
                         }             
@@ -185,13 +211,28 @@ render() {
   }
 }
 
-function mapStateToProps(state, ownProps) {
+/**
+ * Redux connect parameter - mapStateToProps
+ * 
+ * @param {object} state
+ * @param {object} ownProps
+ * 
+ * @returns {object} state with mappped props 
+ */
+const mapStateToProps = (state, ownProps) => {
   return {
     url: ownProps.match.params.uniqueUrl
   }
 }
 
-function dispatchToProps(dispatch) {
+/**
+ * Redux connect parameter - mapStateToProps
+ * 
+ * @param {object} dipatch
+ * 
+ * @returns {object} dispatched actions
+ */
+const dispatchToProps = (dispatch) => {
   return {
     saveNewPassword: (newPassword, uniqueUrl) => dispatch(
       resetPassword(newPassword, uniqueUrl

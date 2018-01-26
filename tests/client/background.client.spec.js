@@ -9,7 +9,7 @@ import expect, { spyOn } from 'expect'
 
 import Background from '../../client/src/components/Background/Background';
 
-import Navbar from '../../client/src/components/navbar/Navbar';
+import Navbar from '../../client/src/components/Navbar/Navbar';
 import { publishedBooksSample } from './mocks/mockdata';
 import mockStorage from './mocks/mockDataStorage';
 

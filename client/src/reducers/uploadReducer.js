@@ -7,11 +7,11 @@ const uploadReducer = (state = {}, action) => {
   switch (action.type) {
     case SAVE_IMAGE:
       return {
-        ...state, image: action.image
+        ...state, imageUrl: action.image
       };
     case SAVE_PDF:
       return {
-        ...state, pdf: action.pdf
+        ...state, pdfUrl: action.pdf
       };
     default:
       return state;

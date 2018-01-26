@@ -12,10 +12,10 @@ const User = (sequelize, DataTypes) => {
         },
         is: {
           args: /([A-Za-z])+/,
-          msg: 'Firstname can only contain strings'
+          msg: 'Firstname can only contain alphabets'
         },
         len: {
-          args: [3, 100],
+          args: [2, 100],
           msg: 'Firstname should be longer than two characters'
         }
       }
@@ -30,10 +30,10 @@ const User = (sequelize, DataTypes) => {
         },
         is: {
           args: /([A-Za-z])+/,
-          msg: 'Lastname can only contain strings'
+          msg: 'Lastname can only contain alphabets'
         },
         len: {
-          args: [3, 100],
+          args: [2, 100],
           msg: 'Lastname should be longer than two characters'
         }
       }
@@ -67,10 +67,14 @@ const User = (sequelize, DataTypes) => {
           args: true,
           msg: 'Username cannot be empty'
         },
+        len: {
+          args: [1, 100],
+          msg: 'Username should be longer than two characters'
+        },
         is: {
-          args: /(\D+)(\d+)/gi,
-          msg: 'Username must start with letter(s) and end with digit(s)'
-        }
+          args: /(\d)+/,
+          msg: 'Username cannot be numbers'
+        },
       }
     },
     password: {
@@ -97,11 +101,11 @@ const User = (sequelize, DataTypes) => {
       allowNull: true,
       defaultValue: 'user'
     },
-    image: {
+    imageUrl: {
       type: DataTypes.STRING,
       allowNull: true
     },
-    passurl: {
+    passwordReseturl: {
       type: DataTypes.STRING,
       allowNull: true
     }
