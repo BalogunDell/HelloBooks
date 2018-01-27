@@ -2,12 +2,25 @@ import express from 'express';
 import UserController from '../controller/UserController';
 import BookController from '../controller/BookController';
 import helper from '../middleware/Helper';
-import PayloadValidator from '../middleware/PayloadValidator';
+import InputValidator from '../middleware/InputValidator';
 import Authentication from '../middleware/Authentication';
+import Helper from '../middleware/Helper';
 
 const appRouter = express.Router();
 
-// Api home
+/**
+* @param  {} '/api/v1/users/signup'
+*
+* @param  {} checkUserInput
+*
+* @param  {} checkValidUserInput
+*
+* @param  {} checkUserInvalidInput
+*
+* @param  {} validateUsers
+*
+* @param  {} users.signup
+*/
 appRouter.get('/', (req, res) => {
   res.status(200)
     .json({
@@ -18,17 +31,20 @@ appRouter.get('/', (req, res) => {
 
 // User Routes
 appRouter.post('/users/signup',
-  PayloadValidator.signupValidator,
+  InputValidator.signupValidator,
   UserController.signup);
+
 appRouter.post('/users/signin',
-  PayloadValidator.loginValidator,
+  InputValidator.loginValidator,
   UserController.signin);
+
 
 // Add and fetch categories
 appRouter.post('/newcategory',
+  InputValidator.checkCategoryPayload,
   Authentication.verifyAdmin,
-  PayloadValidator.checkCategoryPayload,
   BookController.addCategory);
+
 appRouter.get('/categories',
   Authentication.verifyAdmin,
   BookController.getCategories);
@@ -36,44 +52,56 @@ appRouter.get('/categories',
 
 // Generate uique url for password reset, Reset password
 appRouter.post('/resetpassword',
-  PayloadValidator.resetPassEmailVerifer,
+  InputValidator.resetPassEmailVerifer,
   UserController.generateResetPassUrl);
+
 appRouter.put('/resetpassword/:resetUrl',
-  PayloadValidator.resetPassVerifier,
+  InputValidator.resetPassVerifier,
   Authentication.verifyUrl,
   UserController.resetPassword);
 
 
 appRouter.route('/books')
-  .get(Authentication.verifyUser, BookController.getBooks)
-  .post(PayloadValidator.bookPayloadVerifier,
-    Authentication.verifyAdmin, BookController.addBook);
+  .get(Authentication.verifyAdmin,
+    BookController.getBooks)
 
-// Get all borrowed books for admin to display
+  .post(InputValidator.bookPayloadChecker,
+    Authentication.verifyAdmin,
+    BookController.addBook);
+
 appRouter.get('/books/borrowedbooks',
   Authentication.verifyAdmin,
   BookController.getBorrowedBooks);
 
 appRouter.route('/books/:id')
   .put(
-    PayloadValidator.editBookVerifier,
+    InputValidator.editBookVerifier,
     Authentication.verifyAdmin,
+    Helper.checkBookId,
     BookController.modifyBook)
-  .get(Authentication.verifyAdmin,
+
+  .get(
+    Helper.checkBookId,
+    Authentication.verifyAdmin,
     BookController.getBookById)
+
   .delete(Authentication.verifyAdmin,
     BookController.deleteBook);
 
 appRouter.route('/users/:userId/books')
   .post(
+    InputValidator.verifyBookId,
     Authentication.verifyUser,
-    PayloadValidator.verifyBorrowPayload,
     helper.checkBook,
-    helper.verify,
+    helper.verifyBookLimit,
     BookController.borrowBook)
+
   .get(Authentication.verifyUser,
     UserController.getUserBooks)
-  .put(Authentication.verifyUser,
+
+  .put(
+    InputValidator.verifyBookId,
+    Authentication.verifyUser,
     BookController.returnBook);
 
 appRouter.route('/users/:userId/')
@@ -87,9 +115,7 @@ appRouter.get('/trendingbooks',
   BookController.fetchTrendingBooks
 );
 
-appRouter.post('/googleuser',
-  PayloadValidator.signupValidator,
-  UserController.newGoogleAccess);
+appRouter.post('/googleuser', UserController.newGoogleAccess);
 
 // redirect every other address
 appRouter.route('*')

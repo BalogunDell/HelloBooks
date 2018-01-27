@@ -1,4 +1,5 @@
 /**
+ * @description Validates a supplied email
  * 
  * @param {string} email
  * 

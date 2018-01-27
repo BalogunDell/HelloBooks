@@ -7,23 +7,24 @@ import emailTemplate from '../utils/emailTemplate';
 import {
   findOneResourceById,
 } from '../utils/queryFinder';
+import paramValid from '../utils/paramValid';
 
 require('dotenv').config();
 
 const secret = process.env.SECRET;
 const mailPassword = process.env.PASSWORD;
-const borrowedBookModel = model.Borrowedbook;
+const borrowedBookModel = model.BorrowedBook;
 const bookModel = model.Book;
 
 /**
+ * @class authentication
  * 
- * @param {object} req - request object 
- * @param {object} res - response object
- * 
- * @returns { object} - returns an object
+ * @classdesc creates an authentication class
  */
 class Helper {
 /** 
+ * @description This method checks if a book exists. It is a middleware
+ * 
  * @param { object } req - request object
  * @param { object } res - response object
  * @param { object } next - passes action to following controller
@@ -31,9 +32,10 @@ class Helper {
  * @returns { object } - books with count and rows
  */
   static checkBook(req, res, next) {
-    findOneResourceById(bookModel, (parseInt(req.body.bookid, 10)))
+    const { bookId } = req.body;
+
+    findOneResourceById(bookModel, (parseInt(bookId, 10)))
       .then((book) => {
-        console.log(book);
         if (!book) return res.status(404).json({ errorMessage: 'Book not found' });
         if (!book.dataValues.quantity) {
           return res.status(200).json({
@@ -43,23 +45,23 @@ class Helper {
         req.book = book;
         next();
       })
-      .catch((error) => {
+      .catch(() => {
         res.status(500).json({
           errorMessage: 'Internal server error'
         });
-        console.log(error);
       });
   }
 
-  /** 
- * @param { object } req  - request object
- * @param { object } res  - response object 
- * @param { object } next - passes action to following controller
- * 
- * @returns { object } - books with count and rows
- * 
- */
-  static verify(req, res, next) {
+  /**
+   * @description This metho verifies the book limit of a user
+   * 
+   * @param { object } req  - request object
+   * @param { object } res  - response object 
+   * @param { object } next - passes action to following controller
+   * 
+   * @returns { object } - books with count and rows
+  */
+  static verifyBookLimit(req, res, next) {
     const { bookId, userId } = req.body;
     const query = {
       where: {
@@ -91,6 +93,7 @@ class Helper {
   }
 
   /**
+   * @description This method composes a request to be used in another route
    * @param { object} req - request object
    * @param { object} res - response object
    * 
@@ -100,8 +103,8 @@ class Helper {
     const { bookId } = req.body;
     if (!bookId) return res.status(400).json({ message: 'Provide a book id' });
     const body = {
-      bookid: req.body.bookId,
-      userid: req.body.userId,
+      bookId: req.body.bookId,
+      userId: req.body.userId,
       expectedreturndate: moment()
         .add(util[req.membership.toLowerCase()].limit, 'days')
         .format('YYYY-MM-DD')
@@ -110,6 +113,7 @@ class Helper {
   }
 
   /**
+   * @description This generates a token
    * 
    * @param { Object } user - user payload
    * 
@@ -133,6 +137,39 @@ class Helper {
 
 
   /**
+   * @description This decodes a token
+   * 
+   * @param { Object } token - user token
+   * 
+   * @returns { object }  - decoded token
+   */
+  static decodeToken(token) {
+    return jwt.verify(token, secret);
+  }
+
+  /**
+   * @description checks if supplied Id is valid
+   * 
+   * @param { Object } req - request object
+   * @param { Object } res - response object
+   * @param { Object } next
+   * 
+   * @returns { object }  - decoded token
+   */
+  static checkBookId(req, res, next) {
+    const { id } = req.params;
+    if (paramValid(id)) {
+      return res.status(400).json({
+        message: 'You have provided an invalid id'
+      });
+    }
+    req.body.id = id;
+    return next();
+  }
+
+
+  /**
+   * @description This method generates a string to be used for password reset
    * 
    * @param { number } arg - the number of characters
    * @param { string } characters - the actual characters
@@ -147,8 +184,8 @@ class Helper {
     return urlString;
   }
 
-
   /**
+   * @description This method generates email to be sent for password reset
    * 
    * @param { string } userEmail  - email destination
    * @param { string } passwordUrl - generated url
@@ -156,7 +193,6 @@ class Helper {
    * @returns { Function } sendMail method
    */
   static generateMail(userEmail, passwordUrl) {
-    // Define email transporter
     const mailCourier = nodeMailer.createTransport({
       service: 'gmail',
       auth: {
@@ -165,7 +201,6 @@ class Helper {
       }
     });
 
-    // Define email content and optiobs
     const mailOptions = {
       from: 'delighteddell@gmail.com',
       to: userEmail,

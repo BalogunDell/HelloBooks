@@ -9,8 +9,10 @@ import validateEmail from './validateEmail';
  * 
  * @returns { object } - returns an object
  */
-class PayloadValidator {
+class InputValidator {
 /** 
+ * @description Validates login payload
+ * 
  * @param { object } req request object
  * @param { object } res response object
  * @param { object } next passes action to following controller
@@ -18,7 +20,6 @@ class PayloadValidator {
  * @returns { object } req
  */
   static loginValidator(req, res, next) {
-    console.log(req.body);
     const {
       username,
       password
@@ -27,30 +28,30 @@ class PayloadValidator {
     if (username === undefined || password === undefined) {
       return res.status(400)
         .json({
-          error: 'Username and password are both required'
+          errorMessage: 'Username and password are both required'
         });
     }
     if (username === '' || password === '' || !req.body) {
       return res.status(401)
-        .json({ error: 'Provide your username and password to login'
+        .json({ errorMessage: 'Provide your username and password to login'
         });
     }
     if (username.length < 2) {
       return res.status(400)
         .json({
-          error: 'Username should be two or more characters'
+          errorMessage: 'Username should be two or more characters'
         });
     }
     if (password.length < 5) {
       return res.status(400)
         .json({
-          error: 'Password should not be less than 5 characters'
+          errorMessage: 'Password should not be less than 5 characters'
         });
     }
     if (typeof username === 'number') {
       return res.status(400)
         .json({
-          error: 'Invalid Username'
+          errorMessage: 'Invalid Username'
         });
     }
     req.body = {
@@ -61,6 +62,8 @@ class PayloadValidator {
   }
 
   /** 
+ * @description Validates signup payload
+ * 
  * @param { object } req request object
  * @param { object } res response object
  * @param { object } next passes action to following controller
@@ -81,38 +84,55 @@ class PayloadValidator {
     if (firstname === undefined) {
       return res.status(400)
         .json({
-          error: 'Firstname is required'
+          errorMessage: 'Firstname is required'
         });
     }
+
+    if (firstname === '') {
+      return res.status(400)
+        .json({
+          errorMessage: 'Firstname cannot be empty'
+        });
+    }
+
+
     if (firstname.length < 2) {
       return res.status(400)
         .json({
-          error: 'Firstname should be two or more characters'
+          errorMessage: 'Firstname should be two or more characters'
         });
     }
     if (typeof firstname === 'number') {
       return res.status(400)
         .json({
-          error: 'Firstname should only contain alphabets'
+          errorMessage: 'Firstname should only contain alphabets'
         });
     }
     // Validate lastname
+    
+    if (lastname === undefined) {
+      return res.status(400)
+        .json({
+          errorMessage: 'Lastname is required'
+        });
+    }
+
     if (!lastname) {
       return res.status(400)
         .json({
-          error: 'Lastname is required'
+          errorMessage: 'Lastname is required'
         });
     }
     if (lastname.length < 2) {
       return res.status(400)
         .json({
-          error: 'Lastname should be two or more characters'
+          errorMessage: 'Lastname should be two or more characters'
         });
     }
     if (typeof lastname === 'number') {
       return res.status(400)
         .json({
-          error: 'Lastname should only contain alphabets'
+          errorMessage: 'Lastname should only contain alphabets'
         });
     }
 
@@ -120,19 +140,26 @@ class PayloadValidator {
     if (username === undefined) {
       return res.status(400)
         .json({
-          error: 'Username is required'
+          errorMessage: 'Username is required'
         });
     }
     if (typeof username === 'number') {
       return res.status(400)
         .json({
-          error: 'Numbers cannot be used as username'
+          errorMessage: 'Numbers cannot be used as username'
         });
     }
     if (username === '') {
       return res.status(400)
         .json({
-          error: 'Username cannot be empty'
+          errorMessage: 'Username cannot be empty'
+        });
+    }
+
+    if (username.length < 2) {
+      return res.status(400)
+        .json({
+          errorMessage: 'Username should be two or more characters'
         });
     }
 
@@ -140,20 +167,20 @@ class PayloadValidator {
     if (password === undefined) {
       return res.status(400)
         .json({
-          error: 'Password is required'
+          errorMessage: 'Password is required'
         });
     }
     if (password === '') {
       return res.status(400)
         .json({
-          error: 'Password cannot be empty'
+          errorMessage: 'Password cannot be empty'
         });
     }
 
     if (password.length < 5) {
       return res.status(400)
         .json({
-          error: 'Password should not be less than 5 characters'
+          errorMessage: 'Password should not be less than 5 characters'
         });
     }
 
@@ -161,21 +188,21 @@ class PayloadValidator {
     if (email === undefined) {
       return res.status(400)
         .json({
-          error: 'Email is required'
+          errorMessage: 'Email is required'
         });
     }
 
     if (email === '') {
       return res.status(400)
         .json({
-          error: 'Email cannot be empty'
+          errorMessage: 'Email cannot be empty'
         });
     }
     
     if (!validateEmail(email)) {
       return res.status(400)
         .json({
-          error: 'Provided email is invalid'
+          errorMessage: 'Provided email is invalid'
         });
     }
     req.body = {
@@ -188,7 +215,9 @@ class PayloadValidator {
     return next();
   }
 
-/** 
+/**
+ * @description Validates email for password reset
+ *  
  * @param { object } req request object
  * @param { object } res response object
  * @param { object } next passes action to following controller
@@ -202,14 +231,21 @@ class PayloadValidator {
     if (!email) {
       return res.status(400)
         .json({
-          error: 'Email is required'
+          errorMessage: 'Email is required'
+        });
+    }
+
+    if (typeof email === 'number') {
+      return res.status(400)
+        .json({
+          errorMessage: 'Provide your valid email'
         });
     }
 
     if (!validateEmail(email)) {
       return res.status(400)
         .json({
-          error: 'Provide your valid email'
+          errorMessage: 'Provide your valid email'
         });
     }
 
@@ -217,6 +253,8 @@ class PayloadValidator {
   }
 
 /** 
+ * @description Validates password reset url
+ * 
  * @param { object } req request object
  * @param { object } res response object
  * @param { object } next passes action to following controller
@@ -224,28 +262,30 @@ class PayloadValidator {
  * @returns { object } resquest body
  */
  static resetPassVerifier(req, res, next) {
-    const resetUrl = req.params.resetUrl;
+    const { resetUrl } = req.params;
     const newPassword = req.body.password;
     if ((!newPassword) || (newPassword === '')) {
       res.status(400).json({ message: 'Please type in your new password' });
     } else if (newPassword.length < 6) {
       res.status(400).json({ message: 'Password should not be less than 5 characters' });
     } else {
-      const hashP = bcrypt.hashSync(newPassword, bcrypt.genSaltSync(10));
-      req.body.password = hashP;
+      const hashPassword = bcrypt.hashSync(newPassword, bcrypt.genSaltSync(10));
+      req.body.password = hashPassword;
       req.body.passwordResetUrl = resetUrl;
       next();
     }
   }
 
 /** 
+ * @description Validates payload to create a book 
+ * 
  * @param { object } req request object
  * @param { object } res response object
  * @param { object } next passes action to following controller
  * 
  * @returns { object } resquest body
  */
- static bookPayloadVerifier(req, res, next) {
+ static bookPayloadChecker(req, res, next) {
     const {
       isbn,
       author,
@@ -387,7 +427,9 @@ class PayloadValidator {
   }
 
 
-  /** 
+  /**
+ * @description Validates new category payload
+ *  
  * @param { object } req request object
  * @param { object } res response object
  * @param { object } next passes action to following controller
@@ -420,19 +462,21 @@ class PayloadValidator {
     return next();
   }
 
-  /** 
+/**
+ * @description Verfifies if book Id is valid (number)
+ * 
  * @param { object } req request object
  * @param { object } res response object
  * @param { object } next passes action to following controller
  * 
  * @returns { object } resquest body
  */
-  static verifyBorrowPayload(req, res, next) {
-    console.log(req.body);
-    const { bookId } = parseInt(req.body.bookId, 10);
-    const id = parseInt(bookId, 10);
-    console.log(id);
-    if (typeof id !== 'number') {
+  static verifyBookId(req, res, next) {
+    const { bookId } = req.body;
+    console.log(parseInt(bookId, 10));
+    console.log(typeof bookId === 'number');
+    console.log(typeof req.body.bookId);
+    if (typeof bookId !== 'number') {
       return res.status(400)
         .json({
           errorMessage: 'Please provide a valid book id'
@@ -441,7 +485,9 @@ class PayloadValidator {
     return next();
   }
 
-  /** 
+/**
+ * @description Validates payload to edit book
+ *  
  * @param { object } req request object
  * @param { object } res response object
  * @param { object } next passes action to following controller
@@ -578,5 +624,5 @@ class PayloadValidator {
   }
 }
 
-export default PayloadValidator;
+export default InputValidator;
 

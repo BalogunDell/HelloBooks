@@ -22,60 +22,60 @@
 // let userId;
 // let generatedUrl= 'uFUhdjHDJjdf';
 
-// // Seeds
-//   before((done) => {
-//     models.sequelize.sync({force:true}, {individualHooks: true})
-//     .then(() => {
-//       done();
-//     })
-//   });
+// // // Seeds
+// //   before((done) => {
+// //     models.sequelize.sync({force:true}, {individualHooks: true})
+// //     .then(() => {
+// //       done();
+// //     })
+// //   });
 
-//   // Save admin and normal user, sign them in and get token
-//   before((done) => {
-//     models.user.bulkCreate(fakeUsers.users, {individualHooks: true})
-//     .then(() => {
-//       request
-//       .post(`${userAPI}/signin`)
-//       .send({
-//         username: fakeUsers.users[0].username,
-//         password: fakeUsers.users[0].password
-//       })
-//       .end((err, res) => {
-//         adminToken=res.body.responseData.token;
-//       });
-//     })
-//     .then(() => {
-//       request
-//       .post(`${userAPI}/signin`)
-//       .send({
-//         username: fakeUsers.users[1].username,
-//         password: fakeUsers.users[1].password})
+// //   // Save admin and normal user, sign them in and get token
+// //   before((done) => {
+// //     models.User.bulkCreate(fakeUsers.users, {individualHooks: true})
+// //     .then(() => {
+// //       request
+// //       .post(`${userAPI}/signin`)
+// //       .send({
+// //         username: fakeUsers.users[0].username,
+// //         password: fakeUsers.users[0].password
+// //       })
+// //       .end((err, res) => {
+// //         adminToken=res.body.responseData.token;
+// //       });
+// //     })
+// //     .then(() => {
+// //       request
+// //       .post(`${userAPI}/signin`)
+// //       .send({
+// //         username: fakeUsers.users[1].username,
+// //         password: fakeUsers.users[1].password})
         
-//       .end((err, res) => {
-//         userToken=res.body.responseData.token;
-//         userId = res.body.responseData.user.userID;
-//         done();
-//       });
-//     });
-//   })
+// //       .end((err, res) => {
+// //         userToken=res.body.responseData.token;
+// //         userId = res.body.responseData.user.userID;
+// //         done();
+// //       });
+// //     });
+// //   })
   
-//   //Load sample category before test
-//   before((done) => {
-//     models.category.bulkCreate(categories.categories, {individualHooks: true})
-//     .then(() => {
-//       done();
-//     })
-//   });
+// //   //Load sample book before test
+// //   before((done) => {
+// //     models.Book.bulkCreate(fakeBooks.books, {individualHooks: true})
+// //     .then(() => {
+// //       done();
+// //     })
+// //   });
 
 
-//   //Load sample book before test
-//   before((done) => {
-//     models.book.bulkCreate(fakeBooks.books, {individualHooks: true})
-//     .then(() => {
-//       done();
-//     })
-//   });
-
+// //   //Load sample category before test
+// //   before((done) => {
+// //       models.Category.bulkCreate(categories.categories, {individualHooks: true})
+// //       .then(() => {
+// //           done();
+// //       })
+// //       });
+    
 
 //   //**********************************//
 //   //********TEST USER SIGNUP ******* //

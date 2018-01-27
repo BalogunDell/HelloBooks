@@ -32,7 +32,7 @@ let generatedUrl= 'uFUhdjHDJjdf';
 
   // Save admin and normal user, sign them in and get token
   before((done) => {
-    models.user.bulkCreate(fakeUsers.users, {individualHooks: true})
+    models.User.bulkCreate(fakeUsers.users, {individualHooks: true})
     .then(() => {
       request
       .post(`${userAPI}/signin`)
@@ -58,19 +58,18 @@ let generatedUrl= 'uFUhdjHDJjdf';
       });
     });
   })
-  
-  //Load sample category before test
+
+  //Load sample book before test
   before((done) => {
-    models.category.bulkCreate(categories.categories, {individualHooks: true})
+    models.Book.bulkCreate(fakeBooks.books, {individualHooks: true})
     .then(() => {
       done();
     })
   });
 
-
-  //Load sample book before test
-  before((done) => {
-    models.book.bulkCreate(fakeBooks.books, {individualHooks: true})
+   //Load sample category before test
+   before((done) => {
+    models.Category.bulkCreate(categories.categories, {individualHooks: true})
     .then(() => {
       done();
     })

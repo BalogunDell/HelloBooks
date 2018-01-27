@@ -1,6 +1,5 @@
 import model from '../models';
 import errorMessages from '../middleware/errorMessages';
-import paramValid from '../utils/paramValid';
 import {
   findOneResource,
   findOneResourceById,
@@ -9,7 +8,7 @@ import {
 
 const bookModel = model.Book;
 const categoryModel = model.Category;
-const borrowedBookModel = model.BorrowBook;
+const borrowedBookModel = model.BorrowedBook;
 
 /**
  * @class Book
@@ -18,6 +17,8 @@ const borrowedBookModel = model.BorrowBook;
  */
 class BookController {
   /**
+   * @description this method adds a new book to the database
+   * 
    * @param {object} req 
    * @param {object} res
    * 
@@ -43,18 +44,15 @@ class BookController {
 
 
   /**
+   * @description This method deletes a book from the database
+   * 
    * @param {object} req request object
    * @param {object} res response object
    * 
    * @returns {object} deleted book id and message
    */
   static deleteBook(req, res) {
-    const bookId = parseInt(req.params.id, 10);
-    if (paramValid(bookId)) {
-      return res.status(400).json({
-        message: 'You have provided an invalid id'
-      });
-    }
+    const { bookId } = req.body;
     findOneResource(borrowedBookModel,
       { where: {
         bookid: bookId, returnstatus: false } })
@@ -91,6 +89,8 @@ class BookController {
 
 
   /**
+   * @description This method gets all the books in the database
+   * 
    * @param {object} req Request object
    * @param {object} res Response object
    * 
@@ -108,13 +108,15 @@ class BookController {
   }
 
   /**
+   * @description This method gets all the borrowed books in the database
+   * 
    * @param {object} req Request object
    * @param {object} res Response object
    * 
    * @returns {object} borrowedbooks
    */
   static getBorrowedBooks(req, res) {
-    findAllResources({ include: { model: bookModel,
+    findAllResources(borrowedBookModel, { include: { model: bookModel,
       include: { model: categoryModel } } })
       .then((response) => {
         res.status(200).json({ books: response });
@@ -124,18 +126,15 @@ class BookController {
   }
 
   /**
+   * @description This method gets a book by its Id
+   * 
    * @param {object} req Request object
    * @param {object} res  Response object
    * 
    * @returns {object} book payload
    */
   static getBookById(req, res) {
-    const bookId = parseInt(req.params.id, 10);
-    if (paramValid(bookId)) {
-      return res.status(400).json({
-        message: 'You have provided an invalid id'
-      });
-    }
+    const { bookId } = req.params;
     findOneResource(bookModel,
       { where: { id: bookId, visibility: true } })
       .then((book) => {
@@ -153,21 +152,18 @@ class BookController {
 
 
   /**
- * @param {object} req Request object
- * @param {object} res Response object
+ * @description This method edits or modifies a book in the database
  * 
- * @returns {object} modified book payload
+ * @param {object} req request object
+ * @param {object} res response object
+ * 
+ * @returns {object} Modified book
  */
   static modifyBook(req, res) {
-    const bookId = parseInt(req.params.id, 10);
-    if (paramValid(bookId)) {
-      return res.status(400).json({
-        message: 'You have provided an invalid id'
-      });
-    }
+    const { id } = req.body;
     const query = {
       where: {
-        id: bookId,
+        id,
         visibility: true
       }
     };
@@ -176,7 +172,7 @@ class BookController {
       author: req.body.author,
       year: req.body.year,
       title: req.body.title,
-      categoryid: req.body.categoryid,
+      categoryId: req.body.categoryId,
       description: req.body.description,
       quantity: req.body.quantity,
       imageUrl: req.body.imageUrl,
@@ -228,27 +224,30 @@ class BookController {
   }
 
   /**
+   * @description This method allows a user to borrow a book
+   * 
    * @param {object} req request object
    * @param {object} res response object
    * 
    * @returns {object} response payload
    */
   static borrowBook(req, res) {
-    const { bookid, userid, expectedreturndate } = req.body;
+    const { bookId, userId, expectedreturndate } = req.body;
     const payload = {
-      bookid,
-      userid,
+      bookId,
+      userId,
       expectedreturndate
     };
     borrowedBookModel.create(payload)
       .then((response) => {
         bookModel.update({ quantity: req.book.dataValues.quantity - 1 },
-          { where: { id: response.dataValues.bookid } })
+          { where: { id: response.dataValues.bookId } })
           .then((updateResponse) => {
             if (updateResponse) {
               res.status(201).json({
                 message: 'You have successfully borrowed this book',
-                returnDate: req.body.expectedreturndate });
+                returnDate: req.body.expectedreturndate,
+                bookBorrowed: response.dataValues });
             }
           })
           .catch(() => {
@@ -266,6 +265,7 @@ class BookController {
 
 
   /**
+   * @description This method allows a user to return a borrowed book
    * 
    * @param { object } req Requst body
    * @param { object } res Response body
@@ -331,6 +331,7 @@ class BookController {
   }
 
   /**
+   * @description This method adds a category to the database
    * 
    * @param {object} req request body
    * @param {object} res response body
@@ -371,6 +372,7 @@ class BookController {
   }
 
   /**
+   * @description This method fetches all categories from the database
    * 
    * @param { object } req request object
    * @param { object } res respones object
@@ -392,6 +394,7 @@ class BookController {
   }
 
   /**
+   * @description This method fetches the last 4 upload books as trending books
    * 
    * @param { object } req request object
    * @param { object } res response object

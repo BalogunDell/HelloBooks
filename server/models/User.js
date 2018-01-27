@@ -72,7 +72,7 @@ export default (sequelize, DataTypes) => {
           msg: 'Username should be longer than two characters'
         },
         is: {
-          args: /(\d)+/,
+          args: /(\D)+/,
           msg: 'Username cannot be numbers'
         },
       }
@@ -87,7 +87,7 @@ export default (sequelize, DataTypes) => {
         },
         len: {
           args: [5, 1000],
-          msg: 'Password should not be less than 5 characters'
+          msg: 'Please provide a password with atleast 5 characters.'
         }
       }
     },
@@ -120,8 +120,9 @@ export default (sequelize, DataTypes) => {
     },
     hooks: {
       beforeCreate: (user) => {
-        const hashP = bcrypt.hashSync(user.password, bcrypt.genSaltSync(10));
-        user.password = hashP;
+        const hashedPassword = bcrypt.hashSync(user.password,
+          bcrypt.genSaltSync(10));
+        user.password = hashedPassword;
         return user;
       }
     }

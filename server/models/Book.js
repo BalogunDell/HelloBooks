@@ -112,7 +112,7 @@ export default (sequelize, DataTypes) => {
     },
     categoryId: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: true
     },
     visibility: {
       type: DataTypes.BOOLEAN,

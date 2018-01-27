@@ -2,9 +2,11 @@ import bcrypt from 'bcrypt';
 import model from '../models';
 import helper from '../middleware/Helper';
 import errorMessages from '../middleware/errorMessages';
+import paramValid from '../utils/paramValid';
 import {
-  findOneResource,
-  findOneResourceById
+  findOneResourceById,
+  findAllResources,
+  findOneResource
 } from '../utils/queryFinder';
 
 
@@ -22,6 +24,8 @@ const bookModel = model.Book;
  */
 class UserController {
   /**
+   * @description This method handles a new user registration
+   * 
    * @param { object } req - request object
    * @param { object } res - response object
    * 
@@ -36,7 +40,7 @@ class UserController {
           token,
           user: {
             username: user.username,
-            userID: user.id,
+            userId: user.id,
             userRole: user.role,
             imageUrl: user.imageUrl,
           }
@@ -61,13 +65,15 @@ class UserController {
   }
 
   /**
+   * @description This method allows a user login with their google account
+   * 
    * @param { object } req - request object
    * @param { object} res  - response object
    * 
    * @returns { object } user data with token
    */
   static newGoogleAccess(req, res) {
-    userModel.findOne({ where:
+    findOneResource(userModel, { where:
       {
         email: req.body.email,
       }
@@ -86,7 +92,7 @@ class UserController {
             } };
           return res.status(200).json({ responseData });
         }
-        return User.signup(req, res);
+        return UserController.signup(req, res);
       })
       .catch(() => {
         return res.status(500)
@@ -97,6 +103,8 @@ class UserController {
   }
 
   /**
+   * @description This method signs a registered user in
+   * 
    * @param { object } req - request object
    * @param { object} res  - response object
    * 
@@ -145,6 +153,8 @@ class UserController {
   }
 
   /**
+   * @description For password reset, this method generates and sends emails
+   * 
    * @param { object } req  - request object
    * @param { object } res  - response object
    * 
@@ -155,8 +165,8 @@ class UserController {
       .then((response) => {
         if (response) {
           const resetPassUrl = helper.urlGenerator(12, process.env.CHARACTERS);
-          userModel.update({ passwordReseturl: resetPassUrl }, { where:
-            { email: req.body.email } })
+          userModel.update({ passwordReseturl: resetPassUrl },
+            { where: { email: req.body.email } })
             .then(() => {
               helper.generateMail(req.body.email, resetPassUrl)
                 .then((mailerResponse) => {
@@ -167,7 +177,9 @@ class UserController {
                   }
                 })
                 .catch((mailerError) => {
-                  res.status(500).json({ errorMessage: mailerError });
+                  res.status(500).json({
+                    errorMessage: mailerError
+                  });
                 });
             })
             .catch((error) => {
@@ -186,6 +198,8 @@ class UserController {
 
 
   /**
+   * @description This method resets the password using the sent link
+   * 
    * @param { object } req request object
    * @param { object } res response object
    * 
@@ -227,6 +241,8 @@ class UserController {
   }
 
   /**
+   * @description This method gets all the books of a particular user
+   * 
    * @param {object} req request object
    * @param {object} res response object
    * 
@@ -243,19 +259,19 @@ class UserController {
     } else if (returnStatus === 'false') {
       query.where = {
         $and: [
-          { userid: req.body.userid },
+          { userId: req.body.userId },
           { returnstatus: false },
         ]
       };
     } else {
       query.where = {
         $and: [
-          { userid: req.body.userid },
+          { userId: req.body.userId },
           { returnstatus: true }
         ]
       };
     }
-    findOneResource(borrowedBookModel, ({
+    findAllResources(borrowedBookModel, ({
       where: query.where,
       include: [{ model: bookModel }]
     }))
@@ -272,6 +288,7 @@ class UserController {
       });
   }
   /**
+   * @description This method fetches the profile page of a user
    * 
    * @param {object} req request object
    * @param {object} res response object
@@ -281,25 +298,30 @@ class UserController {
   static profilePage(req, res) {
     const { authorization } = req.headers;
     if (!authorization) {
-      res.status(403)
+      return res.status(403)
         .json({
           message: 'Access Denied - You do not have the permission to access this page' });
-    } else {
-      const userId = parseInt(req.params.userId, 10);
-      findOneResourceById(userModel, { where: { id: userId } })
-        .then((user) => {
-          if (user) {
-            return res.status(200).json({ user });
-          }
-          return res.status(404).json({ errorMessage: 'User not found' });
-        })
-        .catch(() => {
-          res.status(500).json({ errorMessage: 'Internal server error' });
-        });
     }
+    if (paramValid(req.params.userId)) {
+      return res.status(400)
+        .json({
+          message: 'Bad request' });
+    }
+    const userId = parseInt(req.params.userId, 10);
+    findOneResourceById(userModel, userId)
+      .then((user) => {
+        if (user) {
+          return res.status(200).json({ user });
+        }
+        return res.status(404).json({ errorMessage: 'User not found' });
+      })
+      .catch(() => {
+        res.status(500).json({ errorMessage: 'Internal server error' });
+      });
   }
 
   /**
+   * @description This method allows a user edit his/her profile
    * 
    * @param { object } req requet object
    * @param { object } res response object
@@ -311,13 +333,16 @@ class UserController {
       firstname: req.body.firstname,
       lastname: req.body.lastname,
       username: req.body.username,
-      image: req.body.image
+      imageUrl: req.body.imageUrl
     };
     const fieldsToUpdate = ['firstname', 'lastname', 'username', 'imageUrl'];
+    const { userId } = req.body;
+    findOneResourceById(userModel, userId).then(() => {
+    });
     userModel.update(userData,
       {
         where: {
-          id: req.body.userid
+          id: userId
         },
         individualHooks: true
       },

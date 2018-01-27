@@ -73,7 +73,7 @@ const invalidBooks = [
     year: 2017,
     description: 'the books does this and that',
     quantity: 3,
-    categoryId: '3',
+    categoryId: 6,
     imageUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295977/book1_mjwwlq.jpg',
     pdfUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295977/book1_mjwwlq.jpg',
 
