@@ -1,6 +1,6 @@
 module.exports = {
   up(queryInterface) {
-    return queryInterface.bulkInsert('books', [
+    return queryInterface.bulkInsert('Books', [
       {
         isbn: '#111111',
         title: 'React for Beginners',
@@ -9,7 +9,7 @@ module.exports = {
         year: 2010,
         description: 'the books does this and that',
         quantity: 3,
-        categoryid: 2,
+        categoryId: 2,
         visibility: true,
         imageUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
         pdfUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
@@ -24,7 +24,7 @@ module.exports = {
         year: 2017,
         description: 'the books does this and that',
         quantity: 6,
-        categoryid: 1,
+        categoryId: 1,
         visibility: true,
         imageUrl: 'http://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book22_ase4mm.jpg',
         pdfUrl: 'http://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book22_ase4mm.jpg',
@@ -40,7 +40,7 @@ module.exports = {
         description: 'the books does this and that',
         quantity: 32,
         visibility: true,
-        categoryid: 2,
+        categoryId: 2,
         imageUrl: 'http://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book5_zyqyv1.jpg',
         pdfUrl: 'http://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book5_zyqyv1.jpg',
         createdAt: new Date(),
@@ -54,7 +54,7 @@ module.exports = {
         year: 2014,
         description: 'the books does this and that',
         quantity: 15,
-        categoryid: 3,
+        categoryId: 3,
         visibility: true,
         imageUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book4_pfdh3s.jpg',
         pdfUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book4_pfdh3s.jpg',
@@ -69,7 +69,7 @@ module.exports = {
         year: 2017,
         description: 'the books does this and that',
         quantity: 5,
-        categoryid: 4,
+        categoryId: 4,
         visibility: true,
         imageUrl: 'http://res.cloudinary.com/djvjxp2am/image/upload/v1507295977/book3_thj6nk.jpg',
         pdfUrl: 'http://res.cloudinary.com/djvjxp2am/image/upload/v1507295977/book3_thj6nk.jpg',
@@ -84,7 +84,7 @@ module.exports = {
         year: 2009,
         description: 'Learn angular 2 and all of its basics with this wonderful book by Tom Cruise. Move from novice to professional in no time.',
         quantity: 5,
-        categoryid: 5,
+        categoryId: 5,
         visibility: true,
         imageUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295977/book1_mjwwlq.jpg',
         pdfUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295977/book1_mjwwlq.jpg',
@@ -95,6 +95,6 @@ module.exports = {
   },
 
   down(queryInterface) {
-    return queryInterface.bulkDelete('books', null, {});
+    return queryInterface.bulkDelete('Books', null, {});
   }
 };

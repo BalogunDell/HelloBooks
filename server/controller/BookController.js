@@ -1,17 +1,22 @@
 import model from '../models';
 import errorMessages from '../middleware/errorMessages';
+import paramValid from '../utils/paramValid';
+import {
+  findOneResource,
+  findOneResourceById,
+  findAllResources
+} from '../utils/queryFinder';
 
-const bookModel = model.book;
-const borrowedBook = model.borrowedbook;
-const categoryModel = model.category;
-
+const bookModel = model.Book;
+const categoryModel = model.Category;
+const borrowedBookModel = model.BorrowBook;
 
 /**
  * @class Book
  * 
- * @classdesc creates a Book classs
+ * @classdesc Creates a Book class
  */
-class Book {
+class BookController {
   /**
    * @param {object} req 
    * @param {object} res
@@ -22,7 +27,6 @@ class Book {
     bookModel.create(req.body).then((book) => {
       res.status(201).json({ message: 'Book created', payload: book });
     }).catch((error) => {
-      // check if all fields are supplied.
       const messageObject = errorMessages(error);
       switch (messageObject.type) {
         case 'uniqueError':
@@ -42,111 +46,65 @@ class Book {
    * @param {object} req request object
    * @param {object} res response object
    * 
-   * @returns {object} updated books and message
+   * @returns {object} deleted book id and message
    */
   static deleteBook(req, res) {
-    const bookId = parseInt((req.params.id), 10);
-    borrowedBook.findOne({ where: {
-      bookid: bookId, returnstatus: false
+    const bookId = parseInt(req.params.id, 10);
+    if (paramValid(bookId)) {
+      return res.status(400).json({
+        message: 'You have provided an invalid id'
+      });
     }
-    })
+    findOneResource(borrowedBookModel,
+      { where: {
+        bookid: bookId, returnstatus: false } })
       .then((response) => {
         if (response !== null) {
           return res.status(422).json({
             message: 'This book has been borrowed and cannot be deleted'
           });
         }
-        bookModel.findOne({ where: { id: bookId, visibility: true } })
+        findOneResource(bookModel, { where: { id: bookId } })
           .then((reply) => {
-            if (reply === null) {
-              res.status(404).json({
+            if (!reply) {
+              return res.status(404).json({
                 message: 'Book not found in the database'
               });
-            } else if (reply.dataValues.visibility === true) {
-              bookModel.update({ visibility: false },
-                { where: { id: bookId } })
-                .then(() => {
-                  bookModel.findAll().then((allbooks) => {
-                    res.status(200).json({
-                      message: 'Book has been successfully deleted',
-                      updatedBooks: allbooks
-                    });
-                  });
-                });
             }
-          })
-          .catch((error) => {
-            res.status(501).json({ message: error });
-          });
-      }).catch((error) => {
-        res.status(501).json({ message: error });
-      });
-  }
-
-  /**
-   * 
-   * @param {object} req Request object
-   * @param {object} res Response object
-   * 
-   * @returns {object} message
-   */
-  static enableBook(req, res) {
-    const bookId = parseInt(req.params.id, 10);
-    bookModel.findById(bookId)
-      .then((response) => {
-        if (response) {
-          return bookModel.update({ visibility: true },
-            {
+            return bookModel.destroy({
               where: { id: bookId }
             })
-            .then(() => {
-              res.status(200).json({
-                message: 'Book has been published'
+              .then(() => {
+                res.status(200).json({
+                  message: 'Book has been successfully deleted',
+                  bookId
+                });
+              })
+              .catch(() => {
+                res.status(500).json({
+                  message: 'Internal server error'
+                });
               });
-            })
-            .catch((error) => {
-              res.status(501).json({ error });
-            });
-        }
-      })
-      .catch((error) => {
-        return error;
+          });
       });
   }
+
 
   /**
    * @param {object} req Request object
    * @param {object} res Response object
    * 
-   * @returns {object} fetched book
+   * @returns {object} All books in the library
    */
   static getBooks(req, res) {
-    bookModel.findAll({ where: {
-      visibility: true },
-    include: {
+    findAllResources(bookModel, { include: {
       model: categoryModel
     }
     }).then((response) => {
       res.status(200).json({ books: response });
-    }).catch((error) => {
-      res.status(404).json({ message: error.message });
+    }).catch(() => {
+      res.status(500).json({ message: 'Internal server error' });
     });
-  }
-
-  /**
-  * @param {object} req Request object
-  * @param {object} res Response object
-
-  * @returns {object} fetched books - published and unpublished
-  */
-  static getAllBooks(req, res) {
-    bookModel.findAll({ where: { visibility: false },
-      include: { model: categoryModel } })
-      .then((response) => {
-        res.status(200).json({ books: response });
-      }).catch((error) => {
-        res.status(501).json({ message: error.message });
-      });
   }
 
   /**
@@ -156,12 +114,13 @@ class Book {
    * @returns {object} borrowedbooks
    */
   static getBorrowedBooks(req, res) {
-    borrowedBook.findAll({ include: { model: bookModel,
-      include: { model: categoryModel } } }).then((response) => {
-      res.status(200).json({ books: response });
-    }).catch((error) => {
-      res.status(404).json({ message: error.message });
-    });
+    findAllResources({ include: { model: bookModel,
+      include: { model: categoryModel } } })
+      .then((response) => {
+        res.status(200).json({ books: response });
+      }).catch(() => {
+        res.status(500).json({ message: 'Internal server error' });
+      });
   }
 
   /**
@@ -171,16 +130,21 @@ class Book {
    * @returns {object} book payload
    */
   static getBookById(req, res) {
-    const bookid = parseInt(req.params.id, 10);
-    bookModel.findOne({ where: { id: bookid, visibility: true } })
+    const bookId = parseInt(req.params.id, 10);
+    if (paramValid(bookId)) {
+      return res.status(400).json({
+        message: 'You have provided an invalid id'
+      });
+    }
+    findOneResource(bookModel,
+      { where: { id: bookId, visibility: true } })
       .then((book) => {
         if (!book) {
-          res.status(404).json({
+          return res.status(404).json({
             message: 'This books is not available in our database'
           });
-        } else {
-          res.status(200).json({ payload: book });
         }
+        return res.status(200).json({ payload: book });
       })
       .catch(() => {
         res.status(500).json({ message: 'Internal server error' });
@@ -195,9 +159,15 @@ class Book {
  * @returns {object} modified book payload
  */
   static modifyBook(req, res) {
+    const bookId = parseInt(req.params.id, 10);
+    if (paramValid(bookId)) {
+      return res.status(400).json({
+        message: 'You have provided an invalid id'
+      });
+    }
     const query = {
       where: {
-        id: parseInt(req.params.id, 10),
+        id: bookId,
         visibility: true
       }
     };
@@ -213,27 +183,24 @@ class Book {
       pdfUrl: req.body.pdfUrl
     };
 
-    bookModel.findOne(query)
+    findOneResource(bookModel, query)
       .then((book) => {
         if (!book) return res.status(404).json({ message: 'Book not found' });
         book.update(bookData)
           .then((updated) => {
             if (updated) {
-              bookModel.findOne({
+              return findOneResource(bookModel, {
                 where: {
                   id: updated.id },
                 include: { model: categoryModel }
+              }).then((response) => {
+                res.status(200).json({
+                  message: 'Book modified successfully',
+                  payload: response });
               })
-                .then((response) => {
-                  res.status(200).json({
-                    message: 'Book modified successfully',
-                    payload: response });
-                })
-                .catch(() => {
-                  res.status(500).json({
-                    message: 'Internal server error'
-                  });
-                });
+                .catch(() => res.status(500).json({
+                  message: 'Internal server error'
+                }));
             }
           }).catch((error) => {
             const messageObject = errorMessages(error);
@@ -273,14 +240,14 @@ class Book {
       userid,
       expectedreturndate
     };
-    borrowedBook.create(payload)
+    borrowedBookModel.create(payload)
       .then((response) => {
         bookModel.update({ quantity: req.book.dataValues.quantity - 1 },
           { where: { id: response.dataValues.bookid } })
-          .then((updateRes) => {
-            if (updateRes) {
+          .then((updateResponse) => {
+            if (updateResponse) {
               res.status(201).json({
-                message: 'You have successfully borrowd this book',
+                message: 'You have successfully borrowed this book',
                 returnDate: req.body.expectedreturndate });
             }
           })
@@ -306,43 +273,40 @@ class Book {
    * @returns { object } returns json object
    */
   static returnBook(req, res) {
-    const userid = parseInt(req.body.userid, 10);
-    const bookid = parseInt(req.body.bookid, 10);
-    borrowedBook.findOne({ where: {
-      userid,
-      bookid,
+    const { userId, bookId } = parseInt(req.body, 10);
+    findOneResource(borrowedBookModel, { where: {
+      userId,
+      bookId,
       returnstatus: false } })
       .then((response) => {
         if (response === null) {
           res.status(404).json({
             message: 'This book is not in your latest borrow history' });
         } else {
-          borrowedBook.update({ returnstatus: true },
-            { where: { id: response.dataValues.id } })
+          borrowedBookModel.update({
+            returnstatus: true },
+          { where: { id: response.dataValues.id } })
             .then((feedback) => {
               if (feedback) {
-                bookModel.findById(req.body.bookid)
+                findOneResourceById(bookModel, bookId)
                   .then((foundBook) => {
                     bookModel.update({
                       quantity: foundBook.dataValues.quantity + 1 },
                     { where: {
-                      id: req.body.bookid
+                      id: bookId
                     }
-                    })
-                      .then((updated) => {
-                        if (updated) {
-                          res.status(200).json({
-                            message: 'Book has been returned'
-                          });
-                        }
-                      })
-                      .catch(() => {
-                        res.status(500).json({
-                          error: 'Internal server error'
+                    }).then((updated) => {
+                      if (updated) {
+                        res.status(200).json({
+                          message: 'Book has been returned'
                         });
+                      }
+                    }).catch(() => {
+                      res.status(500).json({
+                        errorMessage: 'Internal server error'
                       });
-                  })
-                  .catch((error) => {
+                    });
+                  }).catch((error) => {
                     const messageObject = errorMessages(error);
                     switch (messageObject.type) {
                       case 'validationError':
@@ -377,7 +341,7 @@ class Book {
     categoryModel.create(req.body)
       .then((category) => {
         if (category) {
-          categoryModel.findAll()
+          findAllResources(categoryModel)
             .then((response) => {
               res.status(201).json({
                 message: 'Category created',
@@ -414,7 +378,7 @@ class Book {
    * @return { object } categories as payload
    */
   static getCategories(req, res) {
-    categoryModel.findAll()
+    findAllResources()
       .then((categories) => {
         if (categories) {
           res.status(200).json({ categories });
@@ -435,7 +399,8 @@ class Book {
    * @return { object } trending books 
    */
   static fetchTrendingBooks(req, res) {
-    bookModel.findAll({ limit: 4, order: [['createdAt', 'DESC']] })
+    findAllResources(bookModel,
+      { limit: 4, order: [['createdAt', 'DESC']] })
       .then((response) => {
         res.status(200).json({ trendingBooks: response });
       })
@@ -444,4 +409,4 @@ class Book {
       });
   }
 }
-export default Book;
+export default BookController;

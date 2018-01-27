@@ -1,7 +1,7 @@
-const Borrowedbook = (sequelize, DataTypes) => {
-  const borrowedbook = sequelize.define('borrowedbook', {
+export default (sequelize, DataTypes) => {
+  const BorrowedBook = sequelize.define('BorrowedBook', {
 
-    userid: {
+    userId: {
       type: DataTypes.INTEGER,
       onDelete: 'CASCADE',
       references: {
@@ -10,7 +10,7 @@ const Borrowedbook = (sequelize, DataTypes) => {
       }
     },
 
-    bookid: {
+    bookId: {
       type: DataTypes.INTEGER,
       onDelete: 'CASCADE',
       references: {
@@ -40,11 +40,11 @@ const Borrowedbook = (sequelize, DataTypes) => {
     },
   });
 
-  borrowedbook.associate = (models) => {
-    borrowedbook.belongsTo(models.user, { foreignKey: 'userid', onDelete: 'CASCADE' });
-    borrowedbook.belongsTo(models.book, { foreignKey: 'bookid', onDelete: 'CASCADE' });
+  BorrowedBook.associate = (models) => {
+    BorrowedBook.belongsTo(models.User,
+      { foreignKey: 'userId', onDelete: 'CASCADE' });
+    BorrowedBook.belongsTo(models.Book,
+      { foreignKey: 'bookId', onDelete: 'CASCADE' });
   };
-  return borrowedbook;
+  return BorrowedBook;
 };
-
-export default Borrowedbook;

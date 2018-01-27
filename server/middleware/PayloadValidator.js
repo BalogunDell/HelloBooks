@@ -18,6 +18,7 @@ class PayloadValidator {
  * @returns { object } req
  */
   static loginValidator(req, res, next) {
+    console.log(req.body);
     const {
       username,
       password
@@ -427,8 +428,10 @@ class PayloadValidator {
  * @returns { object } resquest body
  */
   static verifyBorrowPayload(req, res, next) {
-    const { bookid } = req.body;
-    const id = parseInt(bookid, 10);
+    console.log(req.body);
+    const { bookId } = parseInt(req.body.bookId, 10);
+    const id = parseInt(bookId, 10);
+    console.log(id);
     if (typeof id !== 'number') {
       return res.status(400)
         .json({

@@ -1,25 +1,25 @@
 module.exports = {
   up(queryInterface, Sequelize) {
-    return queryInterface.createTable('borrowedbooks', {
+    return queryInterface.createTable('BorrowedBooks', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      userid: {
+      userId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'users',
+          model: 'Users',
           key: 'id'
         }
       },
-      bookid: {
+      bookId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'books',
+          model: 'Books',
           key: 'id'
         }
       },
@@ -50,6 +50,6 @@ module.exports = {
     });
   },
   down(queryInterface) {
-    return queryInterface.dropTable('borrowedbooks');
+    return queryInterface.dropTable('BorrowedBooks');
   }
 };

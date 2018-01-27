@@ -2,13 +2,17 @@ import bcrypt from 'bcrypt';
 import model from '../models';
 import helper from '../middleware/Helper';
 import errorMessages from '../middleware/errorMessages';
+import {
+  findOneResource,
+  findOneResourceById
+} from '../utils/queryFinder';
 
 
 require('dotenv').config();
 
-const userModel = model.user;
-const borrowedBookModel = model.borrowedbook;
-const bookModel = model.book;
+const userModel = model.User;
+const borrowedBookModel = model.BorrowedBook;
+const bookModel = model.Book;
  
 
 /**
@@ -16,7 +20,7 @@ const bookModel = model.book;
  * 
  * @classdesc creates a class User
  */
-class User {
+class UserController {
   /**
    * @param { object } req - request object
    * @param { object } res - response object
@@ -43,14 +47,14 @@ class User {
         const messageObject = errorMessages(error);
         switch (messageObject.type) {
           case 'uniqueError':
-            res.status(409).json({ error: messageObject.error });
+            res.status(409).json({ errorMessage: messageObject.error });
             break;
           case 'validationError':
-            res.status(400).json({ error: messageObject.error });
+            res.status(400).json({ errorMessage: messageObject.error });
             break;
           default:
-            res.status(501).json({
-              error: 'The server could not process your request at this time'
+            res.status(500).json({
+              errorMessage: 'Internal server error'
             });
         }
       });
@@ -87,7 +91,7 @@ class User {
       .catch(() => {
         return res.status(500)
           .json({
-            error: 'Internal server error'
+            errorMessage: 'Internal server error'
           });
       });
   }
@@ -121,7 +125,7 @@ class User {
           return res.status(200).json({ responseData });
         }
         return res.status(401).json({
-          message: 'Invalid username or password'
+          errorMessages: 'Invalid username or password'
         });
       })
       .catch((error) => {
@@ -129,12 +133,12 @@ class User {
         switch (messageObject.type) {
           case 'validationError':
             res.status(400).json({
-              error: messageObject.error
+              errorMessage: messageObject.error
             });
             break;
           default:
             res.status(500).json({
-              error: 'Internal server error'
+              errorMessage: 'Internal server error'
             });
         }
       });
@@ -163,20 +167,20 @@ class User {
                   }
                 })
                 .catch((mailerError) => {
-                  res.status(500).json({ message: mailerError });
+                  res.status(500).json({ errorMessage: mailerError });
                 });
             })
             .catch((error) => {
-              res.status(501).json({ error });
+              res.status(501).json({ errorMessage: error });
             });
         } else {
           res.status(404).json({
-            message: 'This email does not exist in our database'
+            errorMessage: 'This email does not exist in our database'
           });
         }
       })
-      .catch((error) => {
-        res.status(501).json({ message: error });
+      .catch(() => {
+        res.status(500).json({ errorMessage: 'Internal server error' });
       });
   }
 
@@ -190,18 +194,18 @@ class User {
   static resetPassword(req, res) {
     const {
       password,
-      passwordReseturl
+      passwordResetUrl
     } = req.body;
 
     userModel.update({
-      password }, { where: { passwordReseturl },
+      password }, { where: { passwordResetUrl },
       individualHooks: true },
     { fields: ['password'] })
       .then(() => {
         userModel.update({
           passwordReseturl: ''
         }, { where: {
-          passwordReseturl
+          passwordResetUrl
         }
         })
           .then(() => {
@@ -211,13 +215,13 @@ class User {
           })
           .catch(() => {
             res.status(500).json({
-              error: 'Internal server error'
+              errorMessage: 'Internal server error'
             });
           });
       })
       .catch(() => {
         res.status(500).json({
-          error: 'Internal server error'
+          errorMessage: 'Internal server error'
         });
       });
   }
@@ -230,11 +234,11 @@ class User {
    */
   static getUserBooks(req, res) {
     const { returned: returnStatus } = req.query;
-    const { userid } = req.body;
+    const { userId } = req.body;
     const query = {};
     if (returnStatus === undefined) {
       query.where = {
-        userid
+        userId
       };
     } else if (returnStatus === 'false') {
       query.where = {
@@ -251,13 +255,12 @@ class User {
         ]
       };
     }
-
-    borrowedBookModel.findAll({
+    findOneResource(borrowedBookModel, ({
       where: query.where,
       include: [{ model: bookModel }]
-    })
+    }))
       .then((response) => {
-        if (response.length < 1) {
+        if (!response) {
           res.status(200).json({ message: 'You have no books yet' });
         } else {
           res.status(200).json({ response });
@@ -279,21 +282,19 @@ class User {
     const { authorization } = req.headers;
     if (!authorization) {
       res.status(403)
-        .json({ message: 'Invalid/Expired token' });
+        .json({
+          message: 'Access Denied - You do not have the permission to access this page' });
     } else {
-      const userid = parseInt(req.params.userId, 10);
-      userModel.findById(userid)
+      const userId = parseInt(req.params.userId, 10);
+      findOneResourceById(userModel, { where: { id: userId } })
         .then((user) => {
           if (user) {
             return res.status(200).json({ user });
           }
-          return res.status(404).json({ message: 'User not found' });
+          return res.status(404).json({ errorMessage: 'User not found' });
         })
         .catch(() => {
-          res.status(500)
-            .json({
-              message: 'Internal server error'
-            });
+          res.status(500).json({ errorMessage: 'Internal server error' });
         });
     }
   }
@@ -341,4 +342,5 @@ class User {
   }
 }
 
-export default User;
+export default UserController;
+

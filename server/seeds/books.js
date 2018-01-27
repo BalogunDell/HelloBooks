@@ -7,7 +7,7 @@ const books = [
     year: 2017,
     description: 'the books does this and that',
     quantity: 6,
-    categoryid: 1,
+    categoryId: 1,
     imageUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
     pdfUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
   },
@@ -19,7 +19,7 @@ const books = [
     year: 2010,
     description: 'the books does this and that',
     quantity: 0,
-    categoryid: 2,
+    categoryId: 2,
     imageUrl: 'http://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book22_ase4mm.jpg',
     pdfUrl: 'http://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book22_ase4mm.jpg',
 
@@ -32,7 +32,7 @@ const books = [
     year: 2016,
     description: 'the books does this and that',
     quantity: 32,
-    categoryid: 3,
+    categoryId: 3,
     imageUrl: 'http://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book5_zyqyv1.jpg',
     pdfUrl: 'http://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book5_zyqyv1.jpg',
   },
@@ -44,7 +44,7 @@ const books = [
     year: 2014,
     description: 'the books does this and that',
     quantity: 15,
-    categoryid: 4,
+    categoryId: 4,
     imageUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book4_pfdh3s.jpg',
     pdfUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book4_pfdh3s.jpg',
 
@@ -57,7 +57,7 @@ const books = [
     year: 2017,
     description: 'the books does this and that',
     quantity: 5,
-    categoryid: 5,
+    categoryId: 5,
     imageUrl: 'http://res.cloudinary.com/djvjxp2am/image/upload/v1507295977/book3_thj6nk.jpg',
     pdfUrl: 'http://res.cloudinary.com/djvjxp2am/image/upload/v1507295977/book3_thj6nk.jpg',
 
@@ -73,7 +73,7 @@ const invalidBooks = [
     year: 2017,
     description: 'the books does this and that',
     quantity: 3,
-    categoryid: '3',
+    categoryId: '3',
     imageUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295977/book1_mjwwlq.jpg',
     pdfUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295977/book1_mjwwlq.jpg',
 
@@ -86,7 +86,7 @@ const invalidBooks = [
     year: 2017,
     description: 'the books does this and that',
     quantity: 6,
-    categoryid: 2,
+    categoryId: 2,
     imageUrl: 'images/andela.jpg',
     pdfUrl: 'pdf7'
   }

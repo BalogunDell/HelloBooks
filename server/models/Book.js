@@ -1,5 +1,5 @@
-const Book = (sequelize, DataTypes) => {
-  const book = sequelize.define('book', {
+export default (sequelize, DataTypes) => {
+  const Book = sequelize.define('Book', {
     isbn: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -110,7 +110,7 @@ const Book = (sequelize, DataTypes) => {
         }
       }
     },
-    categoryid: {
+    categoryId: {
       type: DataTypes.INTEGER,
       allowNull: false
     },
@@ -156,15 +156,15 @@ const Book = (sequelize, DataTypes) => {
     }
   });
 
-  book.associate = (model) => {
-    book.hasMany(model.borrowedbook, {
-      foreignKey: 'bookid',
+  Book.associate = (model) => {
+    Book.hasMany(model.BorrowedBook, {
+      foreignKey: 'bookId',
     });
-    book.belongsTo(model.category, {
-      foreignKey: 'categoryid',
+    Book.belongsTo(model.Category, {
+      foreignKey: 'categoryId',
       onDelete: 'CASCADE'
     });
   };
-  return book;
+  return Book;
 };
-export default Book;
+

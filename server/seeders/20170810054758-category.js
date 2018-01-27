@@ -1,6 +1,6 @@
 module.exports = {
   up(queryInterface) {
-    return queryInterface.bulkInsert('categories', [
+    return queryInterface.bulkInsert('Categories', [
       {
         category: 'Health'
       },
@@ -26,6 +26,6 @@ module.exports = {
     ]);
   },
   down(queryInterface) {
-    return queryInterface.bulkDelete('category', null, {});
+    return queryInterface.bulkDelete('Categories', null, {});
   }
 };

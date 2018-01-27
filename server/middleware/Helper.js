@@ -4,13 +4,16 @@ import nodeMailer from 'nodemailer';
 import model from '../models';
 import util from '../utils/limits';
 import emailTemplate from '../utils/emailTemplate';
+import {
+  findOneResourceById,
+} from '../utils/queryFinder';
 
 require('dotenv').config();
 
 const secret = process.env.SECRET;
 const mailPassword = process.env.PASSWORD;
-const borrowedBookModel = model.borrowedbook;
-const bookModel = model.book;
+const borrowedBookModel = model.Borrowedbook;
+const bookModel = model.Book;
 
 /**
  * 
@@ -28,20 +31,24 @@ class Helper {
  * @returns { object } - books with count and rows
  */
   static checkBook(req, res, next) {
-    bookModel.findById(parseInt(req.body.bookid, 10))
+    findOneResourceById(bookModel, (parseInt(req.body.bookid, 10)))
       .then((book) => {
-        if (!book) return res.status(404).json({ message: 'Book not found' });
+        console.log(book);
+        if (!book) return res.status(404).json({ errorMessage: 'Book not found' });
         if (!book.dataValues.quantity) {
           return res.status(200).json({
-            message: 'This book is currently unavailable'
+            errorMessage: 'This book is currently unavailable'
           });
         }
         req.book = book;
         next();
       })
-      .catch(() => res.status(500).json({
-        message: 'Internal server error'
-      }));
+      .catch((error) => {
+        res.status(500).json({
+          errorMessage: 'Internal server error'
+        });
+        console.log(error);
+      });
   }
 
   /** 
@@ -53,11 +60,11 @@ class Helper {
  * 
  */
   static verify(req, res, next) {
-    const { bookid, userid } = req.body;
+    const { bookId, userId } = req.body;
     const query = {
       where: {
         $and: [
-          { userid },
+          { userId },
           { returnstatus: false }
         ]
       }
@@ -68,7 +75,7 @@ class Helper {
         if (response.count < userBooklimit
             &&
           !response.rows
-            .find(book => book.dataValues.bookid === parseInt(bookid, 10))) {
+            .find(book => book.dataValues.bookId === parseInt(bookId, 10))) {
           req.body = Helper.composeRequest(req);
           next();
         } else {
@@ -90,11 +97,11 @@ class Helper {
    * @returns { object } request body
    */
   static composeRequest(req, res) {
-    const { bookid } = req.body;
-    if (!bookid) return res.status(400).json({ message: 'Provide a book id' });
+    const { bookId } = req.body;
+    if (!bookId) return res.status(400).json({ message: 'Provide a book id' });
     const body = {
-      bookid: req.body.bookid,
-      userid: req.body.userid,
+      bookid: req.body.bookId,
+      userid: req.body.userId,
       expectedreturndate: moment()
         .add(util[req.membership.toLowerCase()].limit, 'days')
         .format('YYYY-MM-DD')
@@ -109,11 +116,16 @@ class Helper {
    * @returns { string }  - generated token
    */
   static generateToken(user) {
+    const {
+      id,
+      email,
+      membership,
+      role } = user;
     const token = jwt.sign({
-      id: user.id,
-      email: user.email,
-      membership: user.membership,
-      role: user.role
+      id,
+      email,
+      membership,
+      role
     }, secret, { expiresIn: '24h' });
 
     return token;

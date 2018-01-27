@@ -1,13 +1,19 @@
 import jwt from 'jsonwebtoken';
 import model from '../models';
+import {
+  findOneResource,
+  findOneResourceById,
+  findAllResources
+} from '../utils/queryFinder';
 
 require('dotenv').config();
 
-const userModel = model.user;
+const userModel = model.User;
 const secret = process.env.SECRET;
 
 /**
  * @class authentication
+ * 
  * @classdesc creates an authentication class
  */
 class Authentication {
@@ -22,7 +28,7 @@ class Authentication {
     const { authorization } = req.headers;
     if (!authorization) {
       res.status(403).json({
-        message: 'Access Denied - You do not have the permission to access this page' });
+        errorMessage: 'Access Denied - You do not have the permission to access this page' });
     } else {
       const decoded = jwt.verify(authorization, secret);
       if (decoded.role === 'user') {
@@ -44,18 +50,19 @@ class Authentication {
    */
   static verifyUser(req, res, next) {
     const { authorization } = req.headers;
+    console.log(req.body);
     if (!authorization) {
       res.status(403).json({
         message: 'Access Denied - You do not have the permission to access this page'
       });
     } else {
       const decoded = jwt.verify(authorization, secret);
-      userModel.findOne({ where:
+      findOneResource(userModel, { where:
         { email: decoded.email,
           id: decoded.id }
       }).then((user) => {
         if (user) {
-          req.body.userid = decoded.id;
+          req.body.userId = decoded.id;
           req.membership = decoded.membership;
           next();
         } else {
