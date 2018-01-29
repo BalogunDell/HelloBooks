@@ -11,6 +11,8 @@ import {
   saveNewImageToDB
 } from '../../Actions/userProfileAction';
 
+require('dotenv').config();
+
 /**
  * @export Profile
  * 
@@ -46,6 +48,7 @@ export class Profile extends React.Component {
     this.cancelEdit = this.cancelEdit.bind(this);
     this.handleImageEdit = this.handleImageEdit.bind(this);
     this.imageUploadHandler = this.imageUploadHandler.bind(this);
+    this.cancelProfileEdit = this.cancelProfileEdit.bind(this);
     
   }
 
@@ -108,6 +111,23 @@ export class Profile extends React.Component {
     });
   }
 
+  /**
+   * @method cancelProfileEdit
+   * 
+   *  @returns a new state with cancelEditStatus set to false
+   * 
+   * @memberof profileUpdateForm
+   */
+  cancelProfileEdit() {
+    this.setState({
+      viewProfile: true,
+      showInput: false,
+      editButton: false,
+      loader: false,
+    });
+  }
+
+
    /**
    * @method handleImageEdit
    * 
@@ -167,7 +187,9 @@ export class Profile extends React.Component {
         const newUpload = new Image();
         newUpload.src = imageReader.result;
         newUpload.onload = () => {
-          if((newUpload.height > newUpload.width) || newUpload.height === newUpload.width) {
+          if((newUpload.height > newUpload.width)
+          ||
+          newUpload.height === newUpload.width) {
             this.setState({ disableUpdateBtn: false, 
               tempImageName: imageInput,
               preview: newUpload.src,
@@ -252,9 +274,16 @@ export class Profile extends React.Component {
               </div>
               
               <div className="userInfoDisplay">
-                <h4>{`${this.state.userData.firstname} ${this.state.userData.lastname}`}</h4>
-                <p>Joined: {this.state.userData.createdAt} | {this.state.userData.email}</p>
-                <p>Member level: {membershipIconCreator(this.state.userData.membership || 'bronze')} </p>
+                <h4>{`${this.state.userData.firstname}
+                ${this.state.userData.lastname}`}
+                </h4>
+                <p>Joined: 
+                  {this.state.userData.createdAt} | {this.state.userData.email}
+                </p>
+                <p>Member level:
+                {membershipIconCreator(this.state.userData.membership 
+                  || 
+                  process.env.DEFAULT_MEMBERSHIP)} </p>
                 <div className="row">
                   <div className="col s12 l12">
                     {!this.state.viewProfile
@@ -273,7 +302,7 @@ export class Profile extends React.Component {
               <div>
                 {this.state.showInput 
                 ? 
-                  <ProfileUpdateForm cancelEdit = {this.cancelEdit}
+                  <ProfileUpdateForm cancelEdit = {this.cancelProfileEdit}
                   showProfile = {this.showProfile}/>
                 :
                   <ProfileInfo userData={this.state.userData}

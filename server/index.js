@@ -5,7 +5,7 @@ import morgan from 'morgan';
 import cors from 'cors';
 import validator from 'express-validator';
 
-import appRouter from './routes/appRouter';
+import appRouter from './routes';
 
 require('dotenv').config();
 

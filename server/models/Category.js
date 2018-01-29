@@ -2,7 +2,7 @@ export default (sequelize, DataTypes) => {
   const Category = sequelize.define('Category', {
     category: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
       unique: {
         args: true,
         msg: 'This category exists'
@@ -36,4 +36,3 @@ export default (sequelize, DataTypes) => {
 
   return Category;
 };
-

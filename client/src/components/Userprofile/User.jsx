@@ -6,15 +6,13 @@ import { connect } from 'react-redux'
 
 import getUserDetails from '../../utils/getUserInfo';
 import Allbooks from './Allbooks/Allbooks';
-import UserDashboard from './Dashboard';
 import UserHistory from './History';
 import BookDetails from './BookDetails';
 import Borrowedbooks from './Borrowedbooks';
 import Profile from './Profile';
 import AdminDashboard from './Admin/Dashboard';
 import CreateBook from './Admin/CreateBook';
-import EditBook from './AdminSubComponents/EditBook';
-import UnpublishedList from './AdminSubComponents/UnPublishedBooks';
+import EditBook from './Admin/EditBook';
 import {
   userLinks,
   userLinkIcons,
@@ -50,13 +48,8 @@ export class User extends React.Component {
     this.navLinks = [];
     this.linkIcons = [];
     this.linkTexts = [];
-
-    // Set user id and type
     this.userID = '';
     this.userType='';
-
-
-    // Bind logout method to this
     this.handleLogout = this.handleLogout.bind(this);
   }
 
@@ -168,10 +161,6 @@ export class User extends React.Component {
               {this.userType == 'user' ?
                 <div className="content-display">
                   <Route 
-                    path="/user/dashboard"
-                    component={AuthenticateUser(UserDashboard)}
-                  /> 
-                  <Route 
                     path="/user/profile"
                     component={AuthenticateUser(Profile)}
                   />
@@ -216,10 +205,6 @@ export class User extends React.Component {
                   <Route
                     path="/user/editbook"
                     component={AuthenticateUser(EditBook)}
-                  />
-                  <Route
-                    path="/user/deletedbooks"
-                    component={AuthenticateUser(UnpublishedList)}
                   />
                 </div>
                 }

@@ -32,7 +32,7 @@ module.exports = {
       },
       membership: {
         type: Sequelize.STRING,
-        defaultValue: 'Bronze'
+        defaultValue: 'bronze'
       },
       role: {
         type: Sequelize.STRING,

@@ -19,7 +19,7 @@ export class BookDetails extends React.Component {
     super(props);
 
     this.state = {
-      book_id: this.props.currentBookId,
+      currentBookId: parseInt(this.props.currentBookId),
       books: this.props.allbooks,
       book: [],
       dataReady: false,
@@ -38,7 +38,7 @@ export class BookDetails extends React.Component {
 
   handleBorrow(){
     this.setState({processingRequest: true})
-    this.props.borrowBook({bookid:this.state.book_id})
+    this.props.borrowBook({bookId:this.state.currentBookId})
     .then(() => {
       this.setState({
         borrowBookSuccess: true,
@@ -103,7 +103,7 @@ export class BookDetails extends React.Component {
         disableBtn: false,
         borrowBookSuccess:false });
       let filteredBook = nextProps.fetchedUserbooks.response.filter(book => (
-        book.bookid == this.state.book_id) 
+        book.bookId == this.state.currentBookId) 
         && 
         (book.returnstatus == false));
         

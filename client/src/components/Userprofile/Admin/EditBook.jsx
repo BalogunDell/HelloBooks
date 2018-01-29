@@ -1,14 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect, Link } from 'react-router-dom';
-import EditBookForm from './EditBookForm';
+import EditBookForm from '../AdminSubComponents/EditBookForm';
 import { getCategories } from '../../../Actions/categoryAction';
 import {
   modifyBook,
   saveImageToCloudinary,
   savePdfToCloudinary
 } from '../../../Actions/booksAction';
-import LoaderText from './Loader';
+import LoaderText from '../AdminSubComponents/Loader';
 
 /**
  * Edit Book component
@@ -56,10 +56,11 @@ export class EditBook extends React.Component {
     let name = event.target.name;
     let tempHolder =  {...this.state.book};
     tempHolder[name] = event.target.value
-    if(event.target.name == 'categoryid') {
+    if(event.target.name == 'categoryId') {
       this.setState({ book:tempHolder});
       this.setState({
-        book: {...this.state.book, categoryid: event.target.value}});
+        book: {...this.state.book,
+          categoryId: parseInt(event.target.value, 10)}});
     } else {
       this.setState({ book:tempHolder });
       
@@ -80,7 +81,6 @@ export class EditBook extends React.Component {
     this.setState({loader: true,
       error: '',
       errorStatus: false })
-    // Check if a new image and pdf was selected, if !, save default values
     if((!this.state.tempImageName) && (!this.state.tempFileName)) {
       this.props.modifyBook(this.state.book).then(() => {
         this.setState({loader: false,  
@@ -101,10 +101,8 @@ export class EditBook extends React.Component {
           redirect:false})
         });
 
-  // Check if a new image and and no pdf was selected, ues? save default values 
     } else if((this.state.tempImageName) && (!this.state.tempFileName)) {
 
-        // Check image size
         if(this.state.imageHeight < 300 || this.state.imageWidth < 250) {
           this.setState({
             loader: false, 
@@ -123,7 +121,7 @@ export class EditBook extends React.Component {
                 loader: true, 
                 error: "",
                 errorStatus: false,
-                disableBtn:true });
+                disableBtn: false });
               this.props.saveImageToCloudinary(this.state.tempImageName)
                 .then(() => {
                   this.props.modifyBook(this.state.book)
@@ -139,11 +137,8 @@ export class EditBook extends React.Component {
                       3000,
                       'blue rounded');
                   })
-                  .catch(error => {
-                  });
+                 
                 })
-                .catch(error => {
-                });
               }
         }
       } else if((!this.state.tempImageName) && (this.state.tempFileName)) {
@@ -170,11 +165,7 @@ export class EditBook extends React.Component {
                       3000,
                       'blue rounded'); 
                 })
-                .catch(error => {
-                });
               })
-              .catch(error => {
-              });
             }
       } else {
         if(this.state.imageHeight < 300 || this.state.imageWidth < 250) {
@@ -209,13 +200,11 @@ export class EditBook extends React.Component {
                     error: "",
                     errorStatus: false,
                     disableBtn:true });
-                // Check if image url has been set before dispatching pdf action
                   if(this.state.book.imageUrl) {
                     this.props.savePdfToCloudinary(this.state.tempFileName)
                     .then(() => {
 
                       if(this.state.book.pdfUrl) {
-                        // Save book details to database
                           this.props.modifyBook(this.state.book).then(() => {
                             this.setState({loader: false,
                               disableBtn:true,
@@ -239,13 +228,9 @@ export class EditBook extends React.Component {
                               error: error.response.data.errorMessage});
                           });
                       }
-                    }).catch((error) => {
-                      return error;
-                    });
+                    })
                   }
                 })
-                .catch(error => {
-                });
                 }
             
             }

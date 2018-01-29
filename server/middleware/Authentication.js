@@ -30,16 +30,15 @@ class Authentication {
     const { authorization } = req.headers;
     if (!authorization) {
       res.status(403).json({
-        errorMessage: 'You do not have the permission to access this page' });
+        message: 'You do not have the permission to access this page' });
     } else {
       const decoded = Helper.decodeToken(authorization);
-      if (decoded.role === 'user') {
-        res.status(403).json({
-          errorMessage: 'You do not have the permission to access this page'
+      if (decoded.role !== process.env.ACCESS_GRANTOR) {
+        return res.status(403).json({
+          message: 'You do not have the permission to access this page'
         });
-      } else {
-        next();
       }
+      return next();
     }
   }
 
@@ -60,13 +59,13 @@ class Authentication {
 
     if (!authorization) {
       return res.status(403).json({
-        errorMessage: 'You do not have the permission to access this page'
+        message: 'You do not have the permission to access this page'
       });
     }
     const decoded = Helper.decodeToken(authorization);
     if (parseInt(userId, 10) !== decoded.id) {
       return res.status(403).json({
-        errorMessage: 'You do not have the permission to access this page'
+        message: 'You do not have the permission to access this page'
       });
     }
     findOneResource(userModel, { where:
@@ -81,7 +80,7 @@ class Authentication {
       }
     }).catch(() => {
       res.status(500).json({
-        errorMessage: 'Internal server error'
+        message: 'Internal server error'
       });
     });
   }
@@ -103,8 +102,8 @@ class Authentication {
     } else {
       findOneResource(userModel, { where: { passwordReseturl: resetUrl } })
         .then((response) => {
-          if (response.dataValues.passwordReseturl === '') {
-            res.status(404).json({ message: 'This link has expired' });
+          if (!response) {
+            res.status(400).json({ message: 'This link has expired' });
           } else {
             next();
           }
@@ -131,27 +130,25 @@ class Authentication {
   static confirmLibraryAccess(req, res, next) {
     const { authorization } = req.headers;
     if (!authorization) {
-      res.status(401).json({
-        errorMessage: 'Only logged in users can see all books' });
-    } else {
-      findOneResource(userModel, { where:
-        { passwordReseturl: req.params.resetUrl } })
-        .then((response) => {
-          const decoded = Helper.decodeToken(authorization);
-          findOneResource(userModel, { where: { id: decoded.id } });
-          if (response.dataValues.id === decoded.id) {
-            return res.status(401).json({
-              message: 'Only logged in users can see all books' });
-          }
-          return next();
-        })
-        .catch(() => {
-          res.status(500).json({
-            message: 'Internal server error'
-          });
-        });
+      return res.status(401).json({
+        message: 'Only logged in users can see all books' });
     }
+    const decoded = Helper.decodeToken(authorization);
+    findOneResource(userModel, { where: { id: decoded.id } })
+      .then((reply) => {
+        if (reply.dataValues.id === decoded.id) {
+          return next();
+        }
+      }).catch(() => {
+        return res.status(401).json({
+          message: 'Only logged in users can see all books' });
+      }).catch(() => {
+        res.status(500).json({
+          message: 'Internal server error'
+        });
+      });
   }
 }
 
 export default Authentication;
+

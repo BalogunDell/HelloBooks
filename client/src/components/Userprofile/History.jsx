@@ -6,7 +6,7 @@ import {
   getUserBooks,
   returnBook
 } from '../../Actions/booksAction';
-import AllUserBooksComp from './TableRows/UserBooks';
+import UserBooks from '../Userprofile/UserBooks';
 import AuthenticateUser from '../HOC/authenticate';
 
 
@@ -22,7 +22,7 @@ export class History extends React.Component {
     super(props);
 
     this.state = {
-      userid: this.props.userID,
+      userId: this.props.userID,
       loading: false,
       allUserBooks: [],
       allbooks: false,
@@ -51,7 +51,7 @@ export class History extends React.Component {
  */
   componentDidMount() {
     this.setState({loading: true})    
-    this.props.getUserBooks(this.state.userid).then(() => {
+    this.props.getUserBooks(this.state.userId).then(() => {
       this.setState({loading:false})
     })
     .catch(error => {
@@ -90,7 +90,7 @@ export class History extends React.Component {
               ?
                 <h3>You have no books yet</h3>
               :
-                <AllUserBooksComp
+                <UserBooks
                   allUserBooks = {this.state.allUserBooks}
                 />
               }
@@ -123,7 +123,7 @@ export const mapStateToProps = (state) => {
  */
 export const mapDispatchToProps = (dispatch) => {
   return {
-    getUserBooks: (userid) => dispatch(getUserBooks(userid)),
+    getUserBooks: (userId) => dispatch(getUserBooks(userId)),
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(History);

@@ -10,8 +10,7 @@ import {
   getAllBorrowedBooks
 
 } from '../../../Actions/booksAction';
-import BorrowedbookTable from './BorrowedbooksTable';
-import PublishedBooks from './PublishedBooks';
+import UserBooks from '../../Userprofile/UserBooks';
 
 /**
   * @class BooksList
@@ -53,7 +52,6 @@ export class BooksList extends React.Component {
       pendingReturnCount: 0,
 
     }
-    // Bind methods to this class
     this.handleBookEdit = this.handleBookEdit.bind(this);
     this.handleBookDelete = this.handleBookDelete.bind(this);
     this.deleteBookTrigger = this.deleteBookTrigger.bind(this);
@@ -171,9 +169,7 @@ export class BooksList extends React.Component {
 
     this.props.deleteBook(this.state.bookId)
     .then(() => {
-      const result = this.state.allbooks
-        .filter(book => book.id != this.state.bookId );
-      this.setState({allbooks: result,
+      this.setState({
         deleteErrorSuccess: true,
         deleteErrorStatus: false,
         errorMessage: '',
@@ -201,8 +197,7 @@ export class BooksList extends React.Component {
         deleteErrorSuccess:false,
         successMessage: '',
         disabled: false
-        
-      })
+      });
     })
   }
 
@@ -276,14 +271,14 @@ render() {
       <div className="bookslist">
         {this.state.borrowed
         ? 
-          <BorrowedbookTable books={this.state.fetchedborrowedbooks}/>
+          <UserBooks borrowedBooks={this.state.fetchedborrowedbooks}/>
         : 
           null
         }
 
         {this.state.all || this.state.showAll
         ? 
-          <PublishedBooks books={this.state.allbooks}
+          <UserBooks allBooks={this.state.allbooks}
           handleBookDelete= {this.handleBookDelete}
           handleBookEdit= {this.handleBookEdit}/>
         :

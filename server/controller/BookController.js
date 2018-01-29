@@ -31,13 +31,13 @@ class BookController {
       const messageObject = errorMessages(error);
       switch (messageObject.type) {
         case 'uniqueError':
-          res.status(409).json({ errorMessage: messageObject.error });
+          res.status(409).json({ message: messageObject.error });
           break;
         case 'validationError':
-          res.status(400).json({ errorMessage: messageObject.error });
+          res.status(400).json({ message: messageObject.error });
           break;
         default:
-          res.status(500).json({ errorMessage: 'Internal server error' });
+          res.status(500).json({ message: 'Internal server error' });
       }
     });
   }
@@ -52,38 +52,42 @@ class BookController {
    * @returns {object} deleted book id and message
    */
   static deleteBook(req, res) {
-    const { bookId } = req.body;
+    const { id } = req.params;
     findOneResource(borrowedBookModel,
       { where: {
-        bookid: bookId, returnstatus: false } })
+        bookId: id, returnstatus: false } })
       .then((response) => {
         if (response !== null) {
           return res.status(422).json({
             message: 'This book has been borrowed and cannot be deleted'
           });
         }
-        findOneResource(bookModel, { where: { id: bookId } })
-          .then((reply) => {
-            if (!reply) {
-              return res.status(404).json({
-                message: 'Book not found in the database'
-              });
-            }
-            return bookModel.destroy({
-              where: { id: bookId }
-            })
-              .then(() => {
-                res.status(200).json({
-                  message: 'Book has been successfully deleted',
-                  bookId
+        borrowedBookModel.destroy({ where: { id } }).then(() => {
+          findOneResource(bookModel, { where: { id } })
+            .then((reply) => {
+              if (!reply) {
+                return res.status(404).json({
+                  message: 'Book not found in the database'
                 });
+              }
+              return bookModel.destroy({
+                where: { id }
               })
-              .catch(() => {
-                res.status(500).json({
-                  message: 'Internal server error'
+                .then(() => {
+                  res.status(200).json({
+                    message: 'Book has been successfully deleted',
+                    bookId: id
+                  });
+                })
+                .catch(() => {
+                  res.status(500).json({
+                    message: 'Internal server error'
+                  });
                 });
-              });
-          });
+            });
+        }).catch(() => {
+          return res.status(500).json({ message: 'Internal service error' });
+        });
       });
   }
 
@@ -134,9 +138,9 @@ class BookController {
    * @returns {object} book payload
    */
   static getBookById(req, res) {
-    const { bookId } = req.params;
+    const { id } = req.body;
     findOneResource(bookModel,
-      { where: { id: bookId, visibility: true } })
+      { where: { id } })
       .then((book) => {
         if (!book) {
           return res.status(404).json({
@@ -203,22 +207,22 @@ class BookController {
             switch (messageObject.type) {
               case 'uniqueError':
                 res.status(409).json({
-                  errorMessage: messageObject.error
+                  message: messageObject.error
                 });
                 break;
               case 'validationError':
                 res.status(400).json({
-                  errorMessage: messageObject.error
+                  message: messageObject.error
                 });
                 break;
               default:
                 res.status(500).json({
-                  errorMessage: 'Internal server error'
+                  message: 'Internal server error'
                 });
             }
           })
           .catch(() => res.status(500).json({
-            errorMessage: 'Internal server error'
+            message: 'Internal server error'
           }));
       });
   }
@@ -252,14 +256,12 @@ class BookController {
           })
           .catch(() => {
             res.status(500).json({
-              message:
-              'Book not added',
-              errorMessage: 'Internal server error'
+              message: 'Internal server error'
             });
           });
       })
       .catch(() => {
-        res.status(500).json({ errorMessage: 'Internal server error' });
+        res.status(500).json({ message: 'Internal server error' });
       });
   }
 
@@ -273,10 +275,12 @@ class BookController {
    * @returns { object } returns json object
    */
   static returnBook(req, res) {
-    const { userId, bookId } = parseInt(req.body, 10);
+    const { userId, bookId } = req.body;
+    const userIdInteger = parseInt(userId, 10);
+    const bookIdInteger = parseInt(bookId, 10);
     findOneResource(borrowedBookModel, { where: {
-      userId,
-      bookId,
+      userId: userIdInteger,
+      bookId: bookIdInteger,
       returnstatus: false } })
       .then((response) => {
         if (response === null) {
@@ -303,7 +307,7 @@ class BookController {
                       }
                     }).catch(() => {
                       res.status(500).json({
-                        errorMessage: 'Internal server error'
+                        message: 'Internal server error'
                       });
                     });
                   }).catch((error) => {
@@ -311,19 +315,19 @@ class BookController {
                     switch (messageObject.type) {
                       case 'validationError':
                         res.status(400).json({
-                          errorMessage: messageObject.error
+                          message: messageObject.error
                         });
                         break;
                       default:
                         res.status(500).json({
-                          errorMessage: 'Internal server error'
+                          message: 'Internal server error'
                         });
                     }
                   });
               }
             })
             .catch(() => {
-              res.status(500).json({ error: 'Internal server error'
+              res.status(500).json({ message: 'Internal server error'
               });
             });
         }
@@ -380,7 +384,7 @@ class BookController {
    * @return { object } categories as payload
    */
   static getCategories(req, res) {
-    findAllResources()
+    findAllResources(categoryModel)
       .then((categories) => {
         if (categories) {
           res.status(200).json({ categories });
@@ -407,8 +411,8 @@ class BookController {
       .then((response) => {
         res.status(200).json({ trendingBooks: response });
       })
-      .catch((error) => {
-        res.status(500).json({ error });
+      .catch(() => {
+        res.status(500).json({ message: 'Internal server error' });
       });
   }
 }

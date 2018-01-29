@@ -8,12 +8,13 @@ import Loader from '../../Userprofile/AdminSubComponents/Loader';
 require('dotenv').config();
 
 /**
- * renders login form
+ * renders Form
  *
  * @param {object} userData
  * @param {Function} handleLoginInput
  * @param {Function} loginHandler
  * @param {Function} googleLoginHandler
+ * @param {object} currentLocation
  * 
  * @returns {JSX}  JSX representation of commponent
  */
@@ -23,7 +24,8 @@ const LoginForm = ({
   loginHandler,
   googleLoginHandler,
   loginError,
-  isLoading }) => {
+  isLoading,
+  currentLocation }) => {
 
     // loader
     const isLoadingText = <h5>Loading...</h5>

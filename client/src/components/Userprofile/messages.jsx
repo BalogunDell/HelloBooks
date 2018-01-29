@@ -1,6 +1,13 @@
 import React from 'react';
 
-
+/**
+ * @description This returns a success message
+ * 
+ * @param {object} message
+ * 
+ * @returns {JSX} JSX representation of DOM
+ * 
+ */
 const successMessage = (message) => {
   return (
     <div className="successMessage">
@@ -13,7 +20,13 @@ const successMessage = (message) => {
   )
 }
 
-
+/** @description This returns a failure message
+* 
+* @param {object} message
+* 
+* @returns {JSX} JSX representation of DOM
+* 
+*/
 const failureMessage = (message) => {
   return (
   <div className="failureMessage">
@@ -27,6 +40,13 @@ const failureMessage = (message) => {
   )
 }
 
+/** @description This returns membership stars based on membership level
+* 
+* @param {object} membershipLevel
+* 
+* @returns {JSX} JSX representation of DOM
+* 
+*/
 const membershipIconCreator = (membershipLevel) => {
   if(!membershipLevel) {
     membershipLevel == 'null'

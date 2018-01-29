@@ -51,14 +51,14 @@ class UserController {
         const messageObject = errorMessages(error);
         switch (messageObject.type) {
           case 'uniqueError':
-            res.status(409).json({ errorMessage: messageObject.error });
+            res.status(409).json({ message: messageObject.error });
             break;
           case 'validationError':
-            res.status(400).json({ errorMessage: messageObject.error });
+            res.status(400).json({ message: messageObject.error });
             break;
           default:
             res.status(500).json({
-              errorMessage: 'Internal server error'
+              message: 'Internal server error'
             });
         }
       });
@@ -73,9 +73,12 @@ class UserController {
    * @returns { object } user data with token
    */
   static newGoogleAccess(req, res) {
+
+    const { email } = req.body;
+
     findOneResource(userModel, { where:
       {
-        email: req.body.email,
+        email,
       }
     })
       .then((response) => {
@@ -86,7 +89,7 @@ class UserController {
             token,
             user: {
               username: response.dataValues.username,
-              userID: response.dataValues.id,
+              userId: response.dataValues.id,
               userRole: response.dataValues.role,
               imageUrl: response.dataValues.imageUrl
             } };
@@ -97,7 +100,7 @@ class UserController {
       .catch(() => {
         return res.status(500)
           .json({
-            errorMessage: 'Internal server error'
+            message: 'Internal server error'
           });
       });
   }
@@ -111,8 +114,9 @@ class UserController {
    * @returns { object } user data with token 
    */
   static signin(req, res) {
+    const { username } = req.body;
     return userModel.findOne({ where: {
-      username: req.body.username
+      username
     }
     })
       .then((user) => {
@@ -125,7 +129,7 @@ class UserController {
             token,
             user: {
               username: user.username,
-              userID: user.id,
+              userId: user.id,
               userRole: user.role,
               imageUrl: user.imageUrl
             }
@@ -133,7 +137,7 @@ class UserController {
           return res.status(200).json({ responseData });
         }
         return res.status(401).json({
-          errorMessages: 'Invalid username or password'
+          message: 'Invalid username or password'
         });
       })
       .catch((error) => {
@@ -141,12 +145,12 @@ class UserController {
         switch (messageObject.type) {
           case 'validationError':
             res.status(400).json({
-              errorMessage: messageObject.error
+              message: messageObject.error
             });
             break;
           default:
             res.status(500).json({
-              errorMessage: 'Internal server error'
+              message: 'Internal server error'
             });
         }
       });
@@ -161,38 +165,40 @@ class UserController {
    * @returns { object }  - generated url for password reset
    */
   static generateResetPassUrl(req, res) {
-    userModel.findOne({ where: { email: req.body.email } })
+    const { email } = req.body;
+    findOneResource(userModel, { where: { email } })
       .then((response) => {
         if (response) {
-          const resetPassUrl = helper.urlGenerator(12, process.env.CHARACTERS);
-          userModel.update({ passwordReseturl: resetPassUrl },
-            { where: { email: req.body.email } })
+          const resetPasswordUrl = helper.urlGenerator(12,
+            process.env.CHARACTERS);
+          userModel.update({ passwordReseturl: resetPasswordUrl },
+            { where: { email } })
             .then(() => {
-              helper.generateMail(req.body.email, resetPassUrl)
+              helper.generateMail(req.body.email, resetPasswordUrl)
                 .then((mailerResponse) => {
                   if (mailerResponse.accepted[0] === req.body.email) {
                     res.status(201).json({
                       message: 'A password reset link has been sent to your email',
-                      url: resetPassUrl });
+                      url: resetPasswordUrl });
                   }
                 })
                 .catch((mailerError) => {
                   res.status(500).json({
-                    errorMessage: mailerError
+                    message: mailerError
                   });
                 });
             })
-            .catch((error) => {
-              res.status(501).json({ errorMessage: error });
+            .catch(() => {
+              res.status().json({ message: 'Interval servre error' });
             });
         } else {
           res.status(404).json({
-            errorMessage: 'This email does not exist in our database'
+            message: 'This email does not exist in our database'
           });
         }
       })
       .catch(() => {
-        res.status(500).json({ errorMessage: 'Internal server error' });
+        res.status(500).json({ message: 'Internal server error' });
       });
   }
 
@@ -206,20 +212,18 @@ class UserController {
    * @returns { object } message that password has been changed
    */
   static resetPassword(req, res) {
-    const {
-      password,
-      passwordResetUrl
-    } = req.body;
+    const { password } = req.body;
+    const { resetUrl } = req.params;
 
     userModel.update({
-      password }, { where: { passwordResetUrl },
+      password }, { where: { passwordReseturl: resetUrl },
       individualHooks: true },
     { fields: ['password'] })
       .then(() => {
         userModel.update({
           passwordReseturl: ''
         }, { where: {
-          passwordResetUrl
+          passwordReseturl: resetUrl
         }
         })
           .then(() => {
@@ -229,13 +233,13 @@ class UserController {
           })
           .catch(() => {
             res.status(500).json({
-              errorMessage: 'Internal server error'
+              message: 'Internal server error'
             });
           });
       })
       .catch(() => {
         res.status(500).json({
-          errorMessage: 'Internal server error'
+          message: 'Internal server error'
         });
       });
   }
@@ -313,10 +317,10 @@ class UserController {
         if (user) {
           return res.status(200).json({ user });
         }
-        return res.status(404).json({ errorMessage: 'User not found' });
+        return res.status(404).json({ message: 'User not found' });
       })
       .catch(() => {
-        res.status(500).json({ errorMessage: 'Internal server error' });
+        res.status(500).json({ message: 'Internal server error' });
       });
   }
 
@@ -353,14 +357,14 @@ class UserController {
         const messageObject = errorMessages(error);
         switch (messageObject.type) {
           case 'uniqueError':
-            res.status(409).json({ error: messageObject.error });
+            res.status(409).json({ message: messageObject.error });
             break;
           case 'validationError':
-            res.status(400).json({ error: messageObject.error });
+            res.status(400).json({ message: messageObject.error });
             break;
           default:
             res.status(500).json({
-              error: 'Internal server error'
+              message: 'Internal server error'
             });
         }
       });

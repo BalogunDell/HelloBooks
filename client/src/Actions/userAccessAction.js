@@ -146,7 +146,9 @@ const newGoogleAccessAction = googleUserData => ({
 
 /**
  * @export newGoogleAccess
+ * 
  * @param { object } googleUserData
+ * 
  * @returns { object } server response
  */
 const newGoogleAccess = googleUserData => dispatch =>

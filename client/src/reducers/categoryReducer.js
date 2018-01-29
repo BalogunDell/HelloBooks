@@ -5,8 +5,10 @@ import {
 
 /**
  * @export createCategoryReducer
- * @param { object } [state={}] initial state
+ * 
+ * @param { object } state initial state
  * @param { object } action action performed
+ * 
  * @returns { object } type of action and payload
  */
 export default function createCategoryReducer(state = {}, action) {

@@ -142,8 +142,8 @@ export class Login extends React.Component {
             loginHandler = {this.loginHandler}
             loginError = {this.state.loginError}
             isLoading = {this.state.isLoading}
-            googleLoginHandler = {this.googleLoginHandler}/>
-
+            googleLoginHandler = {this.googleLoginHandler}
+            currentLocation = {this.props.currentLocation}/>
           </Background>
       </div>
     );
@@ -161,7 +161,8 @@ export const mapStateToProps = (state, ownProps) => {
   return {
     initialUserData: initialUserData,
     isAuthenticated: state.userAccess.isAuthenticated,
-    googleAuth: state.userAccess
+    googleAuth: state.userAccess,
+    currentLocation: ownProps
 
   }
 }

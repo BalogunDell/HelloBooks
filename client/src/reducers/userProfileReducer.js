@@ -18,7 +18,7 @@ const fetchUserReducer = (state = {}, action) => {
   switch (action.type) {
     case FETCH_USER:
       return {
-        ...state, ...action.userID.user
+        ...state, ...action.userId.user
       };
     case EDIT_PROFILE:
       return {

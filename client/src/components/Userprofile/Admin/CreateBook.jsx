@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import {
   createBook,
   saveImageToCloudinary,
@@ -59,8 +60,15 @@ export class CreateBook extends React.Component {
     let name = event.target.name;
     let tempBookData = { ...this.state.bookData };
     tempBookData[name] = event.target.value;
+    if(event.target.name == 'categoryId') {
+      this.setState({ bookData:tempBookData});
+      this.setState({
+        bookData: {...this.state.bookData,
+          categoryId: parseInt(event.target.value, 10)}});
+    } else {
     this.setState({ bookData: tempBookData });
   }
+}
 
   /**
    * Handles book creation - createBookHandler
@@ -136,7 +144,7 @@ export class CreateBook extends React.Component {
                       successStatus:false,
                       errorStatus:true,
                       disableBtn:true,
-                      errorMessage: error.response.data.errorMessage});
+                      errorMessage: error.response.data.message});
                   })
               }
             })
@@ -301,7 +309,7 @@ export const mapStateToProps = (state) => {
     year: '', 
     description: '', 
     quantity: '',
-    categoryid: '', 
+    categoryId: '', 
     imageUrl: '',
     pdfUrl: '' }
 

@@ -49,16 +49,8 @@ export class ProfileUpdateForm extends React.Component {
     this.setState({loader: true});
     this.props.updateProfile(this.state.userData)
     .then(() => {
-      this.setState({
-        loader: false, 
-        errorStatus: false, 
-        errorMessage: '',
-        successStatus: true,
-        disable: true });
         Materialize.toast('Profile has been updated', 3000, 'blue rounded');
         setTimeout(() => {
-          const {cancelEdit} = this.props;
-          cancelEdit();
         }, 1000);
         
     })
@@ -66,7 +58,7 @@ export class ProfileUpdateForm extends React.Component {
       this.setState({
         errorStatus: true,
         disable: false,
-        errorMessage: error.response.data.error,
+        errorMessage: error.response.data.message,
         loader: false});
     });
   }

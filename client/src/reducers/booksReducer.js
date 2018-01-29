@@ -5,12 +5,10 @@ import {
   CREATE_BOOK,
   RETURN_BOOK,
   GET_BOOK_ID,
-  EDIT_BOOK_ID,
   MODIFY_BOOK,
   DELETE_BOOK,
   GET_BORROWED_BOOKS,
   ADMIN_GET_ALLBOOKS,
-  PUBLISH_BOOK,
   TRENDING_BOOKS,
 } from '../Actions/actionTypes';
 
@@ -23,7 +21,7 @@ const getAllBooks = (state = {}, action) => {
     case BORROW_BOOK:
       return {
         ...state,
-        bookid: action.bookDetails
+        bookId: action.bookDetails
       };
 
     case FETCTH_USER_BOOKS:
@@ -37,15 +35,11 @@ const getAllBooks = (state = {}, action) => {
       };
     case RETURN_BOOK:
       return {
-        ...state, returnBookData: action.bookid
+        ...state, returnBookData: action.bookId
       };
     case GET_BOOK_ID:
       return {
-        ...state, currentBookId: action.bookid
-      };
-    case EDIT_BOOK_ID:
-      return {
-        ...state, editBookID: action.bookid
+        ...state, currentBookId: action.bookId
       };
     case MODIFY_BOOK: {
       const newBookArray = [];
@@ -59,10 +53,14 @@ const getAllBooks = (state = {}, action) => {
       return {
         ...state, books: newBookArray };
     }
-    case DELETE_BOOK:
+    case DELETE_BOOK: {
+      const remainingBooks = state.books.filter((book) => {
+        return book.id !== parseInt(action.deletedBook.bookId, 10);
+      });
       return {
-        ...state, updatedBooks: action.updatedBooks.updatedBooks
+        ...state, books: remainingBooks
       };
+    }
     case GET_BORROWED_BOOKS:
       return {
         ...state, allborrowedbooks: action.borrowedbooks
@@ -70,10 +68,6 @@ const getAllBooks = (state = {}, action) => {
     case ADMIN_GET_ALLBOOKS:
       return {
         ...state, unpublishedbooks: action.unpublishedbooks
-      };
-    case PUBLISH_BOOK:
-      return {
-        ...state, publishedBook: action.bookData
       };
     case TRENDING_BOOKS:
       return {

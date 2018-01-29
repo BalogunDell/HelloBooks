@@ -8,8 +8,9 @@
     "npm": "3.10.10"
   },
   "scripts": {
-    "test": "npm run migrate:test && NODE_ENV=test node_modules/.bin/nyc --reporter=lcov --reporter=text mocha --require babel-polyfill --timeout 10000 --compilers js:babel-register -- ./tests/api/*.test.js",
+    "test": "npm run migrate:test && NODE_ENV=test node_modules/.bin/nyc --reporter=lcov --reporter=text mocha --require babel-polyfill --timeout 10000 --compilers js:babel-register -- ./tests/api/api.test.js",
     "lint": "eslint ./server/**/*.js && eslint ./client/**/*.jsx && eslint ./client/**/*.js --fix",
+    "lint:client": "eslint ./client/src/.jsx && eslint ./client/**/*.js --fix",
     "build": "babel ./server --out-dir build",
     "start:server": "babel-node -- server/index.js",
     "start:client": "webpack-dev-server --open --config ./webpack.dev.config.js --hot",

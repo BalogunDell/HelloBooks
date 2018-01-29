@@ -5,7 +5,7 @@ import {
   getUserBooks,
   getBookId,
   returnBook } from '../../Actions/booksAction';
-import UserBooks from './TableRows/UserBooks';
+import UserBooks from '../Userprofile/UserBooks';
 
 /**
  * Borrowed Books component
@@ -19,7 +19,7 @@ export class BorrowedBooks extends React.Component {
     super(props);
 
     this.state = {
-      userid: this.props.userID,
+      userId: this.props.userID,
       loading: false,
       borrowedBooks: [],
       tableHeader: 'Books with you'
@@ -40,9 +40,9 @@ export class BorrowedBooks extends React.Component {
   handleReturn(event) {
     event.persist();
     let spliced = this.state.borrowedBooks.filter((book) => {
-       return book.bookid != event.target.value
+       return book.bookId != event.target.value
       });
-    this.props.returnBook({bookid: event.target.value})
+    this.props.returnBook({bookId: parseInt(event.target.value)})
     .then(() => {
       this.setState({borrowedBooks: spliced });
         Materialize.toast(
@@ -63,7 +63,7 @@ export class BorrowedBooks extends React.Component {
    */
   componentDidMount() {
     this.setState({loading: true });
-    this.props.getUserBooks(this.state.userid)
+    this.props.getUserBooks(this.state.userId)
       .then(() => {
         this.setState({
           loading: false
@@ -147,8 +147,8 @@ export const mapStateToProps = (state) => {
  */
 export const mapDispatchToProps = (dispatch) => {
   return {
-    getUserBooks: (userid) => dispatch(getUserBooks(userid)),
-    returnBook: (bookid) => dispatch(returnBook(bookid)),
+    getUserBooks: (userId) => dispatch(getUserBooks(userId)),
+    returnBook: (bookId) => dispatch(returnBook(bookId)),
   }
 }
 

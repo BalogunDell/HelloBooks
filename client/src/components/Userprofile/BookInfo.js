@@ -43,7 +43,7 @@ const BookInfo = ({
 
                 <tr>
                   <td>Category</td>
-                    <td>{book.category.category}</td> 
+                    <td>{book.Category.category}</td> 
                 </tr>
 
                 <tr>

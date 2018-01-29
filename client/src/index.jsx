@@ -17,7 +17,6 @@ import Register from './components/Useraccess/Register';
 import Navbar from './components/Navbar/Navbar';
 import Footer from './components/Footer/Footer';
 import User from './components/Userprofile/User';
-import Dashboard from './components/Userprofile/Dashboard';
 import UserHistory from './components/Userprofile/History';
 import Allbooks from './components/Userprofile/Allbooks/Allbooks';
 import BookDetails from './components/Userprofile/BookDetails';
@@ -31,6 +30,7 @@ import { loadAllbooks } from './Actions/booksAction';
 // Create an instance of the configStore 
  const store = configStore();
 
+ 
 class App extends React.Component {
     
   render() {
@@ -44,7 +44,8 @@ class App extends React.Component {
               <Route path='/about' component={About}/>
               <Route path='/user' component={User}/>
                <Route path="/user/bookdetails" component={BookDetails}/> 
-               <Route path="/resetpassword/:uniqueUrl" exact component={ResetPassword}/>
+               <Route path="/resetpassword/:uniqueUrl" 
+                exact component={ResetPassword}/>
               <Route path="*" component= {NotFound}/>
             </Switch>
           </BrowserRouter>

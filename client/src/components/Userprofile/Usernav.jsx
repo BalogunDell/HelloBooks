@@ -75,14 +75,20 @@ const UserNav = ({
             </i>
           </Link>
         </li>
-        <li>
-          <Link
-            to={`${path}/${linkTexts[3]}`}
-            id="fourthLink">{navLinks[3]}
-            <i className="material-icons white-text">{linkIcons[3]}
-            </i>
-          </Link>
-        </li> 
+        { 
+          userType === 'user'
+          ?
+          <li>
+            <Link
+              to={`${path}/${linkTexts[3]}`}
+              id="fourthLink">{navLinks[3]}
+              <i className="material-icons white-text">{linkIcons[3]}
+              </i>
+            </Link>
+          </li> 
+          :
+          null
+        }
         <li 
           id="dashboard">
           <div 

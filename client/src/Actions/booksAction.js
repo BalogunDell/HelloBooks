@@ -1,4 +1,5 @@
 import axios from 'axios';
+import getUserDetails from '../utils/getUserInfo';
 
 import {
   GET_ALL_BOOKS,
@@ -13,22 +14,20 @@ import {
   MODIFY_BOOK,
   DELETE_BOOK,
   GET_BORROWED_BOOKS,
-  ADMIN_GET_ALLBOOKS,
-  PUBLISH_BOOK,
   TRENDING_BOOKS,
 } from './actionTypes';
+
 import {
   userProfile,
   userbooks,
   trending,
 } from '../utils/apiEndPoints';
+
 import {
   cloudinaryUrl,
   cloudinaryPreset,
   requestHeader
 } from '../utils/cloudinaryKeys';
-import getUserDetails from '../utils/getUserInfo';
-
 
 /**
  * @export getAllBooks
@@ -59,13 +58,13 @@ export const loadAllbooks = () => dispatch =>
 /**
  * @export getBookId
  * 
- * @param {object} bookid 
+ * @param {object} bookId 
  * 
  * @returns {object} action type and booido
  */
-export const getBookId = bookid => ({
+export const getBookId = bookId => ({
   type: GET_BOOK_ID,
-  bookid
+  bookId
 });
 
 
@@ -135,25 +134,25 @@ export const getUserBooks = () => dispatch =>
 /**
  *  @export returnBookAction
  * 
- * @param {object} bookid
+ * @param {object} bookId
  * 
- * @returns {object} Action Type and bookid 
+ * @returns {object} Action Type and bookId 
  */
-export const returnBookAction = bookid => ({
+export const returnBookAction = bookId => ({
   type: RETURN_BOOK,
-  bookid
+  bookId
 });
 
 /**
  * @export returnBook
  * 
- * @param {object} bookid
+ * @param {object} bookId
  * 
  * @returns {object} axios response 
  */
-export const returnBook = bookid => dispatch =>
+export const returnBook = bookId => dispatch =>
   axios.put(`${userProfile}/${getUserDetails().userId}/books`,
-    bookid,
+    bookId,
     { headers: { Authorization: getUserDetails().savedToken } })
     .then((response) => {
       dispatch(returnBookAction(response.data.message));
@@ -270,13 +269,13 @@ export const saveImageToCloudinary = (image) => {
  * 
  * @export getAdminEditBookId
  * 
- * @param { object } bookid
+ * @param { object } bookId
  * 
- * @returns { object } action type and payload => bookid
+ * @returns { object } action type and payload => bookId
  */
-export const getAdminEditBookId = bookid => ({
+export const getAdminEditBookId = bookId => ({
   type: EDIT_BOOK_ID,
-  bookid
+  bookId
 });
 
 /**
@@ -317,13 +316,13 @@ export const modifyBook = (bookData) => {
  * 
  * @export deleteBookAction
  * 
- * @param { integer } updatedBooks
+ * @param { integer } deletedBook
  * 
- * @returns { object } action type and bookid
+ * @returns { object } action type and bookId
  */
-export const deleteBookAction = updatedBooks => ({
+export const deleteBookAction = deletedBook => ({
   type: DELETE_BOOK,
-  updatedBooks
+  deletedBook
 });
 
 /**
@@ -342,6 +341,7 @@ export const deleteBook = bookId => dispatch =>
     })
     .catch((error) => {
       throw (error);
+      Materialize.toast(error, 4000, 'red rounded');
     });
 
 /**
@@ -370,68 +370,6 @@ export const getAllBorrowedBooks = () => dispatch =>
     .catch((error) => {
       throw (error);
     });
-
-/**
-  * @export adminGetAllBooksAction
-  
-  * @param { object } unpublishedbooks
-  *
-  * @returns { objectv } action type and payload => unpublishedbooks
-  */
-export const adminGetAllBooksAction = unpublishedbooks => ({
-  type: ADMIN_GET_ALLBOOKS,
-  unpublishedbooks
-});
-
-/**
-  * @export adminGetAllBooks
-  
-  * @param { object } dispatch
-  *
-  * @returns { objectv } action type and payload => unpublishedbooks
-  */
-export const adminGetAllBooks = () => dispatch =>
-  axios.get(`${userbooks}/all`, {
-    headers: { Authorization: getUserDetails().savedToken } })
-    .then((response) => {
-      dispatch(adminGetAllBooksAction(response.data.books));
-    })
-    .catch((error) => {
-      throw (error);
-    });
-
-
-/**
- * 
- * @param { integer } bookData 
- * 
- * @returns { object } axios response
- * 
- */
-export const publishBookAction = bookData => ({
-  type: PUBLISH_BOOK,
-  bookData
-});
-
-/**
-  * 
-  *@export { object }
-  *
-  * @param { integer } bookData
-  *
-  * @returns { object } axios response
-  *
-  */
-export const publishBook = bookData => dispatch =>
-  axios.post(`${userbooks}/${bookData}`, null, {
-    headers: { Authorization: getUserDetails().savedToken } })
-    .then((response) => {
-      dispatch(publishBookAction(response.data));
-    })
-    .catch((error) => {
-      throw (error);
-    });
-
 
 /**
  * 

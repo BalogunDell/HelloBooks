@@ -123,9 +123,9 @@ const CreateBookForm = ({
             </div>
 
               <select
-                name="categoryid"
+                name="categoryId"
                 className= "browser-default"
-                value={initialData.categoryid}
+                value={initialData.categoryId}
                 onChange={handleInput}>
                 <option 
                   value="...">Select a category

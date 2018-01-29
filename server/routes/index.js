@@ -1,7 +1,6 @@
 import express from 'express';
 import UserController from '../controller/UserController';
 import BookController from '../controller/BookController';
-import helper from '../middleware/Helper';
 import InputValidator from '../middleware/InputValidator';
 import Authentication from '../middleware/Authentication';
 import Helper from '../middleware/Helper';
@@ -9,17 +8,9 @@ import Helper from '../middleware/Helper';
 const appRouter = express.Router();
 
 /**
-* @param  {} '/api/v1/users/signup'
-*
-* @param  {} checkUserInput
-*
-* @param  {} checkValidUserInput
-*
-* @param  {} checkUserInvalidInput
-*
-* @param  {} validateUsers
-*
-* @param  {} users.signup
+* @param  {string} '/api/v1/'
+* @param  {object} req - request object
+* @param  {object} res - response object
 */
 appRouter.get('/', (req, res) => {
   res.status(200)
@@ -29,50 +20,99 @@ appRouter.get('/', (req, res) => {
 });
 
 
-// User Routes
+/**
+* @param  {string} '/api/v1/users/signup'
+* @param  {method} signupValidator
+* @param  {method} signup
+*/
 appRouter.post('/users/signup',
   InputValidator.signupValidator,
   UserController.signup);
 
+/**
+* @param  {string} '/api/v1/users/signin'
+* @param  {method} loginValidator
+* @param  {method} signin
+*/
 appRouter.post('/users/signin',
   InputValidator.loginValidator,
   UserController.signin);
 
 
-// Add and fetch categories
+/**
+* @param  {string} '/api/v1/newcategory'
+* @param  {method} checkCategoryPayload
+* @param  {method} verifyAdmin
+* @param  {method} addCategory
+*/
 appRouter.post('/newcategory',
   InputValidator.checkCategoryPayload,
   Authentication.verifyAdmin,
   BookController.addCategory);
 
+/**
+* @param  {string} '/api/v1/categories'
+* @param  {method} verifyAdmin
+* @param  {method} getCategories
+*/
 appRouter.get('/categories',
   Authentication.verifyAdmin,
   BookController.getCategories);
 
-
-// Generate uique url for password reset, Reset password
+/**
+* @param  {string} '/api/v1/resetpassword'
+* @param  {method} resetPassEmailVerifer
+* @param  {method} generateResetPassUrl
+*/
 appRouter.post('/resetpassword',
   InputValidator.resetPassEmailVerifer,
   UserController.generateResetPassUrl);
 
+/**
+* @param  {string} '/api/v1/resetpassword/:resetUrl'
+* @param  {method} resetPassVerifier
+* @param  {method} verifyUrl
+* @param  {method} resetPassword
+*/
 appRouter.put('/resetpassword/:resetUrl',
   InputValidator.resetPassVerifier,
   Authentication.verifyUrl,
   UserController.resetPassword);
 
-
+/**
+* @param  {string} '/api/v1/books/'
+* @param  {method} confirmLibraryAccess
+* @param  {method} getBooks
+* @param  {method} bookPayloadChecker
+* @param  {method} verifyAdmin
+* @param {method} addBook
+*/
 appRouter.route('/books')
-  .get(Authentication.verifyAdmin,
+  .get(Authentication.confirmLibraryAccess,
     BookController.getBooks)
 
   .post(InputValidator.bookPayloadChecker,
     Authentication.verifyAdmin,
     BookController.addBook);
 
+/**
+* @param  {string} '/api/v1/books/borrowedbooks'
+* @param  {method} verifyAdmin
+* @param  {method} getBorrowedBooks
+*/
 appRouter.get('/books/borrowedbooks',
   Authentication.verifyAdmin,
   BookController.getBorrowedBooks);
 
+/**
+* @param  {string} '/api/v1/books/:id'
+* @param  {method} editBookVerifier
+* @param  {method} verifyAdmin
+* @param  {method} checkBookId
+* @param  {method} modifyBook
+* @param  {method} getBookById
+* @param  {method} deleteBook
+*/
 appRouter.route('/books/:id')
   .put(
     InputValidator.editBookVerifier,
@@ -85,15 +125,27 @@ appRouter.route('/books/:id')
     Authentication.verifyAdmin,
     BookController.getBookById)
 
-  .delete(Authentication.verifyAdmin,
+  .delete(
+    Helper.checkBookId,
+    Authentication.verifyAdmin,
     BookController.deleteBook);
 
+/**
+* @param  {string} '/api/v1//users/:userId/book'
+* @param  {method} verifyBookId
+* @param  {method} verifyUser
+* @param  {method} checkBook
+* @param  {method} verifyBookLimit
+* @param  {method} borrowBook
+* @param  {method} getUserBooks
+* @param  {method} returnBook
+*/  
 appRouter.route('/users/:userId/books')
   .post(
     InputValidator.verifyBookId,
     Authentication.verifyUser,
-    helper.checkBook,
-    helper.verifyBookLimit,
+    Helper.checkBook,
+    Helper.verifyBookLimit,
     BookController.borrowBook)
 
   .get(Authentication.verifyUser,
@@ -104,20 +156,37 @@ appRouter.route('/users/:userId/books')
     Authentication.verifyUser,
     BookController.returnBook);
 
+/**
+* @param  {string} '/api/v1/users/:userId/'
+* @param  {method} verifyUser
+* @param  {method} profilePage
+* @param  {method} editProfile
+*/ 
 appRouter.route('/users/:userId/')
   .get(Authentication.verifyUser,
     UserController.profilePage)
-  .put(Authentication.verifyUser,
+  .put(InputValidator.editProfileVerifier,
+    Authentication.verifyUser,
     UserController.editProfile
   );
 
+/**
+* @param  {string} '/api/v1/trendingbooks'
+* @param  {method} fetchTrendingBooks
+*/ 
 appRouter.get('/trendingbooks',
   BookController.fetchTrendingBooks
 );
 
-appRouter.post('/googleuser', UserController.newGoogleAccess);
+/**
+* @param  {string} '/api/v1/googleuser'
+* @param  {method} newGoogleAccess
+*/ 
+appRouter.post('/googleuser',
+  InputValidator.signupValidator,
+  UserController.newGoogleAccess);
 
-// redirect every other address
+
 appRouter.route('*')
   .post((req, res) => {
     res.status(404)

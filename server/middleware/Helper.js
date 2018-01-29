@@ -36,10 +36,10 @@ class Helper {
 
     findOneResourceById(bookModel, (parseInt(bookId, 10)))
       .then((book) => {
-        if (!book) return res.status(404).json({ errorMessage: 'Book not found' });
+        if (!book) return res.status(404).json({ message: 'Book not found' });
         if (!book.dataValues.quantity) {
           return res.status(200).json({
-            errorMessage: 'This book is currently unavailable'
+            message: 'This book is currently unavailable'
           });
         }
         req.book = book;
@@ -47,7 +47,7 @@ class Helper {
       })
       .catch(() => {
         res.status(500).json({
-          errorMessage: 'Internal server error'
+          message: 'Internal server error'
         });
       });
   }
@@ -87,7 +87,7 @@ class Helper {
         }
       }).catch((error) => {
         res.status(500).json({
-          msg: error
+          message: error
         });
       });
   }
@@ -158,12 +158,14 @@ class Helper {
    */
   static checkBookId(req, res, next) {
     const { id } = req.params;
+
     if (paramValid(id)) {
       return res.status(400).json({
         message: 'You have provided an invalid id'
       });
     }
-    req.body.id = id;
+    const bookId = parseInt(id, 10);
+    req.body.id = bookId;
     return next();
   }
 

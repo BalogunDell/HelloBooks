@@ -149,13 +149,13 @@ return (
                   </div>
 
                   <select 
-                    name="categoryid" 
-                    id="categoryid"
+                    name="categoryId" 
+                    id="categoryId"
                     className= "browser-default"
-                    value={book.category.category} 
+                    value={book.Category.category} 
                     onChange={handleEditInput}>
-                    <option value={book.categoryid}>
-                      {book.category.category}
+                    <option value={book.categoryId}>
+                      {book.Category.category}
                     </option>
                     { loadedCategories.map((val, index) => {                  
                       return (<option 

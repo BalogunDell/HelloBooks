@@ -10,7 +10,7 @@ import expect, { spyOn } from 'expect'
 import jwt from 'jsonwebtoken';
 import ConnectedEditBookForm, {
   EditBook
-} from '../../client/src/components/Userprofile/AdminSubComponents/EditBook';
+} from '../../client/src/components/Userprofile/Admin/EditBook';
 import Books from '../../client/src/components/Books/Books';
 import Book from '../../client/src/components/Books/Book'
 
@@ -109,13 +109,13 @@ describe('Edit Books Component,', () => {
   it('should set book categoryid to state when input values changes', () => {
     const setup = mount(<EditBook {...props} />);
     const event = {
-      target: { name: 'categoryid', value: 2 } };
-    const categoryId = setup.find('#categoryid');
+      target: { name: 'categoryId', value: 2 } };
+    const categoryId = setup.find('#categoryId');
 
     event.target.value = 3;
     categoryId.simulate('change', event);
 
-    expect(wrapper.instance().state.book.categoryid).toBe(2);
+    expect(wrapper.instance().state.book.categoryId).toBe(2);
   });
   
 

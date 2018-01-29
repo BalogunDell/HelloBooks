@@ -68,8 +68,8 @@ export default (sequelize, DataTypes) => {
           msg: 'Username cannot be empty'
         },
         len: {
-          args: [1, 100],
-          msg: 'Username should be longer than two characters'
+          args: [3, 100],
+          msg: 'Username should be longer than three characters'
         },
         is: {
           args: /(\D)+/,

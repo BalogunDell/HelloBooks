@@ -13,7 +13,7 @@ import {
     mapDispatchToProps,
  } from '../../client/src/components/Userprofile/Allbooks/Allbooks';
 
- import UserBooks from '../../client/src/components/Userprofile/TableRows/UserBooks';
+ import UserBooks from '../../client/src/components/Userprofile/UserBooks';
 
 import { mockBooks, borrowedBookSample } from './mocks/mockdata';
 jest.mock('../../client/src/components/HOC/authenticate.jsx');
@@ -59,7 +59,7 @@ describe('All Books', () => {
     expect(wrapper.find('h1').length).toBe(1);
   });
 
-  it('should test getbookid method', () => {
+  it('should test getbookId method', () => {
     const getBookIdSpy = jest.spyOn(Allbooks.prototype, 'getBookId');
     shallow(<Allbooks {...minProps} onClick = {getBookIdSpy}/>)
     .instance().getBookId(event);
@@ -97,20 +97,5 @@ describe('All Books', () => {
       }
     }
     expect(mapStateToProps(state)).toBeTruthy();
-  });
-});
-
-describe('User Books', () => {
-  const minProps = {
-    allUserBooks: borrowedBookSample,
-    getRowKey: '',
-    tableHeader: '',
-    handleReturn: jest.fn(),
-    books: mockBooks.books,
-    bookLength: 0
-  }
-  const wrapper = shallow(<UserBooks {...minProps}/>)
-  it('renders the all userbooks component without crashing', () => {
-    expect(wrapper.find('div').length).toBe(1);
   });
 });

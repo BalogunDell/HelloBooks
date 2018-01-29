@@ -27,7 +27,9 @@ module.exports = merge(common, {
       CLOUD_URL: JSON.stringify(process.env.CLOUD_URL),
       SECRET: JSON.stringify(process.env.SECRET),
       GOOGLE_CLIENT_ID: JSON.stringify(process.env.GOOGLE_CLIENT_ID),
-      GOOGLE_CLIENT_SECRET: JSON.stringify(process.env.GOOGLE_CLIENT_SECRET)
+      GOOGLE_CLIENT_SECRET: JSON.stringify(process.env.GOOGLE_CLIENT_SECRET),
+      ACCESS_GRANTOR: JSON.stringify(process.env.ACCESS_GRANTOR),
+      DEFAULT_MEMBERSHIP: JSON.stringify(process.env.DEFAULT_MEMBERSHIP),
     }),
   ],
 });

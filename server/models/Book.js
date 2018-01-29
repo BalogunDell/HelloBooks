@@ -112,7 +112,7 @@ export default (sequelize, DataTypes) => {
     },
     categoryId: {
       type: DataTypes.INTEGER,
-      allowNull: true
+      allowNull: false
     },
     visibility: {
       type: DataTypes.BOOLEAN,
@@ -159,6 +159,7 @@ export default (sequelize, DataTypes) => {
   Book.associate = (model) => {
     Book.hasMany(model.BorrowedBook, {
       foreignKey: 'bookId',
+      onDelete: 'CASCADE'
     });
     Book.belongsTo(model.Category, {
       foreignKey: 'categoryId',
@@ -167,4 +168,3 @@ export default (sequelize, DataTypes) => {
   };
   return Book;
 };
-

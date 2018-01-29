@@ -8,6 +8,7 @@ const authenticate = (BasicComponent) => {
 /**
  * 
  * @class authenticate
+ * 
  * @extends {React.Component}
  */
   return class Authenticate extends React.Component {
@@ -21,13 +22,16 @@ const authenticate = (BasicComponent) => {
 /**
  * 
  * @returns { object } object
+ * 
  * @memberof Authenticate
  */
     componentWillMount() {
-      jwt.verify(localStorage.getItem('Access-Token'), process.env.SECRET, (err, decoded) => {
+      jwt.verify(localStorage.getItem('Access-Token'), process.env.SECRET, 
+      (err, decoded) => {
         if(err) {
           localStorage.clear();
-          Materialize.toast(`You token is either invalid or has expired`, 4000, 'blue rounded');
+          Materialize.toast(`You token is either invalid or has expired`,
+          4000, 'blue rounded');
           return this.setState({ redirect: true });
         }
         return decoded;

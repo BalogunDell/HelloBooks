@@ -25,33 +25,33 @@ class InputValidator {
       password
     } = req.body;
 
-    if (username === undefined || password === undefined) {
+    if (!username || !password) {
       return res.status(400)
         .json({
-          errorMessage: 'Username and password are both required'
+          message: 'Username and password are both required'
         });
     }
     if (username === '' || password === '' || !req.body) {
       return res.status(401)
-        .json({ errorMessage: 'Provide your username and password to login'
+        .json({ message: 'Provide your username and password to login'
         });
     }
     if (username.length < 2) {
       return res.status(400)
         .json({
-          errorMessage: 'Username should be two or more characters'
+          message: 'Username should be two or more characters'
         });
     }
     if (password.length < 5) {
       return res.status(400)
         .json({
-          errorMessage: 'Password should not be less than 5 characters'
+          message: 'Password should not be less than 5 characters'
         });
     }
     if (typeof username === 'number') {
       return res.status(400)
         .json({
-          errorMessage: 'Invalid Username'
+          message: 'Invalid Username'
         });
     }
     req.body = {
@@ -81,17 +81,17 @@ class InputValidator {
 
 
     // Validate firstname
-    if (firstname === undefined) {
+    if (!firstname) {
       return res.status(400)
         .json({
-          errorMessage: 'Firstname is required'
+          message: 'Firstname is required'
         });
     }
 
     if (firstname === '') {
       return res.status(400)
         .json({
-          errorMessage: 'Firstname cannot be empty'
+          message: 'Firstname cannot be empty'
         });
     }
 
@@ -99,110 +99,110 @@ class InputValidator {
     if (firstname.length < 2) {
       return res.status(400)
         .json({
-          errorMessage: 'Firstname should be two or more characters'
+          message: 'Firstname should be two or more characters'
         });
     }
     if (typeof firstname === 'number') {
       return res.status(400)
         .json({
-          errorMessage: 'Firstname should only contain alphabets'
+          message: 'Firstname should only contain alphabets'
         });
     }
     // Validate lastname
     
-    if (lastname === undefined) {
+    if (!lastname) {
       return res.status(400)
         .json({
-          errorMessage: 'Lastname is required'
+          message: 'Lastname is required'
         });
     }
 
     if (!lastname) {
       return res.status(400)
         .json({
-          errorMessage: 'Lastname is required'
+          message: 'Lastname is required'
         });
     }
     if (lastname.length < 2) {
       return res.status(400)
         .json({
-          errorMessage: 'Lastname should be two or more characters'
+          message: 'Lastname should be two or more characters'
         });
     }
     if (typeof lastname === 'number') {
       return res.status(400)
         .json({
-          errorMessage: 'Lastname should only contain alphabets'
+          message: 'Lastname should only contain alphabets'
         });
     }
 
     // Validate username
-    if (username === undefined) {
+    if (!username) {
       return res.status(400)
         .json({
-          errorMessage: 'Username is required'
+          message: 'Username is required'
         });
     }
     if (typeof username === 'number') {
       return res.status(400)
         .json({
-          errorMessage: 'Numbers cannot be used as username'
+          message: 'Numbers cannot be used as username'
         });
     }
     if (username === '') {
       return res.status(400)
         .json({
-          errorMessage: 'Username cannot be empty'
+          message: 'Username cannot be empty'
         });
     }
 
     if (username.length < 2) {
       return res.status(400)
         .json({
-          errorMessage: 'Username should be two or more characters'
+          message: 'Username should be two or more characters'
         });
     }
 
     // Validate password
-    if (password === undefined) {
+    if (!password) {
       return res.status(400)
         .json({
-          errorMessage: 'Password is required'
+          message: 'Password is required'
         });
     }
     if (password === '') {
       return res.status(400)
         .json({
-          errorMessage: 'Password cannot be empty'
+          message: 'Password cannot be empty'
         });
     }
 
     if (password.length < 5) {
       return res.status(400)
         .json({
-          errorMessage: 'Password should not be less than 5 characters'
+          message: 'Password should not be less than 5 characters'
         });
     }
 
     // Validate Email
-    if (email === undefined) {
+    if (!email) {
       return res.status(400)
         .json({
-          errorMessage: 'Email is required'
+          message: 'Email is required'
         });
     }
 
     if (email === '') {
       return res.status(400)
         .json({
-          errorMessage: 'Email cannot be empty'
+          message: 'Email cannot be empty'
         });
     }
     
     if (!validateEmail(email)) {
       return res.status(400)
         .json({
-          errorMessage: 'Provided email is invalid'
+          message: 'Provided email is invalid'
         });
     }
     req.body = {
@@ -231,21 +231,21 @@ class InputValidator {
     if (!email) {
       return res.status(400)
         .json({
-          errorMessage: 'Email is required'
+          message: 'Email is required'
         });
     }
 
     if (typeof email === 'number') {
       return res.status(400)
         .json({
-          errorMessage: 'Provide your valid email'
+          message: 'Provide your valid email'
         });
     }
 
     if (!validateEmail(email)) {
       return res.status(400)
         .json({
-          errorMessage: 'Provide your valid email'
+          message: 'Provide your valid email'
         });
     }
 
@@ -305,14 +305,14 @@ class InputValidator {
     if (isbn === '') {
       return res.status(400)
         .json({
-          errorMessage: 'ISBN is required'
+          message: 'ISBN is required'
         });
     }
 
     if (isbn.toString().length !== 6) {
       return res.status(400)
         .json({
-          errorMessage: 'ISBN number should be 6 digits'
+          message: 'ISBN number should be 6 digits'
         });
     }
 
@@ -320,20 +320,20 @@ class InputValidator {
     if (author === '') {
       return res.status(400)
         .json({
-          errorMessage: 'Author is required'
+          message: 'Author is required'
         });
     }
 
     if (typeof author !== 'string') {
       return res.status(400)
         .json({
-          errorMessage: 'Author should be a name'
+          message: 'Author should be a name'
         });
     }
     if (countMutipleSpace.test(author)) {
       return res.status(400)
         .json({
-          errorMessage: 'Author name is not well formated'
+          message: 'Author name is not well formated'
         });
     }
 
@@ -341,13 +341,13 @@ class InputValidator {
     if (title === '') {
       return res.status(400)
         .json({
-          errorMessage: 'Title is required'
+          message: 'Title is required'
         });
     }
     if (typeof title !== 'string') {
       return res.status(400)
         .json({
-          errorMessage: 'Invalid title'
+          message: 'Invalid title'
         });
     }
 
@@ -355,7 +355,7 @@ class InputValidator {
     if (pages === '') {
       return res.status(400)
         .json({
-          errorMessage: 'Book page(s) is required'
+          message: 'Book page(s) is required'
         });
     }
 
@@ -363,13 +363,13 @@ class InputValidator {
     if (year === '') {
       return res.status(400)
         .json({
-          errorMessage: 'Year is required'
+          message: 'Year is required'
         });
     }
     if (year.toString().length > 4) {
       return res.status(400)
         .json({
-          errorMessage: 'Book year can only be 4 digits or less'
+          message: 'Book year can only be 4 digits or less'
         });
     }
 
@@ -377,13 +377,13 @@ class InputValidator {
     if (description === '') {
       return res.status(400)
         .json({
-          errorMessage: 'Book description is required'
+          message: 'Book description is required'
         });
     }
     if (countMutipleSpace.test(description)) {
       return res.status(400)
         .json({
-          errorMessage: 'Description is not well formated'
+          message: 'Description is not well formated'
         });
     }
 
@@ -391,7 +391,7 @@ class InputValidator {
     if (quantity === '') {
       return res.status(400)
         .json({
-          errorMessage: 'Book quantity is required'
+          message: 'Book quantity is required'
         });
     }
 
@@ -399,13 +399,13 @@ class InputValidator {
     if (imageUrl === '') {
       return res.status(400)
         .json({
-          errorMessage: 'Book cover is required'
+          message: 'Book cover is required'
         });
     }
     if (checkSpace.test(imageUrl) || countMutipleSpace.test(imageUrl)) {
       return res.status(400)
         .json({
-          errorMessage: 'Please select a valid book image'
+          message: 'Please select a valid book image'
         });
     }
 
@@ -413,13 +413,13 @@ class InputValidator {
     if (pdfUrl === '') {
       return res.status(400)
         .json({
-          errorMessage: 'Select a pdf to be uploaded'
+          message: 'Select a pdf to be uploaded'
         });
     }
     if (checkSpace.test(pdfUrl) || countMutipleSpace.test(pdfUrl)) {
       return res.status(400)
         .json({
-          errorMessage: 'Invalid file selected'
+          message: 'Invalid file selected'
         });
     }
 
@@ -442,21 +442,21 @@ class InputValidator {
     if (category === '') {
       return res.status(400)
         .json({
-          errorMessage: 'Category field cannot be empty'
+          message: 'Category field cannot be empty'
         });
     }
 
     if (category.length <= 2) {
       return res.status(400)
         .json({
-          errorMessage: 'Category is too short'
+          message: 'Category is too short'
         });
     }
 
     if (numberCheck.test(category)) {
       return res.status(400)
         .json({
-          errorMessage: 'Category cannot contain numbers'
+          message: 'Category cannot contain numbers'
         });
     }
     return next();
@@ -473,13 +473,10 @@ class InputValidator {
  */
   static verifyBookId(req, res, next) {
     const { bookId } = req.body;
-    console.log(parseInt(bookId, 10));
-    console.log(typeof bookId === 'number');
-    console.log(typeof req.body.bookId);
     if (typeof bookId !== 'number') {
       return res.status(400)
         .json({
-          errorMessage: 'Please provide a valid book id'
+          message: 'Please provide a valid book id'
         });
     }
     return next();
@@ -504,7 +501,7 @@ class InputValidator {
       description,
       quantity,
       imageUrl,
-      categoryid,
+      categoryId,
       pdfUrl,
     } = req.body;
 
@@ -515,20 +512,20 @@ class InputValidator {
     if (author === '') {
       return res.status(400)
         .json({
-          errorMessage: 'Author is required'
+          message: 'Author is required'
         });
     }
 
     if (typeof author !== 'string') {
       return res.status(400)
         .json({
-          errorMessage: 'Author should be a name'
+          message: 'Author should be a name'
         });
     }
     if (countMutipleSpace.test(author)) {
       return res.status(400)
         .json({
-          errorMessage: 'Author name is not well formated'
+          message: 'Author name is not well formated'
         });
     }
 
@@ -536,13 +533,13 @@ class InputValidator {
     if (title === '') {
       return res.status(400)
         .json({
-          errorMessage: 'Title is required'
+          message: 'Title is required'
         });
     }
     if (typeof title !== 'string') {
       return res.status(400)
         .json({
-          errorMessage: 'Invalid title'
+          message: 'Invalid title'
         });
     }
 
@@ -550,7 +547,7 @@ class InputValidator {
     if (pages === '') {
       return res.status(400)
         .json({
-          errorMessage: 'Book page(s) is required'
+          message: 'Book page(s) is required'
         });
     }
 
@@ -558,14 +555,14 @@ class InputValidator {
     if (year === '') {
       return res.status(400)
         .json({
-          errorMessage: 'Year is required'
+          message: 'Year is required'
         });
     }
 
     if (year.toString().length > 4) {
       return res.status(400)
         .json({
-          errorMessage: 'Book year can only be 4 digits or less'
+          message: 'Book year can only be 4 digits or less'
         });
     }
 
@@ -573,13 +570,13 @@ class InputValidator {
     if (description === '') {
       return res.status(400)
         .json({
-          errorMessage: 'Book description is required'
+          message: 'Book description is required'
         });
     }
     if (countMutipleSpace.test(description)) {
       return res.status(400)
         .json({
-          errorMessage: 'Description is not well formatted'
+          message: 'Description is not well formatted'
         });
     }
 
@@ -587,7 +584,7 @@ class InputValidator {
     if (quantity === '') {
       return res.status(400)
         .json({
-          errorMessage: 'Book quantity is required'
+          message: 'Book quantity is required'
         });
     }
 
@@ -596,7 +593,7 @@ class InputValidator {
     if (checkSpace.test(imageUrl) || countMutipleSpace.test(imageUrl)) {
       return res.status(400)
         .json({
-          errorMessage: 'Please select a valid book image'
+          message: 'Please select a valid book image'
         });
     }
 
@@ -604,7 +601,7 @@ class InputValidator {
     if (checkSpace.test(pdfUrl) || countMutipleSpace.test(pdfUrl)) {
       return res.status(400)
         .json({
-          errorMessage: 'Invalid file selected'
+          message: 'Invalid file selected'
         });
     }
 
@@ -618,9 +615,82 @@ class InputValidator {
         quantity,
         imageUrl,
         pdfUrl,
-        categoryid };
+        categoryId };
     }
     return next();
+  }
+
+
+  /**
+ * @description Validates payload to edit profile
+ *  
+ * @param { object } req request object
+ * @param { object } res response object
+ * @param { object } next passes action to following controller
+ * 
+ * @returns { object } resquest body
+ */
+  static editProfileVerifier(req, res, next) {
+    const {
+      username,
+      firstname,
+      lastname,
+    } = req.body;
+
+    if (!username) {
+      return res.status(400).json({
+        message: 'Username is required'
+      });
+    }
+
+    if (username.length < 3) {
+      return res.status(400).json({
+        message: 'Username should be at least 3 characters'
+      });
+    }
+
+    if (typeof username === 'number') {
+      return res.status(400).json({
+        message: 'Username cannot be a number'
+      });
+    }
+
+    if (!firstname) {
+      return res.status(400).json({
+        message: 'Firstname is required'
+      });
+    }
+
+    if (firstname.length < 3) {
+      return res.status(400).json({
+        message: 'Firstname should be atleast 3 characters'
+      });
+    }
+
+    if ((/(\d)/gi).test(firstname)) {
+      return res.status(400).json({
+        message: 'Firstname cannot be a number'
+      });
+    }
+
+    if (!lastname) {
+      return res.status(400).json({
+        message: 'Lastname is required'
+      });
+    }
+
+    if (lastname.length < 3) {
+      return res.status(400).json({
+        message: 'Lastname should be atleast 3 characters'
+      });
+    }
+
+    if ((/(\d)/gi).test(lastname)) {
+      return res.status(400).json({
+        message: 'Lastname cannot be a number'
+      });
+    }
+    next();
   }
 }
 

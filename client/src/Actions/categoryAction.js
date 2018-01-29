@@ -1,14 +1,15 @@
 import axios from 'axios';
+import getUserDetails from '../utils/getUserInfo';
+
 import {
   CREATE_CATEGORY,
   GET_CATEGORIES,
 } from './actionTypes';
+
 import {
   newCategory,
   categories,
 } from '../utils/apiEndPoints';
-import getUserDetails from '../utils/getUserInfo';
-
 
 /**
  * @export getCategoriesAction

@@ -245,8 +245,28 @@ const mockData = {
     username: 'abbey33333'
   },
 
+  BadUserEditData: {
+    firstname: '',
+    lastname: 'Olaoluwa',
+    username: 'abbey33333'
+  },
+
+  BadUserEditDataDS: {
+    firstname: '',
+    lastname: 'Olaoluwa',
+    username: 'abbey33333'
+  },
+
+
+  BadUserEditDataD6: {
+    firstname: 'fdf',
+    lastname: 'Olaoluwa',
+    username: 'abbey33'
+  },
+
+
   borrowBookData: {
-    bookid: 2
+    bookId: 2
   },
 
   adminData: {
@@ -265,7 +285,7 @@ const mockData = {
     password: 'password',
   },
 
-  category: {
+  Category: {
     category: 'Test Category'
   },
 
@@ -312,14 +332,14 @@ const mockData = {
     year: 2010,
     description: 'the books does this and that',
     quantity: 3,
-    categoryid: 2,
+    categoryId: 2,
     visibility: true,
     imageUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
     pdfUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
   },
 
   editBookdata: {
-    id: 2,
+    id: 3,
     isbn: '439275',
     title: 'React for Beginners',
     author: 'Nelson Brook',
@@ -327,7 +347,7 @@ const mockData = {
     year: 2000,
     description: 'the books does this and that',
     quantity: 300,
-    categoryid: 5,
+    categoryId: 5,
     visibility: true,
     imageUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
     pdfUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
@@ -341,7 +361,7 @@ const mockData = {
     year: 2000,
     description: 'the books does this and that',
     quantity: 300,
-    categoryid: 5,
+    categoryId: 5,
     visibility: true,
     imageUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
     pdfUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
@@ -355,7 +375,7 @@ const mockData = {
     year: 2000,
     description: 'the books does this and that',
     quantity: 300,
-    categoryid: 5,
+    categoryId: 5,
     visibility: true,
     imageUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
     pdfUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
@@ -369,7 +389,7 @@ const mockData = {
     year: 2000,
     description: 'the books does this and that',
     quantity: 300,
-    categoryid: 5,
+    categoryId: 5,
     visibility: true,
     imageUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
     pdfUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
@@ -383,7 +403,7 @@ const mockData = {
     year: 2000,
     description: 'the books does this and that',
     quantity: 300,
-    categoryid: 5,
+    categoryId: 5,
     visibility: true,
     imageUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
     pdfUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
@@ -397,7 +417,7 @@ const mockData = {
     year: '',
     description: 'the books does this and that',
     quantity: 300,
-    categoryid: 5,
+    categoryId: 5,
     visibility: true,
     imageUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
     pdfUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
@@ -411,7 +431,7 @@ const mockData = {
     year: 5634,
     description: '',
     quantity: 300,
-    categoryid: 5,
+    categoryId: 5,
     visibility: true,
     imageUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
     pdfUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
@@ -425,7 +445,7 @@ const mockData = {
     year: 5634,
     description: 'gdf  dgdg  gdfg  ',
     quantity: 300,
-    categoryid: 5,
+    categoryId: 5,
     visibility: true,
     imageUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
     pdfUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
@@ -439,7 +459,7 @@ const mockData = {
     year: 5634,
     description: 'gdgdggdfg',
     quantity: '',
-    categoryid: 5,
+    categoryId: 5,
     visibility: true,
     imageUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
     pdfUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
@@ -453,7 +473,7 @@ const mockData = {
     year: 5634,
     description: 'gdgdggdfg',
     quantity: 56,
-    categoryid: 5,
+    categoryId: 5,
     visibility: true,
     imageUrl: 'https:/ /res.cloudina  ry.com/djvjx p2am/image/upload/v1507295978/book8_yy9efp.jpg',
     pdfUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
@@ -467,7 +487,7 @@ const mockData = {
     year: 5634,
     description: 'gdgdggdfg',
     quantity: 56,
-    categoryid: 5,
+    categoryId: 5,
     visibility: true,
     imageUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
     pdfUrl: 'https://res.cloudin  ary.com/djv jxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
@@ -481,7 +501,7 @@ const mockData = {
     year: 997347,
     description: 'the books does this and that',
     quantity: 300,
-    categoryid: 5,
+    categoryId: 5,
     visibility: true,
     imageUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
     pdfUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
@@ -495,7 +515,7 @@ const mockData = {
     year: 2000,
     description: 'the books does this and that',
     quantity: 300,
-    categoryid: 5,
+    categoryId: 5,
     visibility: true,
     imageUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
     pdfUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
@@ -511,22 +531,38 @@ const mockData = {
     year: 2010,
     description: 'the books does this and that',
     quantity: 3,
-    categoryid: 2,
+    categoryId: 2,
     visibility: true,
     image: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
     pdf: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
   },
 
-  //  Invalid book data title
-  invalidBookdata2: {
-    isbn: 123456,
+
+   //  Invalid book data isbn
+   invalidBookdata2: {
+    isbn: 545545,
     title: '',
     author: 'Nelson Brook',
     pages: 1080,
     year: 2010,
     description: 'the books does this and that',
     quantity: 3,
-    categoryid: 2,
+    categoryId: 2,
+    visibility: true,
+    image: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
+    pdf: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
+  },
+
+  //  Invalid book data title
+  invalidBookdataTheee: {
+    isbn: '' ,
+    title: 'dffdsfdg',
+    author: 'Nelson Brook',
+    pages: 1080,
+    year: 2010,
+    description: 'the books does this and that',
+    quantity: 3,
+    categoryId: 2,
     visibility: true,
     image: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
     pdf: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
@@ -540,7 +576,7 @@ const mockData = {
     year: 2010,
     description: 'the books does this and that',
     quantity: 3,
-    categoryid: 2,
+    categoryId: 2,
     visibility: true,
     imageUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
     pdfUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
@@ -554,7 +590,7 @@ const mockData = {
     year: 2010,
     description: 'the books does this and that',
     quantity: 3,
-    categoryid: 2,
+    categoryId: 2,
     visibility: true,
     image: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
     pdf: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
@@ -568,7 +604,7 @@ const mockData = {
     year: 2010,
     description: 'the books does this and that',
     quantity: 3,
-    categoryid: 2,
+    categoryId: 2,
     visibility: true,
     image: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
     pdf: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
@@ -583,7 +619,7 @@ const mockData = {
     year: 2010,
     description: 'the books does this and that',
     quantity: 3,
-    categoryid: 2,
+    categoryId: 2,
     visibility: true,
     image: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
     pdf: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
@@ -598,7 +634,7 @@ const mockData = {
     year: '',
     description: 'the books does this and that',
     quantity: 3,
-    categoryid: 2,
+    categoryId: 2,
     visibility: true,
     image: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
     pdf: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
@@ -612,7 +648,7 @@ const mockData = {
     year: '9999999999',
     description: 'the books does this and that',
     quantity: 3,
-    categoryid: 2,
+    categoryId: 2,
     visibility: true,
     image: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
     pdf: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
@@ -626,7 +662,7 @@ const mockData = {
     year: 6775,
     description: 'ffe   erefdf  dfef  ',
     quantity: 3,
-    categoryid: 2,
+    categoryId: 2,
     visibility: true,
     image: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
     pdf: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
@@ -640,7 +676,7 @@ const mockData = {
     year: 6775,
     description: '',
     quantity: 3,
-    categoryid: 2,
+    categoryId: 2,
     visibility: true,
     image: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
     pdf: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
@@ -654,7 +690,7 @@ const mockData = {
     year: 6775,
     description: 'sffgfgsfg sfd',
     quantity: '',
-    categoryid: 2,
+    categoryId: 2,
     visibility: true,
     image: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
     pdf: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
@@ -668,7 +704,7 @@ const mockData = {
     year: 6775,
     description: 'sffgfgsfg',
     quantity: 3,
-    categoryid: 2,
+    categoryId: 2,
     visibility: true,
     imageUrl: '',
     pdf: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
@@ -682,7 +718,7 @@ const mockData = {
     year: 6775,
     description: 'sffgfgsfg',
     quantity: 3,
-    categoryid: 2,
+    categoryId: 2,
     visibility: true,
     imageUrl: 'fdfd   dfdfdf   ddff',
     pdf: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
@@ -696,7 +732,7 @@ const mockData = {
     year: 6775,
     description: 'sffgfgsfg',
     quantity: 3,
-    categoryid: 2,
+    categoryId: 2,
     visibility: true,
     imageUrl: 'fdfddfdfdfddff',
     pdfUrl: '',
@@ -710,7 +746,7 @@ const mockData = {
     year: 6775,
     description: 'sffgfgsfg',
     quantity: 3,
-    categoryid: 2,
+    categoryId: 2,
     visibility: true,
     imageUrl: 'fdfdddff',
     pdfUrl: 'fdfd  dfdfdf  ddff',
@@ -728,17 +764,17 @@ const mockData = {
   },
 
   borrowBook: {
-    userid: 1,
-    bookid: 1
+    userId: 1,
+    bookId: 1
   },
 
   failborrowBook: {
-    userid: '',
-    bookid: ''
+    userId: '',
+    bookId: ''
   },
 
   modifyBookData: {
-    bookid: 1,
+    bookId: 1,
     title: 'Challenges of a bootcamper',
     author: 'Donald Lawrence',
     pages: 453,
@@ -746,11 +782,11 @@ const mockData = {
     description: 'Talks about Andela Bootcamp',
     quantity: 32,
     category: 'Self Growth',
-    image: 'images/andela.jpg'
+    imageUrl: 'images/andela.jpg'
   },
 
   userID: {
-    userid: 1
+    userId: 1
   }
 
 };

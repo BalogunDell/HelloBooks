@@ -79,7 +79,7 @@ const invalidBooks = [
 
   },
   {
-    isbn: '#111117s',
+    isbn: '#111117',
     title: '',
     author: 'Nelson Brook',
     pages: 870,
