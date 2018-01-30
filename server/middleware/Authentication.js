@@ -33,6 +33,11 @@ class Authentication {
         message: 'You do not have the permission to access this page' });
     } else {
       const decoded = Helper.decodeToken(authorization);
+      if (!decoded) {
+        return res.status(403).json({
+          message: 'You do not have the permission to access this page'
+        });
+      }
       if (decoded.role !== process.env.ACCESS_GRANTOR) {
         return res.status(403).json({
           message: 'You do not have the permission to access this page'

@@ -33,9 +33,6 @@ class BookController {
         case 'uniqueError':
           res.status(409).json({ message: messageObject.error });
           break;
-        case 'validationError':
-          res.status(400).json({ message: messageObject.error });
-          break;
         default:
           res.status(500).json({ message: 'Internal server error' });
       }
@@ -77,11 +74,6 @@ class BookController {
                   res.status(200).json({
                     message: 'Book has been successfully deleted',
                     bookId: id
-                  });
-                })
-                .catch(() => {
-                  res.status(500).json({
-                    message: 'Internal server error'
                   });
                 });
             });
@@ -343,9 +335,11 @@ class BookController {
    * @return {object} response object as categories
    */
   static addCategory(req, res) {
-    categoryModel.create(req.body)
-      .then((category) => {
-        if (category) {
+    const { category } = req.body;
+    
+    categoryModel.create({ category })
+      .then((reply) => {
+        if (reply) {
           findAllResources(categoryModel)
             .then((response) => {
               res.status(201).json({

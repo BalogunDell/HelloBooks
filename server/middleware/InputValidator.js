@@ -437,8 +437,9 @@ class InputValidator {
  * @returns { object } resquest body
  */
   static checkCategoryPayload(req, res, next) {
-    const category = req.body.category;
+    const { category } = req.body;
     const numberCheck = /((\d)+)/g;
+    
     if (category === '') {
       return res.status(400)
         .json({

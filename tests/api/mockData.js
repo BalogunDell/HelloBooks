@@ -240,10 +240,15 @@ const mockData = {
 
   // Valid user data
   userEdit: {
-    firstname: 'Biodun',
-    lastname: 'Olaoluwa',
-    username: 'abbey33333'
+    firstname: 'janet',
+    lastname: 'teddy',
+    email: 'jane@mail.com',
+    username: 'abbey3',
+    imageUrl: 'gsvdgb',
   },
+
+  
+
 
   BadUserEditData: {
     firstname: '',
@@ -351,6 +356,23 @@ const mockData = {
     visibility: true,
     imageUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
     pdfUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
+  },
+
+  foundBook: {
+    id: 3,
+     isbn: '#111113',
+     pages: 700,
+     author: 'Bill Gates',
+     year: 2016,
+     title: 'Tactical Analysis',
+     description: 'the books does this and that',
+     quantity: 32,
+     categoryId: 3,
+     visibility: true,
+     imageUrl: 'http://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book5_zyqyv1.jpg',
+     pdfUrl: 'http://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book5_zyqyv1.jpg',
+     createdAt: '2018-01-29T19:01:15.413Z',
+     updatedAt: '2018-01-29T19:01:15.413Z'
   },
 
   editBookdataAuthorError: {
