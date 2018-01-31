@@ -24,7 +24,6 @@ export default function userAccessReducer(state = {}, action) {
         userData: action.userSignupData,
         isAuthenticated: true
       };
-    
     case LOGIN:
       return {
         ...state,

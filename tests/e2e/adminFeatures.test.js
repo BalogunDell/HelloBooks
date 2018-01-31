@@ -27,12 +27,13 @@ const {
         .assert.visible('div.home-bg')
         .pause(3000)
         .setValue('input[name=username]', 'dfv')
-        .setValue('input[name=password]', sdf)
+        .setValue('input[name=password]', 'sdy')
         .click('#regBtn')
         .pause(3000)
         .waitForElementVisible('div.center.red-text', 3000)
         .assert.visible('div.center.red-text')
-        .assert.containsText('div.center.red-text', 'Invalid username or password')
+        .assert.containsText('div.center.red-text',
+          'Password should not be less than 5 characters')
         .pause(2000)
     },
   
@@ -51,7 +52,8 @@ const {
         
     },
   
-    'It should ensure all elements are rendered and show book details': (client) => {
+    'It should ensure all elements are rendered and show book details':
+    (client) => {
       client
         .url('http://localhost:3003/user/books')
         .waitForElementVisible('body', 4000)
@@ -59,7 +61,8 @@ const {
         .assert.visible('h5#hellobooksTitle')
         .assert.containsText('h5#hellobooksTitle', 'HELLO BOOKS')
         .assert.visible('span.white-text.username.password')
-        .assert.containsText('span.white-text.username.password', 'Password:*****')
+        .assert.containsText('span.white-text.username.password',
+        'Password:*****')
         .assert.visible('div.col.s12.books-holder-title.center')
         .assert.visible('h1')
         .assert.containsText('h1', 'All Books')
@@ -79,8 +82,6 @@ const {
           .which.contains('/user/books');
         client.expect.element('a#thirdLink')
           .to.have.attribute('href').which.contains('/user/upload');
-        client.expect.element('a#fourthLink')
-          .to.have.attribute('href').which.contains('/user/deletedbooks');
         client.click('a#bookdetail');
         client.assert.urlEquals('http://localhost:3003/user/bookdetails');
         client.assert.visible('img.responsive-img');
@@ -89,6 +90,46 @@ const {
         client.assert.visible('a.btn.waves-teal.waves-effect');
         client.assert.containsText('a.btn.waves-teal.waves-effect', 'BACK');
         client.pause(3000);
+    },
+
+    'It should create a book': (client) => {
+      client 
+        .url('http://localhost:3003/user/dashboard')
+        .waitForElementVisible('body', 3000)
+        .assert.visible('h4.center')
+        .assert.containsText('h4.center', 'ADMIN DASHBOARD')
+        .waitForElementVisible('table.summary-table', 3000)
+        .assert.visible('table.summary-table')
+        .assert.visible('thead')
+        .assert.visible('th')
+        .assert.containsText('th', 'SUMMARY')
+        .pause(3000)
+        .assert.visible('td#totalBooksText')
+        .assert.containsText('td#totalBooksText', 'Total Books in Library')
+        .assert.visible('td#returnedBooksText')
+        .assert.containsText('td#returnedBooksText', 'Books Returned')
+        .assert.visible('td#pendingBooksText')
+        .assert.containsText('td#pendingBooksText', 'Pending Return')
+        .assert.visible('td#totalBooks')
+        .assert.visible('#edit')
+        .pause(3000)
+        .click('#edit')
+        .pause(5000)
+        .waitForElementVisible('body', 3000)
+        .setValue('input[name=isbn]', fakeBookData.isbn)
+        .setValue('input[name=title]', fakeBookData.title)
+        .setValue('input[name=author]', fakeBookData.author)
+        .setValue('input[name=pages]', fakeBookData.pages)
+        .setValue('input[name=year]', fakeBookData.year)
+        .setValue('textarea[name=description]', fakeBookData.description)
+        .setValue('input[name=quantity]', fakeBookData.quantity)
+        .click('.browser-default')
+        .waitForElementVisible('#Health', 3000)
+        .click('#Health')
+        .pause(4000)
+        .waitForElementPresent('#editBook', 3000)
+        .click('#editBook')
+        .pause(5000)
     },
 
     'It should render admin dashboard and delete a book': (client) => {
@@ -157,40 +198,12 @@ const {
         .setValue('textarea[name=description]', fakeBookData.description)
         .setValue('input[name=quantity]', fakeBookData.quantity)
         .click('.browser-default')
+        .waitForElementVisible('#Health', 3000)
         .click('#Health')
         .pause(4000)
-        .waitForElementPresent('#bookImage', 3000)
-        .setValue('#bookImageInput', path.resolve('../../../personal/myimage2.jpeg'))
-        .pause(2000)
-        .setValue('#pdfInput', path.resolve('../../../personal/Apprenticeship-Patternsbydave-hoover.pdf'))
-        .click('#createBook')
+        .waitForElementPresent('#editBook', 3000)
+        .click('#editBook')
         .pause(5000)
-    },
-  
-    'It should render deleted books component': (client) => {
-      client
-        .url('http://localhost:3003/user/deletedbooks')
-        .waitForElementVisible('body', 3000)
-        .assert.visible('h1')
-        .assert.containsText('h1', 'Deleted Books')
-        .click('.custom')
-        .waitForElementVisible('div#confirmationModal', 3000)
-        .assert.visible('div#confirmationModal')
-        .assert.visible('button.btn.red.modal-close')
-        .assert.containsText('button.btn.red.modal-close','CANCEL')
-        .click('.custom')
-        .assert.visible('button.btn.green')
-        .assert.containsText('button.btn.green','PUBLISH')
-        .assert.containsText('h6.green-text', 'Publishing this book will make it available to all users, do you want to continue?')
-        .click('.btn.red.modal-close')
-        .pause(3000)
-        .click('.custom')
-        .pause(3000)
-        .click('.btn.green')
-        .waitForElementVisible('h6.green-text', 3000)
-        .assert.visible('h6.green-text')
-        .assert.containsText('h6.green-text', 'Book has been successfully pulished')
-        .pause(3000)
     },
     'It should log user out of the application': (client) => {
       client

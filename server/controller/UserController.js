@@ -351,7 +351,24 @@ class UserController {
         individualHooks: true
       },
       { fields: fieldsToUpdate }).then((response) => {
-      res.status(200).json({ user: response[1][0] });
+      const {
+        firstname,
+        lastname,
+        username,
+        imageUrl,
+        email,
+        createdAt,
+        updatedAt } = response[1][0];
+      const user = {
+        firstname,
+        lastname,
+        username,
+        imageUrl,
+        email,
+        createdAt,
+        updatedAt
+      };
+      res.status(200).json({ user });
     })
       .catch((error) => {
         const messageObject = errorMessages(error);

@@ -49,7 +49,7 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
-      pdfUrl: {
+      PDFUrl: {
         type: Sequelize.STRING,
         allowNull: false
       },

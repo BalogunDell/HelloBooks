@@ -160,7 +160,8 @@ return (
                     { loadedCategories.map((val, index) => {                  
                       return (<option 
                                 key={index}
-                                value={val.id}>{val.category}
+                                value={val.id}
+                                id={`${val.category}`}>{val.category}
                               </option>)
                     })
                     }

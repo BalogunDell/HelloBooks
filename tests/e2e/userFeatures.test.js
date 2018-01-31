@@ -50,7 +50,7 @@ module.exports = {
       .pause(3000)
       .waitForElementVisible('div.center.red-text', 3000)
       .assert.visible('div.center.red-text')
-      .assert.containsText('div.center.red-text', 'Invalid username or password')
+      .assert.containsText('div.center.red-text', 'Username should be two or more characters')
       .pause(2000)
   },
 

@@ -202,11 +202,6 @@ class BookController {
                   message: messageObject.error
                 });
                 break;
-              case 'validationError':
-                res.status(400).json({
-                  message: messageObject.error
-                });
-                break;
               default:
                 res.status(500).json({
                   message: 'Internal server error'
@@ -336,7 +331,6 @@ class BookController {
    */
   static addCategory(req, res) {
     const { category } = req.body;
-    
     categoryModel.create({ category })
       .then((reply) => {
         if (reply) {
@@ -359,9 +353,6 @@ class BookController {
         switch (messageObject.type) {
           case 'uniqueError':
             res.status(409).json({ error: messageObject.error });
-            break;
-          case 'validationError':
-            res.status(400).json({ error: messageObject.error });
             break;
           default:
             res.status(500).json({ error: 'Internal server error' });

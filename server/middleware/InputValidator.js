@@ -295,12 +295,13 @@ class InputValidator {
       description,
       quantity,
       imageUrl,
-      pdfUrl,
+      PDFUrl,
+      categoryId,
     } = req.body;
 
     const checkSpace = /(\s){1}/;
     const countMutipleSpace = /(\s){2}/;
-
+    const numberCheck = /((\d)+)/g;
     // Validate ISBN
     if (isbn === '') {
       return res.status(400)
@@ -316,6 +317,13 @@ class InputValidator {
         });
     }
 
+    if (typeof isbn === 'string') {
+      return res.status(400)
+        .json({
+          message: 'ISBN should be a number'
+        });
+    }
+
     // Validate Author
     if (author === '') {
       return res.status(400)
@@ -324,7 +332,14 @@ class InputValidator {
         });
     }
 
-    if (typeof author !== 'string') {
+    if (numberCheck.test(author)) {
+      return res.status(400)
+        .json({
+          message: 'Book author should be a valid name'
+        });
+    }
+
+    if (typeof author === 'number') {
       return res.status(400)
         .json({
           message: 'Author should be a name'
@@ -344,10 +359,20 @@ class InputValidator {
           message: 'Title is required'
         });
     }
-    if (typeof title !== 'string') {
+
+
+    if (numberCheck.test(title)) {
       return res.status(400)
         .json({
-          message: 'Invalid title'
+          message: 'Title should be a valid name'
+        });
+    }
+
+
+    if (countMutipleSpace.test(title)) {
+      return res.status(400)
+        .json({
+          message: 'Title is not well formated'
         });
     }
 
@@ -359,6 +384,13 @@ class InputValidator {
         });
     }
 
+    if (typeof pages === 'string') {
+      return res.status(400)
+        .json({
+          message: 'Book page should be a number'
+        });
+    }
+
     // Validate pages
     if (year === '') {
       return res.status(400)
@@ -366,10 +398,38 @@ class InputValidator {
           message: 'Year is required'
         });
     }
-    if (year.toString().length > 4) {
+    if (year.toString().length !== 4) {
       return res.status(400)
         .json({
           message: 'Book year can only be 4 digits or less'
+        });
+    }
+
+    // categoryId
+    if (categoryId === '') {
+      return res.status(400)
+        .json({
+          message: 'Please choose a category id'
+        });
+    }
+
+    if (!numberCheck.test(categoryId)) {
+      return res.status(400)
+        .json({
+          message: 'CategoryId should be a number'
+        });
+    }
+    if (typeof year === 'string') {
+      return res.status(400)
+        .json({
+          message: 'Book year can only be digits'
+        });
+    }
+
+    if (countMutipleSpace.test(year)) {
+      return res.status(400)
+        .json({
+          message: 'Year is not well formatted'
         });
     }
 
@@ -395,6 +455,13 @@ class InputValidator {
         });
     }
 
+    if (typeof quantity === 'string') {
+      return res.status(400)
+        .json({
+          message: 'Book quantity should be a number'
+        });
+    }
+
     //  Validate imageUrl
     if (imageUrl === '') {
       return res.status(400)
@@ -402,6 +469,14 @@ class InputValidator {
           message: 'Book cover is required'
         });
     }
+
+    if (typeof imageUrl !== 'string') {
+      return res.status(400)
+        .json({
+          message: 'Book cover is invalid'
+        });
+    }
+
     if (checkSpace.test(imageUrl) || countMutipleSpace.test(imageUrl)) {
       return res.status(400)
         .json({
@@ -410,13 +485,20 @@ class InputValidator {
     }
 
     //  Validate pdfUrl
-    if (pdfUrl === '') {
+    if (PDFUrl === '') {
       return res.status(400)
         .json({
           message: 'Select a pdf to be uploaded'
         });
     }
-    if (checkSpace.test(pdfUrl) || countMutipleSpace.test(pdfUrl)) {
+
+    if (typeof PDFUrl !== 'string') {
+      return res.status(400)
+        .json({
+          message: 'Select a pdf to be uploaded'
+        });
+    }
+    if (checkSpace.test(PDFUrl) || countMutipleSpace.test(PDFUrl)) {
       return res.status(400)
         .json({
           message: 'Invalid file selected'

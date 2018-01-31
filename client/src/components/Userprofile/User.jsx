@@ -247,6 +247,7 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     userProfile: (userID) => dispatch(fetchUserTrigger(userID)),
+    userLogout: () => dispatch(userLogout())
   }
 }
 

@@ -11,7 +11,7 @@ const uploadReducer = (state = {}, action) => {
       };
     case SAVE_PDF:
       return {
-        ...state, pdfUrl: action.pdf
+        ...state, PDFUrl: action.pdf
       };
     default:
       return state;

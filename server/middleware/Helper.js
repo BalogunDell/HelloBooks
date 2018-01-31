@@ -130,7 +130,7 @@ class Helper {
       email,
       membership,
       role
-    }, secret, { expiresIn: '24h' });
+    }, secret, { expiresIn: '3600' });
 
     return token;
   }

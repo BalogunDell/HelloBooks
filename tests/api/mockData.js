@@ -9,6 +9,14 @@ const mockData = {
     password: 'abbey2',
   },
 
+  googleUser1: {
+    firstname: 'janet',
+    lastname: 'teddy',
+    email: 'jane5@mail.com',
+    username: 'abbey',
+    password: 'abbey2',
+  },
+
   user1InvalidDataFirstname: {
     firstname: 1223,
     lastname: 'teddy',

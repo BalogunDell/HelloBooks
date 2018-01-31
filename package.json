@@ -15,6 +15,7 @@
     "start:server": "babel-node -- server/index.js",
     "start:client": "webpack-dev-server --open --config ./webpack.dev.config.js --hot",
     "start:dev": "webpack -d --config ./webpack.dev.config.js && NODE_ENV=development npm run start:server",
+    "start:watch": "nodemon --watch server --exec npm run start:server",
     "start": "NODE_ENV=production npm run start:server",
     "migrate": "sequelize db:migrate",
     "migrate:undo": "sequelize db:migrate:undo:all",

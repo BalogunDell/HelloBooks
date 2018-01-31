@@ -25,6 +25,7 @@ import About from './components/About/About';
 import NotFound from './components/NotFound/NotFound';
 
 import { loadAllbooks } from './Actions/booksAction';
+import authenticate from '../src/components/HOC/authenticate';
 
 
 // Create an instance of the configStore 
@@ -32,7 +33,7 @@ import { loadAllbooks } from './Actions/booksAction';
 
  
 class App extends React.Component {
-    
+  
   render() {
     return (
       <div> 
@@ -42,7 +43,7 @@ class App extends React.Component {
               <Route path='/register' component={Register}/>
               <Route path= '/login' component={Login}/>
               <Route path='/about' component={About}/>
-              <Route path='/user' component={User}/>
+              <Route path='/user' component={authenticate(User)}/>
                <Route path="/user/bookdetails" component={BookDetails}/> 
                <Route path="/resetpassword/:uniqueUrl" 
                 exact component={ResetPassword}/>

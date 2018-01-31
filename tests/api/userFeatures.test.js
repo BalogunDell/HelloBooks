@@ -344,11 +344,9 @@ let userId;
       .end((err, res) => {
         expect(res.status).to.equal(200);
         expect(res.body).to.be.an('object');
-        expect(res.body.user).to.have.a.property('id');
         expect(res.body.user).to.have.a.property('firstname');
         expect(res.body.user).to.have.a.property('lastname');
         expect(res.body.user).to.have.a.property('username');
-        expect(res.body.user.id).to.be.a('number');
         expect(res.body.user.firstname).to.equal(mockdata.userEdit.firstname);
         expect(res.body.user.lastname).to.equal(mockdata.userEdit.lastname);
         expect(res.body.user.username).to.equal(mockdata.userEdit.username);

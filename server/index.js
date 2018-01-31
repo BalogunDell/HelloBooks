@@ -4,6 +4,9 @@ import path from 'path';
 import morgan from 'morgan';
 import cors from 'cors';
 import validator from 'express-validator';
+import webpackMiddleware from 'webpack-dev-middleware';
+import webpack from 'webpack';
+import webpackDevConfig from '../webpack.dev.config';
 
 import appRouter from './routes';
 
@@ -19,11 +22,16 @@ app.use(validator());
 app.use(cors());
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  res.header('Access-Control-Allow-Headers',
+  'Origin, X-Requested-With, Content-Type, Accept');
   next();
 });
 app.use('/api/v1/', appRouter);
 
+if (process.env.NODE_ENV === 'development') {
+  console.log('sfdsdff');
+  app.use(webpackMiddleware(webpack(webpackDevConfig)));
+}
 app.get('/bundle.js', (req, res) => res.sendFile(
   path.join(path.dirname(__dirname), 'dist/bundle.js')
 ));

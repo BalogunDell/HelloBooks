@@ -133,7 +133,7 @@ export default (sequelize, DataTypes) => {
         }
       }
     },
-    pdfUrl: {
+    PDFUrl: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
