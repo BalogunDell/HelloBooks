@@ -11,7 +11,7 @@ import {
   Dashboard,
   dispatchToProps,
   stateToProps
-} from '../../client/src/components/userprofile/admin/Dashboard';
+} from '../../client/src/components/Userprofile/Admin/Dashboard';
 
 import { mockBooks } from './mocks/mockdata';
 jest.mock('../../client/src/components/HOC/authenticate.jsx');

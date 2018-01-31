@@ -11,11 +11,11 @@ import {
   CreateBook,
   mapDispatchToProps,
   mapStateToProps 
-} from '../../client/src/components/userprofile/admin/createBook';
+} from '../../client/src/components/Userprofile/Admin/CreateBook';
 
-import CreateBookForm from '../../client/src/components/userprofile/adminSubComponents/createBookForm';
+import CreateBookForm from '../../client/src/components/Userprofile/AdminSubComponents/CreateBookForm';
 
-import { CreateCategoryModal } from '../../client/src/components/userprofile/adminSubComponents/createCategory';
+jest.mock('../../client/src/components/Userprofile/AdminSubComponents/CreateCategoryModal');
 import { initialData, categories } from './mocks/mockdata';
 
 jest.mock('../../client/src/components/HOC/authenticate.jsx');
@@ -120,6 +120,93 @@ describe('renders Create Book Component and create category', () => {
     expect(createBookHandlerSpy).toHaveBeenCalledTimes(1);
   });
 
+  it('should not save book if image dimensions are small and if there is no file selected', () => {
+    const event = {
+      preventDefault: jest.fn()
+    };
+    const wrapper = mount(<CreateBook {...minProps}/>)
+    const form = wrapper.find('#handleSubmit');
+    wrapper.setState({
+      tempImageName: 'dfadsfadsfdsf',
+      tempFileName: '',
+      imageHeight: 200,
+      imageWidth: 150, 
+    });
+    form.simulate('submit', event);
+    expect(wrapper.instance().state.errorMessage).toBe('Image is too small. it should 300 x 250 pixels.');
+  });
+
+  it('should not save book if the image size is higher than expected', () => {
+    const event = {
+      preventDefault: jest.fn()
+    };
+    const wrapper = mount(<CreateBook {...minProps}/>)
+    const form = wrapper.find('#handleSubmit');
+    wrapper.setState({
+      tempImageName: '',
+      tempFileName: 'dfadsfadsfdsf',
+      tempFileSize: 9485760,
+      imageHeight: 200,
+      imageWidth: 150
+    });
+    form.simulate('submit', event);
+    expect(wrapper.instance().state.errorMessage).toBe('Image is too small. it should 300 x 250 pixels.');
+  });
+
+
+  it('should not save book if file size is more than 10MB', () => {
+    const event = {
+      preventDefault: jest.fn()
+    };
+    const wrapper = mount(<CreateBook {...minProps}/>)
+    const form = wrapper.find('#handleSubmit');
+    wrapper.setState({
+      tempImageName: 'sdfdsfadf',
+      tempFileName: 'dfadsfadsfdsf',
+      tempFileSize: 19485760,
+      imageHeight: 500,
+      imageWidth: 450
+    });
+    form.simulate('submit', event);
+    expect(wrapper.instance().state.errorMessage).toBe('File too large, Only 10MB or less is allowed.');
+  });
+  
+  it('should pass on to the next condition if the main conditions are met', () => {
+    const event = {
+      preventDefault: jest.fn()
+    };
+    const wrapper = mount(<CreateBook {...minProps}/>)
+    const form = wrapper.find('#handleSubmit');
+    wrapper.setState({
+      tempImageName: 'sdfsdfds',
+      tempFileName: 'dfadsfadsfdsf',
+      tempFileSize: 45760,
+      imageHeight: 500,
+      imageWidth: 450
+    });
+    form.simulate('submit', event);
+  });
+
+  it('should not save book if file size is more than 10MB and if there is no image file selected', () => {
+    const event = {
+      preventDefault: jest.fn()
+    };
+    const wrapper = mount(<CreateBook {...minProps}/>)
+    const form = wrapper.find('#handleSubmit');
+    wrapper.setState({
+      tempImageName: 'sdfsdfds',
+      tempFileName: 'dfadsfadsfdsf',
+      tempFileSize: 45760,
+      imageHeight: 500,
+      imageWidth: 450,
+      bookData: {
+        image: 'dfadfd',
+        pdf: 'dfdfadf'
+      }
+    });
+    form.simulate('submit', event);
+  });
+
   it('should have the componentDidMount method', () => {
     const componentDidMountSpy = jest.spyOn(CreateBook.prototype, 'componentDidMount');
     shallow(<CreateBook {...minProps}/>)
@@ -146,7 +233,7 @@ describe('renders Create Book Component and create category', () => {
   it('ensures that mapStateToProps dispatches the specified actions', () => {
     const state = {
     initialData,
-    createCategory: {},
+    loadedCategories: {},
     uploadFiles: '',
     uploadFiles: '',
     }
@@ -177,59 +264,11 @@ describe('Create Book Form', () => {
   }
   it('renders the create book form without crashing', () => {
     const wrapper = shallow(<CreateBookForm { ...props }/>);
-    expect(wrapper.find('div').length).toBe(26);
+    expect(wrapper.find('div').length).toBe(25);
     expect(wrapper.find('.createBookForm').length).toBe(1);
     expect(wrapper.find('.create-book').length).toBe(1);
     expect(wrapper.find('.create-form').length).toBe(1);
     expect(wrapper.find('input').length).toBe(11);
     expect(wrapper.find('textarea').length).toBe(1);  
-  });
-});
-
-
-describe('Create Category', () => {
-  const wrapper = shallow(<CreateCategoryModal { ...props }/>);
-  const props = {
-    newCategory: '',
-      newCategoryError: '',
-      newCategoryErrorStatus: false,
-      newCategorySuccessStatus: false,
-      newCategorySuccess: '',
-      loader: false,
-      disableSubmit: false,
-      handleInput: jest.fn(),
-      saveCategory: jest.fn(() => Promise.resolve()),
-      closeModal: jest.fn(),
-      loaderText: '',
-      createCategory: jest.fn(() => Promise.resolve())
-  }
-  it('renders the create category form without crashing', () => {
-    expect(wrapper.find('#addCategory').length).toBe(1);
-    expect(wrapper.find('.modal-content').length).toBe(1);
-    expect(wrapper.find('.modal-footer').length).toBe(1);
-    expect(wrapper.find('div').length).toBe(14);
-    expect(wrapper.find('h5').length).toBe(1);
-    expect(wrapper.find('input').length).toBe(2);  
-  });
-
-  it('ensure that it has the method: handleInput', () => {
-    const spyHandleInput = jest.spyOn(CreateCategoryModal.prototype, 'handleInput');
-    shallow(<CreateCategoryModal {...props} onChange={spyHandleInput}/>)
-    .instance().handleInput(event);
-    expect(spyHandleInput).toHaveBeenCalledTimes(1);    
-  });
-
-  it('ensure that it has the method: closeModal', () => {
-    const spycloseModal = jest.spyOn(CreateCategoryModal.prototype, 'closeModal');
-    shallow(<CreateCategoryModal {...props} onChange={spycloseModal}/>)
-    .instance().closeModal({setState:() => 1});
-    expect(spycloseModal).toHaveBeenCalledTimes(1);    
-  });
-
-  it('ensure that it has the method: saveCategory', () => {
-    const spysaveCategory = jest.spyOn(CreateCategoryModal.prototype, 'saveCategory');
-    shallow(<CreateCategoryModal {...props} onChange={spysaveCategory}/>)
-    .instance().saveCategory(event);
-    expect(spysaveCategory).toHaveBeenCalledTimes(1);    
   });
 });

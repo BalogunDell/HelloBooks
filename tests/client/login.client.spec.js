@@ -7,17 +7,17 @@ import { shallow, mount, render , configure} from 'enzyme';
 import jestSnapshot from 'chai-jest-snapshot';
 import expect, { createSpy, spyOn, isSpy } from 'expect'
 
-import LoginForm from '../../client/src/components/useraccess/Forms/LoginForm';
+import LoginForm from '../../client/src/components/Useraccess/Forms/LoginForm';
 import { 
   Login,
   mapDispatchToProps,
   mapStateToProps
-} from '../../client/src/components/useraccess/Login';
+} from '../../client/src/components/Useraccess/Login';
 
 import {
   PasswordResetModal,
   dispatchToProps
-} from '../../client/src/components/useraccess/Forms/PasswordResetModal';
+} from '../../client/src/components/Useraccess/Forms/PasswordResetModal';
 import {
   userData,
   signupResponse
@@ -33,12 +33,7 @@ configure({ adapter: new Adapter() });
 global.$ = global.jQuery = $;
 global.message = {
   message: ''
-}
-
-
-// ************************ //
-// *****COMPONENTS TEST**** //
-// ************************ //
+};
 
 
 const event = {
@@ -47,7 +42,7 @@ const event = {
     name: 'username',
     value: 'Test'
   }
-}
+};
 
 
 // **************************************** //
@@ -65,7 +60,7 @@ describe('renders Login Form', () => {
     loginHandler: jest.fn(),
     error: '',
     isLoading: false,
-    isAuthenticated: false
+    isAuthenticated: false,
   }
   const wrapper = shallow(<LoginForm {...minProps}/>);
 
@@ -101,7 +96,16 @@ describe('Login Component', () => {
       username: 'Fred1',
       password: 'password'
     },
-    userLogin: jest.fn(() => Promise.resolve())
+    googleAuth: {
+      isAuthenticated: false
+    },
+    isAuthenticated: {
+      userAccess: {
+        isAuthenticated: false
+      }
+    },
+    userLogin: jest.fn(() => Promise.resolve()),
+    googleAccess: jest.fn(() => Promise.resolve())
   }
   it('renders the login component', () => {
     const wrapper = shallow(<Login {...props}/>);
@@ -119,15 +123,37 @@ describe('Login Component', () => {
     expect(loginHandlerspy).toHaveBeenCalledTimes(1);
   });
 
+  it('should contain the google login handler method', () => {
+    const wrapper = shallow(<Login {...props}/>);
+    const spy = jest.spyOn(Login.prototype, 'googleLoginHandler');
+    const response = {
+      profileObj: {
+        givenName: '',
+        familyName: '',
+        googleId: 3,
+        email: '',
+        imageUrl: ''
+      }
+    }
+    shallow(<Login { ...props } googleLoginHandler = {spy}/>)
+    .instance().googleLoginHandler(response);
+    expect(spy).toHaveBeenCalledTimes(1);
+  });
+
+
   it('should ensure mapDispatchToProps returns called methods', () => {
     const dispatch = jest.fn();
     expect(mapDispatchToProps(dispatch).userLogin).toBeTruthy();
+    expect(mapDispatchToProps(dispatch).googleAccess).toBeTruthy();
   });
 
   it('should ensure mapStateToProps returns prop from redux store', () => {
     const storeState = {
       userData: signupResponse,
-      isAuthenticated: true
+      isAuthenticated: true,
+      userAccess: {
+        isAuthenticated: true
+      }
     };
     expect(mapStateToProps(storeState)).toBeTruthy();
   });
@@ -157,12 +183,60 @@ describe('Password Reset Modal', () => {
     expect(wrapper.find('button').length).toBe(1);
   });
 
-  it('ensure that it has the handleSubmit method', () => {
-    const spyHandleSubmit = jest.spyOn(PasswordResetModal.prototype, 'handleSubmit');
-    shallow(<PasswordResetModal {...minProps} onSubmit={spyHandleSubmit}/>)
-    .instance().handleSubmit(event);
-    expect(spyHandleSubmit).toHaveBeenCalledTimes(1);
+
+  it('ensure that it the handleSubmit method called', () => {
+    const setup = shallow(<PasswordResetModal {...minProps}/>);
+    const event = {
+      preventDefault: jest.fn()
+    };
+    const form = setup.find('#handleSubmit');
+    setup.setState({
+      email: 'sample@gmail.com'
+    });
+    form.simulate('submit', event);
   });
+
+  it('ensure that it the handleSubmit method called', () => {
+    const setup = shallow(<PasswordResetModal {...minProps}/>);
+    const event = {
+      preventDefault: jest.fn()
+    };
+    const form = setup.find('#handleSubmit');
+    setup.setState({
+      email: ''
+    });
+    form.simulate('submit', event);
+  });
+
+  it('ensure that it the handleSubmit method called', () => {
+    const setup = shallow(<PasswordResetModal {...minProps}/>);
+    const event = {
+      preventDefault: jest.fn()
+    };
+    const form = setup.find('#handleSubmit');
+    setup.setState({
+      email: ''
+    });
+    form.simulate('submit', event);
+  });
+
+  it('ensure that it the handleSubmit method called', () => {
+    const setup = shallow(<PasswordResetModal {...minProps}/>);
+    setup.instance.error = {
+      response: {
+        status: 501
+      }
+    }
+    const event = {
+      preventDefault: jest.fn()
+    };
+    const form = setup.find('#cancelPass');
+    setup.setState({
+      email: ''
+    });
+    form.simulate('click', event);
+  });
+
 
   it('ensure that it has the handleInput method', () => {
     const spyhandleInput = jest.spyOn(PasswordResetModal.prototype, 'handleInput');

@@ -1,3 +1,5 @@
+import jwt from 'jsonwebtoken';
+
 
   export const userData = {
     firstname: "Test",
@@ -7,7 +9,77 @@
     password: "password"
   }
 
-  export const mocktrendingBook = [
+  
+
+  export const trendingBooksMock = {
+  trendingBooks: [
+    {
+      id: 14,
+      isbn: "#949586",
+      pages: 4,
+      author: "f narar",
+      year: 3450,
+      title: "ratj rr art",
+      description: "fna dfadsfds adf",
+      quantity: 342,
+      categoryId: 4,
+      visibility: true,
+      image: "https://res.cloudinary.com/djvjxp2am/image/upload/v1513678579/ma2vpijr4kawokqynuty.jpg",
+      pdf: "https://res.cloudinary.com/djvjxp2am/image/upload/v1513678580/ytn1ckngz46h4uvatfxy.pdf",
+      createdAt: "2017-12-19T10:16:20.630Z",
+      updatedAt: "2017-12-19T10:16:20.630Z"
+    },
+    {
+        id: 13,
+        isbn: "#999900",
+        pages: 4,
+        author: "dsfuadsufadsad",
+        year: 4385,
+        title: "jsadfnsd ",
+        description: "fjnadn adsfadf n asdf",
+        quantity: 3,
+        categoryId: 4,
+        visibility: true,
+        image: "https://res.cloudinary.com/djvjxp2am/image/upload/v1513675078/uadujqhe4gowckqvpb6v.jpg",
+        pdf: "https://res.cloudinary.com/djvjxp2am/image/upload/v1513675079/gsstrjoqekidcmtgw3bv.pdf",
+        createdAt: "2017-12-19T09:17:58.139Z",
+        updatedAt: "2017-12-19T09:17:58.139Z"
+    },
+    {
+        id: 12,
+        isbn: "#978676",
+        pages: 343,
+        author: "thfggdh",
+        year: 3535,
+        title: "ryhrhygtt",
+        description: "ghdgvbghjfbv",
+        quantity: 43,
+        categoryId: 3,
+        visibility: true,
+        image: "https://res.cloudinary.com/djvjxp2am/image/upload/v1513600279/lv4ql887pytvljhib0wa.jpg",
+        pdf: "https://res.cloudinary.com/djvjxp2am/image/upload/v1513600280/wdbtujra487dbn8mujnu.pdf",
+        createdAt: "2017-12-18T12:31:20.887Z",
+        updatedAt: "2017-12-18T12:31:20.887Z"
+    },
+    {
+        id: 11,
+        isbn: "#453576",
+        pages: 12,
+        author: "Creator",
+        year: 1991,
+        title: "Testing create",
+        description: "Testing the application",
+        quantity: 20,
+        categoryId: 2,
+        visibility: true,
+        image: "https://res.cloudinary.com/djvjxp2am/image/upload/v1513244706/inyec7xtzydiygdyalbb.jpg",
+        pdf: "https://res.cloudinary.com/djvjxp2am/image/upload/v1513244742/tgwvlefw2p3mlutfhzgy.pdf",
+        createdAt: "2017-12-14T09:45:43.174Z",
+        updatedAt: "2017-12-18T10:55:35.375Z"
+    }
+  ]
+}
+  export const mocktrendingBooks = [
   {
     id: 14,
     isbn: "#949586",
@@ -17,7 +89,7 @@
     title: "ratj rr art",
     description: "fna dfadsfds adf",
     quantity: 342,
-    categoryid: 4,
+    categoryId: 4,
     visibility: true,
     image: "https://res.cloudinary.com/djvjxp2am/image/upload/v1513678579/ma2vpijr4kawokqynuty.jpg",
     pdf: "https://res.cloudinary.com/djvjxp2am/image/upload/v1513678580/ytn1ckngz46h4uvatfxy.pdf",
@@ -33,7 +105,7 @@
       title: "jsadfnsd ",
       description: "fjnadn adsfadf n asdf",
       quantity: 3,
-      categoryid: 4,
+      categoryId: 4,
       visibility: true,
       image: "https://res.cloudinary.com/djvjxp2am/image/upload/v1513675078/uadujqhe4gowckqvpb6v.jpg",
       pdf: "https://res.cloudinary.com/djvjxp2am/image/upload/v1513675079/gsstrjoqekidcmtgw3bv.pdf",
@@ -49,7 +121,7 @@
       title: "ryhrhygtt",
       description: "ghdgvbghjfbv",
       quantity: 43,
-      categoryid: 3,
+      categoryId: 3,
       visibility: true,
       image: "https://res.cloudinary.com/djvjxp2am/image/upload/v1513600279/lv4ql887pytvljhib0wa.jpg",
       pdf: "https://res.cloudinary.com/djvjxp2am/image/upload/v1513600280/wdbtujra487dbn8mujnu.pdf",
@@ -65,7 +137,7 @@
       title: "Testing create",
       description: "Testing the application",
       quantity: 20,
-      categoryid: 2,
+      categoryId: 2,
       visibility: true,
       image: "https://res.cloudinary.com/djvjxp2am/image/upload/v1513244706/inyec7xtzydiygdyalbb.jpg",
       pdf: "https://res.cloudinary.com/djvjxp2am/image/upload/v1513244742/tgwvlefw2p3mlutfhzgy.pdf",
@@ -87,7 +159,11 @@ export const mockBooks = {
       title: "ratj rr art",
       description: "fna dfadsfds adf",
       quantity: 342,
-      categoryid: 4,
+      Category: {
+          id: 2,
+          category: 'Hello'
+      },
+      categoryId: 4,
       visibility: true,
       image: "https://res.cloudinary.com/djvjxp2am/image/upload/v1513678579/ma2vpijr4kawokqynuty.jpg",
       pdf: "https://res.cloudinary.com/djvjxp2am/image/upload/v1513678580/ytn1ckngz46h4uvatfxy.pdf",
@@ -103,7 +179,7 @@ export const mockBooks = {
       title: "jsadfnsd ",
       description: "fjnadn adsfadf n asdf",
       quantity: 3,
-      categoryid: 4,
+      categoryId: 4,
       visibility: true,
       image: "https://res.cloudinary.com/djvjxp2am/image/upload/v1513675078/uadujqhe4gowckqvpb6v.jpg",
       pdf: "https://res.cloudinary.com/djvjxp2am/image/upload/v1513675079/gsstrjoqekidcmtgw3bv.pdf",
@@ -119,7 +195,7 @@ export const mockBooks = {
       title: "ryhrhygtt",
       description: "ghdgvbghjfbv",
       quantity: 43,
-      categoryid: 3,
+      categoryId: 3,
       visibility: true,
       image: "https://res.cloudinary.com/djvjxp2am/image/upload/v1513600279/lv4ql887pytvljhib0wa.jpg",
       pdf: "https://res.cloudinary.com/djvjxp2am/image/upload/v1513600280/wdbtujra487dbn8mujnu.pdf",
@@ -135,7 +211,7 @@ export const mockBooks = {
       title: "Testing create",
       description: "Testing the application",
       quantity: 20,
-      categoryid: 2,
+      categoryId: 2,
       visibility: true,
       image: "https://res.cloudinary.com/djvjxp2am/image/upload/v1513244706/inyec7xtzydiygdyalbb.jpg",
       pdf: "https://res.cloudinary.com/djvjxp2am/image/upload/v1513244742/tgwvlefw2p3mlutfhzgy.pdf",
@@ -218,8 +294,8 @@ export const borrowBookResponse = {
 
 export const borrowedBook = {
   id: 2,
-  userid: 2,
-  bookid: 2,
+  userId: 2,
+  bookId: 2,
   dateborrowed: "2017-12-24",
   expectedreturndate: "2017-12-25",
   returnstatus: false,
@@ -235,7 +311,7 @@ export const borrowedBook = {
       title: "React for Beginners",
       description: "the books does this and that",
       quantity: 299,
-      categoryid: 3,
+      categoryId: 3,
       visibility: false,
       image: "https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg",
       pdf: "https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg",
@@ -244,11 +320,43 @@ export const borrowedBook = {
   }
 }
 
+
+export const borrowedBookMirror = {
+  books: [{
+    id: 2,
+    userId: 2,
+    bookId: 2,
+    dateborrowed: "2017-12-24",
+    expectedreturndate: "2017-12-25",
+    returnstatus: false,
+    approvedreturn: false,
+    createdAt: "2017-12-24T12:26:07.401Z",
+    updatedAt: "2017-12-24T12:26:07.401Z",
+    book: {
+        id: 2,
+        isbn: "##7766",
+        pages: 100,
+        author: "Nelson Brook",
+        year: 2000,
+        title: "React for Beginners",
+        description: "the books does this and that",
+        quantity: 299,
+        categoryId: 3,
+        visibility: false,
+        image: "https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg",
+        pdf: "https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg",
+        createdAt: "2017-12-23T11:13:07.025Z",
+        updatedAt: "2017-12-24T12:26:07.424Z"
+      }
+    }]
+}
+
+
 export const borrowedBookSample = [
   {
     id: 2,
-    userid: 2,
-    bookid: 2,
+    userId: 2,
+    bookId: 2,
     dateborrowed: "2017-12-24",
     expectedreturndate: "2017-12-25",
     returnstatus: false,
@@ -264,11 +372,11 @@ export const borrowedBookSample = [
       title: "React for Beginners",
       description: "the books does this and that",
       quantity: 299,
-      category: {
+      Category: {
         id: 1,
         category: 'Programmoing'
       },
-      categoryid: 3,
+      categoryId: 3,
       visibility: false,
       image: "https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg",
       pdf: "https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg",
@@ -287,7 +395,7 @@ export const unpublishedBooks = {
   title: "Testing create",
   description: "Testing the application",
   quantity: 20,
-  categoryid: 2,
+  categoryId: 2,
   visibility: false,
   image: "https://res.cloudinary.com/djvjxp2am/image/upload/v1513244706/inyec7xtzydiygdyalbb.jpg",
   pdf: "https://res.cloudinary.com/djvjxp2am/image/upload/v1513244742/tgwvlefw2p3mlutfhzgy.pdf",
@@ -296,15 +404,15 @@ export const unpublishedBooks = {
 }
 
 export const publishedBooks = {
-  id: 4,
+  id: 1,
   isbn: "#453576",
   pages: 12,
   author: "Creator",
-  year: 1991,
+  year: 6000,
   title: "Testing create",
   description: "Testing the application",
-  quantity: 20,
-  categoryid: 2,
+  quantity: 20000,
+  categoryId: 2,
   visibility: true,
   image: "https://res.cloudinary.com/djvjxp2am/image/upload/v1513244706/inyec7xtzydiygdyalbb.jpg",
   pdf: "https://res.cloudinary.com/djvjxp2am/image/upload/v1513244742/tgwvlefw2p3mlutfhzgy.pdf",
@@ -322,11 +430,11 @@ export const publishedBooksSample = [
     title: "Testing create",
     description: "Testing the application",
     quantity: 20,
-    category: {
+    Category: {
       id: 2,
       category: 'Programming'
     },
-    categoryid: 2,
+    categoryId: 2,
     visibility: true,
     image: "https://res.cloudinary.com/djvjxp2am/image/upload/v1513244706/inyec7xtzydiygdyalbb.jpg",
     pdf: "https://res.cloudinary.com/djvjxp2am/image/upload/v1513244742/tgwvlefw2p3mlutfhzgy.pdf",
@@ -347,11 +455,11 @@ export const publishedBooksSample2 = {
       title: "Testing create",
       description: "Testing the application",
       quantity: 20,
-      category: {
+      Category: {
         id: 2,
         category: 'Programming'
       },
-      categoryid: 2,
+      categoryId: 2,
       visibility: true,
       image: "https://res.cloudinary.com/djvjxp2am/image/upload/v1513244706/inyec7xtzydiygdyalbb.jpg",
       pdf: "https://res.cloudinary.com/djvjxp2am/image/upload/v1513244742/tgwvlefw2p3mlutfhzgy.pdf",
@@ -373,7 +481,7 @@ export const createdBookResponse = {
       year: 2010,
       description: "the books does this and that",
       quantity: 3,
-      categoryid: 1,
+      categoryId: 1,
       image: "images/andela.jpg",
       pdf: "randadfa",
       updatedAt: "2017-12-12T15:30:17.144Z",
@@ -389,7 +497,7 @@ export const initialData = {
   year: '', 
   description: '', 
   quantity: '',
-  categoryid: '', 
+  categoryId: '', 
   image: '',
   pdf: '' }
 
@@ -405,7 +513,7 @@ export const editBookResponse = {
       year: 2010,
       description: "the books does this and that",
       quantity: 3,
-      categoryid: 1,
+      categoryId: 1,
       image: "images/andela.jpg",
       pdf: "randadfa",
       updatedAt: "2017-12-12T15:30:17.144Z",
@@ -414,12 +522,13 @@ export const editBookResponse = {
 }
 
 export const saveImagerResponse = {
+  data: {
     public_id: 'qpzstpk6hpkljrg1t9vt',
     version: 1515674221,
     signature: 'c8878bc1123fa6af91729b89f6195412f295c6ad',
     width: 960,
     height: 960,
-    format: 'jpg',
+    format: 'pdf',
     resource_type: 'image',
     created_at: '2018-01-11T12:37:01Z',
     tags: [],
@@ -427,9 +536,10 @@ export const saveImagerResponse = {
     type: 'upload',
     etag: '76c617e26159bf44a40aabaf9ed7844c',
     placeholder: false,
-    url: 'http://res.cloudinary.com/djvjxp2am/image/upload/v1515674221/qpzstpk6hpkljrg1t9vt.jpg',
-    secure_url: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1515674221/qpzstpk6hpkljrg1t9vt.jpg',
-    original_filename: 'IMG_8191-X2'
+    url: 'http://res.cloudinary.com/djvjxp2am/image/upload/v1515674221/sample.pdf',
+    secure_url: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1515674221/sample.pdf',
+    original_filename: 'sample.pdf'
+  }
 }
 
 export const categories = [
@@ -465,8 +575,15 @@ categories: [
 ]
 }
 
-
+export const token = jwt.sign({
+  id: 5,
+  email: 'example@example.com',
+  membership: 'bronze',
+  role: 'user'
+},
+'abcdsefd', 
+{ expiresIn: 24 * 60 * 60} );
 
 // COMPONENT DATA
 
-export const homeParagraph = `Hello books allows you to borrow books that have been gathered from different part of the  world. Finding books of your choice just got easier with us`
+export const homeParagraph = `Hello books allows you to borrow books that have been gathered from different part of the  world. Finding books of your choice just got easier with us.`

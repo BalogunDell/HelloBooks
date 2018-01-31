@@ -1,28 +1,37 @@
-import * as types from '../Actions/actionTypes';
+import {
+  FETCH_USER,
+  EDIT_PROFILE,
+  EDIT_IMAGE,
+} from '../Actions/actionTypes';
 
 /**
  * 
  * 
  * @export fetchUserReducer
- * @param { object } [state={}] inital state
+ * 
+ * @param { object } state inital state
  * @param { object } action action type and payload
+ * 
  * @returns { object } action performed and payload of the action
  */
-export default function fetchUserReducer(state = {}, action) {
+const fetchUserReducer = (state = {}, action) => {
   switch (action.type) {
-    case types.FETCH_USER:
+    case FETCH_USER:
       return {
-        ...state, ...action.userID.user
+        ...state, ...action.userId.user
       };
-    case types.EDIT_PROFILE:
+    case EDIT_PROFILE:
       return {
         ...state, ...action.newUserData.user
       };
-    case types.EDIT_IMAGE:
+    case EDIT_IMAGE:
       return {
         ...state, ...action.newImageUrl
       };
     default:
       return state;
   }
-}
+};
+
+export default fetchUserReducer;
+

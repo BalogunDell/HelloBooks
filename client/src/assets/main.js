@@ -1,20 +1,10 @@
 import 'jquery'
 import '../assets/materialize/js/materialize.min';
 
-$(document).ready(function(){
-   $('.button-collapse').off('click').sideNav({
-    closeOnclick:true,
+$(document).ready(() => {
+  $('.button-collapse').off('click').sideNav({
+    closeOnclick: true,
     menuWidth: 320,
-    // edge: 'left'
   });
-  
-  // Initialize materialize select
   $('select').material_select();
-  
-  
-  // Show image overlay when profile image is hovered on
-
 });
-
-
-

@@ -9,21 +9,23 @@ import expect, { createSpy, spyOn, isSpy } from 'expect'
 
 import {
   RegistrationForm
-} from '../../client/src/components/useraccess/Forms/RegistrationForm';
+} from '../../client/src/components/Useraccess/Forms/RegistrationForm';
 
 import { 
   Register,
   mapDispatchToProps,
   mapStateToProps
-} from '../../client/src/components/useraccess/Register'
+} from '../../client/src/components/Useraccess/Register'
 
 import {
   userData,
-  signupResponse
+  signupResponse,
+  mockBooks,
+  profile
 } from './mocks/mockdata';
 
 jest.mock('../../client/src/components/HOC/authenticate.jsx');
-jest.mock('../../client/src/components/useraccess/Forms/PasswordResetModal.jsx');
+jest.mock('../../client/src/components/Useraccess/Forms/PasswordResetModal.jsx');
 jest.mock('react-router-dom');
 
 
@@ -108,5 +110,17 @@ describe('Register Component', () => {
     const dispatch = jest.fn();
     expect(mapDispatchToProps(dispatch).saveNewUser).toBeTruthy();
   });
-  
+
+  it('should contain the mapDispatchToProps method', () => {
+    const store = {
+      initialUserData: { username: '', firstname: '', lastname: '', email: '', password: '', confirmPassword: ''},
+      userAccess: {
+        isAuthenticated: false,
+        userData: profile
+      }
+    };
+    expect(mapStateToProps(store).authStatus).toExist;
+    expect(mapStateToProps(store).initialUserData).toExist;
+    expect(mapStateToProps(store).userType).toExist;
+  });
 });

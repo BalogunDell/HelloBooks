@@ -6,7 +6,7 @@ import $ from 'jquery';
 import { shallow, mount, render , configure} from 'enzyme';
 import expect, { createSpy, spyOn, isSpy } from 'expect'
 
-import Home from '../../client/src/components/home/Home';
+import Home from '../../client/src/components/Home/Home';
 
 import { homeParagraph } from './mocks/mockdata';
 

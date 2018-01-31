@@ -1,14 +1,17 @@
-import * as types from '../Actions/actionTypes';
+import {
+  SAVE_IMAGE,
+  SAVE_PDF,
+} from '../Actions/actionTypes';
 
 const uploadReducer = (state = {}, action) => {
   switch (action.type) {
-    case types.SAVE_IMAGE:
+    case SAVE_IMAGE:
       return {
-        ...state, image: action.image
+        ...state, imageUrl: action.image
       };
-    case types.SAVE_PDF:
+    case SAVE_PDF:
       return {
-        ...state, pdf: action.pdf
+        ...state, PDFUrl: action.pdf
       };
     default:
       return state;

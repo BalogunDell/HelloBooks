@@ -7,10 +7,10 @@ import { shallow, mount, render , configure} from 'enzyme';
 import jestSnapshot from 'chai-jest-snapshot';
 import expect, { createSpy, spyOn, isSpy } from 'expect'
 
-import Notfound from '../../client/src/components/notFound/index';
+import Notfound from '../../client/src/components/NotFound/notFound';
 
 jest.mock('../../client/src/components/HOC/authenticate.jsx');
-jest.mock('../../client/src/components/useraccess/Forms/PasswordResetModal.jsx');
+jest.mock('../../client/src/components/Useraccess/Forms/PasswordResetModal.jsx');
 jest.mock('react-router-dom');
 
 

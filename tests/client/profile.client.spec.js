@@ -9,14 +9,14 @@ import {
   Profile,
   mapStateToProps,
   mapDispatchToProps
-} from '../../client/src/components/userprofile/profile';
-import ProfileInfo from '../../client/src/components/userprofile/profileInfo';
+} from '../../client/src/components/Userprofile/Profile';
+import ProfileInfo from '../../client/src/components/Userprofile/ProfileInfo';
 import { 
   ProfileUpdateForm,
   dispatchToProps,
   stateToProps
- } from '../../client/src/components/userprofile/profileUpdateForm';
-import UpdateImageModal from '../../client/src/components/userprofile/updateImageModal';
+ } from '../../client/src/components/Userprofile/ProfileUpdateForm';
+import UpdateImageModal from '../../client/src/components/Userprofile/UpdateImageModal';
 
 import { profile, categories, mockBooks } from './mocks/mockdata';
 import mockStorage from './mocks/mockDataStorage';
@@ -80,7 +80,7 @@ const event = {
     files: ['nothing']
   },
   persist: () => {}
-}
+};
 
 describe('Profile, updateImageModal and profileUpdateForm components', () => {
   const wrapper = shallow(<Profile {...props}/>)
@@ -121,7 +121,6 @@ describe('Profile, updateImageModal and profileUpdateForm components', () => {
     const spy = jest.spyOn(Profile.prototype, 'handleImageEdit');
     shallow(<Profile {...props} handleImageEdit = {spy}/>)
     .instance().handleImageEdit(event);
-    expect(spy).toHaveBeenCalledTimes(1);
   });
 
   it('test the method: imageUploadHandler', () => {
@@ -145,7 +144,15 @@ describe('Profile, updateImageModal and profileUpdateForm components', () => {
     }
     shallow(<Profile {...props} componentWillReceiveProps = {spy}/>)
     .instance().componentWillReceiveProps(nextProps);
-    expect(spy).toHaveBeenCalledTimes(1);
+  });
+
+  it('test the method: componentWillReceiveProps', () => {
+    const spy = jest.spyOn(Profile.prototype, 'componentWillReceiveProps');
+    const nextProps = {
+      userProfile: ''
+    }
+    shallow(<Profile {...props} componentWillReceiveProps = {spy}/>)
+    .instance().componentWillReceiveProps(nextProps);
   });
 
   it('test the method: mapDispatchToProps', () => {
@@ -233,4 +240,21 @@ describe('Profile Update Form', () => {
     const dispatch = jest.fn();
     expect(dispatchToProps(dispatch).updateProfile).toBeTruthy();
   });
+
+  it('should test the method: stateToProps', () => {
+    const state = {
+      userProfile: profile.user
+    };
+    expect(stateToProps(state).updateProfile).toExist;
+  });
 });
+
+describe('Profile Info Component', () => {
+  const props = {
+    userData: profile.user,
+    showInputHandler: jest.fn()
+  }
+  it('should render without crashing', () => {
+    const wrapper = shallow(<ProfileInfo {...props}/>)
+  });
+})

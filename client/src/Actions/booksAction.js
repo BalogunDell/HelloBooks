@@ -1,482 +1,398 @@
 import axios from 'axios';
-
-import * as types from './actionTypes';
-import * as apiRoutes from '../utils/apiEndPoints';
-import * as cloudKeys from '../utils/cloudinaryKeys';
 import getUserDetails from '../utils/getUserInfo';
 
+import {
+  GET_ALL_BOOKS,
+  BORROW_BOOK,
+  FETCTH_USER_BOOKS,
+  CREATE_BOOK,
+  SAVE_IMAGE,
+  SAVE_PDF,
+  RETURN_BOOK,
+  GET_BOOK_ID,
+  EDIT_BOOK_ID,
+  MODIFY_BOOK,
+  DELETE_BOOK,
+  GET_BORROWED_BOOKS,
+  TRENDING_BOOKS,
+} from './actionTypes';
 
-// *********************************************************** //
-// DEFINE ACTION CREATOR AND MAKE API CALL FOR GET ALL BOOKS** //
-// *********************************************************** //
+import {
+  userProfile,
+  userbooks,
+  trending,
+} from '../utils/apiEndPoints';
+
+import {
+  cloudinaryUrl,
+  cloudinaryPreset,
+  requestHeader
+} from '../utils/cloudinaryKeys';
 
 /**
  * @export getAllBooks
- * @param { object } books 
- * @returns { object } action type and payload
+ * 
+ * @param {object} books 
+ * 
+ * @returns {object} Action type and payload
  */
-export function getAllBooks(books) {
-  return {
-    type: types.GET_ALL_BOOKS,
-    books
-  };
-}
+export const getAllBooks = books => ({
+  type: GET_ALL_BOOKS,
+  books
+});
 
 /**
- * @export loadAllbooks
- * @returns { object } axios response
- */
-export function loadAllbooks() {
-  return (dispatch) => {
-    return axios.get(apiRoutes.books).then((response) => {
+  * @description Request to the API to load all books
+  *
+  * @param  {object} recipeDetails the recipe details to be saved
+  *
+  * @return {object} dispatch object
+  */
+export const loadAllbooks = () => dispatch =>
+  axios.get(userbooks, {
+    headers: { Authorization: getUserDetails().savedToken } })
+    .then((response) => {
       dispatch(getAllBooks(response.data));
     }).catch(() => {
     });
-  };
-}
-
 /**
  * @export getBookId
- * @param { object } bookid 
- * @returns { object } action type and payload
+ * 
+ * @param {object} bookId 
+ * 
+ * @returns {object} action type and booido
  */
-export function getBookId(bookid) {
-  return {
-    type: types.GET_BOOK_ID,
-    bookid
+export const getBookId = bookId => ({
+  type: GET_BOOK_ID,
+  bookId
+});
 
-  };
-}
-
-// ********************************************************** //
-// *DEFINE ACTION CREATOR AND MAKE API CALL FOR BORROW BOOKS* //
-// ********************************************************** //
 
 /**
  * @export borrowBookAction
- * @param { object } bookDetails 
- * @returns { object } action type and payload
+ * 
+ * @param {object} bookDetails 
+ * 
+ * @returns {object} action type and payload
  */
-export function borrowBookAction(bookDetails) {
-  return {
-    type: types.BORROW_BOOK,
-    bookDetails
-  };
-}
+export const borrowBookAction = bookDetails => ({
+  type: BORROW_BOOK,
+  bookDetails
+});
 
 
 /**
  * @export borrowBook
- * @param { object } bookDetails 
- * @returns { object } action type and axios response
- */
-export function borrowBook(bookDetails) {
-  return (dispatch) => {
-    return axios.post(`${apiRoutes.userProfile}/${getUserDetails().userId}/books`,
-      bookDetails, {
-        headers: { Authorization: getUserDetails().savedToken }
-      })
-      .then((response) => {
-        dispatch(borrowBookAction(response.data));
-      })
-      .catch((error) => {
-        throw (error);
-      });
-  };
-}
-
-
-// ********************************************************** //
-// *DEFINE ACTION CREATOR & MAKE API CALL FOR GET USER BOOKS* //
-// ********************************************************** //
-
-/**
- * @param { object } fetchedBooks
- * @returns { object } Action Type and fetched books 
- */
-export function userBooks(fetchedBooks) {
-  return {
-    type: types.FETCTH_USER_BOOKS,
-    fetchedBooks
-  };
-}
-
-/**
- * @param { object } getUserBooks
- * @returns { object } axios response
- */
-export function getUserBooks() {
-  return (dispatch) => {
-    return axios.get(`${apiRoutes.userProfile}/${getUserDetails().userId}/books`,
-      {
-        headers: { Authorization: getUserDetails().savedToken }
-      })
-      .then((response) => {
-        dispatch(userBooks(response.data));
-      })
-      .catch((error) => {
-        throw (error);
-      });
-  };
-}
-
-
-// ********************************************************** //
-// *DEFINE ACTION CREATOR AND MAKE API CALL FOR RETURN BOOKS* //
-// ********************************************************** //
-
-/**
- * @param { object } bookid
- * @returns { object } Action Type and bookid 
- */
-export function returnBookAction(bookid) {
-  return {
-    type: types.RETURN_BOOK,
-    bookid
-  };
-}
-
-/**
- * @param { object } bookid
- * @returns { object } axios response 
- */
-export function returnBook(bookid) {
-  return (dispatch) => {
-    return axios.put(`${apiRoutes.userProfile}/${getUserDetails().userId}/books`,
-      bookid,
-      { headers: { Authorization: getUserDetails().savedToken } })
-      .then((response) => {
-        dispatch(returnBookAction(response.data.message));
-      })
-      .catch((error) => {
-        throw (error);
-      });
-  };
-}
-
-// ********************************************************** //
-// **DEFINE ACTION CREATOR & MAKE API CALL FOR CREATE BOOKS** //
-// ********************************************************** //
-
-/**
- * @param { object } bookData
- * @returns { object } action type and payload => bookdata
- */
-export function createBookAction(bookData) {
-  return {
-    type: types.CREATE_BOOK,
-    bookData
-  };
-}
-
-/**
- * @param { object } bookData
- * @returns { object } axios response
- */
-export function createBook(bookData) {
-  return (dispatch) => {
-    return axios.post(`${apiRoutes.books}`,
-      bookData, {
-        headers: { Authorization: getUserDetails().savedToken } })
-      .then((response) => {
-        dispatch(createBookAction(response.data));
-      })
-      .catch((error) => {
-        throw (error);
-      });
-  };
-}
-
-/**
- * @param { object } pdf
- * @returns { object } action type and payload => pdf
- */
-export function savePdf(pdf) {
-  return {
-    type: types.SAVE_PDF,
-    pdf
-  };
-}
-
-/**
  * 
+ * @param {object} bookDetails 
+ * 
+ * @returns {object} action type and axios response
+ */
+export const borrowBook = bookDetails => dispatch =>
+  axios.post(`${userProfile}/${getUserDetails().userId}/books`,
+    bookDetails, {
+      headers: { Authorization: getUserDetails().savedToken }
+    })
+    .then((response) => {
+      dispatch(borrowBookAction(response.data));
+    })
+    .catch((error) => {
+      throw (error);
+    });
+
+/**
+ * @export userBooks
+ * 
+ * @param {object} fetchedBooks
+ * 
+ * @returns {object} Action Type and fetched books 
+ */
+export const userBooks = fetchedBooks => ({
+  type: FETCTH_USER_BOOKS,
+  fetchedBooks
+});
+
+/**
+ * @export getUserBooks
+ * 
+ * @param {object} getUserBooks
+ * 
+ * @returns {object} axios response
+ */
+export const getUserBooks = () => dispatch =>
+  axios.get(`${userProfile}/${getUserDetails().userId}/books`,
+    {
+      headers: { Authorization: getUserDetails().savedToken }
+    })
+    .then((response) => {
+      dispatch(userBooks(response.data));
+    })
+    .catch((error) => {
+      throw (error);
+    });
+
+/**
+ *  @export returnBookAction
+ * 
+ * @param {object} bookId
+ * 
+ * @returns {object} Action Type and bookId 
+ */
+export const returnBookAction = bookId => ({
+  type: RETURN_BOOK,
+  bookId
+});
+
+/**
+ * @export returnBook
+ * 
+ * @param {object} bookId
+ * 
+ * @returns {object} axios response 
+ */
+export const returnBook = bookId => dispatch =>
+  axios.put(`${userProfile}/${getUserDetails().userId}/books`,
+    bookId,
+    { headers: { Authorization: getUserDetails().savedToken } })
+    .then((response) => {
+      dispatch(returnBookAction(response.data.message));
+    })
+    .catch((error) => {
+      throw (error);
+    });
+
+
+/**
+ * @export createBookAction
+ * 
+ * @param {object} bookData
+ * 
+ * @returns {object} action type and payload => bookdata
+ */
+export const createBookAction = bookData => ({
+  type: CREATE_BOOK,
+  bookData
+
+});
+
+/**
+ * @export createBook
+ * 
+ * @param {object} bookData
+ * 
+ * @returns {object} axios response
+ */
+export const createBook = bookData => dispatch => axios.post(`${userbooks}`,
+  bookData, {
+    headers: { Authorization: getUserDetails().savedToken } })
+  .then((response) => {
+    dispatch(createBookAction(response.data));
+  })
+  .catch((error) => {
+    throw (error);
+  });
+
+/**
+ * @export savePdf
+ * 
+ * @param { object } pdf
+ * 
+ * @returns { object } t
+ */
+export const savePdf = pdf => ({
+  type: SAVE_PDF,
+  pdf
+});
+
+/**
  * @export savePdfToCloudinary
- * @param { object } pdf 
+ * 
+ * @param { object } pdf  File to save oo devlopr fa
+ * 
  * @returns { object } axios responsee
  */
-export function savePdfToCloudinary(pdf) {
-  
+
+export const savePdfToCloudinary = (pdf) => {
   const formData = new FormData();
   formData.append('file', pdf);
-  formData.append('upload_preset', cloudKeys.cloudinaryPreset);
-  return (dispatch) => {
-    return axios.post(cloudKeys.cloudinaryUrl,
-      formData, {
-        headers: { 'Content-Type': cloudKeys.requestHeader } })
-      .then((response) => {
-        dispatch(savePdf(response.data));
-      })
-      .catch((error) => {
-        throw (error);
-      });
-  };
-}
+  formData.append('upload_preset', cloudinaryPreset);
+  return dispatch => axios.post(cloudinaryUrl,
+    formData, {
+      headers: { 'Content-Type': requestHeader } })
+    .then((response) => {
+      dispatch(savePdf(response.data));
+    })
+    .catch((error) => {
+      throw (error);
+    });
+};
 
 /**
  * 
  * @export saveImage
+ * 
  * @param { object } image 
+ * 
  * @returns { object } action type and payload (image)
  */
-export function saveImage(image) {
-  return {
-    type: types.SAVE_IMAGE,
-    image
-  };
-}
+export const saveImage = image => ({
+  type: SAVE_IMAGE,
+  image
+});
 
 /**
  * 
  * @export saveImageToCloudinary
+ * 
  * @param { object } image 
+ * 
  * @returns { object } axios response
  */
-export function saveImageToCloudinary(image) {
-
+export const saveImageToCloudinary = (image) => {
   const formData = new FormData();
   formData.append('file', image);
-  formData.append('upload_preset', cloudKeys.cloudinaryPreset);
+  formData.append('upload_preset', cloudinaryPreset);
 
-  return (dispatch) => {
-    return axios.post(cloudKeys.cloudinaryUrl,
-      formData, {
-        headers: { 'Content-Type': cloudKeys.requestHeader } })
-      .then((response) => {
-        dispatch(saveImage(response.data));
-      })
-      .catch((error) => {
-        throw (error);
-      });
-  };
-}
+  return dispatch => axios.post('https://api.cloudinary.com/v1_1/djvjxp2am/upload',
+    formData, {
+      headers: { 'Content-Type': requestHeader } })
+    .then((response) => {
+      dispatch(saveImage(response.data));
+    })
+    .catch((error) => {
+      throw (error);
+    });
+};
 
-// *********************************************** //
-// **DEFINE ACTION CREATOR FOR ADMIN EDIT BOOKS** //
-// ********************************************** //
 
 /**
  * 
- * @export saveImageToCloudinary
- * @param { object } bookid 
- * @returns { object } action type and payload => bookid
+ * @export getAdminEditBookId
+ * 
+ * @param { object } bookId
+ * 
+ * @returns { object } action type and payload => bookId
  */
-export function getAdminEditBookId(bookid) {
-  return {
-    type: types.EDIT_BOOK_ID,
-    bookid
-  };
-}
+export const getAdminEditBookId = bookId => ({
+  type: EDIT_BOOK_ID,
+  bookId
+});
 
 /**
  * 
  * @export modifyBookAction
- * @param { object } bookData 
+ * 
+ * @param { object } bookData
+ *  
  * @returns { object } action type and payload => bookData
  */
-export function modifyBookAction(bookData) {
-  return {
-    type: types.MODIFY_BOOK,
-    bookData
-  };
-}
+export const modifyBookAction = bookData => ({
+  type: MODIFY_BOOK,
+  bookData
+});
 
 /**
  * 
  * @export modifyBook
+ * 
  * @param { object } bookData 
+ * 
  * @returns { object } action type and payload => bookData
  */
-export function modifyBook(bookData) {
+export const modifyBook = (bookData) => {
   const bookId = parseInt(bookData.id, 10);
-  return (dispatch) => {
-    return axios.put(`${apiRoutes.books}/${bookId}`,
-      bookData,
-      { headers: { Authorization: getUserDetails().savedToken } })
-      .then((response) => {
-        dispatch(modifyBookAction(response.data.data));
-      })
-      .catch((error) => {
-        throw (error);
-      });
-  };
-}
-
-// ************************************************ //
-// **DEFINE ACTION CREATOR FOR ADMIN DELETE BOOKS** //
-// *********************************************** //
+  return dispatch => axios.put(`${userbooks}/${bookId}`,
+    bookData,
+    { headers: { Authorization: getUserDetails().savedToken } })
+    .then((response) => {
+      dispatch(modifyBookAction(response.data.payload));
+    })
+    .catch((error) => {
+      throw (error);
+    });
+};
 
 /**
  * 
+ * @export deleteBookAction
  * 
- * @export deleteBookAction method
- * @param { integer } updatedBooks 
- * @returns { object } action type and bookid
+ * @param { integer } deletedBook
+ * 
+ * @returns { object } action type and bookId
  */
-export function deleteBookAction(updatedBooks) {
-  return {
-    type: types.DELETE_BOOK,
-    updatedBooks
-  };
-}
+export const deleteBookAction = deletedBook => ({
+  type: DELETE_BOOK,
+  deletedBook
+});
 
 /**
- * @export deleteBook method
- * @param { integer } bookId 
+ * @export deleteBook
+ * 
+ * @param { integer } bookId
+ * 
  * @returns { object } axios response
  */
-export function deleteBook(bookId) {
-  return (dispatch) => {
-    return axios.delete(`${apiRoutes.books}/${bookId}`, {
-      headers: { Authorization: getUserDetails().savedToken }
+export const deleteBook = bookId => dispatch =>
+  axios.delete(`${userbooks}/${bookId}`, {
+    headers: { Authorization: getUserDetails().savedToken }
+  })
+    .then((response) => {
+      dispatch(deleteBookAction(response.data));
     })
-      .then((response) => {
-        dispatch(deleteBookAction(response.data.updatedBooks));
-      })
-      .catch((error) => {
-        throw (error);
-      });
-  };
-}
-
-// ************************************************ //
-// *DEFINE ACTION CREATOR FOR ADMIN BORROWED BOOKS //
-// *********************************************** //
+    .catch((error) => {
+      throw (error);
+      Materialize.toast(error, 4000, 'red rounded');
+    });
 
 /**
- * @export getborrowedbooksAction method
+ * @export getborrowedbooksAction
+ * 
  * @param { object } borrowedbooks
+ * 
  * @returns { object } action type and borrowedbooks
  */
-export function getborrowedbooksAction(borrowedbooks) {
-  return {
-    type: types.GET_BORROWED_BOOKS,
-    borrowedbooks
-  };
-}
+export const getborrowedbooksAction = borrowedbooks => ({
+  type: GET_BORROWED_BOOKS,
+  borrowedbooks
+});
 
 /**
  * @export getAllBorrowedBooks method
+ * 
  * @returns { object } action type and borrowedbooks
  */
-export function getAllBorrowedBooks() {
-  return (dispatch) => {
-    return axios.get(`${apiRoutes.books}/borrowedbooks`,
-      { headers: { Authorization: getUserDetails().savedToken } })
-      .then((response) => {
-        dispatch(getborrowedbooksAction(response.data.books));
-      })
-      .catch((error) => {
-        throw (error);
-      });
-  };
-}
-
-// ************************************************ //
-// *DEFINE ACTION CREATOR FOR ADMIN GET ALL BOOKS** //
-// ************************************************ //
-
- /**
-  * 
-  * @param { object } unpublishedbooks 
-  * @returns { objectv } action type and payload => unpublishedbooks
-  */
-export function adminGetAllBooksAction(unpublishedbooks) {
-  return {
-    type: types.ADMIN_GET_ALLBOOKS,
-    unpublishedbooks
-  };
-}
-
- /**
-  * @returns { object } axios response
-  */
-export function adminGetAllBooks() {
-  return (dispatch) => {
-    return axios.get(`${apiRoutes.books}/all`, {
-      headers: { Authorization: getUserDetails().savedToken } })
-      .then((response) => {
-        dispatch(adminGetAllBooksAction(response.data.books));
-      })
-      .catch((error) => {
-        throw (error);
-      });
-  };
-}
-
-// *********************************************** //
-// *DEFINE ACTION CREATOR FOR ADMIN PUBLISH BOOK* //
-// ********************************************** //
+export const getAllBorrowedBooks = () => dispatch =>
+  axios.get(`${userbooks}/borrowedbooks`,
+    { headers: { Authorization: getUserDetails().savedToken } })
+    .then((response) => {
+      dispatch(getborrowedbooksAction(response.data.books));
+    })
+    .catch((error) => {
+      throw (error);
+    });
 
 /**
  * 
- * @param { integer } bookData 
- * @returns { object } axios response
+ * @param { object } books
+ * 
+ * @returns { object } action type and payload
  */
-export function publishBookAction(bookData) {
-  return {
-    type: types.PUBLISH_BOOK,
-    bookData
-  };
-}
-
- /**
-  * 
-  * @param { integer } bookData 
-  * @returns { object } axios response
-  */
- export function publishBook(bookData) {
-  return (dispatch) => {
-    return axios.post(`${apiRoutes.books}/${bookData}`, null, {
-      headers: { Authorization: getUserDetails().savedToken } })
-      .then((response) => {
-        dispatch(publishBookAction(response.data));
-      })
-      .catch((error) => {
-        throw (error);
-      });
-  };
-}
-
-
-// *********************************************** //
-// ****DEFINE ACTION CREATOR FOR TRENDING BOOK**** //
-// ********************************************** //
+export const trendingBooksAction = books => ({
+  type: TRENDING_BOOKS,
+  books
+});
 
 /**
- * 
- * @param { object } books 
- * @returns { object } axios response
- */
-export function trendingBooksAction(books) {
-  return {
-    type: types.TRENDING_BOOKS,
-    books
-  };
-}
-
- /**
   * 
   * @param { books } books
+  *
   * @returns { object } axios response
   */
- export function trendingBooks() {
-  return (dispatch) => {
-    return axios.get(`${apiRoutes.trending}`)
-      .then((response) => {
-        dispatch(trendingBooksAction(response.data));
-      })
-      .catch((error) => {
-        throw (error);
-      });
-  };
-}
+export const trendingBooks = () => dispatch => axios.get(trending)
+  .then((response) => {
+    dispatch(trendingBooksAction(response.data));
+  })
+  .catch((error) => {
+    throw (error);
+  });
+

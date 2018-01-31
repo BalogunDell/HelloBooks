@@ -1,156 +1,144 @@
 import axios from 'axios';
-
-import * as types from '../Actions/actionTypes';
-import * as apiRoutes from '../utils/apiEndPoints';
-import * as cloudKeys from '../utils/cloudinaryKeys';
 import getUserDetails from '../utils/getUserInfo';
+import { userProfile } from '../utils/apiEndPoints';
 
+import {
+  FETCH_USER,
+  SAVE_IMAGE,
+  EDIT_PROFILE,
+  EDIT_IMAGE,
+} from '../Actions/actionTypes';
 
-// *********************************************** //
-// ******DEFINE ACTION CREATOR TO FETCH USER****** //
-// *********************************************** //
+import {
+  cloudinaryUrl,
+  cloudinaryPreset,
+  requestHeader
+} from '../utils/cloudinaryKeys';
 
 /**
  * @export fetchUser
- * @param { integer } userID 
+ * 
+ * @param { integer } userId
+ * 
  * @returns { object } returns action type and integer, user id
  */
-export function fetchUser(userID) {
-  return {
-    type: types.FETCH_USER,
-    userID
-  };
-}
+export const fetchUser = userId => ({
+  type: FETCH_USER,
+  userId
+});
 
 /**
- * 
- * 
  * @export fetchUserTrigger
+ * 
  * @returns { object } axios response
  */
-export function fetchUserTrigger() {
-  return (dispatch) => {
-    return axios.get(`${apiRoutes.userProfile}/${getUserDetails().userId}`,
-      {
-        headers: { Authorization: getUserDetails().savedToken } })
-      .then((response) => {
-        dispatch(fetchUser(response.data));
-      }).catch((error) => {
-        throw (error);
-      });
-  };
-}
+export const fetchUserTrigger = () => dispatch =>
+  axios.get(`${userProfile}/${getUserDetails().userId}`,
+    {
+      headers: { Authorization: getUserDetails().savedToken } })
+    .then((response) => {
+      dispatch(fetchUser(response.data));
+    }).catch((error) => {
+      throw (error);
+    });
 
-
-// *********************************************** //
-// *DEFINE ACTION CREATOR FOR USER EDIT PROFILE**** //
-// ************************************************ //
 
 /**
- * @export
+ * @export editProfileAction
+ * 
  * @param { object } newUserData 
+ * 
  * @returns { object } action type and newUserData objet
  */
-export function editProfileAction(newUserData) {
-  return {
-    type: types.EDIT_PROFILE,
-    newUserData
-  };
-}
+export const editProfileAction = newUserData => ({
+  type: EDIT_PROFILE,
+  newUserData
+});
 
 /**
  * 
  * @export editProfile function
+ * 
  * @param { object } newUserData 
+ * 
  * @returns { object } axios response
  */
-export function editProfile(newUserData) {
-  return (dispatch) => {
-    return axios.put(`${apiRoutes.userProfile}/${newUserData.id}`,
-      newUserData,
-      { headers: { Authorization: getUserDetails().savedToken } })
-      .then((response) => {
-        dispatch(editProfileAction(response.data));
-      })
-      .catch((error) => {
-        throw (error);
-      });
-  };
-}
-
-// ****************************************************** //
-// *DEFINE ACTION CREATOR FOR USER EDIT PROFIL IMAGEE**** //
-// ****************************************************** //
-
+export const editProfile = newUserData => dispatch =>
+  axios.put(`${userProfile}/${newUserData.id}`,
+    newUserData,
+    { headers: { Authorization: getUserDetails().savedToken } })
+    .then((response) => {
+      dispatch(editProfileAction(response.data));
+    })
+    .catch((error) => {
+      throw (error);
+    });
 
 /**
  * 
  * @export saveImage
+ * 
  * @param { object } image 
+ * 
  * @returns { object } action type and payload (image)
  */
-export function saveImageToCloud(image) {
-  return {
-    type: types.SAVE_IMAGE,
-    image
-  };
-}
+export const saveImageToCloud = image => ({
+  type: SAVE_IMAGE,
+  image
+});
+
+
 /**
  * @export saveNewImage
+ * 
  * @param { object } image 
+ * 
  * @returns { object } action type and newImage url (from cloudinary)
  */
-export function saveNewImage(image) {
+export const saveNewImage = (image) => {
   const formdata = new FormData();
   formdata.append('file', image);
-  formdata.append('upload_preset', cloudKeys.cloudinaryPreset);
-  return (dispatch) => {
-    return axios.post(cloudKeys.cloudinaryUrl, formdata,
-      { headers: { 'Content-Type': cloudKeys.requestHeader } })
-      .then((response) => {
-        dispatch(saveImageToCloud(response.data));
-      })
-      .catch((error) => {
-        throw (error);
-      });
-  };
-}
-
-
-// ****************************************************** //
-// *DEFINE ACTION CREATOR FOR USER EDIT PROFIL IMAGEE**** //
+  formdata.append('upload_preset', cloudinaryPreset);
+  return dispatch => axios.post(cloudinaryUrl, formdata,
+    { headers: { 'Content-Type': requestHeader } })
+    .then((response) => {
+      dispatch(saveImageToCloud(response.data));
+    })
+    .catch((error) => {
+      throw (error);
+    });
+};
 
 
 /**
- * @export
+ * @export saveImage
+ * 
  * @param { object } newImage 
+ * 
  * @returns { object } action type and newImage url (from cloudinary)
  */
-export function saveImage(newImage) {
-  return {
-    type: types.EDIT_IMAGE,
-    newImageUrl: newImage
-  };
-}
+export const saveImage = newImage => ({
+  type: EDIT_IMAGE,
+  newImageUrl: newImage
+});
 
 
 /**
  * @export saveNewImageToDB
- * @param { object } newImage 
+ * 
+ * @param { object } newImage
+ * 
  * @returns { object } action type and newImage url (from cloudinary)
  */
-export function saveNewImageToDB(newImage) {
-  return (dispatch) => {
-    return axios.put(`${apiRoutes.userProfile}/${getUserDetails().userId}`,
-      newImage, {
-        headers: { Authorization: getUserDetails().savedToken }
-      })
-      .then((response) => {
-        const newUrl = response.data.user;
-        dispatch(saveImage(newUrl));
-      })
-      .catch((error) => {
-        throw (error);
-      });
-  };
-}
+export const saveNewImageToDB = newImage => dispatch => 
+  axios.put(`${userProfile}/${getUserDetails().userId}`,
+    newImage, {
+      headers: { Authorization: getUserDetails().savedToken }
+    })
+    .then((response) => {
+      const newUrl = response.data.user;
+      dispatch(saveImage(newUrl));
+    })
+    .catch((error) => {
+      throw (error);
+    });

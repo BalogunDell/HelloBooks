@@ -4,10 +4,11 @@ import { Redirect } from 'react-router-dom';
 
 require('dotenv').config();
 
-export default function authenticateUser(BasicComponent){
+const authenticate = (BasicComponent) => {
 /**
  * 
  * @class authenticate
+ * 
  * @extends {React.Component}
  */
   return class Authenticate extends React.Component {
@@ -21,14 +22,16 @@ export default function authenticateUser(BasicComponent){
 /**
  * 
  * @returns { object } object
+ * 
  * @memberof Authenticate
  */
     componentWillMount() {
-      // console.log(localStorage.getItem('Access-Token'));
-      jwt.verify(localStorage.getItem('Access-Token'), process.env.SECRET, (err, decoded) => {
+      jwt.verify(localStorage.getItem('Access-Token'), process.env.SECRET, 
+      (err, decoded) => {
         if(err) {
           localStorage.clear();
-          Materialize.toast(`You token is either invalid or has expired`, 4000, 'blue rounded');
+          Materialize.toast(`You token is either invalid or has expired`,
+          4000, 'blue rounded');
           return this.setState({ redirect: true });
         }
         return decoded;
@@ -52,4 +55,5 @@ export default function authenticateUser(BasicComponent){
   }
 };
 
+export default authenticate;
 

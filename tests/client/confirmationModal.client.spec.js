@@ -7,7 +7,7 @@ import { shallow, mount, render , configure} from 'enzyme';
 import jestSnapshot from 'chai-jest-snapshot';
 import expect, { spyOn } from 'expect'
 
-import ConfirmationModal from '../../client/src/components/userprofile/adminSubComponents/confirmationModal';
+import ConfirmationModal from '../../client/src/components/Userprofile/AdminSubComponents/ConfirmationModal';
 
 import { mockBooks, categories } from './mocks/mockdata';
 
