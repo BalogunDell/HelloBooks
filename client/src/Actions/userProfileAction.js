@@ -65,7 +65,7 @@ export const editProfileAction = newUserData => ({
  * @returns { object } axios response
  */
 export const editProfile = newUserData => dispatch =>
-  axios.put(`${userProfile}/${newUserData.id}`,
+  axios.put(`${userProfile}/${getUserDetails().userId}`,
     newUserData,
     { headers: { Authorization: getUserDetails().savedToken } })
     .then((response) => {

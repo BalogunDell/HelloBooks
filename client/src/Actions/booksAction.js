@@ -361,16 +361,20 @@ export const getborrowedbooksAction = borrowedbooks => ({
  * 
  * @returns { object } action type and borrowedbooks
  */
-export const getAllBorrowedBooks = () => dispatch =>
-  axios.get(`${userbooks}/borrowedbooks`,
-    { headers: { Authorization: getUserDetails().savedToken } })
-    .then((response) => {
-      dispatch(getborrowedbooksAction(response.data.books));
+export const getAllBorrowedBooks = () => {
+  return (dispatch) => {
+    return axios.get(`${userbooks}/borrowedbooks`, {
+      headers: { Authorization: getUserDetails().savedToken }
     })
-    .catch((error) => {
-      throw (error);
-    });
-
+      .then((response) => {
+        console.log(response);
+        dispatch(getborrowedbooksAction(response.data.books));
+      })
+      .catch((error) => {
+        throw (error);
+      });
+  };
+};
 /**
  * 
  * @param { object } books

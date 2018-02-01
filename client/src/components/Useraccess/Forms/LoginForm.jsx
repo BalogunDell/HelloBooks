@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import 'jquery';
 import GoogleLogin from 'react-google-login';
 import PasswordResetModal from './PasswordResetModal';
-import Loader from '../../Userprofile/AdminSubComponents/Loader';
+import Loader from '../../presentational/Loader';
 
 require('dotenv').config();
 

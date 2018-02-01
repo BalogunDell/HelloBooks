@@ -345,10 +345,9 @@ class UserController {
       firstName: req.body.firstName,
       lastName: req.body.lastName,
       userName: req.body.userName,
-      imageUrl: req.body.imageUrl,
-      password: req.body.password
+      imageUrl: req.body.imageUrl
     };
-    const fieldsToUpdate = ['firstName', 'lastName', 'userName', 'imageUrl', 'password'];
+    const fieldsToUpdate = ['firstName', 'lastName', 'userName', 'imageUrl'];
     const { userId } = req.body;
     findOneResourceById(userModel, userId).then(() => {
     });

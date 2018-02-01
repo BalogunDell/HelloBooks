@@ -29,7 +29,6 @@ app.use((req, res, next) => {
 app.use('/api/v1/', appRouter);
 
 if (process.env.NODE_ENV === 'development') {
-  console.log('sfdsdff');
   app.use(webpackMiddleware(webpack(webpackDevConfig)));
 }
 app.get('/bundle.js', (req, res) => res.sendFile(

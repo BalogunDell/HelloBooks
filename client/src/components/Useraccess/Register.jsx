@@ -2,9 +2,9 @@ import React, {PropTypes} from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import Navbar from '../Navbar/Navbar';
+import Navbar from '../presentational/Navbar/Navbar';
 import RegistrationForm from './Forms/RegistrationForm';
-import Background from '../Background/Background';
+import Background from '../presentational/Background/Background';
 import { saveNewUser } from '../../Actions/userAccessAction';
 
 

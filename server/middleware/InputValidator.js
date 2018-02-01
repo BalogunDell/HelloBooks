@@ -790,7 +790,6 @@ class InputValidator {
       currentPassword,
       newPassword
     } = req.body;
-    console.log(req.body);
     if (!currentPassword || !newPassword) {
       return res.status(400)
         .json({

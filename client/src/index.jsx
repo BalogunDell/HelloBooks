@@ -10,22 +10,22 @@ import './assets/materialize/js/materialize.min.js'
 import './assets/css/main.scss';
 import './assets/main.js';
 
-import Main from './components/Main';
-import Home from './components/Home/Home';
+import Main from './components/containers/Main';
+import Home from './components/presentational/Home/Home';
 import Login from './components/Useraccess/Login';
 import Register from './components/Useraccess/Register';
-import Navbar from './components/Navbar/Navbar';
-import Footer from './components/Footer/Footer';
-import User from './components/Userprofile/User';
-import UserHistory from './components/Userprofile/History';
-import Allbooks from './components/Userprofile/Allbooks/Allbooks';
-import BookDetails from './components/Userprofile/BookDetails';
+import Navbar from './components/presentational/Navbar/Navbar';
+import Footer from './components/presentational/Footer/Footer';
+import User from './components/containers/User';
+import UserHistory from './components/containers/History';
+import Allbooks from './components/containers/Allbooks/Allbooks';
+import BookDetails from './components/containers/BookDetails';
 import ResetPassword from './components/Useraccess/ResetPassword';
-import About from './components/About/About';
-import NotFound from './components/NotFound/NotFound';
+import About from './components/presentational/About/About';
+import NotFound from './components/presentational/NotFound/NotFound';
 
 import { loadAllbooks } from './Actions/booksAction';
-import authenticate from '../src/components/HOC/authenticate';
+import authenticate from '../src/components/presentational/HOC/authenticate';
 
 
 // Create an instance of the configStore 

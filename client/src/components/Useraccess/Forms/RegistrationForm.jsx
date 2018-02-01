@@ -1,7 +1,7 @@
 import React from 'react';
 import toastr from 'toastr';
 import { Link, Redirect } from 'react-router-dom';
-import Loading from '../../Userprofile/AdminSubComponents/Loader';
+import Loading from '../../presentational/Loader';
 
 /**
  * RegistrationForm 

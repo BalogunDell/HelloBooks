@@ -4,9 +4,9 @@ import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import jwt from 'jsonwebtoken';
 
-import Navbar from '../Navbar/Navbar';
+import Navbar from '../presentational/Navbar/Navbar';
 import LoginForm from './Forms/LoginForm';
-import Background from '../Background/Background';
+import Background from '../presentational/Background/Background';
 import { 
   userLogin,
   newGoogleAccess} from '../../Actions/userAccessAction'; 

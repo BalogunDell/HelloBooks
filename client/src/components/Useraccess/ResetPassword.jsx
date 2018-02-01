@@ -2,9 +2,9 @@ import React, {PropTypes} from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import Navbar from '../Navbar/Navbar';
-import Background from '../Background/Background';
-import Loader from '../Userprofile/AdminSubComponents/Loader';
+import Navbar from '../presentational/Navbar/Navbar';
+import Background from '../presentational/Background/Background';
+import Loader from '../presentational/Loader';
 import { resetPassword } from '../../Actions/userAccessAction';
 
 
