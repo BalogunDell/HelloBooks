@@ -5,6 +5,7 @@ import { Redirect, Link } from 'react-router-dom';
 import { connect } from 'react-redux'
 
 import getUserDetails from '../../utils/getUserInfo';
+import Loader from './AdminSubComponents/Loader';
 import Allbooks from './Allbooks/Allbooks';
 import UserHistory from './History';
 import BookDetails from './BookDetails';
@@ -22,8 +23,8 @@ import {
   adminLinkText
 } from './UserNavLinks';
 import UserNav from './Usernav';
-import AuthenticateUser from '../HOC/authenticate';
-import { fetchUserTrigger } from '../../Actions/userProfileAction';
+import authenticate from '../HOC/authenticate';
+import { fetchUserTrigger, editPassword } from '../../Actions/userProfileAction';
 
 
 /**
@@ -43,25 +44,114 @@ export class User extends React.Component {
       redirect: false,
       userData: this.props.userData,
       dataReady: true,
+      showInput: false,
+      passwordContainer: { ...this.props.initialData },
+      loading: false
     }
 
     this.navLinks = [];
     this.linkIcons = [];
     this.linkTexts = [];
-    this.userID = '';
+    this.userId = '';
     this.userType='';
     this.handleLogout = this.handleLogout.bind(this);
+    this.handleShowVisibility = this.handleShowVisibility.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handlePasswordUpdate = this.handlePasswordUpdate.bind(this);
+    this.handleHideVisibility = this.handleHideVisibility.bind(this);
   }
 
 /**
+ * @description handles logout
  * 
- *handleLogout
+ * handleLogout
  *
  * @returns {object} action creators
  */
   handleLogout() {
     localStorage.clear();
   }
+
+
+/**
+ * @description decides when to show the password edit form
+ * 
+ * @param {boolean} status of the form 
+ *
+ * @returns {object} action creators
+ */
+handleShowVisibility(event) {
+  this.setState({
+    showInput: true
+  });
+}
+
+/**
+ * @description decides when to show the password edit form
+ * 
+ * @param {boolean} status of the form 
+ *
+ * @returns {object} action creators
+ */
+handleHideVisibility(event) {
+  this.setState({
+    showInput: event.target.dataset.status
+  });
+}
+
+
+/**
+ * @description handles inout change of the form
+ * 
+ * @param {boolean} event of the form 
+ *
+ * @returns {object} action creators
+ */
+handleChange(event) {
+  event.preventDefault();
+  const field = event.target.name;
+  let temporaryPasswordContainer = { ...this.state.passwordContainer }
+  temporaryPasswordContainer[field] = event.target.value;
+  return this.setState({
+    passwordContainer: temporaryPasswordContainer
+  });
+}
+
+
+
+/**
+ * @description handles the password update
+ * 
+ * @param {boolean} event of the form 
+ *
+ * @returns {object} action creators
+ */
+handlePasswordUpdate(event) {
+  event.preventDefault();
+  console.log(this.state.passwordContainer);
+  this.setState({
+    loading: true
+  });
+  this.props.editPassword(this.state.passwordContainer)
+    .then(() => {
+      this.setState({
+        loading: false
+      });
+      Materialize.toast(
+        'Password has been successfully changed',
+        3000,
+        'blue rounded'
+    );
+    })
+    .catch((error) => {
+      Materialize.toast(
+        error.response.data.message,
+        3000,
+        'red rounded'
+    );
+    });
+}
+  
 
 
   /**
@@ -77,7 +167,7 @@ export class User extends React.Component {
     
     this.setState({isAuthenticated: true});
 
-    this.userID = getUserDetails().userId;
+    this.userId = getUserDetails().userId;
     this.userType = getUserDetails().userType;
 
     this.navLinks = this.userType === 'user' ?  userLinks : adminLinks
@@ -109,12 +199,14 @@ export class User extends React.Component {
   */
   componentDidMount() {
   $(document).ready(() => {
+    
    $('.button-collapse').off('click').sideNav({
     closeOnClick: true,
     menuWidth: 260,
     });
 
-       this.props.userProfile(this.userID).then(() => {
+
+       this.props.userProfile(this.userid).then(() => {
       })
       .catch(error => {
         if(error) {
@@ -154,6 +246,12 @@ export class User extends React.Component {
               userDetails = {this.props.userDetails}
               handleLogout = {this.handleLogout}
               userType={this.userType}
+              showInput = {this.state.showInput}
+              handleShowVisibility={this.handleShowVisibility}
+              handleHideVisibility={this.handleHideVisibility}
+              passwordContainer = {this.state.passwordContainer}
+              handleChange = {this.handleChange}
+              handlePasswordUpdate = {this.handlePasswordUpdate}
               /> 
               </div>
               
@@ -162,12 +260,11 @@ export class User extends React.Component {
                 <div className="content-display">
                   <Route 
                     path="/user/profile"
-                    component={AuthenticateUser(Profile)}
+                    component={authenticate(Profile)}
                   />
                   <Route
-                    path="/user/books"
-                    render={() =><Allbooks
-                      getBookId = {this.getBookId}/>}
+                    path="/user/books" render={() => (<Allbooks
+                    getBookId = {this.getBookId}/>)}
                     />  
                   <Route
                     path="/user/bookdetails"
@@ -187,7 +284,7 @@ export class User extends React.Component {
                   {/* <h4>Welcome to Hello books</h4> */}
                   <Route
                     path="/user/dashboard" 
-                    component={AuthenticateUser(AdminDashboard)}
+                    component={authenticate(AdminDashboard)}
                   />
                   <Route
                     path="/user/books"
@@ -196,7 +293,7 @@ export class User extends React.Component {
                   />
                   <Route
                     path="/user/upload"
-                    component={AuthenticateUser(CreateBook)}
+                    component={authenticate(CreateBook)}
                   /> 
                   <Route
                     path="/user/bookdetails"
@@ -204,7 +301,7 @@ export class User extends React.Component {
                   />
                   <Route
                     path="/user/editbook"
-                    component={AuthenticateUser(EditBook)}
+                    component={authenticate(EditBook)}
                   />
                 </div>
                 }
@@ -226,11 +323,13 @@ export class User extends React.Component {
  * @returns {object} action creators
  */
 const mapStateToProps = (state, ownProps) => {
+  let initialData = { currentPassword: '', newPassword: ''};
   return {
     isAuthenticated: state.userAccess.isAuthenticated,
     userDetails: state.userProfile,
     url: ownProps.match.path,
-    currentToken: state.userAccess.userData
+    currentToken: state.userAccess.userData,
+    initialData
   }
 }
 
@@ -246,8 +345,8 @@ const mapStateToProps = (state, ownProps) => {
  */
 const mapDispatchToProps = (dispatch) => {
   return {
-    userProfile: (userID) => dispatch(fetchUserTrigger(userID)),
-    userLogout: () => dispatch(userLogout())
+    userProfile: (userId) => dispatch(fetchUserTrigger(userId)),
+    editPassword: (payload) => dispatch(editPassword(payload))
   }
 }
 

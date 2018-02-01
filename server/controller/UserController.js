@@ -39,7 +39,7 @@ class UserController {
           message: 'User created',
           token,
           user: {
-            username: user.username,
+            userName: user.userName,
             userId: user.id,
             userRole: user.role,
             imageUrl: user.imageUrl,
@@ -88,7 +88,7 @@ class UserController {
             message: 'signed in',
             token,
             user: {
-              username: response.dataValues.username,
+              userName: response.dataValues.userName,
               userId: response.dataValues.id,
               userRole: response.dataValues.role,
               imageUrl: response.dataValues.imageUrl
@@ -114,9 +114,9 @@ class UserController {
    * @returns { object } user data with token 
    */
   static signin(req, res) {
-    const { username } = req.body;
+    const { userName } = req.body;
     return userModel.findOne({ where: {
-      username
+      userName
     }
     })
       .then((user) => {
@@ -128,7 +128,7 @@ class UserController {
             message: 'signed in',
             token,
             user: {
-              username: user.username,
+              userName: user.userName,
               userId: user.id,
               userRole: user.role,
               imageUrl: user.imageUrl
@@ -137,7 +137,7 @@ class UserController {
           return res.status(200).json({ responseData });
         }
         return res.status(401).json({
-          message: 'Invalid username or password'
+          message: 'Invalid userName or password'
         });
       })
       .catch((error) => {
@@ -171,7 +171,7 @@ class UserController {
         if (response) {
           const resetPasswordUrl = helper.urlGenerator(12,
             process.env.CHARACTERS);
-          userModel.update({ passwordReseturl: resetPasswordUrl },
+          userModel.update({ passwordResetUrl: resetPasswordUrl },
             { where: { email } })
             .then(() => {
               helper.generateMail(req.body.email, resetPasswordUrl)
@@ -216,14 +216,14 @@ class UserController {
     const { resetUrl } = req.params;
 
     userModel.update({
-      password }, { where: { passwordReseturl: resetUrl },
+      password }, { where: { passwordResetUrl: resetUrl },
       individualHooks: true },
     { fields: ['password'] })
       .then(() => {
         userModel.update({
-          passwordReseturl: ''
+          passwordResetUrl: ''
         }, { where: {
-          passwordReseturl: resetUrl
+          passwordResetUrl: resetUrl
         }
         })
           .then(() => {
@@ -315,7 +315,15 @@ class UserController {
     findOneResourceById(userModel, userId)
       .then((user) => {
         if (user) {
-          return res.status(200).json({ user });
+          const userData = {
+            firstName: user.firstName,
+            lastName: user.lastName,
+            email: user.email,
+            userName: user.userName,
+            imageUrl: user.imageUrl,
+            createdAt: user.createdAt
+          };
+          return res.status(200).json({ userData });
         }
         return res.status(404).json({ message: 'User not found' });
       })
@@ -334,12 +342,13 @@ class UserController {
    */
   static editProfile(req, res) {
     const userData = {
-      firstname: req.body.firstname,
-      lastname: req.body.lastname,
-      username: req.body.username,
-      imageUrl: req.body.imageUrl
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      userName: req.body.userName,
+      imageUrl: req.body.imageUrl,
+      password: req.body.password
     };
-    const fieldsToUpdate = ['firstname', 'lastname', 'username', 'imageUrl'];
+    const fieldsToUpdate = ['firstName', 'lastName', 'userName', 'imageUrl', 'password'];
     const { userId } = req.body;
     findOneResourceById(userModel, userId).then(() => {
     });
@@ -352,17 +361,17 @@ class UserController {
       },
       { fields: fieldsToUpdate }).then((response) => {
       const {
-        firstname,
-        lastname,
-        username,
+        firstName,
+        lastName,
+        userName,
         imageUrl,
         email,
         createdAt,
         updatedAt } = response[1][0];
       const user = {
-        firstname,
-        lastname,
-        username,
+        firstName,
+        lastName,
+        userName,
         imageUrl,
         email,
         createdAt,
@@ -384,6 +393,53 @@ class UserController {
               message: 'Internal server error'
             });
         }
+      });
+  }
+
+  /**
+   * @description This method allows a user edit his/her profile
+   * 
+   * @param { object } req requet object
+   * @param { object } res response object
+   * 
+   * @returns {object} edited user profile
+   */
+  static editPassword(req, res) {
+    const {
+      currentPassword,
+      newPassword } = req.body;
+    const fieldToUpdate = ['password'];
+    const { userId } = req.body;
+
+    findOneResourceById(userModel, userId)
+      .then((response) => {
+        const { password } = response.dataValues;
+        if (password && bcrypt.compareSync(currentPassword, password)) {
+          const hashedPassword = bcrypt.hashSync(newPassword, bcrypt.genSaltSync(10));
+          userModel.update({ password: hashedPassword },
+            { where: {
+              id: userId
+            },
+            fieldToUpdate
+            }).then(() => {
+            res.status(200).json({
+              message: 'You password has been successfully changed'
+            });
+          }).catch(() => {
+            res.status(500).json({
+              message: 'Internal server error'
+            });
+          });
+        } else {
+          res.status(401).json({
+            message: 'The password you provided is incorrect'
+          });
+        }
+      })
+      .catch(() => {
+        res.status(500).json({
+          message: 'Internal server error'
+        });
       });
   }
 }

@@ -24,7 +24,6 @@ import {
   profile
 } from './mocks/mockdata';
 
-jest.mock('../../client/src/components/HOC/authenticate.jsx');
 jest.mock('../../client/src/components/Useraccess/Forms/PasswordResetModal.jsx');
 jest.mock('react-router-dom');
 

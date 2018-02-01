@@ -108,12 +108,11 @@ export class Register extends React.Component {
  */
 export const mapStateToProps = (state) => {
   let initialUserData = { 
-    username: '',
-    firstname: '',
-    lastname: '',
+    userName: '',
+    firstName: '',
+    lastName: '',
     email: '',
-    password: '',
-    confirmPassword: ''
+    password: ''
   };
   return {
     initialUserData: initialUserData,

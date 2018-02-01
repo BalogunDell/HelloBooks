@@ -64,12 +64,12 @@ export class Login extends React.Component {
   googleLoginHandler(response) {
     const googleId = response.profileObj.googleId[5];
     const userData = {
-      firstname: response.profileObj.givenName,
-      lastname: response.profileObj.familyName,
-      username: `${response.profileObj.givenName}${googleId}`,
+      firstName: response.profileObj.givenName,
+      lastName: response.profileObj.familyName,
+      userName: `${response.profileObj.givenName}${googleId}`,
       password: `${response.profileObj.familyName}${googleId}`,
       email: response.profileObj.email,
-      image: response.profileObj.imageUrl
+      imageUrl: response.profileObj.imageUrl
     }
     this.props.googleAccess(userData).then(() => {
       this.setState({
@@ -157,7 +157,7 @@ export class Login extends React.Component {
  * @returns {object} mapped state from redux store
  */
 export const mapStateToProps = (state, ownProps) => {
-    let initialUserData = { username:'' , password:'' }
+    let initialUserData = { userName:'' , password:'' }
   return {
     initialUserData: initialUserData,
     isAuthenticated: state.userAccess.isAuthenticated,

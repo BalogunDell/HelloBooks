@@ -14,6 +14,12 @@ import { connect } from 'react-redux';
  * @param {object} path
  * @param {string} path
  * @param {function} handleLogout
+ * @param {function} handleShowVisibility
+ * @param {function} handleHideVisibility
+ * @param {boolean} showInput
+ * @param {object} passwordContainer
+ * @param {function} handleChange
+ * @param {function} handlePasswordUpdate
  *
  * @returns {object} action creators
  */
@@ -24,7 +30,14 @@ const UserNav = ({
   linkTexts,
   path,
   userDetails,
-  handleLogout }) => {
+  handleLogout,
+  handleHideVisibility,
+  handleShowVisibility,
+  showInput,
+  passwordContainer,
+  handleChange,
+  handlePasswordUpdate
+}) => {
   return(
     <div>
 
@@ -102,20 +115,65 @@ const UserNav = ({
             <div className="background user-view-bg">
             </div>
 
-            
-              <span 
+            { 
+              showInput ?
+              <div>
+                  <form onSubmit={handlePasswordUpdate}>
+                    <h6 className="center white-text">Change Password</h6>
+                    <input
+                      type="password"
+                      placeholder="Enter your current password"
+                      name="currentPassword"
+                      onChange={handleChange}
+                      required
+                      minLength="6"
+                      className="white-text"
+                      value={passwordContainer.currentPassword}
+                    />
+                    <input
+                      type="password"
+                      name="newPassword"
+                      value={passwordContainer.newPassword}
+                      onChange={handleChange}
+                      className="white-text"
+                      required
+                      minLength="6"
+                      placeholder="Enter your new password"
+                    />
+
+                    <input
+                      type="submit"
+                      value = "submit"
+                      className="btn black-text white"
+                    />
+
+                    <a
+                      className="btn white-text red"
+                      onClick={handleHideVisibility}>Cancel
+                    </a>
+                  </form>
+              </div>
+            :
+            <div>
+              <h6 
                 className="white-text username password">Password:*****
-              </span>
-            <span 
-              className="white-text username">Username: {userDetails.username}
-            </span>
+                <a 
+                  onClick={handleShowVisibility}>
+                  <i className="material-icons editPass">edit</i>
+                </a>
+              </h6>
+            <h6 
+              className="white-text username">Username: {userDetails.userName}
+            </h6>
             {userType === 'user'
             ?
-            <span 
+            <h6 
               className="white-text email">Membership: {userDetails.membership}
-            </span>
+            </h6>
             :
             ''
+            }
+            </div>
             }
           </div>
         </li>

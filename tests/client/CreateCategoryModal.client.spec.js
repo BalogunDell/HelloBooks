@@ -11,7 +11,6 @@ import {
     mapDispatchToProps } from '../../client/src/components/Userprofile/AdminSubComponents/CreateCategoryModal';
 import { initialData, categories } from './mocks/mockdata';
 
-jest.mock('../../client/src/components/HOC/authenticate.jsx');
 jest.mock('react-router-dom');
 
 

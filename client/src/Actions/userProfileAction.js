@@ -7,6 +7,7 @@ import {
   SAVE_IMAGE,
   EDIT_PROFILE,
   EDIT_IMAGE,
+  EDIT_PASSWORD
 } from '../Actions/actionTypes';
 
 import {
@@ -18,13 +19,13 @@ import {
 /**
  * @export fetchUser
  * 
- * @param { integer } userId
+ * @param { integer } payload
  * 
  * @returns { object } returns action type and integer, user id
  */
-export const fetchUser = userId => ({
+export const fetchUser = payload => ({
   type: FETCH_USER,
-  userId
+  payload
 });
 
 /**
@@ -69,6 +70,38 @@ export const editProfile = newUserData => dispatch =>
     { headers: { Authorization: getUserDetails().savedToken } })
     .then((response) => {
       dispatch(editProfileAction(response.data));
+    })
+    .catch((error) => {
+      throw (error);
+    });
+
+/**
+ * @export editPasswordAction
+ * 
+ * @param { object } payload 
+ * 
+ * @returns { object } action type and newUserData objet
+ */
+export const editPasswordAction = payload => ({
+  type: EDIT_PASSWORD,
+  payload
+});
+
+
+  /**
+ * 
+ * @export editPassword function
+ * 
+ * @param { object } payload  
+ * 
+ * @returns { object } axios response
+ */
+export const editPassword = payload => dispatch =>
+  axios.put(`${userProfile}/${getUserDetails().userId}/newpassword`,
+    payload,
+    { headers: { Authorization: getUserDetails().savedToken } })
+    .then((response) => {
+      dispatch(editPasswordAction(response.data));
     })
     .catch((error) => {
       throw (error);

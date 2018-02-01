@@ -14,7 +14,6 @@ import {
 
 import { mockBooks , borrowedBookSample } from './mocks/mockdata';
 
-jest.mock('../../client/src/components/HOC/authenticate.jsx');
 jest.mock('react-router-dom');
 
 configure({ adapter: new Adapter() });

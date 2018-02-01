@@ -21,22 +21,22 @@ class InputValidator {
  */
   static loginValidator(req, res, next) {
     const {
-      username,
+      userName,
       password
     } = req.body;
 
-    if (!username || !password) {
+    if (!userName || !password) {
       return res.status(400)
         .json({
           message: 'Username and password are both required'
         });
     }
-    if (username === '' || password === '' || !req.body) {
+    if (userName === '' || password === '' || !req.body) {
       return res.status(401)
-        .json({ message: 'Provide your username and password to login'
+        .json({ message: 'Provide your userName and password to login'
         });
     }
-    if (username.length < 2) {
+    if (userName.length < 2) {
       return res.status(400)
         .json({
           message: 'Username should be two or more characters'
@@ -48,14 +48,14 @@ class InputValidator {
           message: 'Password should not be less than 5 characters'
         });
     }
-    if (typeof username === 'number') {
+    if (typeof userName === 'number') {
       return res.status(400)
         .json({
           message: 'Invalid Username'
         });
     }
     req.body = {
-      username: username.toLowerCase(),
+      userName: userName.toLowerCase(),
       password
     };
     return next();
@@ -72,23 +72,23 @@ class InputValidator {
  */
   static signupValidator(req, res, next) {
     const {
-      firstname,
-      lastname,
-      username,
+      firstName,
+      lastName,
+      userName,
       email,
       password,
     } = req.body;
 
 
-    // Validate firstname
-    if (!firstname) {
+    // Validate firstName
+    if (!firstName) {
       return res.status(400)
         .json({
           message: 'Firstname is required'
         });
     }
 
-    if (firstname === '') {
+    if (firstName === '') {
       return res.status(400)
         .json({
           message: 'Firstname cannot be empty'
@@ -96,67 +96,67 @@ class InputValidator {
     }
 
 
-    if (firstname.length < 2) {
+    if (firstName.length < 2) {
       return res.status(400)
         .json({
           message: 'Firstname should be two or more characters'
         });
     }
-    if (typeof firstname === 'number') {
+    if (typeof firstName === 'number') {
       return res.status(400)
         .json({
           message: 'Firstname should only contain alphabets'
         });
     }
-    // Validate lastname
+    // Validate lastName
     
-    if (!lastname) {
+    if (!lastName) {
       return res.status(400)
         .json({
           message: 'Lastname is required'
         });
     }
 
-    if (!lastname) {
+    if (!lastName) {
       return res.status(400)
         .json({
           message: 'Lastname is required'
         });
     }
-    if (lastname.length < 2) {
+    if (lastName.length < 2) {
       return res.status(400)
         .json({
           message: 'Lastname should be two or more characters'
         });
     }
-    if (typeof lastname === 'number') {
+    if (typeof lastName === 'number') {
       return res.status(400)
         .json({
           message: 'Lastname should only contain alphabets'
         });
     }
 
-    // Validate username
-    if (!username) {
+    // Validate userName
+    if (!userName) {
       return res.status(400)
         .json({
           message: 'Username is required'
         });
     }
-    if (typeof username === 'number') {
+    if (typeof userName === 'number') {
       return res.status(400)
         .json({
-          message: 'Numbers cannot be used as username'
+          message: 'Numbers cannot be used as userName'
         });
     }
-    if (username === '') {
+    if (userName === '') {
       return res.status(400)
         .json({
           message: 'Username cannot be empty'
         });
     }
 
-    if (username.length < 2) {
+    if (userName.length < 2) {
       return res.status(400)
         .json({
           message: 'Username should be two or more characters'
@@ -206,10 +206,10 @@ class InputValidator {
         });
     }
     req.body = {
-      firstname,
-      lastname,
+      firstName,
+      lastName,
       email,
-      username: username.toLowerCase(),
+      userName: userName.toLowerCase(),
       password
     };
     return next();
@@ -303,7 +303,7 @@ class InputValidator {
     const countMutipleSpace = /(\s){2}/;
     const numberCheck = /((\d)+)/g;
     // Validate ISBN
-    if (isbn === '') {
+    if (isbn === '' || !isbn) {
       return res.status(400)
         .json({
           message: 'ISBN is required'
@@ -585,7 +585,7 @@ class InputValidator {
       quantity,
       imageUrl,
       categoryId,
-      pdfUrl,
+      PDFUrl,
     } = req.body;
 
     const checkSpace = /(\s){1}/;
@@ -681,7 +681,7 @@ class InputValidator {
     }
 
     //  Validate pdfUrl
-    if (checkSpace.test(pdfUrl) || countMutipleSpace.test(pdfUrl)) {
+    if (checkSpace.test(PDFUrl) || countMutipleSpace.test(PDFUrl)) {
       return res.status(400)
         .json({
           message: 'Invalid file selected'
@@ -697,14 +697,14 @@ class InputValidator {
         description,
         quantity,
         imageUrl,
-        pdfUrl,
+        PDFUrl,
         categoryId };
     }
     return next();
   }
 
 
-  /**
+/**
  * @description Validates payload to edit profile
  *  
  * @param { object } req request object
@@ -715,67 +715,104 @@ class InputValidator {
  */
   static editProfileVerifier(req, res, next) {
     const {
-      username,
-      firstname,
-      lastname,
+      userName,
+      firstName,
+      lastName,
     } = req.body;
 
-    if (!username) {
+    if (!userName) {
       return res.status(400).json({
         message: 'Username is required'
       });
     }
 
-    if (username.length < 3) {
+    if (userName.length < 3) {
       return res.status(400).json({
         message: 'Username should be at least 3 characters'
       });
     }
 
-    if (typeof username === 'number') {
+    if (typeof userName === 'number') {
       return res.status(400).json({
         message: 'Username cannot be a number'
       });
     }
 
-    if (!firstname) {
+    if (!firstName) {
       return res.status(400).json({
         message: 'Firstname is required'
       });
     }
 
-    if (firstname.length < 3) {
+    if (firstName.length < 3) {
       return res.status(400).json({
         message: 'Firstname should be atleast 3 characters'
       });
     }
 
-    if ((/(\d)/gi).test(firstname)) {
+    if ((/(\d)/gi).test(firstName)) {
       return res.status(400).json({
         message: 'Firstname cannot be a number'
       });
     }
 
-    if (!lastname) {
+    if (!lastName) {
       return res.status(400).json({
         message: 'Lastname is required'
       });
     }
 
-    if (lastname.length < 3) {
+    if (lastName.length < 3) {
       return res.status(400).json({
         message: 'Lastname should be atleast 3 characters'
       });
     }
 
-    if ((/(\d)/gi).test(lastname)) {
+    if ((/(\d)/gi).test(lastName)) {
       return res.status(400).json({
         message: 'Lastname cannot be a number'
       });
     }
     next();
   }
+
+/**
+ * @description Validates payload to edit password
+ *  
+ * @param { object } req request object
+ * @param { object } res response object
+ * @param { object } next passes action to following controller
+ * 
+ * @returns { object } resquest body
+ */
+  static editPasswordVerifier(req, res, next) {
+    const {
+      currentPassword,
+      newPassword
+    } = req.body;
+    console.log(req.body);
+    if (!currentPassword || !newPassword) {
+      return res.status(400)
+        .json({
+          message: 'Please type your current password and the new password'
+        });
+    }
+    if (currentPassword === '' || newPassword === '') {
+      return res.status(400)
+        .json({
+          message: 'Field cannot be empty'
+        });
+    }
+
+    if (currentPassword.length < 5 || newPassword.length < 5) {
+      return res.status(400)
+        .json({
+          message: 'Your password should be atleast 5 characters long'
+        });
+    }
+
+    return next();
+  }
 }
 
 export default InputValidator;
-

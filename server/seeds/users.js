@@ -2,41 +2,41 @@ import faker from 'faker';
 
 const users = [
   {
-    firstname: 'admin',
-    lastname: 'admin',
-    username: 'adminusername',
+    firstName: 'admin',
+    lastName: 'admin',
+    userName: 'adminusername',
     email: 'admin@mail.com',
     password: 'password',
     role: 'admin',
     membership: '',
-    passwordReseturl: 'uFUhdjHDJjdt',
+    passwordResetUrl: 'uFUhdjHDJjdt',
   },
   {
-    firstname: 'david',
-    lastname: 'brook',
+    firstName: 'david',
+    lastName: 'brook',
     email: 'david@mail.com',
-    username: 'username',
+    userName: 'username',
     password: 'password',
     role: 'user',
     membership: 'bronze',
-    passwordReseturl: 'uFUhdjHDJjdg',
+    passwordResetUrl: 'uFUhdjHDJjdg',
   },
   {
-    firstname: 'daniel',
-    lastname: 'doe',
+    firstName: 'daniel',
+    lastName: 'doe',
     email: 'daniel@mail.com',
-    username: 'username32',
+    userName: 'username32',
     password: 'password',
     role: 'user',
     membership: 'silver',
-    passwordReseturl: 'uFUhdjHDJjdf'
+    passwordResetUrl: 'uFUhdjHDJjdf'
   },
 ];
 
 const invalidUsers = [
   {
-    firstname: faker.firstname,
-    lastname: '',
+    firstName: faker.firstName,
+    lastName: '',
     email: 'admin@hellobooks.com',
     password: 'password',
     role: 'admin',
@@ -45,8 +45,8 @@ const invalidUsers = [
     updatedAt: new Date()
   },
   {
-    firstname: 'john',
-    lastname: 'brook',
+    firstName: 'john',
+    lastName: 'brook',
     email: 'john@hellobooks.com',
     password: 'password',
     role: 'user',
@@ -55,8 +55,8 @@ const invalidUsers = [
     updatedAt: new Date()
   },
   {
-    firstname: 'jane',
-    lastname: 'doe',
+    firstName: 'jane',
+    lastName: 'doe',
     email: 'jane@hellobooks.com',
     password: 'password',
     role: 'user',
@@ -65,8 +65,8 @@ const invalidUsers = [
     updatedAt: new Date()
   },
   {
-    firstname: 'mike',
-    lastname: 'tyson',
+    firstName: 'mike',
+    lastName: 'tyson',
     email: 'mike@hellobooks.com',
     password: 'password',
     role: 'user',

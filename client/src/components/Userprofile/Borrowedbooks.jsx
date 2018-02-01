@@ -6,6 +6,7 @@ import {
   getBookId,
   returnBook } from '../../Actions/booksAction';
 import UserBooks from '../Userprofile/UserBooks';
+import authenticate from '../HOC/authenticate';
 
 /**
  * Borrowed Books component
@@ -152,4 +153,4 @@ export const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(BorrowedBooks);
+export default connect(mapStateToProps, mapDispatchToProps)(authenticate(BorrowedBooks));

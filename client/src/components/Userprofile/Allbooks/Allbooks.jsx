@@ -7,6 +7,7 @@ import {
 } from '../../../Actions/booksAction';
 import Loader from '../AdminSubComponents/Loader';
 import Books from './Books';
+import authenticate from '../../HOC/authenticate'
 
 /**
  * Renders All books
@@ -40,7 +41,8 @@ export class Allbooks extends React.Component {
   */
   getBookId(event) {
     this.props.getCurrentBookId(event.target.value);
-    let currentBook = this.state.books.filter((book) => book.id == event.target.value);
+    let currentBook = this.state.books
+      .filter((book) => book.id == event.target.value);
     localStorage.setItem('book', JSON.stringify(currentBook[0]));
   }
 
@@ -54,9 +56,11 @@ export class Allbooks extends React.Component {
   componentDidMount() {
     this.setState({ loadingBooks: true });
     // Fetch all books
-    this.props.loadAllbooks().then(() => {
-      this.setState({ loadingBooks: false });
-    });
+    this.props.loadAllbooks()
+      .then(() => {
+        this.setState({ loadingBooks: false });
+      })
+      .catch((error) => {});
   }
 
   /**
@@ -70,7 +74,8 @@ export class Allbooks extends React.Component {
   */
   componentWillReceiveProps(nextProps) {
     if(nextProps.retrievedBooks) {
-      this.setState({loadingBooks: false, books: nextProps.retrievedBooks});
+      this.setState({loadingBooks: false,
+        books: nextProps.retrievedBooks});
     }
   }
 
@@ -116,4 +121,4 @@ export const mapDispatchToProps = (dispatch) => {
   }
 }
 
-  export default connect(mapStateToProps, mapDispatchToProps)(Allbooks);
+  export default connect(mapStateToProps, mapDispatchToProps)(authenticate(Allbooks));

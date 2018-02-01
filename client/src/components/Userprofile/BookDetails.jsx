@@ -12,7 +12,7 @@ import {
   failureMessage,
   membershipIconCreator
 } from './messages';
-import AuthenticateUser from '../HOC/authenticate';
+import authenticate from '../HOC/authenticate';
 
 export class BookDetails extends React.Component {
   constructor(props){
@@ -175,4 +175,4 @@ export function maptDispatchToProps(dispatch) {
   }
 }
 
-export default connect(mapStateToProps, maptDispatchToProps)(BookDetails);
+export default connect(mapStateToProps, maptDispatchToProps)(authenticate(BookDetails));

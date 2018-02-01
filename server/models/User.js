@@ -2,7 +2,7 @@ import bcrypt from 'bcrypt';
 
 export default (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
-    firstname: {
+    firstName: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
@@ -20,7 +20,7 @@ export default (sequelize, DataTypes) => {
         }
       }
     },
-    lastname: {
+    lastName: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
@@ -55,7 +55,7 @@ export default (sequelize, DataTypes) => {
         }
       }
     },
-    username: {
+    userName: {
       type: DataTypes.STRING,
       allowNull: false,
       unique: {
@@ -105,7 +105,7 @@ export default (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: true
     },
-    passwordReseturl: {
+    passwordResetUrl: {
       type: DataTypes.STRING,
       allowNull: true
     }

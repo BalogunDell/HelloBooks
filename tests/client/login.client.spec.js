@@ -24,7 +24,6 @@ import {
 } from './mocks/mockdata';
 import { PassThrough } from 'stream';
 
-jest.mock('../../client/src/components/HOC/authenticate.jsx');
 jest.mock('react-router-dom');
 
 

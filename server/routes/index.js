@@ -45,19 +45,14 @@ appRouter.post('/users/signin',
 * @param  {method} verifyAdmin
 * @param  {method} addCategory
 */
-appRouter.post('/newcategory',
-  InputValidator.checkCategoryPayload,
-  Authentication.verifyAdmin,
-  BookController.addCategory);
-
-/**
-* @param  {string} '/api/v1/categories'
-* @param  {method} verifyAdmin
-* @param  {method} getCategories
-*/
-appRouter.get('/categories',
-  Authentication.verifyAdmin,
-  BookController.getCategories);
+appRouter.route('/categories')
+  .post(
+    InputValidator.checkCategoryPayload,
+    Authentication.verifyAdmin,
+    BookController.addCategory)
+  .get(
+    Authentication.verifyAdmin,
+    BookController.getCategories);
 
 /**
 * @param  {string} '/api/v1/resetpassword'
@@ -169,6 +164,19 @@ appRouter.route('/users/:userId/')
     Authentication.verifyUser,
     UserController.editProfile
   );
+
+
+/**
+* @param  {string} '/api/v1/users/:userId/newpassword'
+* @param  {method} verifyUser
+* @param  {method} editPassword
+*/ 
+appRouter.put('/users/:userId/newpassword',
+  InputValidator.editPasswordVerifier,
+  Authentication.verifyUser,
+  UserController.editPassword
+);
+
 
 /**
 * @param  {string} '/api/v1/trendingbooks'

@@ -7,7 +7,7 @@ import {
   returnBook
 } from '../../Actions/booksAction';
 import UserBooks from '../Userprofile/UserBooks';
-import AuthenticateUser from '../HOC/authenticate';
+import authenticate from '../HOC/authenticate';
 
 
 /**
@@ -126,4 +126,4 @@ export const mapDispatchToProps = (dispatch) => {
     getUserBooks: (userId) => dispatch(getUserBooks(userId)),
   }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(History);
+export default connect(mapStateToProps, mapDispatchToProps)(authenticate(History));

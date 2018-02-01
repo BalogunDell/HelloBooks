@@ -24,3 +24,4 @@ export const SEND_EMAIL = 'SEND_EMAIL';
 export const RESET_PASS = 'RESET_PASS';
 export const TRENDING_BOOKS = 'TRENDING_BOOKS';
 export const GOOGLE_ACCESS = 'GOOGLE_ACCESS';
+export const EDIT_PASSWORD = 'EDIT_PASSWORD';

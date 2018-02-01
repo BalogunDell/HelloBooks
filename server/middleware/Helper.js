@@ -67,7 +67,7 @@ class Helper {
       where: {
         $and: [
           { userId },
-          { returnstatus: false }
+          { returnStatus: false }
         ]
       }
     };
@@ -105,7 +105,7 @@ class Helper {
     const body = {
       bookId: req.body.bookId,
       userId: req.body.userId,
-      expectedreturndate: moment()
+      expectedReturnDate: moment()
         .add(util[req.membership.toLowerCase()].limit, 'days')
         .format('YYYY-MM-DD')
     };
@@ -130,7 +130,7 @@ class Helper {
       email,
       membership,
       role
-    }, secret, { expiresIn: '3600' });
+    }, secret, { expiresIn: '24hr' });
 
     return token;
   }

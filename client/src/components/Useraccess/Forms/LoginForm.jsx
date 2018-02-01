@@ -57,9 +57,9 @@ const LoginForm = ({
                     <div className="input-field s12">
                       <input 
                       type="text" 
-                      id="username" 
-                      name="username"
-                      value = {userData.username}
+                      id="userName" 
+                      name="userName"
+                      value = {userData.userName}
                       onChange={handleLoginInput}
                       className="validate"
                       required

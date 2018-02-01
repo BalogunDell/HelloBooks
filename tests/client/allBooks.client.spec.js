@@ -6,7 +6,8 @@ import $ from 'jquery';
 import { shallow, mount, render , configure} from 'enzyme';
 import jestSnapshot from 'chai-jest-snapshot';
 import expect, { createSpy, spyOn, isSpy } from 'expect'
-
+import mockStorage from './mocks/mockDataStorage';
+import authenticate from '../../client/src/components/HOC/authenticate';
 import { 
     Allbooks,
     mapStateToProps,
@@ -14,13 +15,10 @@ import {
  } from '../../client/src/components/Userprofile/Allbooks/Allbooks';
 
  import UserBooks from '../../client/src/components/Userprofile/UserBooks';
+ import { mockBooks, borrowedBookSample } from './mocks/mockdata';
 
-import { mockBooks, borrowedBookSample } from './mocks/mockdata';
-jest.mock('../../client/src/components/HOC/authenticate.jsx');
+
 jest.mock('react-router-dom');
-
-
-import mockStorage from './mocks/mockDataStorage';
 
 window.localStorage = mockStorage;
 

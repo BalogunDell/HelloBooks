@@ -114,7 +114,7 @@ class ResetPassword extends React.Component {
    * 
    * @returns { object } updated state 
    */
-  componentWillMount() {
+  componentDidMount() {
     this.props.saveNewPassword(null, this.props.url)
     .then((response)=> {
 

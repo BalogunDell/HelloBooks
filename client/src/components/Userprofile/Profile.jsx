@@ -274,8 +274,8 @@ export class Profile extends React.Component {
               </div>
               
               <div className="userInfoDisplay">
-                <h4>{`${this.state.userData.firstname}
-                ${this.state.userData.lastname}`}
+                <h4>{`${this.state.userData.firstName}
+                ${this.state.userData.lastName}`}
                 </h4>
                 <p>Joined: 
                   {this.state.userData.createdAt} | {this.state.userData.email}

@@ -14,7 +14,6 @@ import {
 } from '../../client/src/components/Userprofile/Admin/Dashboard';
 
 import { mockBooks } from './mocks/mockdata';
-jest.mock('../../client/src/components/HOC/authenticate.jsx');
 jest.mock('react-router-dom');
 
 

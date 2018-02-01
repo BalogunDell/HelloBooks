@@ -25,7 +25,6 @@ import mockLocalStorage from './mocks/mockDataStorage'
 import { prototype } from 'mocha';
 import { deleteBook } from '../../client/src/Actions/booksAction';
 
-jest.mock('../../client/src/components/HOC/authenticate.jsx');
 jest.mock('react-router-dom');
 
 configure({ adapter: new Adapter() });

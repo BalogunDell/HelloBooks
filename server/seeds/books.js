@@ -9,7 +9,7 @@ const books = [
     quantity: 6,
     categoryId: 1,
     imageUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
-    pdfUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
+    PDFUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
   },
   {
     isbn: '#111112',
@@ -21,7 +21,7 @@ const books = [
     quantity: 0,
     categoryId: 2,
     imageUrl: 'http://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book22_ase4mm.jpg',
-    pdfUrl: 'http://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book22_ase4mm.jpg',
+    PDFUrl: 'http://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book22_ase4mm.jpg',
 
   },
   {
@@ -34,7 +34,7 @@ const books = [
     quantity: 32,
     categoryId: 3,
     imageUrl: 'http://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book5_zyqyv1.jpg',
-    pdfUrl: 'http://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book5_zyqyv1.jpg',
+    PDFUrl: 'http://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book5_zyqyv1.jpg',
   },
   {
     isbn: '#111114',
@@ -46,7 +46,7 @@ const books = [
     quantity: 15,
     categoryId: 4,
     imageUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book4_pfdh3s.jpg',
-    pdfUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book4_pfdh3s.jpg',
+    PDFUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book4_pfdh3s.jpg',
 
   },
   {
@@ -59,7 +59,7 @@ const books = [
     quantity: 5,
     categoryId: 5,
     imageUrl: 'http://res.cloudinary.com/djvjxp2am/image/upload/v1507295977/book3_thj6nk.jpg',
-    pdfUrl: 'http://res.cloudinary.com/djvjxp2am/image/upload/v1507295977/book3_thj6nk.jpg',
+    PDFUrl: 'http://res.cloudinary.com/djvjxp2am/image/upload/v1507295977/book3_thj6nk.jpg',
 
   }
 ];
@@ -75,7 +75,7 @@ const invalidBooks = [
     quantity: 3,
     categoryId: 6,
     imageUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295977/book1_mjwwlq.jpg',
-    pdfUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295977/book1_mjwwlq.jpg',
+    PDFUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295977/book1_mjwwlq.jpg',
 
   },
   {
@@ -88,7 +88,7 @@ const invalidBooks = [
     quantity: 6,
     categoryId: 2,
     imageUrl: 'images/andela.jpg',
-    pdfUrl: 'pdf7'
+    PDFUrl: 'pdf7'
   }
 ];
 

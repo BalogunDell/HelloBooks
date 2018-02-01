@@ -25,19 +25,15 @@ module.exports = {
           key: 'id'
         }
       },
-      dateborrowed: {
+      dateBorrowed: {
         type: Sequelize.DATEONLY,
         allowNull: false
       },
-      expectedreturndate: {
+      expectedReturnDate: {
         type: Sequelize.DATEONLY,
         allowNull: false
       },
-      returnstatus: {
-        type: Sequelize.BOOLEAN,
-        allowNull: false
-      },
-      approvedreturn: {
+      returnStatus: {
         type: Sequelize.BOOLEAN,
         allowNull: false
       },

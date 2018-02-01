@@ -44,7 +44,9 @@ class App extends React.Component {
               <Route path= '/login' component={Login}/>
               <Route path='/about' component={About}/>
               <Route path='/user' component={authenticate(User)}/>
-               <Route path="/user/bookdetails" component={BookDetails}/> 
+               <Route path="/user/bookdetails" 
+                component={authenticate(BookDetails)}
+                /> 
                <Route path="/resetpassword/:uniqueUrl" 
                 exact component={ResetPassword}/>
               <Route path="*" component= {NotFound}/>

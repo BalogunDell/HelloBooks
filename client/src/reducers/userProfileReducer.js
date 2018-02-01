@@ -2,6 +2,7 @@ import {
   FETCH_USER,
   EDIT_PROFILE,
   EDIT_IMAGE,
+  EDIT_PASSWORD
 } from '../Actions/actionTypes';
 
 /**
@@ -18,7 +19,7 @@ const fetchUserReducer = (state = {}, action) => {
   switch (action.type) {
     case FETCH_USER:
       return {
-        ...state, ...action.userId.user
+        ...state, ...action.payload.userData
       };
     case EDIT_PROFILE:
       return {
@@ -27,6 +28,10 @@ const fetchUserReducer = (state = {}, action) => {
     case EDIT_IMAGE:
       return {
         ...state, ...action.newImageUrl
+      };
+    case EDIT_PASSWORD:
+      return {
+        ...state, ...action.payload
       };
     default:
       return state;

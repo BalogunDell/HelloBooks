@@ -317,7 +317,7 @@ let userId;
         expect(res.body.user.username).to.equal('abbey3');
         expect(res.body.user.role).to.equal('user');
         expect(res.body.user.membership).to.equal('silver');
-        expect(res.body.user.passwordReseturl).to.equal('uFUhdjHDJjGf');
+        expect(res.body.user.passwordResetUrl).to.equal('uFUhdjHDJjGf');
         done();
       });
     });

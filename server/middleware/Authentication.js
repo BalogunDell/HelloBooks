@@ -61,7 +61,6 @@ class Authentication {
   static verifyUser(req, res, next) {
     const { authorization } = req.headers;
     const { userId } = req.params;
-
     if (!authorization) {
       return res.status(403).json({
         message: 'You do not have the permission to access this page'
@@ -83,7 +82,8 @@ class Authentication {
         req.membership = decoded.membership;
         return next();
       }
-    }).catch(() => {
+    }).catch((error) => {
+      console.log(error);
       res.status(500).json({
         message: 'Internal server error'
       });
@@ -105,7 +105,7 @@ class Authentication {
     if (resetUrl.length !== 12) {
       res.status(400).json({ message: 'This link is invalid' });
     } else {
-      findOneResource(userModel, { where: { passwordReseturl: resetUrl } })
+      findOneResource(userModel, { where: { passwordResetUrl: resetUrl } })
         .then((response) => {
           if (!response) {
             res.status(400).json({ message: 'This link has expired' });
@@ -128,7 +128,7 @@ class Authentication {
    * @param { object } res  - response object
    * @param { object } next - method to pass action to next controller
    * 
-   * @method Authentication
+   * @memberof Authentication
    * 
    * @returns { object }    - modified body object
    */
@@ -139,6 +139,10 @@ class Authentication {
         message: 'Only logged in users can see all books' });
     }
     const decoded = Helper.decodeToken(authorization);
+    if (!decoded) {
+      return res.status(401).json({
+        message: 'Your token is either invalid or it has expired' });
+    }
     findOneResource(userModel, { where: { id: decoded.id } })
       .then((reply) => {
         if (reply.dataValues.id === decoded.id) {

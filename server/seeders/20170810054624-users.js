@@ -4,10 +4,10 @@ module.exports = {
   up(queryInterface) {
     return queryInterface.bulkInsert('Users', [
       {
-        firstname: 'admin',
-        lastname: 'admin',
+        firstName: 'admin',
+        lastName: 'admin',
         email: 'admin@mail.com',
-        username: 'adminusername',
+        userName: 'adminusername',
         password: bcrypt.hashSync('password', bcrypt.genSaltSync(10)),
         role: 'admin',
         membership: '',
@@ -16,28 +16,28 @@ module.exports = {
         updatedAt: new Date()
       },
       {
-        firstname: 'john',
-        lastname: 'doe',
+        firstName: 'john',
+        lastName: 'doe',
         email: 'john@mail.com',
-        username: 'abbey2',
+        userName: 'abbey2',
         password: bcrypt.hashSync('password', bcrypt.genSaltSync(10)),
         role: 'user',
         membership: 'gold',
         imageUrl: '',
-        passwordReseturl: 'uFUhdjHDJjdf',
+        passwordResetUrl: 'uFUhdjHDJjdf',
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
-        firstname: 'jane',
-        lastname: 'ted',
+        firstName: 'jane',
+        lastName: 'ted',
         email: 'jane@mail.com',
-        username: 'abbey3',
+        userName: 'abbey3',
         password: bcrypt.hashSync('password', bcrypt.genSaltSync(10)),
         role: 'user',
         membership: 'silver',
         imageUrl: '',
-        passwordReseturl: 'uFUhdjHDJjGf',
+        passwordResetUrl: 'uFUhdjHDJjGf',
         createdAt: new Date(),
         updatedAt: new Date()
       }

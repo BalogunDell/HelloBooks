@@ -18,22 +18,17 @@ export default (sequelize, DataTypes) => {
         key: 'id'
       }
     },
-    dateborrowed: {
+    dateBorrowed: {
       type: DataTypes.DATEONLY,
       allowNull: false,
       defaultValue: Date.now()
     },
-    expectedreturndate: {
+    expectedReturnDate: {
       type: DataTypes.DATEONLY,
       allowNull: false,
       defaultValue: Date.now()
     },
-    returnstatus: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false,
-      defaultValue: false
-    },
-    approvedreturn: {
+    returnStatus: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: false

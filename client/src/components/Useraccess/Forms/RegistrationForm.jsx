@@ -38,11 +38,11 @@ export const RegistrationForm  = ({
                 <input 
                   type="text" 
                   required 
-                  id="firstname" 
-                  name="firstname"
+                  id="firstName" 
+                  name="firstName"
                   className="validate"
                   minLength="2"
-                  value= {userData.firstname}
+                  value= {userData.firstName}
                   onChange= {handleUserInput}
                 />
                 <label data-error="Invalid input">Firstname
@@ -56,11 +56,11 @@ export const RegistrationForm  = ({
                 </label>
                 <input 
                   type="text" 
-                  id="lastname" 
+                  id="lastName" 
                   required
                   minLength="2"
-                  name="lastname" 
-                  value= {userData.lastname} 
+                  name="lastName" 
+                  value= {userData.lastName} 
                   onChange= {handleUserInput}
                 />
               </div>
@@ -73,11 +73,11 @@ export const RegistrationForm  = ({
                 </label>
                 <input 
                   type="text" 
-                  id="username" 
-                  name="username" 
+                  id="userName" 
+                  name="userName" 
                   required
                   minLength="4"
-                  value= {userData.username}
+                  value= {userData.userName}
                   onChange= {handleUserInput}
                 />
               </div>

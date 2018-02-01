@@ -98,7 +98,8 @@ class BookController {
     }
     }).then((response) => {
       res.status(200).json({ books: response });
-    }).catch(() => {
+    }).catch((error) => {
+      console.log(error);
       res.status(500).json({ message: 'Internal server error' });
     });
   }

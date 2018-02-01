@@ -8,11 +8,11 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      firstname: {
+      firstName: {
         type: Sequelize.STRING,
         allowNull: false
       },
-      lastname: {
+      lastName: {
         type: Sequelize.STRING,
         allowNull: false
       },
@@ -21,7 +21,7 @@ module.exports = {
         allowNull: false,
         unique: true
       },
-      username: {
+      userName: {
         type: Sequelize.STRING,
         allowNull: false,
         unique: true
@@ -43,7 +43,7 @@ module.exports = {
         type: Sequelize.STRING
       },
 
-      passwordReseturl: {
+      passwordResetUrl: {
         type: Sequelize.STRING,
         allowNull: true
       },
