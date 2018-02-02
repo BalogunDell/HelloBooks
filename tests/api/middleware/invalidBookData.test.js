@@ -25,7 +25,7 @@ let generatedUrl= 'uFUhdjHDJjdf';
   //*****TEST FOR INVALID BOOK DATA***//
   //**********************************//
   
-  describe('Admin Features Using Invalid Data', () => {
+  describe('Book Controller With Invalid Data', () => {
 
     it('should log admin in to get a token', (done) => {
       request
@@ -42,10 +42,10 @@ let generatedUrl= 'uFUhdjHDJjdf';
   });
 
 
-    it('should not all books if no token', (done) => {
+    it('should not get all books if no token', (done) => {
       request
       .get(`${api}/books`)
-      .send('Content-Type', 'application/json')
+      .set('Content-Type', 'application/json')
       .end((err, res) => {
         expect(res.status).to.equal(401);
         expect(res.body).to.have.property('message');
@@ -59,7 +59,7 @@ let generatedUrl= 'uFUhdjHDJjdf';
     it('should fetch trending books', (done) => {
       request
       .get(`${api}/trendingbooks`)
-      .send('Content-Type', 'application/json')
+      .set('Content-Type', 'application/json')
       .end((err, res) => {
         expect(res.status).to.equal(200);
         expect(res.body).to.have.property('trendingBooks');
@@ -74,7 +74,7 @@ let generatedUrl= 'uFUhdjHDJjdf';
       request
       .post(`${api}/books`)
       .set('Authorization', adminToken)
-      .send('Accept', 'Application/json')
+      .set('Accept', 'Application/json')
       .send(mockdata.invalidBookdata1)
       .end((err, res) => {
         expect(res.status).to.equal(400);
@@ -89,7 +89,7 @@ let generatedUrl= 'uFUhdjHDJjdf';
       request
       .post(`${api}/books`)
       .set('Authorization', adminToken)
-      .send('Accept', 'Application/json')
+      .set('Accept', 'Application/json')
       .send(mockdata.invalidBookdataTheee)
       .end((err, res) => {
         expect(res.status).to.equal(400);
@@ -103,7 +103,7 @@ let generatedUrl= 'uFUhdjHDJjdf';
       request
       .post(`${api}/books`)
       .set('Authorization', adminToken)
-      .send('Accept', 'Application/json')
+      .set('Accept', 'Application/json')
       .send(mockdata.invalidBookdata2)
       .end((err, res) => {
         expect(res.status).to.equal(400);
@@ -131,7 +131,7 @@ let generatedUrl= 'uFUhdjHDJjdf';
       request
       .post(`${api}/books`)
       .set('Authorization', adminToken)
-      .send('Accept', 'Application/json')
+      .set('Accept', 'Application/json')
       .send(mockdata.invalidBookdata3)
       .end((err, res) => {
         expect(res.status).to.equal(400);
@@ -145,7 +145,7 @@ let generatedUrl= 'uFUhdjHDJjdf';
       request
       .post(`${api}/books`)
       .set('Authorization', adminToken)
-      .send('Accept', 'Application/json')
+      .set('Accept', 'Application/json')
       .send(mockdata.invalidBookdataInvalidAuthor)
       .end((err, res) => {
         expect(res.status).to.equal(400);
@@ -159,7 +159,7 @@ let generatedUrl= 'uFUhdjHDJjdf';
       request
       .post(`${api}/books`)
       .set('Authorization', adminToken)
-      .send('Accept', 'Application/json')
+      .set('Accept', 'Application/json')
       .send(mockdata.invalidBookdata4)
       .end((err, res) => {
         expect(res.status).to.equal(400);
@@ -173,7 +173,7 @@ let generatedUrl= 'uFUhdjHDJjdf';
       request
       .post(`${api}/books`)
       .set('Authorization', adminToken)
-      .send('Accept', 'Application/json')
+      .set('Accept', 'Application/json')
       .send(mockdata.invalidBookdata5)
       .end((err, res) => {
         expect(res.status).to.equal(400);
@@ -187,7 +187,7 @@ let generatedUrl= 'uFUhdjHDJjdf';
       request
       .post(`${api}/books`)
       .set('Authorization', adminToken)
-      .send('Accept', 'Application/json')
+      .set('Accept', 'Application/json')
       .send(mockdata.invalidBookdataYearLength)
       .end((err, res) => {
         expect(res.status).to.equal(400);
@@ -202,7 +202,7 @@ let generatedUrl= 'uFUhdjHDJjdf';
       request
       .post(`${api}/books`)
       .set('Authorization', adminToken)
-      .send('Accept', 'Application/json')
+      .set('Accept', 'Application/json')
       .send(mockdata.emptyDescription)
       .end((err, res) => {
         expect(res.status).to.equal(400);
@@ -216,7 +216,7 @@ let generatedUrl= 'uFUhdjHDJjdf';
       request
       .post(`${api}/books`)
       .set('Authorization', adminToken)
-      .send('Accept', 'Application/json')
+      .set('Accept', 'Application/json')
       .send(mockdata.tooManySpaceDescription)
       .end((err, res) => {
         expect(res.status).to.equal(400);
@@ -230,7 +230,7 @@ let generatedUrl= 'uFUhdjHDJjdf';
       request
       .post(`${api}/books`)
       .set('Authorization', adminToken)
-      .send('Accept', 'Application/json')
+      .set('Accept', 'Application/json')
       .send(mockdata.emptyQty)
       .end((err, res) => {
         expect(res.status).to.equal(400);
@@ -244,7 +244,7 @@ let generatedUrl= 'uFUhdjHDJjdf';
       request
       .post(`${api}/books`)
       .set('Authorization', adminToken)
-      .send('Accept', 'Application/json')
+      .set('Accept', 'Application/json')
       .send(mockdata.emptyImageUrl)
       .end((err, res) => {
         expect(res.status).to.equal(400);
@@ -258,7 +258,7 @@ let generatedUrl= 'uFUhdjHDJjdf';
       request
       .post(`${api}/books`)
       .set('Authorization', adminToken)
-      .send('Accept', 'Application/json')
+      .set('Accept', 'Application/json')
       .send(mockdata.invalidImageUrl)
       .end((err, res) => {
         expect(res.status).to.equal(400);
@@ -272,7 +272,7 @@ let generatedUrl= 'uFUhdjHDJjdf';
       request
       .post(`${api}/books`)
       .set('Authorization', adminToken)
-      .send('Accept', 'Application/json')
+      .set('Accept', 'Application/json')
       .send(mockdata.emptyPdfUrl)
       .end((err, res) => {
         expect(res.status).to.equal(400);
@@ -286,7 +286,7 @@ let generatedUrl= 'uFUhdjHDJjdf';
       request
       .post(`${api}/books`)
       .set('Authorization', adminToken)
-      .send('Accept', 'Application/json')
+      .set('Accept', 'Application/json')
       .send(mockdata.invalidPdfUrl)
       .end((err, res) => {
         expect(res.status).to.equal(400);

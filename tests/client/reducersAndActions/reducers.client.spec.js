@@ -6,10 +6,10 @@ import { shallow, mount, render , configure} from 'enzyme';
 import jestSnapshot from 'chai-jest-snapshot';
 
 // Import reducers
-import userAccessReducer from '../../client/src/reducers/userAccessReducer';
-import booksReducer from '../../client/src/reducers/booksReducer';
-import userProfile from '../../client/src/reducers/userProfileReducer';
-import categoryReducer from '../../client/src/reducers/categoryReducer';
+import userAccessReducer from '../../../client/src/reducers/userAccessReducer';
+import booksReducer from '../../../client/src/reducers/booksReducer';
+import userProfile from '../../../client/src/reducers/userProfileReducer';
+import categoryReducer from '../../../client/src/reducers/categoryReducer';
 
 // Import actions
 import {
@@ -18,7 +18,7 @@ import {
   sendEmailAction,
   resetPasswordAction,
   newGoogleAccessAction
-} from '../../client/src/Actions/userAccessAction';
+} from '../../../client/src/Actions/userAccessAction';
 
 import {
   getAllBooks,
@@ -36,14 +36,13 @@ import {
   publishBookAction,
   trendingBooksAction,
   trendingBooks,
-} from '../../client/src/Actions/booksAction';
+} from '../../../client/src/Actions/booksAction';
 
 import {
   fetchUser,
   editProfileAction,
   saveImage,
-} from '../../client/src/Actions/userProfileAction';
-// Import mock data 
+} from '../../../client/src/Actions/userProfileAction';
 import {
   signupResponse,
   resetPasswordResponse,
@@ -61,13 +60,12 @@ import {
   categories,
   sampleCats,
   trendingBooksMock
-} from './mocks/mockdata';
+} from '../mock/mockdata';
 
 import {
   createCategoryAction,
   getCategoriesAction
-} from '../../client/src/Actions/categoryAction';
-import updateImageModal from '../../client/src/components/userprofile/updateImageModal';
+} from '../../../client/src/Actions/categoryAction';
 
 // Configure necessary libs
 const expect = chai.expect;
@@ -118,8 +116,9 @@ describe('User Access Reducer', () => {
   });
 
   it('should return a new state when password is changed', () => {
-    const newState = userAccessReducer(initialState, resetPasswordAction({message: 'Your password has been updated'}));
-    expect(newState.message).to.equal('Your password has been updated');
+    const newState = userAccessReducer(initialState,
+      resetPasswordAction({message: 'password changed'}));
+    expect(newState.message).to.equal('password changed');
   });
 
   it('should return the initial state when no action is perforomed', () => {
@@ -151,98 +150,36 @@ describe('Books Reducer', () => {
   });
 
   it('should return a new state when BORROW BOOK action is dispatched', () => {
-    const newState = booksReducer(initialState,
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
+    const newState = booksReducer(initialState,  
       borrowBookAction(borrowBookResponse));
-    expect(newState.bookId).to.be.an('object');
-    expect(newState.bookId.message).to.equal(borrowBookResponse.message);
-    expect(newState.bookId.returnDate).to.equal(borrowBookResponse.returnDate);
+    expect(newState.fetchedBooks
+    ).to.be.an('array');
+    expect(newState.fetchedBooks.returnDate).to
+      .equal(borrowBookResponse.bookBorrowed.returnDate);
+    expect(newState.fetchedBooks[0].userId).to
+      .equal(borrowBookResponse.bookBorrowed.userId);
+    expect(newState.fetchedBooks[0].bookId).to
+      .equal(borrowBookResponse.bookBorrowed.bookId);
+    expect(newState.fetchedBooks[0].returnStatus).to
+      .equal(borrowBookResponse.bookBorrowed.returnStatus);
   });
 
   it('should return a new state when FETCH USER BOOKS action is dispatched',
    () => {
     const newState = booksReducer(initialState, userBooks(borrowedBook));
-    expect(newState.fetchedBooks).to.equal(borrowedBook);
-    expect(newState.fetchedBooks).to.have.property('id');
-    expect(newState.fetchedBooks).to.have.property('userId');
-    expect(newState.fetchedBooks).to.have.property('bookId');
-    expect(newState.fetchedBooks).to.have.property('dateborrowed');
-    expect(newState.fetchedBooks).to.have.property('expectedreturndate');
-    expect(newState.fetchedBooks).to.have.property('returnstatus');
-    expect(newState.fetchedBooks).to.have.property('approvedreturn');
-    expect(newState.fetchedBooks).to.have.property('book');
-    expect(newState.fetchedBooks.id).to.equal(borrowedBook.id);
-    expect(newState.fetchedBooks.userId).to.equal(borrowedBook.userId);
-    expect(newState.fetchedBooks.bookId).to.equal(borrowedBook.bookId);
+    expect(newState.fetchedBooks).to.equal(borrowedBook.response);
+    expect(newState.fetchedBooks.id).to.equal(borrowedBook.response.id);
+    expect(newState.fetchedBooks.userId).to
+      .equal(borrowedBook.response.userId);
+    expect(newState.fetchedBooks.bookId).to
+      .equal(borrowedBook.response.bookId);
     expect(newState.fetchedBooks.dateborrowed)
-    .to.equal(borrowedBook.dateborrowed);
+    .to.equal(borrowedBook.response.dateborrowed);
     expect(newState.fetchedBooks.expectedreturndate)
-    .to.equal(borrowedBook.expectedreturndate);
-    expect(newState.fetchedBooks.returnstatus)
-    .to.equal(borrowedBook.returnstatus);
-    expect(newState.fetchedBooks.approvedreturn)
-    .to.equal(borrowedBook.approvedreturn);
-    expect(newState.fetchedBooks.book).to.equal(borrowedBook.book);
+    .to.equal(borrowedBook.response.expectedreturndate);
+    expect(newState.fetchedBooks.returnStatus)
+    .to.equal(borrowedBook.response.returnStatus);
+    expect(newState.fetchedBooks.book).to.equal(borrowedBook.response.book);
   });
 
   it('should return a new state when CREATE BOOK action is dispatched', () => {
@@ -254,20 +191,6 @@ describe('Books Reducer', () => {
     .to.equal(createdBookResponse.message);
     expect(newState.createbook).to.have.property('data');
     expect(newState.createbook.data).to.be.an('object');
-    expect(newState.createbook.data).to.have.property('visibility');
-    expect(newState.createbook.data).to.have.property('isbn');
-    expect(newState.createbook.data).to.have.property('id');
-    expect(newState.createbook.data).to.have.property('title');
-    expect(newState.createbook.data).to.have.property('author');
-    expect(newState.createbook.data).to.have.property('pages');
-    expect(newState.createbook.data).to.have.property('year');
-    expect(newState.createbook.data).to.have.property('description');
-    expect(newState.createbook.data).to.have.property('quantity');
-    expect(newState.createbook.data).to.have.property('categoryId');
-    expect(newState.createbook.data).to.have.property('image');
-    expect(newState.createbook.data).to.have.property('pdf');
-    expect(newState.createbook.data).to.have.property('updatedAt');
-    expect(newState.createbook.data).to.have.property('createdAt');
     expect(newState.createbook.data.visibility)
     .to.equal(createdBookResponse.data.visibility);
     expect(newState.createbook.data.isbn)
@@ -327,34 +250,26 @@ describe('Books Reducer', () => {
       mockBooks.books}));
     expect(newState.books[0]).to.equal(mockBooks.books[0]);
   });
-
   
   it('should return a new state when admin tries to GET BORROWED BOOKS', () => {
     const newState = booksReducer(initialState,
       getborrowedbooksAction(borrowedBook));
     expect(newState.allborrowedbooks).to.equal(borrowedBook);
-    expect(newState.allborrowedbooks).to.have.property('id');
-    expect(newState.allborrowedbooks).to.have.property('userId');
-    expect(newState.allborrowedbooks).to.have.property('bookId');
-    expect(newState.allborrowedbooks).to.have.property('dateborrowed');
-    expect(newState.allborrowedbooks).to.have.property('expectedreturndate');
-    expect(newState.allborrowedbooks).to.have.property('returnstatus');
-    expect(newState.allborrowedbooks).to.have.property('approvedreturn');
-    expect(newState.allborrowedbooks).to.have.property('book');
-    expect(newState.allborrowedbooks.id).to.equal(borrowedBook.id);
-    expect(newState.allborrowedbooks.userId).to.equal(borrowedBook.userId);
-    expect(newState.allborrowedbooks.bookId).to.equal(borrowedBook.bookId);
-    expect(newState.allborrowedbooks.dateborrowed)
+    expect(newState.allborrowedbooks.response.id).to.equal(borrowedBook.response.id);
+    expect(newState.allborrowedbooks.response.userId).to
+      .equal(borrowedBook.response.userId);
+    expect(newState.allborrowedbooks.response.bookId).to
+      .equal(borrowedBook.response.bookId);
+    expect(newState.allborrowedbooks.response.dateborrowed)
     .to.equal(borrowedBook.dateborrowed);
-    expect(newState.allborrowedbooks.expectedreturndate)
-    .to.equal(borrowedBook.expectedreturndate);
-    expect(newState.allborrowedbooks.returnstatus)
-    .to.equal(borrowedBook.returnstatus);
-    expect(newState.allborrowedbooks.approvedreturn)
-    .to.equal(borrowedBook.approvedreturn);
-    expect(newState.allborrowedbooks.book).to.equal(borrowedBook.book);
+    expect(newState.allborrowedbooks.response.expectedreturndate)
+    .to.equal(borrowedBook.response.expectedreturndate);
+    expect(newState.allborrowedbooks.response.returnstatus)
+    .to.equal(borrowedBook.response.returnstatus);
+    expect(newState.allborrowedbooks.response.approvedreturn)
+    .to.equal(borrowedBook.response.approvedreturn);
+    expect(newState.allborrowedbooks.response.book).to.equal(borrowedBook.response.book);
   });
-
 
   it('should return a new state with TRENDING_BOOKS action', () => {
     const newState = booksReducer(initialState,
@@ -381,19 +296,19 @@ describe('Books Reducer', () => {
 
 describe('User Profile Reducer', () => {
   it('should return a new state when FETCT_USER is triggered', () => {
-    const newState = userProfile(initialState, fetchUser(profile));
-    expect(newState.id).to.equal(profile.user.id);
-    expect(newState.firstname).to.equal(profile.user.firstname);
-    expect(newState.lastname).to.equal(profile.user.lastname);
-    expect(newState.username).to.equal(profile.user.username);
-    expect(newState.email).to.equal(profile.user.email);
-    expect(newState.password).to.equal(profile.user.password);
-    expect(newState.passurl).to.equal(profile.user.passurl);
-    expect(newState.image).to.equal(profile.user.image);
-    expect(newState.createdAt).to.equal(profile.user.createdAt);
-    expect(newState.updatedAt).to.equal(profile.user.updatedAt);
-    expect(newState.membership).to.equal(profile.user.membership);
-    expect(newState.role).to.equal(profile.user.role);
+    const newState = userProfile(initialState, fetchUser(profile.payload));
+    expect(newState.id).to.equal(profile.payload.userData.id);
+    expect(newState.firstname).to.equal(profile.payload.userData.firstname);
+    expect(newState.lastname).to.equal(profile.payload.userData.lastname);
+    expect(newState.username).to.equal(profile.payload.userData.username);
+    expect(newState.email).to.equal(profile.payload.userData.email);
+    expect(newState.password).to.equal(profile.payload.userData.password);
+    expect(newState.passurl).to.equal(profile.payload.userData.passurl);
+    expect(newState.image).to.equal(profile.payload.userData.image);
+    expect(newState.createdAt).to.equal(profile.payload.userData.createdAt);
+    expect(newState.updatedAt).to.equal(profile.payload.userData.updatedAt);
+    expect(newState.membership).to.equal(profile.payload.userData.membership);
+    expect(newState.role).to.equal(profile.payload.userData.role);
   });
 
   it('should return a new state when EDIT PROFILE is triggered', () => {

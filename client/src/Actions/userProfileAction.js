@@ -1,6 +1,7 @@
 import axios from 'axios';
 import getUserDetails from '../utils/getUserInfo';
 import { userProfile } from '../utils/apiEndPoints';
+import networkErrorReporter from '../utils/networkErrorReporter';
 
 import {
   FETCH_USER,
@@ -40,6 +41,7 @@ export const fetchUserTrigger = () => dispatch =>
     .then((response) => {
       dispatch(fetchUser(response.data));
     }).catch((error) => {
+      networkErrorReporter(error);
       throw (error);
     });
 
@@ -72,6 +74,7 @@ export const editProfile = newUserData => dispatch =>
       dispatch(editProfileAction(response.data));
     })
     .catch((error) => {
+      networkErrorReporter(error);
       throw (error);
     });
 
@@ -104,6 +107,7 @@ export const editPassword = payload => dispatch =>
       dispatch(editPasswordAction(response.data));
     })
     .catch((error) => {
+      networkErrorReporter(error);
       throw (error);
     });
 
@@ -138,6 +142,7 @@ export const saveNewImage = (image) => {
       dispatch(saveImageToCloud(response.data));
     })
     .catch((error) => {
+      networkErrorReporter(error);
       throw (error);
     });
 };
@@ -146,26 +151,26 @@ export const saveNewImage = (image) => {
 /**
  * @export saveImage
  * 
- * @param { object } newImage 
+ * @param { object } newUserData 
  * 
  * @returns { object } action type and newImage url (from cloudinary)
  */
-export const saveImage = newImage => ({
+export const saveImage = newUserData => ({
   type: EDIT_IMAGE,
-  newImageUrl: newImage
+  newUserData
 });
 
 
 /**
  * @export saveNewImageToDB
  * 
- * @param { object } newImage
+ * @param { object } newUserData
  * 
  * @returns { object } action type and newImage url (from cloudinary)
  */
-export const saveNewImageToDB = newImage => dispatch => 
+export const saveNewImageToDB = newUserData => dispatch => 
   axios.put(`${userProfile}/${getUserDetails().userId}`,
-    newImage, {
+  newUserData, {
       headers: { Authorization: getUserDetails().savedToken }
     })
     .then((response) => {
@@ -173,5 +178,6 @@ export const saveNewImageToDB = newImage => dispatch =>
       dispatch(saveImage(newUrl));
     })
     .catch((error) => {
+      networkErrorReporter(error);
       throw (error);
     });

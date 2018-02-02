@@ -3,7 +3,7 @@ process.env.NODE_ENV = 'test'
 import chai from 'chai';
 import supertest from 'supertest';
 import app from '../../../server/index';
-import mockdata from './mockData';
+import mockdata from '../mock/mockData';
 import jwt from 'jsonwebtoken';
 
 require('dotenv').config();
@@ -25,24 +25,18 @@ let generatedUrl= 'uFUhdjHDJjdf';
   //**********************************//
 
   describe('User registration > ', () => {
-    it('should register a user when valid data is given' , (done) => {
+    it('should register a new user' , (done) => {
       request
       .post(`${userAPI}/signup`)
       .send('Accept', 'Application/json')
-      .send(mockdata.user1)
+      .send(mockdata.userTestRegistration)
       .end((err, res) => {
         expect(res.status).to.equal(201);
         expect(res.body).to.have.property('responseData');
-        expect(res.body.responseData).to.have.property('message');
-        expect(res.body.responseData.message).to.equal('User created');
-        expect(res.body.responseData).to.have.property('user');
-        expect(res.body.responseData.user).to.have.property('username');
-        expect(res.body.responseData.user.username).to.equal('abbey');
-        expect(res.body.responseData.user).to.have.property('userId');
-        expect(res.body.responseData.user.userId).to.equal(4);
-        expect(res.body.responseData.user).to.have.property('userRole');
+        expect(res.body.responseData.user.username).to
+          .equal(mockdata.userTestRegistration.username);
+        expect(res.body.responseData.user.userId).to.equal(5);
         expect(res.body.responseData.user.userRole).to.equal('user');
-        expect(res.body.responseData.user).to.have.property('imageUrl');
         expect(res.body.responseData.user.imageUrl).to.equal(null);
         done();
       });
@@ -51,30 +45,23 @@ let generatedUrl= 'uFUhdjHDJjdf';
 
 
   describe('User Authentication > ', () => {
-    it('should log a user with valid credentials into the app' , (done) => {
+    it('should provide access when correct credentials are given' , (done) => {
       request
       .post(`${userAPI}/signin`)
       .send('Accept', 'Application/json')
-      .send(mockdata.user1Login)
+      .send(mockdata.userTestRegistration)
       .end((err, res) => {
         expect(res.status).to.equal(200);
-        expect(res.body).to.have.property('responseData');
-        expect(res.body.responseData).to.have.property('token');
-        expect(res.body.responseData).to.have.property('user');
-        expect(res.body.responseData.user).to.have.property('username');
-        expect(res.body.responseData.user.username)
-          .to.equal(mockdata.user1Login.username);
-        expect(res.body.responseData.user).to.have.property('userId')
-        expect(res.body.responseData.user.userId).to.equal(4);
-        expect(res.body.responseData.user).to.have.property('userRole');
+        expect(res.body.responseData.user.username).to
+          .equal(mockdata.userTestRegistration.username);
+        expect(res.body.responseData.user.userId).to.equal(5);
         expect(res.body.responseData.user.userRole).to.equal('user');
-        expect(res.body.responseData.user).to.have.property('imageUrl');
         expect(res.body.responseData.user.imageUrl).to.equal(null);
         done();
       });
     });
 
-    it('should not log a user with invalid credentials in' , (done) => {
+    it('returns error message when login credentials are wrong' , (done) => {
       request
       .post(`${userAPI}/signin`)
       .send('Accept', 'Application/json')
@@ -91,7 +78,7 @@ let generatedUrl= 'uFUhdjHDJjdf';
       });
     });
 
-    it('should not log a user with empty username into the app' , (done) => {
+    it('should check if request body is valid' , (done) => {
       request
       .post(`${userAPI}/signin`)
       .send('Accept', 'Application/json')
@@ -118,7 +105,6 @@ let generatedUrl= 'uFUhdjHDJjdf';
       })
       .end((err, res) => {
         expect(res.status).to.equal(400);
-        expect(res.body).to.have.property('message');
         expect(res.body.message)
           .to.be.equal('Username should be two or more characters');
         done();
@@ -172,11 +158,6 @@ let generatedUrl= 'uFUhdjHDJjdf';
         expect(res.status).to.equal(200);
         expect(res.body).to.have.property('responseData');
         expect(res.body.responseData).to.have.property('token');
-        expect(res.body.responseData).to.have.property('user');
-        expect(res.body.responseData.user).to.have.property('userId');
-        expect(res.body.responseData.user).to.have.property('username');
-        expect(res.body.responseData.user).to.have.property('userRole');
-        expect(res.body.responseData).to.have.property('message');
         expect(res.body.responseData.message).to.equal('signed in');
         expect(res.body.responseData.user.username)
         .to.equal(mockdata.adminSigninData.username);

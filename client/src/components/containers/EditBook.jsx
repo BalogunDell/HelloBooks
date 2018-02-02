@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Redirect, Link } from 'react-router-dom';
 import EditBookForm from '../presentational/EditBookForm';
 import { getCategories } from '../../Actions/categoryAction';
+import getCategory from '../../utils/getCategory';
 import {
   modifyBook,
   saveImageToCloudinary,
@@ -34,7 +35,8 @@ export class EditBook extends React.Component {
       error: '',
       redirect: false,
       errorStatus: false,
-      bookIndex : 0
+      bookIndex : 0,
+      selectedCategoryId: 0
     }
 
     this.handleEditInput = this.handleEditInput.bind(this);
@@ -57,10 +59,18 @@ export class EditBook extends React.Component {
     let tempHolder =  {...this.state.book};
     tempHolder[name] = event.target.value
     if(event.target.name == 'categoryId') {
-      this.setState({ book:tempHolder});
+      this.setState({
+        book:tempHolder,
+        selectedCategoryId: parseInt(event.target.value, 10)
+      });
+      const result = getCategory(this.state.loadedCategories,
+        parseInt(event.target.value, 10));
+
       this.setState({
         book: {...this.state.book,
-          categoryId: parseInt(event.target.value, 10)}});
+          categoryId: parseInt(event.target.value, 10),
+          Category: result[0]
+        }});
     } else {
       this.setState({ book:tempHolder });
       
@@ -97,7 +107,6 @@ export class EditBook extends React.Component {
         .catch(error => {
           this.setState({loader: false, 
             errorStatus: true,
-            error: error.response,
           redirect:false})
         });
 
@@ -191,7 +200,6 @@ export class EditBook extends React.Component {
                   disableBtn:false });
               } else {
 
-                  // Save image to cloudinary
                 this.props.saveImageToCloudinary(this.state.tempImageName)
                 .then(() => {
                 
@@ -224,8 +232,8 @@ export class EditBook extends React.Component {
                             this.setState({
                               loader: false,
                               errorStatus:true,
-                              disableBtn:true,
-                              error: error.response.data.errorMessage});
+                              disableBtn:true
+                            });
                           });
                       }
                     })
@@ -375,6 +383,7 @@ export class EditBook extends React.Component {
           error = {this.state.error}
           errorStatus = {this.state.errorStatus}
           loader = {this.state.loader}
+          selectedCategoryId = {this.state.selectedCategoryId}
         />
       </div>
     );

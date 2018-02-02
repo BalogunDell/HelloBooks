@@ -47,6 +47,56 @@ export class CreateBook extends React.Component {
     this.fileUploadHandler = this.fileUploadHandler.bind(this);
   }
 
+
+  /**
+   * React lifecycle hook - componentDidMount
+   * 
+   * @memberof CreateBook
+   * 
+   * @returns {object} updated state
+   */
+  componentDidMount() {
+    this.props.getCategories()
+      .then(() => {})
+      .catch(() => {})
+   $(document).ready(() => {
+    $('.modal').modal();
+   })
+  }
+
+  
+  /**
+   * React lifecycle hook - componentWillReceiveProps
+   * 
+   * @param {object} nextProps
+   * 
+   * @memberof CreateBook
+   * 
+   * @returns {object} updated state
+   */
+  componentWillReceiveProps(nextProps) {
+    console.log(nextProps);
+    if(nextProps.imageUrl) {
+      this.setState({bookData: {
+        ...this.state.bookData,
+        imageUrl: nextProps.imageUrl.secure_url
+      }
+    });
+    } else {
+    }
+    if(nextProps.loadedCategories[0].id) {
+      this.setState({loadedCategories: nextProps.loadedCategories});
+    }
+
+    if(nextProps.PDFUrl) {
+      this.setState({bookData: {
+        ...this.state.bookData, PDFUrl: nextProps.PDFUrl.secure_url
+      }
+    });
+    }
+  }
+
+  
   /**
    * Handles user input - handleInput
    * 
@@ -60,14 +110,41 @@ export class CreateBook extends React.Component {
     let name = event.target.name;
     let tempBookData = { ...this.state.bookData };
     tempBookData[name] = event.target.value;
-    if(event.target.name == 'categoryId') {
-      this.setState({ bookData:tempBookData});
-      this.setState({
+    switch(event.target.name) {
+
+      case 'categoryId': 
+        this.setState({ bookData:tempBookData});
+        return this.setState({
         bookData: {...this.state.bookData,
           categoryId: parseInt(event.target.value, 10)}});
-    } else {
-    this.setState({ bookData: tempBookData });
-  }
+
+      case 'isbn':
+        this.setState({ bookData:tempBookData});
+        return this.setState({
+          bookData: {...this.state.bookData,
+            isbn: parseInt(event.target.value, 10)}});
+
+      case 'year':
+          this.setState({ bookData:tempBookData});
+          return this.setState({
+            bookData: {...this.state.bookData,
+              year: parseInt(event.target.value, 10)}});
+
+      case 'pages':
+        this.setState({ bookData:tempBookData});
+        return this.setState({
+          bookData: {...this.state.bookData,
+            pages: parseInt(event.target.value, 10)}});
+
+      case 'quantity':
+        this.setState({ bookData:tempBookData});
+        return this.setState({
+          bookData: {...this.state.bookData,
+            quantity: parseInt(event.target.value, 10)}});
+
+      default: 
+      this.setState({ bookData: tempBookData });
+      }
 }
 
   /**
@@ -117,7 +194,7 @@ export class CreateBook extends React.Component {
           if(this.state.bookData.imageUrl) {
             this.props.savePdfToCloudinary(this.state.tempFileName)
             .then(() =>{
-              if(this.state.bookData.pdfUrl) {
+              if(this.state.bookData.PDFUrl) {
                   this.props.createBook(this.state.bookData).then(() => {
                     this.setState({
                       loader: false,
@@ -143,13 +220,12 @@ export class CreateBook extends React.Component {
                       loader: false,
                       successStatus:false,
                       errorStatus:true,
-                      disableBtn:true,
-                      errorMessage: error.response.data.message});
+                      disableBtn:true });
                   })
               }
-            })
+            }).catch(() => {})
           }
-        })
+        }).catch(() => {});
     }
   }
 
@@ -207,51 +283,6 @@ export class CreateBook extends React.Component {
   }
 
   /**
-   * React lifecycle hook - componentDidMount
-   * 
-   * @memberof CreateBook
-   * 
-   * @returns {object} updated state
-   */
-  componentDidMount() {
-    this.props.getCategories()
-   $(document).ready(() => {
-    $('.modal').modal();
-   })
-  }
-
-  
-  /**
-   * React lifecycle hook - componentWillReceiveProps
-   * 
-   * @param {object} nextProps
-   * 
-   * @memberof CreateBook
-   * 
-   * @returns {object} updated state
-   */
-  componentWillReceiveProps(nextProps) {
-    if(nextProps.imageUrl) {
-      this.setState({bookData: {
-        ...this.state.bookData,
-        imageUrl: nextProps.imageUrl.secure_url
-      }
-    });
-    } else {
-    }
-    if(nextProps.loadedCategories[0].id) {
-      this.setState({loadedCategories: nextProps.loadedCategories});
-    }
-
-    if(nextProps.pdfUrl) {
-      this.setState({bookData: {
-        ...this.state.bookData, pdfUrl: nextProps.pdfUrl.secure_url
-      }
-    });
-    }
-  }
-
-  /**
    * React render method - render
    * 
    * @memberof CreateBook
@@ -259,7 +290,7 @@ export class CreateBook extends React.Component {
    * @returns {JSX} JSX representation of DOM
    */
   render() {
-
+    console.log(this.props.imageUrl)
     return(
       <div>
         {
@@ -311,13 +342,13 @@ export const mapStateToProps = (state) => {
     quantity: '',
     categoryId: '', 
     imageUrl: '',
-    pdfUrl: '' }
+    PDFUrl: '' }
 
   return {
     initialData,
     loadedCategories: state.loadedCategories.categories,
     imageUrl: state.uploadFiles.imageUrl,
-    pdfUrl: state.uploadFiles.pdfUrl
+    PDFUrl: state.uploadFiles.PDFUrl
   }
 }
 

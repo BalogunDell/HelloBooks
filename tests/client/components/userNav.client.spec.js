@@ -8,22 +8,27 @@ import { shallow, mount, render , configure} from 'enzyme';
 import expect, { spyOn } from 'expect'
 
 
-import UserNav from '../../client/src/components/Userprofile/Usernav';
-import Footer from '../../client/src/components/Footer/Footer';
+import UserNav from '../../../client/src/components/presentational/Usernav';
+import Footer from '../../../client/src/components/presentational/Footer/Footer';
 import { 
   successMessage ,
   failureMessage,
   membershipIconCreator
-} from '../../client/src/components/Userprofile/messages';
+} from '../../../client/src/utils/messages';
 
 import {
   Main,
   mapDispatchToProps,
-  mapStateToProps} from '../../client/src/components/Main';
+  mapStateToProps} from '../../../client/src/components/containers/Main';
 
-import { publishedBooksSample, categories, mockBooks, profile, token } from './mocks/mockdata';
+import {
+  publishedBooksSample,
+  categories,
+  mockBooks,
+  profile,
+  token } from '../mock/mockdata';
 
-import mockStorage from './mocks/mockDataStorage';
+import mockStorage from '../mock/mockDataStorage';
 
 
 jest.mock('react-router-dom');
@@ -69,7 +74,7 @@ describe('UserNav Component', () => {
   }
   const wrapper = shallow(<UserNav {...props}/>)
   it('should render Usernav components successfully', () => {
-    expect(wrapper.find('div').length).toBe(6);
+    expect(wrapper.find('div').length).toBe(7);
     expect(wrapper.find('#userprofile').length).toBe(1);
     expect(wrapper.find('#dashboard').length).toBe(2);
   });
@@ -134,7 +139,8 @@ describe('UserNav Component', () => {
 });
 
 describe('Messages Function', () => {
-  it('should return the appropriate messages depending on the parameter given', () => {
+  it('should return the appropriate messages depending on the parameter given',
+   () => {
     const Result = successMessage('Welcome');
     expect(Result.type).toBe('div');
     expect(Result.props.className).toBe('successMessage');

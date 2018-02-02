@@ -29,12 +29,12 @@ class Authentication {
   static verifyAdmin(req, res, next) {
     const { authorization } = req.headers;
     if (!authorization) {
-      res.status(403).json({
+      res.status(401).json({
         message: 'You do not have the permission to access this page' });
     } else {
       const decoded = Helper.decodeToken(authorization);
       if (!decoded) {
-        return res.status(403).json({
+        return res.status(401).json({
           message: 'You do not have the permission to access this page'
         });
       }
@@ -62,7 +62,7 @@ class Authentication {
     const { authorization } = req.headers;
     const { userId } = req.params;
     if (!authorization) {
-      return res.status(403).json({
+      return res.status(401).json({
         message: 'You do not have the permission to access this page'
       });
     }
@@ -82,8 +82,7 @@ class Authentication {
         req.membership = decoded.membership;
         return next();
       }
-    }).catch((error) => {
-      console.log(error);
+    }).catch(() => {
       res.status(500).json({
         message: 'Internal server error'
       });

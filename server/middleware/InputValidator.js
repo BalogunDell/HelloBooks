@@ -21,22 +21,22 @@ class InputValidator {
  */
   static loginValidator(req, res, next) {
     const {
-      userName,
+      username,
       password
     } = req.body;
 
-    if (!userName || !password) {
+    if (!username || !password) {
       return res.status(400)
         .json({
           message: 'Username and password are both required'
         });
     }
-    if (userName === '' || password === '' || !req.body) {
+    if (username === '' || password === '' || !req.body) {
       return res.status(401)
-        .json({ message: 'Provide your userName and password to login'
+        .json({ message: 'Provide your username and password to login'
         });
     }
-    if (userName.length < 2) {
+    if (username.length < 2) {
       return res.status(400)
         .json({
           message: 'Username should be two or more characters'
@@ -48,14 +48,14 @@ class InputValidator {
           message: 'Password should not be less than 5 characters'
         });
     }
-    if (typeof userName === 'number') {
+    if (typeof username === 'number') {
       return res.status(400)
         .json({
           message: 'Invalid Username'
         });
     }
     req.body = {
-      userName: userName.toLowerCase(),
+      username: username.toLowerCase(),
       password
     };
     return next();
@@ -74,7 +74,7 @@ class InputValidator {
     const {
       firstName,
       lastName,
-      userName,
+      username,
       email,
       password,
     } = req.body;
@@ -84,14 +84,14 @@ class InputValidator {
     if (!firstName) {
       return res.status(400)
         .json({
-          message: 'Firstname is required'
+          message: 'First name is required'
         });
     }
 
     if (firstName === '') {
       return res.status(400)
         .json({
-          message: 'Firstname cannot be empty'
+          message: 'First name cannot be empty'
         });
     }
 
@@ -99,13 +99,13 @@ class InputValidator {
     if (firstName.length < 2) {
       return res.status(400)
         .json({
-          message: 'Firstname should be two or more characters'
+          message: 'First name should be two or more characters'
         });
     }
     if (typeof firstName === 'number') {
       return res.status(400)
         .json({
-          message: 'Firstname should only contain alphabets'
+          message: 'First name should only contain alphabets'
         });
     }
     // Validate lastName
@@ -113,50 +113,50 @@ class InputValidator {
     if (!lastName) {
       return res.status(400)
         .json({
-          message: 'Lastname is required'
+          message: 'Last name is required'
         });
     }
 
     if (!lastName) {
       return res.status(400)
         .json({
-          message: 'Lastname is required'
+          message: 'Last name is required'
         });
     }
     if (lastName.length < 2) {
       return res.status(400)
         .json({
-          message: 'Lastname should be two or more characters'
+          message: 'Last name should be two or more characters'
         });
     }
     if (typeof lastName === 'number') {
       return res.status(400)
         .json({
-          message: 'Lastname should only contain alphabets'
+          message: 'Last name should only contain alphabets'
         });
     }
 
-    // Validate userName
-    if (!userName) {
+    // Validate username
+    if (!username) {
       return res.status(400)
         .json({
           message: 'Username is required'
         });
     }
-    if (typeof userName === 'number') {
+    if (typeof username === 'number') {
       return res.status(400)
         .json({
-          message: 'Numbers cannot be used as userName'
+          message: 'Numbers cannot be used as username'
         });
     }
-    if (userName === '') {
+    if (username === '') {
       return res.status(400)
         .json({
           message: 'Username cannot be empty'
         });
     }
 
-    if (userName.length < 2) {
+    if (username.length < 2) {
       return res.status(400)
         .json({
           message: 'Username should be two or more characters'
@@ -209,7 +209,7 @@ class InputValidator {
       firstName,
       lastName,
       email,
-      userName: userName.toLowerCase(),
+      username: username.toLowerCase(),
       password
     };
     return next();
@@ -267,7 +267,8 @@ class InputValidator {
     if ((!newPassword) || (newPassword === '')) {
       res.status(400).json({ message: 'Please type in your new password' });
     } else if (newPassword.length < 6) {
-      res.status(400).json({ message: 'Password should not be less than 5 characters' });
+      res.status(400).json({ 
+        message: 'Password should not be less than 5 characters' });
     } else {
       const hashPassword = bcrypt.hashSync(newPassword, bcrypt.genSaltSync(10));
       req.body.password = hashPassword;
@@ -576,21 +577,29 @@ class InputValidator {
  */
   static editBookVerifier(req, res, next) {
     const {
+      isbn,
       author,
       title,
-      isbn,
       pages,
       year,
       description,
       quantity,
       imageUrl,
-      categoryId,
       PDFUrl,
+      categoryId,
     } = req.body;
 
     const checkSpace = /(\s){1}/;
     const countMutipleSpace = /(\s){2}/;
-    
+    const numberCheck = /((\d)+)/g;
+    // Validate ISBN
+    if (isbn) {
+      return res.status(400)
+        .json({
+          message: 'ISBN cannot be edited'
+        });
+    }
+
     // Validate Author
     if (author === '') {
       return res.status(400)
@@ -599,7 +608,14 @@ class InputValidator {
         });
     }
 
-    if (typeof author !== 'string') {
+    if (numberCheck.test(author)) {
+      return res.status(400)
+        .json({
+          message: 'Book author should be a valid name'
+        });
+    }
+
+    if (typeof author === 'number') {
       return res.status(400)
         .json({
           message: 'Author should be a name'
@@ -619,10 +635,20 @@ class InputValidator {
           message: 'Title is required'
         });
     }
-    if (typeof title !== 'string') {
+
+
+    if (numberCheck.test(title)) {
       return res.status(400)
         .json({
-          message: 'Invalid title'
+          message: 'Title should be a valid name'
+        });
+    }
+
+
+    if (countMutipleSpace.test(title)) {
+      return res.status(400)
+        .json({
+          message: 'Title is not well formated'
         });
     }
 
@@ -634,6 +660,13 @@ class InputValidator {
         });
     }
 
+    if (typeof pages === 'string') {
+      return res.status(400)
+        .json({
+          message: 'Book page should be a number'
+        });
+    }
+
     // Validate pages
     if (year === '') {
       return res.status(400)
@@ -641,11 +674,38 @@ class InputValidator {
           message: 'Year is required'
         });
     }
-
-    if (year.toString().length > 4) {
+    if (year.toString().length !== 4) {
       return res.status(400)
         .json({
           message: 'Book year can only be 4 digits or less'
+        });
+    }
+
+    // categoryId
+    if (categoryId === '') {
+      return res.status(400)
+        .json({
+          message: 'Please choose a category id'
+        });
+    }
+
+    if (!numberCheck.test(categoryId)) {
+      return res.status(400)
+        .json({
+          message: 'CategoryId should be a number'
+        });
+    }
+    if (typeof year === 'string') {
+      return res.status(400)
+        .json({
+          message: 'Book year can only be digits'
+        });
+    }
+
+    if (countMutipleSpace.test(year)) {
+      return res.status(400)
+        .json({
+          message: 'Year is not well formatted'
         });
     }
 
@@ -671,7 +731,27 @@ class InputValidator {
         });
     }
 
+    if (typeof quantity === 'string') {
+      return res.status(400)
+        .json({
+          message: 'Book quantity should be a number'
+        });
+    }
+
     //  Validate imageUrl
+    if (imageUrl === '') {
+      return res.status(400)
+        .json({
+          message: 'Book cover is required'
+        });
+    }
+
+    if (typeof imageUrl !== 'string') {
+      return res.status(400)
+        .json({
+          message: 'Please select a valid book image'
+        });
+    }
 
     if (checkSpace.test(imageUrl) || countMutipleSpace.test(imageUrl)) {
       return res.status(400)
@@ -681,6 +761,19 @@ class InputValidator {
     }
 
     //  Validate pdfUrl
+    if (PDFUrl === '') {
+      return res.status(400)
+        .json({
+          message: 'Select a pdf to be uploaded'
+        });
+    }
+
+    if (typeof PDFUrl !== 'string') {
+      return res.status(400)
+        .json({
+          message: 'Select a pdf to be uploaded'
+        });
+    }
     if (checkSpace.test(PDFUrl) || countMutipleSpace.test(PDFUrl)) {
       return res.status(400)
         .json({
@@ -688,18 +781,6 @@ class InputValidator {
         });
     }
 
-    if (isbn !== undefined) {
-      req.body = {
-        author,
-        title,
-        pages,
-        year,
-        description,
-        quantity,
-        imageUrl,
-        PDFUrl,
-        categoryId };
-    }
     return next();
   }
 
@@ -715,24 +796,24 @@ class InputValidator {
  */
   static editProfileVerifier(req, res, next) {
     const {
-      userName,
+      username,
       firstName,
       lastName,
     } = req.body;
 
-    if (!userName) {
+    if (!username) {
       return res.status(400).json({
         message: 'Username is required'
       });
     }
 
-    if (userName.length < 3) {
+    if (username.length < 3) {
       return res.status(400).json({
         message: 'Username should be at least 3 characters'
       });
     }
 
-    if (typeof userName === 'number') {
+    if (typeof username === 'number') {
       return res.status(400).json({
         message: 'Username cannot be a number'
       });
@@ -740,37 +821,37 @@ class InputValidator {
 
     if (!firstName) {
       return res.status(400).json({
-        message: 'Firstname is required'
+        message: 'First name is required'
       });
     }
 
     if (firstName.length < 3) {
       return res.status(400).json({
-        message: 'Firstname should be atleast 3 characters'
+        message: 'First name should be atleast 3 characters'
       });
     }
 
     if ((/(\d)/gi).test(firstName)) {
       return res.status(400).json({
-        message: 'Firstname cannot be a number'
+        message: 'First name cannot be a number'
       });
     }
 
     if (!lastName) {
       return res.status(400).json({
-        message: 'Lastname is required'
+        message: 'Last name is required'
       });
     }
 
     if (lastName.length < 3) {
       return res.status(400).json({
-        message: 'Lastname should be atleast 3 characters'
+        message: 'Last name should be atleast 3 characters'
       });
     }
 
     if ((/(\d)/gi).test(lastName)) {
       return res.status(400).json({
-        message: 'Lastname cannot be a number'
+        message: 'Last name cannot be a number'
       });
     }
     next();

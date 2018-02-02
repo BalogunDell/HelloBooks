@@ -11,7 +11,7 @@ import Loader from '../../presentational/Loader';
   *
 	*/
 const Book = (bookData) => {
-  // const books = bookData.bookData.bookData.books
+  const books = bookData.bookData.bookData.books
   return (
     <div>
       <div className="row">
@@ -22,7 +22,7 @@ const Book = (bookData) => {
   <div className="row">
     <div className="col s12 m12 l12">
       <div className="books-holder center">
-        {/* {books.map((book, id) => 
+        {books.map((book, id) => 
           <div className="trending-book-holder-prot" key= {book.id}>
 
             <div className="item book-title center">
@@ -47,7 +47,7 @@ const Book = (bookData) => {
               </Link>
             </div>
           </div>
-        )} */}
+        )}
       </div>
     </div>
   </div>

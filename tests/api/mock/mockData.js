@@ -2,278 +2,286 @@ const mockData = {
 
   // Valid user data
   user1: {
-    firstname: 'janet',
-    lastname: 'teddy',
+    firstName: 'janet',
+    lastName: 'teddy',
     email: 'jane5@mail.com',
     username: 'abbey',
     password: 'abbey2',
   },
 
+userTestRegistration: {
+  firstName: 'janet',
+  lastName: 'teddy',
+  email: 'ja@mail.com',
+  username: 'usernameregistration',
+  password: 'password',
+},
+
   googleUser1: {
-    firstname: 'janet',
-    lastname: 'teddy',
+    firstName: 'janet',
+    lastName: 'teddy',
     email: 'jane5@mail.com',
     username: 'abbey',
     password: 'abbey2',
   },
 
   user1InvalidDataFirstname: {
-    firstname: 1223,
-    lastname: 'teddy',
+    firstName: 1223,
+    lastName: 'teddy',
     email: 'jane5@mail.com',
     username: 'abbey33',
     password: 'abbey2',
     role: 'user',
     membership: 'silver',
-    image: 'image2'
+    imageUrl: 'imageUrl2'
   },
 
   user1InvalidDataFirstnameEmpty: {
-    firstname: '',
-    lastname: 'teddy',
+    firstName: '',
+    lastName: 'teddy',
     email: 'jane5@mail.com',
     username: 'abbey33',
     password: 'abbey2',
     role: 'user',
     membership: 'silver',
-    image: 'image2'
+    imageUrl: 'imageUrl2'
   },
 
   user1InvalidDataFirstnamellength: {
-    firstname: 'r',
-    lastname: 'teddy',
+    firstName: 'r',
+    lastName: 'teddy',
     email: 'jane5@mail.com',
     username: 'abbey33',
     password: 'abbey2',
     role: 'user',
     membership: 'silver',
-    image: 'image2'
+    imageUrl: 'imageUrl2'
   },
 
   user1InvalidDataLastnamellength: {
-    firstname: 'rfwdf',
-    lastname: 'y',
+    firstName: 'rfwdf',
+    lastName: 'y',
     email: 'jane5@mail.com',
     username: 'abbey33',
     password: 'abbey2',
     role: 'user',
     membership: 'silver',
-    image: 'image2'
+    imageUrl: 'imageUrl2'
   },
 
   user1InvalidDataNoEmail: {
-    firstname: 'rfwdf',
-    lastname: 'ydfdfd',
+    firstName: 'rfwdf',
+    lastName: 'ydfdfd',
     username: 'abbey33',
     password: 'abbey2',
     role: 'user',
     membership: 'silver',
-    image: 'image2'
+    imageUrl: 'imageUrl2'
   },
 
   user1InvalidEmail: {
-    firstname: 'Ola',
-    lastname: 'teddy',
+    firstName: 'Ola',
+    lastName: 'teddy',
     email: 'janemail.com',
     username: 'abbey33',
     password: 'abbey2',
     role: 'user',
     membership: 'silver',
-    image: 'image2'
+    imageUrl: 'imageUrl2'
   },
 
   user1EmptyEmail: {
-    firstname: 'Ola',
-    lastname: 'teddy',
+    firstName: 'Ola',
+    lastName: 'teddy',
     username: 'abbey33',
     password: 'abbey2',
     role: 'user',
     membership: 'silver',
-    image: 'image2'
+    imageUrl: 'imageUrl2'
   },
 
   user1InvalidDataEmptyLastname: {
-    firstname: 'George',
-    lastname: '',
+    firstName: 'George',
+    lastName: '',
     email: 'jane5@mail.com',
     username: 'abbey33',
     password: 'abbey2',
     role: 'user',
     membership: 'silver',
-    image: 'image2'
+    imageUrl: 'imageUrl2'
   },
 
   user1InvalidDataDigitLastname: {
-    firstname: 'George',
-    lastname: 123,
+    firstName: 'George',
+    lastName: 123,
     email: 'jane5@mail.com',
     username: 'abbey33',
     password: 'abbey2',
     role: 'user',
     membership: 'silver',
-    image: 'image2'
+    imageUrl: 'imageUrl2'
   },
 
   user1InvalidDataLastnameLen: {
-    firstname: 'George',
-    lastname:'r',
+    firstName: 'George',
+    lastName:'r',
     email: 'jane5@mail.com',
     username: 'abbey33',
     password: 'abbey2',
     role: 'user',
     membership: 'silver',
-    image: 'image2'
+    imageUrl: 'imageUrl2'
   },
   user1InvalidData: {
-    firstname: 1223,
-    lastname: 'teddy',
+    firstName: 1223,
+    lastName: 'teddy',
     email: 'jane5@mail.com',
     username: 'abbey33',
     password: 'abbey2',
     role: 'user',
     membership: 'silver',
-    image: 'image2'
+    imageUrl: 'imageUrl2'
   },
 
   user1IncompleteData: {
-    firstname: 'shola',
-    lastname: '',
+    firstName: 'shola',
+    lastName: '',
     email: 'jane5@mail.com',
     username: '',
     password: 'abbey2',
     role: 'user',
     membership: 'silver',
-    image: 'image2'
+    imageUrl: 'imageUrl2'
   },
 
   user1IncompleteData2: {
-    firstname: 'shola',
-    lastname: 'Abbey',
+    firstName: 'shola',
+    lastName: 'Abbey',
     email: '',
     username: 'gsfgsf',
     password: 'abbey2',
     role: 'user',
     membership: 'silver',
-    image: 'image2'
+    imageUrl: 'imageUrl2'
   },
 
   user1IncompleteData3: {
-    firstname: 'Shola',
-    lastname: 'Abbey',
+    firstName: 'Shola',
+    lastName: 'Abbey',
     email: 'dfdfgsfs',
     username: 'adwasadsg',
     password: 'abbey2',
     role: 'user',
     membership: 'silver',
-    image: 'image2'
+    imageUrl: 'imageUrl2'
   },
 
   user1IncompleteData4: {
-    firstname: 'Shola',
-    lastname: 'Abbey',
+    firstName: 'Shola',
+    lastName: 'Abbey',
     email: 'deli@gmail.com',
     username: '',
     password: 'abbey2',
     role: 'user',
     membership: 'silver',
-    image: 'image2'
+    imageUrl: 'imageUrl2'
   },
 
   user1IncompleteDataMissingUsername: {
-    firstname: 'Shola',
-    lastname: 'Abbey',
+    firstName: 'Shola',
+    lastName: 'Abbey',
     email: 'deli@gmail.com',
     password: 'abbey2',
     role: 'user',
     membership: 'silver',
-    image: 'image2'
+    imageUrl: 'imageUrl2'
   },
 
   user1IncompleteData5: {
-    firstname: 'Shola',
-    lastname: 'Abbey',
+    firstName: 'Shola',
+    lastName: 'Abbey',
     email: 'deli@gmail.com',
     username: 1234,
     password: 'abbey2',
     role: 'user',
     membership: 'silver',
-    image: 'image2'
+    imageUrl: 'imageUrl2'
   },
 
   user1IncompleteData6: {
-    firstname: 'Shola',
-    lastname: 'Abbey',
+    firstName: 'Shola',
+    lastName: 'Abbey',
     email: 'deli@gmail.com',
     username: 'adminusername',
     password: 'abbey2',
     role: 'user',
     membership: 'silver',
-    image: 'image2'
+    imageUrl: 'imageUrl2'
   },
   
   // empty password
   user1IncompleteData7: {
-    firstname: 'Shola',
-    lastname: 'Abbey',
+    firstName: 'Shola',
+    lastName: 'Abbey',
     email: 'deli@gmail.com',
     username: 'mathew234',
     password: '',
     role: 'user',
     membership: 'silver',
-    image: 'image2'
+    imageUrl: 'imageUrl2'
   },
 
   // too short password
   user1IncompleteData8: {
-    firstname: 'Shola',
-    lastname: 'Abbey',
+    firstName: 'Shola',
+    lastName: 'Abbey',
     email: 'deli@gmail.com',
     username: 'mathew234',
     password: '123',
     role: 'user',
     membership: 'silver',
-    image: 'image2'
+    imageUrl: 'imageUrl2'
   },
 
 
   user1IncompleteDataMissingPass: {
-    firstname: 'Shola',
-    lastname: 'Abbey',
+    firstName: 'Shola',
+    lastName: 'Abbey',
     email: 'deli@gmail.com',
     username: 'mathew234',
     role: 'user',
     membership: 'silver',
-    image: 'image2'
+    imageUrl: 'imageUrl2'
   },
 
   // Valid user data
   userEdit: {
-    firstname: 'janet',
-    lastname: 'teddy',
+    firstName: 'janet',
+    lastName: 'teddy',
     email: 'jane@mail.com',
     username: 'abbey3',
-    imageUrl: 'gsvdgb',
+    imageUrlUrl: 'gsvdgb',
   },
 
   
 
 
   BadUserEditData: {
-    firstname: '',
-    lastname: 'Olaoluwa',
+    firstName: '',
+    lastName: 'Olaoluwa',
     username: 'abbey33333'
   },
 
   BadUserEditDataDS: {
-    firstname: '',
-    lastname: 'Olaoluwa',
+    firstName: '',
+    lastName: 'Olaoluwa',
     username: 'abbey33333'
   },
 
 
   BadUserEditDataD6: {
-    firstname: 'fdf',
-    lastname: 'Olaoluwa',
+    firstName: 'fdf',
+    lastName: 'Olaoluwa',
     username: 'abbey33'
   },
 
@@ -283,14 +291,14 @@ const mockData = {
   },
 
   adminData: {
-    firstname: 'uadminFirstName',
-    lastname: 'adminLastName',
+    firstName: 'uadminFirstName',
+    lastName: 'adminLastName',
     username: 'userUsername123',
     email: 'adminEmail@gmail.com',
     password: 'adminpassword',
     role: 'admin',
     membership: 'bronze',
-    image: 'image1'
+    imageUrl: 'imageUrl1'
   },
 
   adminSigninData: {
@@ -318,8 +326,8 @@ const mockData = {
   },
 
   user1ConflictData: {
-    firstname: 'user1FirstName',
-    lastname: 'user1LastName',
+    firstName: 'user1FirstName',
+    lastName: 'user1LastName',
     email: 'user1Email@gmail.com',
     password: 'user1password',
     role: 'user',
@@ -347,13 +355,11 @@ const mockData = {
     quantity: 3,
     categoryId: 2,
     visibility: true,
-    imageUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
-    pdfUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
+    imageUrl: 'https://res.cloudinary.com/djvjxp2am/imageUrl/upload/v1507295978/book8_yy9efp.jpg',
+    PDFUrl: 'https://res.cloudinary.com/djvjxp2am/imageUrl/upload/v1507295978/book8_yy9efp.jpg',
   },
 
   editBookdata: {
-    id: 3,
-    isbn: '439275',
     title: 'React for Beginners',
     author: 'Nelson Brook',
     pages: 100,
@@ -362,8 +368,8 @@ const mockData = {
     quantity: 300,
     categoryId: 5,
     visibility: true,
-    imageUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
-    pdfUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
+    imageUrl: 'https://res.cloudinary.com/djvjxp2am/imageUrl/upload/v1507295978/book8_yy9efp.jpg',
+    PDFUrl: 'https://res.cloudinary.com/djvjxp2am/imageUrl/upload/v1507295978/book8_yy9efp.jpg',
   },
 
   foundBook: {
@@ -377,8 +383,8 @@ const mockData = {
      quantity: 32,
      categoryId: 3,
      visibility: true,
-     imageUrl: 'http://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book5_zyqyv1.jpg',
-     pdfUrl: 'http://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book5_zyqyv1.jpg',
+     imageUrlUrl: 'http://res.cloudinary.com/djvjxp2am/imageUrl/upload/v1507295978/book5_zyqyv1.jpg',
+     PDFUrl: 'http://res.cloudinary.com/djvjxp2am/imageUrl/upload/v1507295978/book5_zyqyv1.jpg',
      createdAt: '2018-01-29T19:01:15.413Z',
      updatedAt: '2018-01-29T19:01:15.413Z'
   },
@@ -393,8 +399,8 @@ const mockData = {
     quantity: 300,
     categoryId: 5,
     visibility: true,
-    imageUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
-    pdfUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
+    imageUrlUrl: 'https://res.cloudinary.com/djvjxp2am/imageUrl/upload/v1507295978/book8_yy9efp.jpg',
+    PDFUrl: 'https://res.cloudinary.com/djvjxp2am/imageUrl/upload/v1507295978/book8_yy9efp.jpg',
   },
 
   editBookdataAuthorformat: {
@@ -407,8 +413,8 @@ const mockData = {
     quantity: 300,
     categoryId: 5,
     visibility: true,
-    imageUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
-    pdfUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
+    imageUrlUrl: 'https://res.cloudinary.com/djvjxp2am/imageUrl/upload/v1507295978/book8_yy9efp.jpg',
+    PDFUrl: 'https://res.cloudinary.com/djvjxp2am/imageUrl/upload/v1507295978/book8_yy9efp.jpg',
   },
 
   editBookdataTitleError: {
@@ -421,8 +427,8 @@ const mockData = {
     quantity: 300,
     categoryId: 5,
     visibility: true,
-    imageUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
-    pdfUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
+    imageUrlUrl: 'https://res.cloudinary.com/djvjxp2am/imageUrl/upload/v1507295978/book8_yy9efp.jpg',
+    PDFUrl: 'https://res.cloudinary.com/djvjxp2am/imageUrl/upload/v1507295978/book8_yy9efp.jpg',
   },
 
   editBookdataPageError: {
@@ -435,8 +441,8 @@ const mockData = {
     quantity: 300,
     categoryId: 5,
     visibility: true,
-    imageUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
-    pdfUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
+    imageUrlUrl: 'https://res.cloudinary.com/djvjxp2am/imageUrl/upload/v1507295978/book8_yy9efp.jpg',
+    PDFUrl: 'https://res.cloudinary.com/djvjxp2am/imageUrl/upload/v1507295978/book8_yy9efp.jpg',
   },
 
   editBookdataYearError: {
@@ -449,8 +455,8 @@ const mockData = {
     quantity: 300,
     categoryId: 5,
     visibility: true,
-    imageUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
-    pdfUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
+    imageUrlUrl: 'https://res.cloudinary.com/djvjxp2am/imageUrl/upload/v1507295978/book8_yy9efp.jpg',
+    PDFUrl: 'https://res.cloudinary.com/djvjxp2am/imageUrl/upload/v1507295978/book8_yy9efp.jpg',
   },
 
   editBookdataDescriptionError: {
@@ -463,8 +469,8 @@ const mockData = {
     quantity: 300,
     categoryId: 5,
     visibility: true,
-    imageUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
-    pdfUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
+    imageUrlUrl: 'https://res.cloudinary.com/djvjxp2am/imageUrl/upload/v1507295978/book8_yy9efp.jpg',
+    PDFUrl: 'https://res.cloudinary.com/djvjxp2am/imageUrl/upload/v1507295978/book8_yy9efp.jpg',
   },
 
   editBookdataDescriptionFormat: {
@@ -477,8 +483,8 @@ const mockData = {
     quantity: 300,
     categoryId: 5,
     visibility: true,
-    imageUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
-    pdfUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
+    imageUrlUrl: 'https://res.cloudinary.com/djvjxp2am/imageUrl/upload/v1507295978/book8_yy9efp.jpg',
+    PDFUrl: 'https://res.cloudinary.com/djvjxp2am/imageUrl/upload/v1507295978/book8_yy9efp.jpg',
   },
 
   editBookdataQty: {
@@ -491,8 +497,8 @@ const mockData = {
     quantity: '',
     categoryId: 5,
     visibility: true,
-    imageUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
-    pdfUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
+    imageUrlUrl: 'https://res.cloudinary.com/djvjxp2am/imageUrl/upload/v1507295978/book8_yy9efp.jpg',
+    PDFUrl: 'https://res.cloudinary.com/djvjxp2am/imageUrl/upload/v1507295978/book8_yy9efp.jpg',
   },
 
   editBookdataImageUrlFormatError: {
@@ -505,8 +511,8 @@ const mockData = {
     quantity: 56,
     categoryId: 5,
     visibility: true,
-    imageUrl: 'https:/ /res.cloudina  ry.com/djvjx p2am/image/upload/v1507295978/book8_yy9efp.jpg',
-    pdfUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
+    imageUrlUrl: 'https:/ /res.cloudina  ry.com/djvjx p2am/imageUrl/upload/v1507295978/book8_yy9efp.jpg',
+    PDFUrl: 'https://res.cloudinary.com/djvjxp2am/imageUrl/upload/v1507295978/book8_yy9efp.jpg',
   },
 
   editBookdataPdfUrlFormatError: {
@@ -519,8 +525,8 @@ const mockData = {
     quantity: 56,
     categoryId: 5,
     visibility: true,
-    imageUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
-    pdfUrl: 'https://res.cloudin  ary.com/djv jxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
+    imageUrl: 'https://res.cloudinary.com/djvjxp2am/imageUrl/upload/v1507295978/book8_yy9efp.jpg',
+    PDFUrl: 'https://res.cloudin  ary.com/djv jxp2am/imageUrl/upload/v1507295978/book8_yy9efp.jpg',
   },
 
   editBookdataYearlengthError: {
@@ -533,8 +539,8 @@ const mockData = {
     quantity: 300,
     categoryId: 5,
     visibility: true,
-    imageUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
-    pdfUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
+    imageUrlUrl: 'https://res.cloudinary.com/djvjxp2am/imageUrl/upload/v1507295978/book8_yy9efp.jpg',
+    PDFUrl: 'https://res.cloudinary.com/djvjxp2am/imageUrl/upload/v1507295978/book8_yy9efp.jpg',
   },
 
   editBookdata2: {
@@ -547,8 +553,8 @@ const mockData = {
     quantity: 300,
     categoryId: 5,
     visibility: true,
-    imageUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
-    pdfUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
+    imageUrlUrl: 'https://res.cloudinary.com/djvjxp2am/imageUrl/upload/v1507295978/book8_yy9efp.jpg',
+    PDFUrl: 'https://res.cloudinary.com/djvjxp2am/imageUrl/upload/v1507295978/book8_yy9efp.jpg',
   },
 
 
@@ -563,8 +569,8 @@ const mockData = {
     quantity: 3,
     categoryId: 2,
     visibility: true,
-    image: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
-    pdf: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
+    imageUrl: 'https://res.cloudinary.com/djvjxp2am/imageUrl/upload/v1507295978/book8_yy9efp.jpg',
+    PDFUrl: 'https://res.cloudinary.com/djvjxp2am/imageUrl/upload/v1507295978/book8_yy9efp.jpg',
   },
 
 
@@ -579,8 +585,8 @@ const mockData = {
     quantity: 3,
     categoryId: 2,
     visibility: true,
-    image: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
-    pdf: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
+    imageUrl: 'https://res.cloudinary.com/djvjxp2am/imageUrl/upload/v1507295978/book8_yy9efp.jpg',
+    PDFUrl: 'https://res.cloudinary.com/djvjxp2am/imageUrl/upload/v1507295978/book8_yy9efp.jpg',
   },
 
   //  Invalid book data title
@@ -594,8 +600,8 @@ const mockData = {
     quantity: 3,
     categoryId: 2,
     visibility: true,
-    image: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
-    pdf: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
+    imageUrl: 'https://res.cloudinary.com/djvjxp2am/imageUrl/upload/v1507295978/book8_yy9efp.jpg',
+    PDFUrl: 'https://res.cloudinary.com/djvjxp2am/imageUrl/upload/v1507295978/book8_yy9efp.jpg',
   },
 
   invalidBookdataInvalidAuthor: {
@@ -608,8 +614,8 @@ const mockData = {
     quantity: 3,
     categoryId: 2,
     visibility: true,
-    imageUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
-    pdfUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
+    imageUrlUrl: 'https://res.cloudinary.com/djvjxp2am/imageUrl/upload/v1507295978/book8_yy9efp.jpg',
+    PDFUrl: 'https://res.cloudinary.com/djvjxp2am/imageUrl/upload/v1507295978/book8_yy9efp.jpg',
   },
 
   invalidBookdataInvalidIsbn: {
@@ -622,8 +628,8 @@ const mockData = {
     quantity: 3,
     categoryId: 2,
     visibility: true,
-    image: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
-    pdf: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
+    imageUrl: 'https://res.cloudinary.com/djvjxp2am/imageUrl/upload/v1507295978/book8_yy9efp.jpg',
+    PDFUrl: 'https://res.cloudinary.com/djvjxp2am/imageUrl/upload/v1507295978/book8_yy9efp.jpg',
   },
   // Invalid book data author
   invalidBookdata3: {
@@ -636,8 +642,8 @@ const mockData = {
     quantity: 3,
     categoryId: 2,
     visibility: true,
-    image: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
-    pdf: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
+    imageUrl: 'https://res.cloudinary.com/djvjxp2am/imageUrl/upload/v1507295978/book8_yy9efp.jpg',
+    PDFUrl: 'https://res.cloudinary.com/djvjxp2am/imageUrl/upload/v1507295978/book8_yy9efp.jpg',
   },
 
   // Invalid book data pages
@@ -651,8 +657,8 @@ const mockData = {
     quantity: 3,
     categoryId: 2,
     visibility: true,
-    image: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
-    pdf: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
+    imageUrl: 'https://res.cloudinary.com/djvjxp2am/imageUrl/upload/v1507295978/book8_yy9efp.jpg',
+    PDFUrl: 'https://res.cloudinary.com/djvjxp2am/imageUrl/upload/v1507295978/book8_yy9efp.jpg',
   },
 
   // Invalid book data pages
@@ -666,8 +672,8 @@ const mockData = {
     quantity: 3,
     categoryId: 2,
     visibility: true,
-    image: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
-    pdf: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
+    imageUrl: 'https://res.cloudinary.com/djvjxp2am/imageUrl/upload/v1507295978/book8_yy9efp.jpg',
+    PDFUrl: 'https://res.cloudinary.com/djvjxp2am/imageUrl/upload/v1507295978/book8_yy9efp.jpg',
   },
 
   invalidBookdataYearLength: {
@@ -680,8 +686,8 @@ const mockData = {
     quantity: 3,
     categoryId: 2,
     visibility: true,
-    image: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
-    pdf: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
+    imageUrl: 'https://res.cloudinary.com/djvjxp2am/imageUrl/upload/v1507295978/book8_yy9efp.jpg',
+    PDFUrl: 'https://res.cloudinary.com/djvjxp2am/imageUrl/upload/v1507295978/book8_yy9efp.jpg',
   },
 
   tooManySpaceDescription: {
@@ -694,8 +700,8 @@ const mockData = {
     quantity: 3,
     categoryId: 2,
     visibility: true,
-    image: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
-    pdf: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
+    imageUrl: 'https://res.cloudinary.com/djvjxp2am/imageUrl/upload/v1507295978/book8_yy9efp.jpg',
+    PDFUrl: 'https://res.cloudinary.com/djvjxp2am/imageUrl/upload/v1507295978/book8_yy9efp.jpg',
   },
 
   emptyDescription: {
@@ -708,8 +714,8 @@ const mockData = {
     quantity: 3,
     categoryId: 2,
     visibility: true,
-    image: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
-    pdf: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
+    imageUrl: 'https://res.cloudinary.com/djvjxp2am/imageUrl/upload/v1507295978/book8_yy9efp.jpg',
+    PDFUrl: 'https://res.cloudinary.com/djvjxp2am/imageUrl/upload/v1507295978/book8_yy9efp.jpg',
   },
 
   emptyQty: {
@@ -722,8 +728,8 @@ const mockData = {
     quantity: '',
     categoryId: 2,
     visibility: true,
-    image: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
-    pdf: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
+    imageUrl: 'https://res.cloudinary.com/djvjxp2am/imageUrl/upload/v1507295978/book8_yy9efp.jpg',
+    PDFUrl: 'https://res.cloudinary.com/djvjxp2am/imageUrl/upload/v1507295978/book8_yy9efp.jpg',
   },
 
   emptyImageUrl: {
@@ -737,7 +743,7 @@ const mockData = {
     categoryId: 2,
     visibility: true,
     imageUrl: '',
-    pdf: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
+    PDFUrl: 'https://res.cloudinary.com/djvjxp2am/imageUrl/upload/v1507295978/book8_yy9efp.jpg',
   },
 
   invalidImageUrl: {
@@ -751,7 +757,7 @@ const mockData = {
     categoryId: 2,
     visibility: true,
     imageUrl: 'fdfd   dfdfdf   ddff',
-    pdf: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg',
+    PDFUrl: 'https://res.cloudinary.com/djvjxp2am/imageUrl/upload/v1507295978/book8_yy9efp.jpg',
   },
  
   emptyPdfUrl: {
@@ -765,7 +771,7 @@ const mockData = {
     categoryId: 2,
     visibility: true,
     imageUrl: 'fdfddfdfdfddff',
-    pdfUrl: '',
+    PDFUrl: '',
   },
 
   invalidPdfUrl: {
@@ -779,7 +785,7 @@ const mockData = {
     categoryId: 2,
     visibility: true,
     imageUrl: 'fdfdddff',
-    pdfUrl: 'fdfd  dfdfdf  ddff',
+    PDFUrl: 'fdfd  dfdfdf  ddff',
   },
   invalidBookdata: {
     isbn: '11164',
@@ -790,7 +796,7 @@ const mockData = {
     description: 'The description of the book',
     quantity: 100,
     category: 'Self Growth',
-    image: 'images/andela.jpg'
+    imageUrl: 'imageUrls/andela.jpg'
   },
 
   borrowBook: {
@@ -812,7 +818,7 @@ const mockData = {
     description: 'Talks about Andela Bootcamp',
     quantity: 32,
     category: 'Self Growth',
-    imageUrl: 'images/andela.jpg'
+    imageUrl: 'imageUrls/andela.jpg'
   },
 
   userID: {

@@ -145,7 +145,7 @@ export class Profile extends React.Component {
       this.setState({
         userData: { 
           ...this.state.userData, 
-          image: this.props.newImageUrl.secure_url } });
+          imageUrl: this.props.newImageUrl } });
       this.props.saveNewImageToDB(this.state.userData)
         .then(() => {
           Materialize.toast(
@@ -155,18 +155,15 @@ export class Profile extends React.Component {
           // Close modal afer message has been displayed
         })
         .catch((error) => {
+          this.setState({ 
+            loader: false,
+            newImageUploadError: true,
+            newImageUploadSuccess: false,
+            newImageUploadSuccessMessage: '',
+            tempImageName: ''
+          });
         });
       })
-      .catch((error) => {
-        this.setState({ 
-          loader: false,
-          newImageUploadError: true,
-          newImageUploadSuccess: false,
-          newImageUploadErrorMessage: error.response.data.message,
-          newImageUploadSuccessMessage: '',
-          tempImageName: ''
-        });
-    })
   }
 
   /**
@@ -354,7 +351,7 @@ export class Profile extends React.Component {
 export const mapStateToProps = (state, ownProps) => {
   return {
     userProfile: state.userProfile,
-    newImageUrl: state.uploadFiles.image
+    newImageUrl: state.uploadedFiles
   }
 }
 

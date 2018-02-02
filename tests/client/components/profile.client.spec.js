@@ -9,17 +9,17 @@ import {
   Profile,
   mapStateToProps,
   mapDispatchToProps
-} from '../../client/src/components/Userprofile/Profile';
-import ProfileInfo from '../../client/src/components/Userprofile/ProfileInfo';
+} from '../../../client/src/components/containers/Profile';
+import ProfileInfo from '../../../client/src/components/presentational/ProfileInfo';
 import { 
   ProfileUpdateForm,
   dispatchToProps,
   stateToProps
- } from '../../client/src/components/Userprofile/ProfileUpdateForm';
-import UpdateImageModal from '../../client/src/components/Userprofile/UpdateImageModal';
+ } from '../../../client/src/components/containers/ProfileUpdateForm';
+import UpdateImageModal from '../../../client/src/components/presentational/UpdateImageModal';
 
-import { profile, categories, mockBooks } from './mocks/mockdata';
-import mockStorage from './mocks/mockDataStorage';
+import { profile, categories, mockBooks } from '../mock/mockdata';
+import mockStorage from '../mock/mockDataStorage';
 
 window.localStorage = mockStorage;
 
@@ -243,7 +243,9 @@ describe('Profile Update Form', () => {
 
   it('should test the method: stateToProps', () => {
     const state = {
-      userProfile: profile.user
+      userProfile: {
+        data: profile.user
+    }
     };
     expect(stateToProps(state).updateProfile).toExist;
   });
@@ -251,7 +253,7 @@ describe('Profile Update Form', () => {
 
 describe('Profile Info Component', () => {
   const props = {
-    userData: profile.user,
+    userData: profile.payload,
     showInputHandler: jest.fn()
   }
   it('should render without crashing', () => {

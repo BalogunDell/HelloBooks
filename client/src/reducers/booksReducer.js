@@ -8,7 +8,6 @@ import {
   MODIFY_BOOK,
   DELETE_BOOK,
   GET_BORROWED_BOOKS,
-  ADMIN_GET_ALLBOOKS,
   TRENDING_BOOKS,
 } from '../Actions/actionTypes';
 
@@ -21,13 +20,13 @@ const getAllBooks = (state = {}, action) => {
     case BORROW_BOOK:
       return {
         ...state,
-        bookId: action.bookDetails
+        fetchedBooks: [action.payload.bookBorrowed]
       };
 
     case FETCTH_USER_BOOKS:
       return {
         ...state,
-        fetchedBooks: action.fetchedBooks
+        fetchedBooks: action.fetchedBooks.response
       };
     case CREATE_BOOK:
       return {
@@ -65,10 +64,7 @@ const getAllBooks = (state = {}, action) => {
       return {
         ...state, allborrowedbooks: action.borrowedbooks
       };
-    case ADMIN_GET_ALLBOOKS:
-      return {
-        ...state, unpublishedbooks: action.unpublishedbooks
-      };
+
     case TRENDING_BOOKS:
       return {
         ...state, books: action.books.trendingBooks

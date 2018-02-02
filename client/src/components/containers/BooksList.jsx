@@ -4,10 +4,10 @@ import { connect } from 'react-redux';
 
 import ConfirmationModal from '../presentational/ConfirmationModal';
 import {
-  // loadAllbooks,
+  loadAllbooks,
   getAdminEditBookId,
   deleteBook,
-  // getAllBorrowedBooks
+  getAllBorrowedBooks
 
 } from '../../Actions/booksAction';
 import UserBooks from '../presentational/UserBooks';
@@ -207,10 +207,9 @@ export class BooksList extends React.Component {
  * @returns {object}
  */
   componentDidMount() {
-    //   .then(() => {
-
-    //   })
-    //   .catch((error) => console.log(error));
+    this.props.getAllBorrowedBooks()
+      .then(() => {})
+      .catch(() => {})
     $(document).ready(() => {
       $('select').material_select();
       $('select').change(event => this.handleSelectChange(event));
@@ -306,7 +305,7 @@ export const stateToProps = state => ({
 export const dispatchToProps = dispatch => ({
   getAdminEditBookId: id => dispatch(getAdminEditBookId(id)),
   deleteBook: id => dispatch(deleteBook(id)),
-  // getAllBorrowedBooks: () => dispatch(getAllBorrowedBooks())
+  getAllBorrowedBooks: () => dispatch(getAllBorrowedBooks())
 });
 
 export default connect(stateToProps, dispatchToProps)(BooksList);

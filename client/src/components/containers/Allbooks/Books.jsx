@@ -10,12 +10,17 @@ import Loader from '../../presentational/Loader';
  * 
  * @param {number} getBookId
  * 
+ * @param {string} bookAvailabilityMessage
+ * 
+ * @param {boolean} noProps
+ * 
  * @return {JSX} JSX representation of DOM
  */
 const Books = ({
   loadingBooks,
   books,
-  getBookId
+  getBookId,
+  bookAvailabilityMessage
 }) => {
   return (
     <div>
@@ -33,7 +38,7 @@ const Books = ({
             <div className="books-holder center">
               {books.length === 0 ?
               <h4 className="center">
-                There's currently no book in the libary
+                {bookAvailabilityMessage}
               </h4>
               :
               books.map((book, id) => 
@@ -45,7 +50,9 @@ const Books = ({
 
                   {/* Book image  */}
                   <div className="item img-holder center">
-                    <img src= {book.imageUrl} alt=""/>
+                    <img 
+                      src= {book.imageUrl} alt="" 
+                      id={(book.title).split(' ')[0]}/>
                     <div className="img-overlay">
                       <p>{book.title} by <strong>{book.author}</strong></p>
                     </div>

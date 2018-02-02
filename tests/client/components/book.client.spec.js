@@ -10,11 +10,11 @@ import expect, { spyOn } from 'expect'
 import jwt from 'jsonwebtoken';
 import ConnectedEditBookForm, {
   EditBook
-} from '../../client/src/components/Userprofile/Admin/EditBook';
-import Books from '../../client/src/components/Books/Books';
-import Book from '../../client/src/components/Books/Book'
+} from '../../../client/src/components/containers/EditBook';
+import Books from '../../../client/src/components/presentational/Books/Books';
+import Book from '../../../client/src/components/presentational/Books/Book';
 
-jest.mock('../../client/src/components/Userprofile/AdminSubComponents/CreateCategoryModal.jsx');
+jest.mock('../../../client/src/components/containers/CreateCategoryModal.jsx');
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
@@ -24,9 +24,9 @@ import {
   categories,
   mockBooks,
   token,
-  editBookResponse } from './mocks/mockdata';
+  editBookResponse } from '../mock/mockdata';
 
-import mockStorage from './mocks/mockDataStorage';
+import mockStorage from '../mock/mockDataStorage';
 import { setState } from 'expect/build/jest_matchers_object';
 
 window.localStorage = mockStorage;
@@ -94,6 +94,7 @@ describe('Edit Books Component,', () => {
     fileUploadHandler: jest.fn(),
     getBookToEdit: publishedBooksSample,
     loadedCategories: categories,
+    book: {Category: {id: 2, category: 'category'}}
   };
   const wrapper = shallow(<EditBook {...props} />);
   it('should render the edit book component without crashing', () => {
@@ -105,19 +106,6 @@ describe('Edit Books Component,', () => {
     shallow(<EditBook {...props} onChange= {spy}/>)
     .instance().handleEditInput(event);
   });
-
-  it('should set book categoryid to state when input values changes', () => {
-    const setup = mount(<EditBook {...props} />);
-    const event = {
-      target: { name: 'categoryId', value: 2 } };
-    const categoryId = setup.find('#categoryId');
-
-    event.target.value = 3;
-    categoryId.simulate('change', event);
-
-    expect(wrapper.instance().state.book.categoryId).toBe(2);
-  });
-  
 
   it('should have the handleUpdate method', () => {
     const spy = jest.spyOn(EditBook.prototype, 'handleUpdate');
@@ -301,11 +289,8 @@ describe('Single Book component', () => {
       }
     }
     const wrapper = shallow(<Book {...props}/>);
-    expect(wrapper.find('div').length).toBe(11);
+    expect(wrapper.find('div').length).toBe(6);
     expect(wrapper.find('.books-holder-title').length).toBe(1);
-    expect(wrapper.find('.trending').length).toBe(1);
-    expect(wrapper.find('.books-holder').length).toBe(1);
-    expect(wrapper.find('.trending-book-holder-prot').length).toBe(1);
   });
 });
 

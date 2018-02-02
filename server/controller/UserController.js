@@ -39,7 +39,7 @@ class UserController {
           message: 'User created',
           token,
           user: {
-            userName: user.userName,
+            username: user.username,
             userId: user.id,
             userRole: user.role,
             imageUrl: user.imageUrl,
@@ -88,7 +88,7 @@ class UserController {
             message: 'signed in',
             token,
             user: {
-              userName: response.dataValues.userName,
+              username: response.dataValues.username,
               userId: response.dataValues.id,
               userRole: response.dataValues.role,
               imageUrl: response.dataValues.imageUrl
@@ -114,9 +114,9 @@ class UserController {
    * @returns { object } user data with token 
    */
   static signin(req, res) {
-    const { userName } = req.body;
+    const { username } = req.body;
     return userModel.findOne({ where: {
-      userName
+      username
     }
     })
       .then((user) => {
@@ -128,7 +128,7 @@ class UserController {
             message: 'signed in',
             token,
             user: {
-              userName: user.userName,
+              username: user.username,
               userId: user.id,
               userRole: user.role,
               imageUrl: user.imageUrl
@@ -137,7 +137,7 @@ class UserController {
           return res.status(200).json({ responseData });
         }
         return res.status(401).json({
-          message: 'Invalid userName or password'
+          message: 'Invalid username or password'
         });
       })
       .catch((error) => {
@@ -187,9 +187,6 @@ class UserController {
                     message: mailerError
                   });
                 });
-            })
-            .catch(() => {
-              res.status().json({ message: 'Interval servre error' });
             });
         } else {
           res.status(404).json({
@@ -230,11 +227,6 @@ class UserController {
             res.status(200).json({
               message: 'Your password has been updated'
             });
-          })
-          .catch(() => {
-            res.status(500).json({
-              message: 'Internal server error'
-            });
           });
       })
       .catch(() => {
@@ -264,14 +256,14 @@ class UserController {
       query.where = {
         $and: [
           { userId: req.body.userId },
-          { returnstatus: false },
+          { returnStatus: false },
         ]
       };
     } else {
       query.where = {
         $and: [
           { userId: req.body.userId },
-          { returnstatus: true }
+          { returnStatus: true }
         ]
       };
     }
@@ -300,12 +292,6 @@ class UserController {
    * @returns {object} user details
    */
   static profilePage(req, res) {
-    const { authorization } = req.headers;
-    if (!authorization) {
-      return res.status(403)
-        .json({
-          message: 'Access Denied - You do not have the permission to access this page' });
-    }
     if (paramValid(req.params.userId)) {
       return res.status(400)
         .json({
@@ -319,8 +305,10 @@ class UserController {
             firstName: user.firstName,
             lastName: user.lastName,
             email: user.email,
-            userName: user.userName,
+            username: user.username,
             imageUrl: user.imageUrl,
+            membership: user.membership,
+            role: user.role,
             createdAt: user.createdAt
           };
           return res.status(200).json({ userData });
@@ -344,10 +332,10 @@ class UserController {
     const userData = {
       firstName: req.body.firstName,
       lastName: req.body.lastName,
-      userName: req.body.userName,
+      username: req.body.username,
       imageUrl: req.body.imageUrl
     };
-    const fieldsToUpdate = ['firstName', 'lastName', 'userName', 'imageUrl'];
+    const fieldsToUpdate = ['firstName', 'lastName', 'username', 'imageUrl'];
     const { userId } = req.body;
     findOneResourceById(userModel, userId).then(() => {
     });
@@ -362,7 +350,7 @@ class UserController {
       const {
         firstName,
         lastName,
-        userName,
+        username,
         imageUrl,
         email,
         createdAt,
@@ -370,7 +358,7 @@ class UserController {
       const user = {
         firstName,
         lastName,
-        userName,
+        username,
         imageUrl,
         email,
         createdAt,
@@ -422,7 +410,7 @@ class UserController {
             fieldToUpdate
             }).then(() => {
             res.status(200).json({
-              message: 'You password has been successfully changed'
+              message: 'Your password has been successfully changed'
             });
           }).catch(() => {
             res.status(500).json({

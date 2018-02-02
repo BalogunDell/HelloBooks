@@ -7,15 +7,15 @@ import { shallow, mount, render , configure} from 'enzyme';
 import jestSnapshot from 'chai-jest-snapshot';
 import expect, { createSpy, spyOn, isSpy } from 'expect'
 import mockStorage from '../mock/mockDataStorage';
-import authenticate from '../../../client/src/components/HOC';
+import authenticate from '../../../client/src/components/presentational/HOC/authenticate';
 import { 
     Allbooks,
     mapStateToProps,
     mapDispatchToProps,
- } from '../../client/src/components/Userprofile/Allbooks/Allbooks';
+ } from '../../../client/src/components/containers/Allbooks/Allbooks';
 
- import UserBooks from '../../client/src/components/Userprofile/UserBooks';
- import { mockBooks, borrowedBookSample } from './mocks/mockdata';
+ import UserBooks from '../../../client/src/components/presentational/UserBooks';
+ import { mockBooks, borrowedBookSample } from '../mock/mockdata';
 
 
 jest.mock('react-router-dom');

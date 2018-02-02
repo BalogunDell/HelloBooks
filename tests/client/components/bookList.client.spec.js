@@ -11,7 +11,7 @@ import {
   BooksList,
   stateToProps,
   dispatchToProps 
-} from '../../client/src/components/Userprofile/AdminSubComponents/BooksList';
+} from '../../../client/src/components/containers/BooksList';
 
 import { 
   mockBooks,
@@ -19,11 +19,10 @@ import {
   publishedBooksSample,
   borrowedBook,
   borrowBookResponse
-} from './mocks/mockdata';
+} from '../mock/mockdata';
 
-import mockLocalStorage from './mocks/mockDataStorage'
+import mockLocalStorage from '../mock/mockDataStorage'
 import { prototype } from 'mocha';
-import { deleteBook } from '../../client/src/Actions/booksAction';
 
 jest.mock('react-router-dom');
 

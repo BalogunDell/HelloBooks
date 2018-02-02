@@ -66,7 +66,7 @@ export class Login extends React.Component {
     const userData = {
       firstName: response.profileObj.givenName,
       lastName: response.profileObj.familyName,
-      userName: `${response.profileObj.givenName}${googleId}`,
+      username: `${response.profileObj.givenName}${googleId}`,
       password: `${response.profileObj.familyName}${googleId}`,
       email: response.profileObj.email,
       imageUrl: response.profileObj.imageUrl
@@ -96,7 +96,7 @@ export class Login extends React.Component {
     .catch(error => {
       this.setState({
         isLoading:false,
-        loginError: error.response.data.message})
+        })
     });
   }
   
@@ -140,7 +140,6 @@ export class Login extends React.Component {
             userData = {this.state.userData}
             handleLoginInput = {this.handleLoginInput}
             loginHandler = {this.loginHandler}
-            loginError = {this.state.loginError}
             isLoading = {this.state.isLoading}
             googleLoginHandler = {this.googleLoginHandler}
             currentLocation = {this.props.currentLocation}/>
@@ -157,7 +156,7 @@ export class Login extends React.Component {
  * @returns {object} mapped state from redux store
  */
 export const mapStateToProps = (state, ownProps) => {
-    let initialUserData = { userName:'' , password:'' }
+    let initialUserData = { username:'' , password:'' }
   return {
     initialUserData: initialUserData,
     isAuthenticated: state.userAccess.isAuthenticated,

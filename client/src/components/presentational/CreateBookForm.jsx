@@ -133,7 +133,7 @@ const CreateBookForm = ({
                 { loadedCategories.map((val, key) => {                  
                        return (<option key={val.id} 
                           value={val.id} 
-                          id={`#${val.category}`}>{val.category}
+                          id={`${val.category}`}>{val.category}
                       </option>)
                     })
                 }

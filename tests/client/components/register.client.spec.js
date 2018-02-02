@@ -9,22 +9,22 @@ import expect, { createSpy, spyOn, isSpy } from 'expect'
 
 import {
   RegistrationForm
-} from '../../client/src/components/Useraccess/Forms/RegistrationForm';
+} from '../../../client/src/components/Useraccess/Forms/RegistrationForm';
 
 import { 
   Register,
   mapDispatchToProps,
   mapStateToProps
-} from '../../client/src/components/Useraccess/Register'
+} from '../../../client/src/components/Useraccess/Register'
 
 import {
   userData,
   signupResponse,
   mockBooks,
   profile
-} from './mocks/mockdata';
+} from '../mock/mockdata';
 
-jest.mock('../../client/src/components/Useraccess/Forms/PasswordResetModal.jsx');
+jest.mock('../../../client/src/components/Useraccess/Forms/PasswordResetModal.jsx');
 jest.mock('react-router-dom');
 
 

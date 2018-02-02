@@ -95,7 +95,11 @@ handleShowVisibility(event) {
  */
 handleHideVisibility(event) {
   this.setState({
-    showInput: false
+    showInput: false,
+    passwordContainer: {
+      currentPassword: '',
+      newPassword: ''
+      }
   });
 }
 
@@ -113,7 +117,7 @@ handleChange(event) {
   let temporaryPasswordContainer = { ...this.state.passwordContainer }
   temporaryPasswordContainer[field] = event.target.value;
   return this.setState({
-    passwordContainer: temporaryPasswordContainer
+    passwordContainer: temporaryPasswordContainer,
   });
 }
 
@@ -134,20 +138,21 @@ handlePasswordUpdate(event) {
   this.props.editPassword(this.state.passwordContainer)
     .then(() => {
       this.setState({
-        loading: false
+        loading: false,
+        showInput: false
       });
       Materialize.toast(
         'Password has been successfully changed',
         3000,
-        'blue rounded'
-    );
+        'blue rounded');
+        this.setState({
+          passwordContainer: {
+            currentPassword: '',
+            newPassword: ''
+          }
+        });
     })
-    .catch((error) => {
-      Materialize.toast(
-        error.response.data.message,
-        3000,
-        'red rounded'
-    );
+    .catch(() => {
     });
 }
   
@@ -285,7 +290,7 @@ handlePasswordUpdate(event) {
                   {/* <h4>Welcome to Hello books</h4> */}
                   <Route
                     path="/user/dashboard" 
-                    component={authenticate(AdminDashboard)}
+                    component={AdminDashboard}
                   />
                   <Route
                     path="/user/books"
@@ -294,7 +299,7 @@ handlePasswordUpdate(event) {
                   />
                   <Route
                     path="/user/upload"
-                    component={authenticate(CreateBook)}
+                    component={CreateBook}
                   /> 
                   <Route
                     path="/user/bookdetails"
@@ -302,7 +307,7 @@ handlePasswordUpdate(event) {
                   />
                   <Route
                     path="/user/editbook"
-                    component={authenticate(EditBook)}
+                    component={EditBook}
                   />
                 </div>
                 }

@@ -54,12 +54,10 @@ export class History extends React.Component {
     this.props.getUserBooks(this.state.userId).then(() => {
       this.setState({loading:false})
     })
-    .catch(error => {
-      Materialize.toast(
-        'An error occured, please try again or refresh the page',
-        3000,
-        'blue rounded'
-      );
+    .catch((error) => {
+      this.setState({
+        loading: false
+      })
     });
   }
 

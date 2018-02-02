@@ -60,7 +60,6 @@ export class ProfileUpdateForm extends React.Component {
       this.setState({
         errorStatus: true,
         disable: false,
-        errorMessage: error.response.data.message,
         loader: false});
     });
   }
@@ -138,11 +137,11 @@ export class ProfileUpdateForm extends React.Component {
               <div className="input-field col s12">
                 <input 
                   type="text" 
-                  id="userName" 
-                  name="userName" 
+                  id="username" 
+                  name="username" 
                   className="validate" 
                   required
-                  value = {this.state.userData.userName}
+                  value = {this.state.userData.username}
                   onChange= {this.handleUserInput}
                 />
                 <label 

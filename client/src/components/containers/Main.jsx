@@ -50,6 +50,7 @@ export class Main extends React.Component {
           loading: false
         })
       })
+      .catch(() => {})
   }
 
   /** 

@@ -11,9 +11,9 @@ import {
   Dashboard,
   dispatchToProps,
   stateToProps
-} from '../../client/src/components/Userprofile/Admin/Dashboard';
+} from '../../../client/src/components/containers/Dashboard';
 
-import { mockBooks } from './mocks/mockdata';
+import { mockBooks } from '../mock/mockdata';
 jest.mock('react-router-dom');
 
 
@@ -50,13 +50,5 @@ describe('Dashboard Component', () => {
   it('should ensure mapDispatchToProps calls appropriate method', () => {
     const dispatch = jest.fn();
     expect(dispatchToProps(dispatch).getAllBooks).toBeTruthy();
-  });
-
-  it('should ensure stateToProps returns prop from redux store', () => {
-
-    const state = {
-      books: mockBooks.books
-    }
-    expect(stateToProps(state).allbooks).toExist;
   });
 });

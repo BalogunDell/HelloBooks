@@ -23,7 +23,6 @@ export class BookDetails extends React.Component {
       books: this.props.allbooks,
       book: [],
       dataReady: false,
-      borrowError: '',
       borrowErrorStatus:false,
       disableBtn: false,
       processingRequest: false,
@@ -44,7 +43,6 @@ export class BookDetails extends React.Component {
         borrowBookSuccess: true,
         borrowErrorStatus:false,
         processingRequest: false,
-        borrowError: '',
         disableBtn: true,
         borrowBookSuccessMessage: this.props.borrowBookSuccess
       });
@@ -56,11 +54,7 @@ export class BookDetails extends React.Component {
       this.setState({
         processingRequest: false,
         borrowErrorStatus:true,
-        borrowError: error.response.data.errorMessage, disableBtn:true });
-        Materialize.toast(
-          'You have either exhausted your book limit or you still have this book with you',
-          4000,
-          'red rounded');
+        disableBtn:true });
     });
   }
 
@@ -105,7 +99,7 @@ export class BookDetails extends React.Component {
       let filteredBook = nextProps.fetchedUserbooks.response.filter(book => (
         book.bookId == this.state.currentBookId) 
         && 
-        (book.returnstatus == false));
+        (book.returnStatus == false));
         
       
       if(filteredBook.length === 1) {

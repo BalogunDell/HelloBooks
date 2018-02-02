@@ -37,7 +37,7 @@ const ProfileInfo = ({userData, showInputHandler}) => {
 
             <tr>
               <td id="usernameText">Username:</td>
-              <td id="username"> {userData.userName} </td>
+              <td id="username"> {userData.username} </td>
             </tr>
 
             <tr>

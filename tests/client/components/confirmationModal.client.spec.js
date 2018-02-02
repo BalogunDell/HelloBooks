@@ -7,11 +7,11 @@ import { shallow, mount, render , configure} from 'enzyme';
 import jestSnapshot from 'chai-jest-snapshot';
 import expect, { spyOn } from 'expect'
 
-import ConfirmationModal from '../../client/src/components/Userprofile/AdminSubComponents/ConfirmationModal';
+import ConfirmationModal from '../../../client/src/components/presentational/ConfirmationModal';
 
-import { mockBooks, categories } from './mocks/mockdata';
+import { mockBooks, categories } from '../mock/mockdata';
 
-import mockLocalStorage from './mocks/mockDataStorage'
+import mockLocalStorage from '../mock/mockDataStorage'
 import { prototype } from 'mocha';
 
 jest.mock('react-router-dom');

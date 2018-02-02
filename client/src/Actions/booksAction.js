@@ -1,5 +1,6 @@
 import axios from 'axios';
 import getUserDetails from '../utils/getUserInfo';
+import networkErrorReporter from '../utils/networkErrorReporter';
 
 import {
   GET_ALL_BOOKS,
@@ -53,7 +54,9 @@ export const loadAllbooks = () => dispatch =>
     headers: { Authorization: getUserDetails().savedToken } })
     .then((response) => {
       dispatch(getAllBooks(response.data));
-    }).catch(() => {
+    }).catch((error) => {
+      networkErrorReporter(error);
+      throw (error);
     });
 /**
  * @export getBookId
@@ -71,32 +74,33 @@ export const getBookId = bookId => ({
 /**
  * @export borrowBookAction
  * 
- * @param {object} bookDetails 
+ * @param {object} payload 
  * 
  * @returns {object} action type and payload
  */
-export const borrowBookAction = bookDetails => ({
+export const borrowBookAction = payload => ({
   type: BORROW_BOOK,
-  bookDetails
+  payload
 });
 
 
 /**
  * @export borrowBook
  * 
- * @param {object} bookDetails 
+ * @param {object} payload 
  * 
  * @returns {object} action type and axios response
  */
-export const borrowBook = bookDetails => dispatch =>
+export const borrowBook = payload => dispatch =>
   axios.post(`${userProfile}/${getUserDetails().userId}/books`,
-    bookDetails, {
+    payload, {
       headers: { Authorization: getUserDetails().savedToken }
     })
     .then((response) => {
       dispatch(borrowBookAction(response.data));
     })
     .catch((error) => {
+      networkErrorReporter(error);
       throw (error);
     });
 
@@ -128,6 +132,7 @@ export const getUserBooks = () => dispatch =>
       dispatch(userBooks(response.data));
     })
     .catch((error) => {
+      networkErrorReporter(error);
       throw (error);
     });
 
@@ -158,6 +163,7 @@ export const returnBook = bookId => dispatch =>
       dispatch(returnBookAction(response.data.message));
     })
     .catch((error) => {
+      networkErrorReporter(error);
       throw (error);
     });
 
@@ -189,6 +195,7 @@ export const createBook = bookData => dispatch => axios.post(`${userbooks}`,
     dispatch(createBookAction(response.data));
   })
   .catch((error) => {
+    networkErrorReporter(error);
     throw (error);
   });
 
@@ -223,6 +230,7 @@ export const savePdfToCloudinary = (pdf) => {
       dispatch(savePdf(response.data));
     })
     .catch((error) => {
+      networkErrorReporter(error);
       throw (error);
     });
 };
@@ -260,6 +268,7 @@ export const saveImageToCloudinary = (image) => {
       dispatch(saveImage(response.data));
     })
     .catch((error) => {
+      networkErrorReporter(error);
       throw (error);
     });
 };
@@ -308,6 +317,7 @@ export const modifyBook = (bookData) => {
       dispatch(modifyBookAction(response.data.payload));
     })
     .catch((error) => {
+      networkErrorReporter(error);
       throw (error);
     });
 };
@@ -340,8 +350,8 @@ export const deleteBook = bookId => dispatch =>
       dispatch(deleteBookAction(response.data));
     })
     .catch((error) => {
+      networkErrorReporter(error);
       throw (error);
-      Materialize.toast(error, 4000, 'red rounded');
     });
 
 /**
@@ -361,20 +371,17 @@ export const getborrowedbooksAction = borrowedbooks => ({
  * 
  * @returns { object } action type and borrowedbooks
  */
-export const getAllBorrowedBooks = () => {
-  return (dispatch) => {
-    return axios.get(`${userbooks}/borrowedbooks`, {
-      headers: { Authorization: getUserDetails().savedToken }
+export const getAllBorrowedBooks = () => dispatch =>
+  axios.get(`${userbooks}/borrowedbooks`, {
+    headers: { Authorization: getUserDetails().savedToken }
+  })
+    .then((response) => {
+      dispatch(getborrowedbooksAction(response.data.books));
     })
-      .then((response) => {
-        console.log(response);
-        dispatch(getborrowedbooksAction(response.data.books));
-      })
-      .catch((error) => {
-        throw (error);
-      });
-  };
-};
+    .catch((error) => {
+      networkErrorReporter(error);
+      throw (error);
+    });
 /**
  * 
  * @param { object } books
@@ -397,6 +404,7 @@ export const trendingBooks = () => dispatch => axios.get(trending)
     dispatch(trendingBooksAction(response.data));
   })
   .catch((error) => {
+    networkErrorReporter(error);
     throw (error);
   });
 

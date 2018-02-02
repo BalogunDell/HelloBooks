@@ -6,9 +6,9 @@ import $ from 'jquery';
 import { shallow, mount, render , configure} from 'enzyme';
 import jestSnapshot from 'chai-jest-snapshot';
 import expect, { createSpy, spyOn, isSpy } from 'expect'
-import Notfound from '../../client/src/components/NotFound/notFound';
+import Notfound from '../../../client/src/components/presentational/NotFound/NotFound';
 
-jest.mock('../../client/src/components/Useraccess/Forms/PasswordResetModal.jsx');
+jest.mock('../../../client/src/components/Useraccess/Forms/PasswordResetModal.jsx');
 jest.mock('react-router-dom');
 
 

@@ -23,6 +23,7 @@ export class Allbooks extends React.Component {
     this.state = {
       books: [],
       loadingBooks: false,
+      bookAvailabilityMessage: ''
     }
 
     // Bind getBookId to this
@@ -61,6 +62,9 @@ export class Allbooks extends React.Component {
         this.setState({ loadingBooks: false });
       })
       .catch(() => {
+        this.setState({
+          loadingBooks: false
+        });
       });
   }
 
@@ -75,7 +79,13 @@ export class Allbooks extends React.Component {
   */
   componentWillReceiveProps(nextProps) {
     if(nextProps.retrievedBooks) {
-      this.setState({loadingBooks: false,
+      if( nextProps.retrievedBooks.length === 0) {
+        return this.setState({
+          bookAvailabilityMessage: 'There is currently no book in the library'
+        });
+      } 
+      return this.setState({
+        loadingBooks: false,
         books: nextProps.retrievedBooks});
     }
   }
@@ -101,6 +111,7 @@ export class Allbooks extends React.Component {
           loadingBooks={this.state.loadingBooks}
           books={this.state.books}
           getBookId={this.getBookId}
+          bookAvailabilityMessage = {this.state.bookAvailabilityMessage}
         />
       </div>
     );

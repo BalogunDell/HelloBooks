@@ -254,17 +254,36 @@ export const newUserData = {
 }
 
 export const profile = {
-  user: {
+  payload: {
+    userData : {
       id: 6,
-      firstname: "Test",
-      lastname: "Test",
+      firstName: "Test",
+      lastName: "Test",
       email: "delighteddell@gmail.com",
       username: "Test1",
       password: "$2a$10$TgTcE5TDNnb.nOepUuhaAumi9/79gwUvv0BNjxyValzHmitKbQS1O",
       membership: "bronze",
       role: "user",
-      image: "https://res.cloudinary.com/djvjxp2am/image/upload/v1556530447/ubwtgb7pznq5gzayxqzd.jpg",
-      passurl: null,
+      imageUrl: "https://res.cloudinary.com/djvjxp2am/image/upload/v1556530447/ubwtgb7pznq5gzayxqzd.jpg",
+      passwordResetUrl: null,
+      createdAt: "2017-12-20T20:15:20.937Z",
+      updatedAt: "2017-12-22T12:43:20.897Z"
+  }
+  }
+}
+
+export const userProfile = {
+    user : {
+      id: 6,
+      firstName: "Test",
+      lastName: "Test",
+      email: "delighteddell@gmail.com",
+      username: "Test1",
+      password: "$2a$10$TgTcE5TDNnb.nOepUuhaAumi9/79gwUvv0BNjxyValzHmitKbQS1O",
+      membership: "bronze",
+      role: "user",
+      imageUrl: "https://res.cloudinary.com/djvjxp2am/image/upload/v1556530447/ubwtgb7pznq5gzayxqzd.jpg",
+      passwordResetUrl: null,
       createdAt: "2017-12-20T20:15:20.937Z",
       updatedAt: "2017-12-22T12:43:20.897Z"
   }
@@ -289,34 +308,61 @@ export const updatedProfile = {
 
 export const borrowBookResponse = {
   message: "Book Added",
-  returnDate: "2017-12-25"
-}
-
-export const borrowedBook = {
-  id: 2,
+  bookBorrowed:  {
+    id: 2,
   userId: 2,
   bookId: 2,
   dateborrowed: "2017-12-24",
   expectedreturndate: "2017-12-25",
-  returnstatus: false,
+  returnStatus: false,
   approvedreturn: false,
   createdAt: "2017-12-24T12:26:07.401Z",
   updatedAt: "2017-12-24T12:26:07.401Z",
   book: {
+    id: 2,
+    isbn: "##7766",
+    pages: 100,
+    author: "Nelson Brook",
+    year: 2000,
+    title: "React for Beginners",
+    description: "the books does this and that",
+    quantity: 299,
+    categoryId: 3,
+    visibility: false,
+    image: "https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg",
+    pdf: "https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg",
+    createdAt: "2017-12-23T11:13:07.025Z",
+    updatedAt: "2017-12-24T12:26:07.424Z"
+  }
+}
+}
+export const borrowedBook = {
+  response: {
       id: 2,
-      isbn: "##7766",
-      pages: 100,
-      author: "Nelson Brook",
-      year: 2000,
-      title: "React for Beginners",
-      description: "the books does this and that",
-      quantity: 299,
-      categoryId: 3,
-      visibility: false,
-      image: "https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg",
-      pdf: "https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg",
-      createdAt: "2017-12-23T11:13:07.025Z",
-      updatedAt: "2017-12-24T12:26:07.424Z"
+      userId: 2,
+      bookId: 2,
+      dateBorrowed: "2017-12-24",
+      expectedReturnDate: "2017-12-25",
+      returnStatus: false,
+      approvedReturn: false,
+      createdAt: "2017-12-24T12:26:07.401Z",
+      updatedAt: "2017-12-24T12:26:07.401Z",
+      book: {
+          id: 2,
+          isbn: "##7766",
+          pages: 100,
+          author: "Nelson Brook",
+          year: 2000,
+          title: "React for Beginners",
+          description: "the books does this and that",
+          quantity: 299,
+          categoryId: 3,
+          visibility: false,
+          image: "https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg",
+          pdf: "https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book8_yy9efp.jpg",
+          createdAt: "2017-12-23T11:13:07.025Z",
+          updatedAt: "2017-12-24T12:26:07.424Z"
+    }
   }
 }
 
@@ -328,7 +374,7 @@ export const borrowedBookMirror = {
     bookId: 2,
     dateborrowed: "2017-12-24",
     expectedreturndate: "2017-12-25",
-    returnstatus: false,
+    returnStatus: false,
     approvedreturn: false,
     createdAt: "2017-12-24T12:26:07.401Z",
     updatedAt: "2017-12-24T12:26:07.401Z",
@@ -359,7 +405,7 @@ export const borrowedBookSample = [
     bookId: 2,
     dateborrowed: "2017-12-24",
     expectedreturndate: "2017-12-25",
-    returnstatus: false,
+    returnStatus: false,
     approvedreturn: false,
     createdAt: "2017-12-24T12:26:07.401Z",
     updatedAt: "2017-12-24T12:26:07.401Z",

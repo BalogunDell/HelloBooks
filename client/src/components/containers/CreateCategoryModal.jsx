@@ -98,7 +98,6 @@ export class CreateCategoryModal extends React.Component {
       .catch(() => {
         this.setState({
           loader:false, 
-          newCategoryError: 'Internal server error', 
           disableSubmit: false,
           newCategorySuccessStatus: false,
           newCategoryErrorStatus: true
@@ -108,7 +107,6 @@ export class CreateCategoryModal extends React.Component {
     .catch(error => {
       this.setState({
         loader:false, 
-        newCategoryError: error.response.data.error, 
         disableSubmit: false,
         newCategorySuccessStatus: false,
         newCategoryErrorStatus: true });

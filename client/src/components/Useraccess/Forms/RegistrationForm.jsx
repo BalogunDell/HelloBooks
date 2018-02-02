@@ -73,11 +73,11 @@ export const RegistrationForm  = ({
                 </label>
                 <input 
                   type="text" 
-                  id="userName" 
-                  name="userName" 
+                  id="username" 
+                  name="username" 
                   required
                   minLength="4"
-                  value= {userData.userName}
+                  value= {userData.username}
                   onChange= {handleUserInput}
                 />
               </div>

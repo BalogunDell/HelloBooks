@@ -8,8 +8,9 @@ import jestSnapshot from 'chai-jest-snapshot';
 import expect, { createSpy, spyOn, isSpy } from 'expect'
 import {
     CreateCategoryModal,
-    mapDispatchToProps } from '../../client/src/components/Userprofile/AdminSubComponents/CreateCategoryModal';
-import { initialData, categories } from './mocks/mockdata';
+    mapDispatchToProps
+  } from '../../../client/src/components/containers/CreateCategoryModal';
+import { initialData, categories } from '../mock/mockdata';
 
 jest.mock('react-router-dom');
 

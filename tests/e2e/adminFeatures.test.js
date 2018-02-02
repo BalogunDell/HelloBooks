@@ -12,6 +12,29 @@ const {
   
   module.exports = {
   
+    'It should display homepage': (client) => {
+      client
+      .url('http://localhost:3003')
+      .waitForElementVisible('body', 3000)
+      .assert.visible('div.home-bg')
+      .assert.visible('h1')
+      .assert.containsText('h1','Hellobooks Library')
+      .assert.visible('p')
+      .assert.containsText('p', hompageIntro)
+      .assert.visible('a.btn.waves-effect.waves-ripple.about')
+      .assert.containsText('a.btn.waves-effect.waves-ripple.about',
+      'GET TO KNOW MORE')
+      .assert.visible('a.btn.waves-effect.waves-ripple.signup')
+      .assert.containsText('a.btn.waves-effect.waves-ripple.signup', 'SIGNUP')
+      .pause(2000)
+      .waitForElementVisible('div.container.home-books', 3000)
+      .assert.visible('div.container.home-books')
+      .assert.visible('h1.trending')
+      .assert.containsText('h1.trending','Trending Books')
+      .assert.visible('button.btn.waves-effect.waves-teal')
+      .pause(600);
+    },
+
     'It should display login page': (client) => {
       client
         .url('http://localhost:3003/login')
@@ -60,9 +83,16 @@ const {
         .assert.visible('#userprofile')
         .assert.visible('h5#hellobooksTitle')
         .assert.containsText('h5#hellobooksTitle', 'HELLO BOOKS')
-        .assert.visible('span.white-text.username.password')
-        .assert.containsText('span.white-text.username.password',
+        .waitForElementVisible('img.responsive-img.center', 3000)
+        .assert.visible('img.responsive-img.center')
+        .assert.visible('a#firstLink')
+        .assert.visible('a#secondLink')
+        .assert.visible('a#thirdLink')
+        .assert.visible('div.settings.white-text')
+        .assert.visible('h6.white-text.username.password')
+        .assert.containsText('h6.white-text.username.password',
         'Password:*****')
+        .assert.visible('i.material-icons.editPass')
         .assert.visible('div.col.s12.books-holder-title.center')
         .assert.visible('h1')
         .assert.containsText('h1', 'All Books')
@@ -113,7 +143,9 @@ const {
         .assert.visible('td#totalBooks')
         .assert.visible('#edit')
         .pause(3000)
-        .click('#edit')
+        .click('#thirdLink')
+        .pause(2000)
+        .assert.urlEquals('http://localhost:3003/user/upload')
         .pause(5000)
         .waitForElementVisible('body', 3000)
         .setValue('input[name=isbn]', fakeBookData.isbn)
@@ -124,12 +156,14 @@ const {
         .setValue('textarea[name=description]', fakeBookData.description)
         .setValue('input[name=quantity]', fakeBookData.quantity)
         .click('.browser-default')
-        .waitForElementVisible('#Health', 3000)
-        .click('#Health')
+        .click('#Education')
         .pause(4000)
-        .waitForElementPresent('#editBook', 3000)
-        .click('#editBook')
-        .pause(5000)
+        .setValue('input[type="file"]', path.resolve('./gitCheat.jpeg'))
+        .setValue('input[type="file"]', path.resolve('./tesbook.pdf'))
+        .pause(4000)
+        .waitForElementVisible('input[type=submit]', 5000)
+        .click('input[type=submit]')
+        .pause(10000)
     },
 
     'It should render admin dashboard and delete a book': (client) => {

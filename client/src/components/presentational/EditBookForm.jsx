@@ -20,7 +20,8 @@ const EditBookForm = ({
   fileUploadHandler,
   error,
   errorStatus,
-  loader
+  loader,
+  selectedCategoryId
 }) => {
 return (
   <div>

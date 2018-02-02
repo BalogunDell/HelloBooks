@@ -11,12 +11,12 @@ import {
   CreateBook,
   mapDispatchToProps,
   mapStateToProps 
-} from '../../client/src/components/Userprofile/Admin/CreateBook';
+} from '../../../client/src/components/containers/CreateBook';
 
-import CreateBookForm from '../../client/src/components/Userprofile/AdminSubComponents/CreateBookForm';
+import CreateBookForm from '../../../client/src/components/presentational/CreateBookForm';
 
-jest.mock('../../client/src/components/Userprofile/AdminSubComponents/CreateCategoryModal');
-import { initialData, categories } from './mocks/mockdata';
+jest.mock('../../../client/src/components/containers/CreateCategoryModal.jsx');
+import { initialData, categories } from '../mock/mockdata';
 
 jest.mock('react-router-dom');
 
@@ -81,8 +81,10 @@ describe('renders Create Book Component and create category', () => {
         files: ['sampleFile', 'sampleFile2']
       }
     }
-    const imageUploadHandlerSpy = jest.spyOn(CreateBook.prototype, 'imageUploadHandler');
-    shallow(<CreateBook {...minProps} imageUploadHandler = {imageUploadHandlerSpy}/>)
+    const imageUploadHandlerSpy = jest.spyOn(CreateBook.prototype,
+      'imageUploadHandler');
+    shallow(<CreateBook {...minProps}
+      imageUploadHandler = {imageUploadHandlerSpy}/>)
     .instance().imageUploadHandler(event);
     expect(imageUploadHandlerSpy).toHaveBeenCalledTimes(1);
   });
@@ -97,8 +99,10 @@ describe('renders Create Book Component and create category', () => {
         files: ['sampleFile', 'sampleFile2']
       }
     }
-    const fileUploadHandlerSpy = jest.spyOn(CreateBook.prototype, 'fileUploadHandler');
-    shallow(<CreateBook {...minProps} fileUploadHandler = {fileUploadHandlerSpy}/>)
+    const fileUploadHandlerSpy = jest.spyOn(CreateBook.prototype,
+      'fileUploadHandler');
+    shallow(<CreateBook {...minProps}
+      fileUploadHandler = {fileUploadHandlerSpy}/>)
     .instance().fileUploadHandler(event);
     expect(fileUploadHandlerSpy).toHaveBeenCalledTimes(1);
   });
@@ -113,13 +117,14 @@ describe('renders Create Book Component and create category', () => {
         files: ['sampleFile', 'sampleFile2']
       }
     }
-    const createBookHandlerSpy = jest.spyOn(CreateBook.prototype, 'createBookHandler');
+    const createBookHandlerSpy = jest.spyOn(CreateBook.prototype,
+      'createBookHandler');
     shallow(<CreateBook {...minProps} onSubmit = {createBookHandlerSpy}/>)
     .instance().createBookHandler(event);
     expect(createBookHandlerSpy).toHaveBeenCalledTimes(1);
   });
 
-  it('should not save book if image dimensions are small and if there is no file selected', () => {
+  it('should not save books if dimensions are invalid', () => {
     const event = {
       preventDefault: jest.fn()
     };
@@ -132,7 +137,8 @@ describe('renders Create Book Component and create category', () => {
       imageWidth: 150, 
     });
     form.simulate('submit', event);
-    expect(wrapper.instance().state.errorMessage).toBe('Image is too small. it should 300 x 250 pixels.');
+    expect(wrapper.instance().state.errorMessage)
+    .toBe('Image is too small. it should 300 x 250 pixels.');
   });
 
   it('should not save book if the image size is higher than expected', () => {
@@ -149,7 +155,8 @@ describe('renders Create Book Component and create category', () => {
       imageWidth: 150
     });
     form.simulate('submit', event);
-    expect(wrapper.instance().state.errorMessage).toBe('Image is too small. it should 300 x 250 pixels.');
+    expect(wrapper.instance().state.errorMessage)
+    .toBe('Image is too small. it should 300 x 250 pixels.');
   });
 
 
@@ -167,10 +174,11 @@ describe('renders Create Book Component and create category', () => {
       imageWidth: 450
     });
     form.simulate('submit', event);
-    expect(wrapper.instance().state.errorMessage).toBe('File too large, Only 10MB or less is allowed.');
+    expect(wrapper.instance().state.errorMessage)
+    .toBe('File too large, Only 10MB or less is allowed.');
   });
   
-  it('should pass on to the next condition if the main conditions are met', () => {
+  it('', () => {
     const event = {
       preventDefault: jest.fn()
     };

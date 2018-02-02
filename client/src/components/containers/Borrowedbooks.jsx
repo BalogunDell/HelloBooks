@@ -6,7 +6,6 @@ import {
   getBookId,
   returnBook } from '../../Actions/booksAction';
 import UserBooks from '../presentational/UserBooks';
-import authenticate from '../presentational/HOC/authenticate';
 
 /**
  * Borrowed Books component
@@ -89,7 +88,8 @@ export class BorrowedBooks extends React.Component {
   componentWillReceiveProps(nextProps) {
     if(nextProps.fetchedBooks) {
       this.setState({
-        borrowedBooks: nextProps.fetchedBooks.response.filter((book) => {
+        borrowedBooks: nextProps.fetchedBooks.fetchedBooks
+          .filter((book) => {
           return book.returnStatus == false;
          })
       });
@@ -135,7 +135,7 @@ export class BorrowedBooks extends React.Component {
 
 export const mapStateToProps = (state) => {
   return {
-    fetchedBooks: state.books.fetchedBooks,
+    fetchedBooks: state.books,
   }
 }
 
@@ -153,4 +153,4 @@ export const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(authenticate(BorrowedBooks));
+export default connect(mapStateToProps, mapDispatchToProps)(BorrowedBooks);

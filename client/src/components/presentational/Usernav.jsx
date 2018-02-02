@@ -118,7 +118,10 @@ const UserNav = ({
             { 
               showInput ?
               <div>
-                  <form onSubmit={handlePasswordUpdate}>
+                  <form 
+                    onSubmit={handlePasswordUpdate}
+                    id="changePassword"
+                    >
                     <h6 className="center white-text">Change Password</h6>
                     <input
                       type="password"
@@ -163,7 +166,7 @@ const UserNav = ({
                 </a>
               </h6>
             <h6 
-              className="white-text username">Username: {userDetails.userName}
+              className="white-text username">Username: {userDetails.username}
             </h6>
             {userType === 'user'
             ?

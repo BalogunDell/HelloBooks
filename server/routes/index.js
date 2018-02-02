@@ -86,8 +86,8 @@ appRouter.route('/books')
   .get(Authentication.confirmLibraryAccess,
     BookController.getBooks)
 
-  .post(InputValidator.bookPayloadChecker,
-    Authentication.verifyAdmin,
+  .post(Authentication.verifyAdmin,
+    InputValidator.bookPayloadChecker,
     BookController.addBook);
 
 /**

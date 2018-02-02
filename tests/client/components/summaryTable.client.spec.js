@@ -10,9 +10,9 @@ import expect, { spyOn } from 'expect'
 import {
     SummaryTable,
     stateToProps
-} from '../../client/src/components/Userprofile/AdminSubComponents/SummaryTable';
+} from '../../../client/src/components/containers/SummaryTable';
 
-import { mockBooks , borrowedBookSample } from './mocks/mockdata';
+import { mockBooks , borrowedBookSample } from '../mock/mockdata';
 
 jest.mock('react-router-dom');
 
@@ -41,12 +41,14 @@ describe('Summary Table,', () => {
   });
 
   it('should call the componentWillReceiveProps method', () => {
-    const spycomponentWillReceiveProps = jest.spyOn(SummaryTable.prototype, 'componentWillReceiveProps');
+    const spycomponentWillReceiveProps = jest.spyOn(SummaryTable.prototype,
+      'componentWillReceiveProps');
     const nextProps = {
         allbooks: mockBooks.books,
         borrowedBooks: borrowedBookSample
     }
-    shallow(<SummaryTable {...props} componentWillReceiveProps = {spycomponentWillReceiveProps}/>)
+    shallow(<SummaryTable {...props}
+      componentWillReceiveProps = {spycomponentWillReceiveProps}/>)
     .instance().componentWillReceiveProps(nextProps);
     expect(spycomponentWillReceiveProps).toHaveBeenCalledTimes(1);
     expect(spycomponentWillReceiveProps).toHaveBeenCalledTimes(1);

@@ -6,9 +6,9 @@ import $ from 'jquery';
 import { shallow, mount, render , configure} from 'enzyme';
 import expect, { createSpy, spyOn, isSpy } from 'expect'
 
-import Home from '../../client/src/components/Home/Home';
+import Home from '../../../client/src/components/presentational/Home/Home';
 
-import { homeParagraph } from './mocks/mockdata';
+import { homeParagraph } from '../mock/mockdata';
 
 jest.mock('react-router-dom');
 

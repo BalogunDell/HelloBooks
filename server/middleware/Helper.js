@@ -85,9 +85,9 @@ class Helper {
             message: 'You have either exhausted your book limit or you still have this book with you'
           });
         }
-      }).catch((error) => {
+      }).catch(() => {
         res.status(500).json({
-          message: error
+          message: 'Internal server error'
         });
       });
   }
@@ -105,7 +105,7 @@ class Helper {
     const body = {
       bookId: req.body.bookId,
       userId: req.body.userId,
-      expectedReturnDate: moment()
+      expectedReturnDdate: moment()
         .add(util[req.membership.toLowerCase()].limit, 'days')
         .format('YYYY-MM-DD')
     };

@@ -7,13 +7,13 @@ import { shallow, mount, render , configure} from 'enzyme';
 import jestSnapshot from 'chai-jest-snapshot';
 import expect, { spyOn } from 'expect'
 
-import Background from '../../client/src/components/Background/Background';
+import Background from '../../../client/src/components/presentational/Background/Background';
 
-import Navbar from '../../client/src/components/Navbar/Navbar';
-import { publishedBooksSample } from './mocks/mockdata';
-import mockStorage from './mocks/mockDataStorage';
+import Navbar from '../../../client/src/components/presentational/Navbar/Navbar';
+import { publishedBooksSample } from '../mock/mockdata';
+import mockStorage from '../mock/mockDataStorage';
 
-jest.mock('../../client/src/components/HOC/authenticate.jsx');
+jest.mock('../../../client/src/components/presentational/HOC/authenticate.jsx');
 jest.mock('react-router-dom');
 
 configure({ adapter: new Adapter() });

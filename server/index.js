@@ -3,11 +3,12 @@ import bodyParser from 'body-parser';
 import path from 'path';
 import morgan from 'morgan';
 import cors from 'cors';
+import winston from 'winston';
 import validator from 'express-validator';
-import webpackMiddleware from 'webpack-dev-middleware';
-import webpack from 'webpack';
-import webpackDevConfig from '../webpack.dev.config';
+// import webpackMiddleware from 'webpack-dev-middleware';
+// import webpack from 'webpack';
 
+// import webpackDevConfig from '../webpack.dev.config';
 import appRouter from './routes';
 
 require('dotenv').config();
@@ -28,9 +29,9 @@ app.use((req, res, next) => {
 });
 app.use('/api/v1/', appRouter);
 
-if (process.env.NODE_ENV === 'development') {
-  app.use(webpackMiddleware(webpack(webpackDevConfig)));
-}
+// if (process.env.NODE_ENV === 'development') {
+//   app.use(webpackMiddleware(webpack(webpackDevConfig)));
+// }
 app.get('/bundle.js', (req, res) => res.sendFile(
   path.join(path.dirname(__dirname), 'dist/bundle.js')
 ));
@@ -40,8 +41,9 @@ app.get('/*', (req, res) => res.sendFile(
 );
 
 app.listen(port, (err) => {
-  if (err) console.log(err);
-  console.log('started');
+  winston.level = 'info';
+  if (err) winston.log('info', err);
+  winston.log('info', 'application started');
 });
 
 export default app;

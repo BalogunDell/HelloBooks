@@ -88,7 +88,7 @@ let userId;
     });
 
 
-    it('should allow user borrow a book', (done) => {
+    it('allows a user borrow a book when book Id is supplied', (done) => {
       request
       .post(`${userAPI}/${userId}/books`)
       .set('Authorization', userToken)
@@ -97,38 +97,13 @@ let userId;
       .end((err, res) => {
         expect(res.status).to.equal(201);
         expect(res.body).to.be.an('object');
-        expect(res.body).to.have.property('message');
-        expect(res.body).to.have.property('returnDate');
-        expect(res.body).to.have.property('bookBorrowed');
-        expect(res.body.bookBorrowed).to.have.property('dateborrowed');
-        expect(res.body.bookBorrowed).to.have.property('returnstatus');
-        expect(res.body.bookBorrowed).to.have.property('id');
-        expect(res.body.bookBorrowed).to.have.property('userId');
-        expect(res.body.bookBorrowed).to.have.property('bookId');
-        expect(res.body.bookBorrowed).to.have.property('expectedreturndate');
         expect(res.body.message).to.equal('You have successfully borrowed this book');
-        expect(res.body).to.have.property('returnDate');
-        expect(res.body).to.have.property('bookBorrowed');
-        expect(res.body.bookBorrowed).to.have.property('id');
         expect(res.body.bookBorrowed.userId).to.equal(3);
         expect(res.body.bookBorrowed.bookId).to.equal(5);
         done();
       });
     });
-
-    it('should not delete a borrowed book', (done) => {
-      request
-      .delete(`${api}/books/${5}`)
-      .set('Authorization', adminToken)
-      .set('Content-Type', 'application/json')
-      .end((err, res) => {
-        expect(res.status).to.equal(422);
-        expect(res.body.message).to
-        .equal('This book has been borrowed and cannot be deleted');
-        done();
-      });
-    });
-
+    
     it('should not allow user borrow the same book', (done) => {
       request
       .post(`${userAPI}/${userId}/books`)
@@ -144,7 +119,7 @@ let userId;
       });
     });
 
-    it('should return Book not found for book not in the database ', (done) => {
+    it('should not find a book that has not been uploaded', (done) => {
       request
       .post(`${userAPI}/${userId}/books`)
       .set('Authorization', userToken)
@@ -158,7 +133,8 @@ let userId;
       });
     });
 
-    it('should not borrow a book with invalid id ', (done) => {
+    it('returns error message on borrow book action if book Id is invalid ',
+    (done) => {
       request
       .post(`${userAPI}/${userId}/books`)
       .set('Authorization', userToken)
@@ -181,24 +157,8 @@ let userId;
         expect(res.status).to.equal(200);
         expect(res.body).to.have.property('response');
         expect(res.body.response).to.be.an('array');
-        expect(res.body.response[0]).to.have.property('id');
-        expect(res.body.response[0]).to.have.property('userId');
-        expect(res.body.response[0]).to.have.property('bookId');
-        expect(res.body.response[0]).to.have.property('dateborrowed');
-        expect(res.body.response[0]).to.have.property('expectedreturndate');
-        expect(res.body.response[0]).to.have.property('returnstatus');
-        expect(res.body.response[0]).to.have.property('approvedreturn');
-        expect(res.body.response[0]).to.have.property('createdAt');
-        expect(res.body.response[0]).to.have.property('updatedAt');
-        expect(res.body.response[0]).to.have.property('Book');
-        expect(res.body.response[0].Book).to.be.an('object');
-        expect(res.body.response[0].id).to.be.a('number');
-        expect(res.body.response[0].userId).to.be.a('number');
-        expect(res.body.response[0].bookId).to.be.a('number');
-        expect(res.body.response[0].dateborrowed).to.be.a('string');
-        expect(res.body.response[0].expectedreturndate).to.be.a('string');
-        expect(res.body.response[0].returnstatus).to.be.a('boolean');
-        expect(res.body.response[0].approvedreturn).to.be.a('boolean');     
+        const fetchedBooks = res.body.response.length
+        expect(fetchedBooks).to.not.equal(0);    
         done();
       })
     });
@@ -212,29 +172,13 @@ let userId;
         expect(res.status).to.equal(200);
         expect(res.body).to.have.property('response');
         expect(res.body.response).to.be.an('array');
-        expect(res.body.response[0]).to.have.property('id');
-        expect(res.body.response[0]).to.have.property('userId');
-        expect(res.body.response[0]).to.have.property('bookId');
-        expect(res.body.response[0]).to.have.property('dateborrowed');
-        expect(res.body.response[0]).to.have.property('expectedreturndate');
-        expect(res.body.response[0]).to.have.property('returnstatus');
-        expect(res.body.response[0]).to.have.property('approvedreturn');
-        expect(res.body.response[0]).to.have.property('createdAt');
-        expect(res.body.response[0]).to.have.property('updatedAt');
-        expect(res.body.response[0]).to.have.property('Book');
-        expect(res.body.response[0].Book).to.be.an('object');
-        expect(res.body.response[0].id).to.be.a('number');
-        expect(res.body.response[0].userId).to.be.a('number');
-        expect(res.body.response[0].bookId).to.be.a('number');
-        expect(res.body.response[0].dateborrowed).to.be.a('string');
-        expect(res.body.response[0].expectedreturndate).to.be.a('string');
-        expect(res.body.response[0].returnstatus).to.be.a('boolean');
-        expect(res.body.response[0].approvedreturn).to.be.a('boolean');
+        expect(res.body.response[0].userId).to.equal(userId);
+        expect(res.body.response[0].returnStatus).to.equal(false);
         done();
       })
     });
 
-    it('should allow user return a book', (done) => {
+    it('allows user return a borrowed book', (done) => {
       request
       .put(`${userAPI}/${userId}/books`)
       .set('Authorization', userToken)
@@ -249,7 +193,7 @@ let userId;
     });
     
 
-    it('should check if book was borrowed by user', (done) => {
+    it('should check if a non existing book was borrowed by user', (done) => {
       request
       .put(`${userAPI}/${userId}/books`)
       .set('Authorization', userToken)
@@ -265,7 +209,7 @@ let userId;
       })
     });
 
-    it('should check if book id is valid', (done) => {
+    it('returns error message when book id is invalid', (done) => {
       request
       .put(`${userAPI}/${userId}/books`)
       .set('Authorization', userToken)
@@ -274,7 +218,6 @@ let userId;
       .end((err, res) => {
         expect(res.status).to.equal(400);
         expect(res.body).to.be.an('object');
-        expect(res.body).to.have.property('message');
         expect(res.body.message).to.
         equal('Please provide a valid book id');
         done();
@@ -296,40 +239,28 @@ let userId;
       })
     });
 
-    it('should return user profile details', (done) => {
+    it('fetches user profile with valid user Id', (done) => {
       request
       .get(`${userAPI}/${userId}`)
       .set('Authorization', userToken)
       .end((err, res) => {
         expect(res.status).to.equal(200);
-        expect(res.body).to.have.property('user');
-        expect(res.body.user).to.have.property('id');
-        expect(res.body.user).to.have.property('firstname');
-        expect(res.body.user).to.have.property('lastname');
-        expect(res.body.user).to.have.property('email');
-        expect(res.body.user).to.have.property('username');
-        expect(res.body.user).to.have.property('password');
-        expect(res.body.user).to.have.property('membership');
-        expect(res.body.user).to.have.property('createdAt');
-        expect(res.body.user).to.have.property('updatedAt');
-        expect(res.body.user).to.have.property('imageUrl');
-        expect(res.body.user.firstname).to.equal('jane');
-        expect(res.body.user.lastname).to.equal('ted');
-        expect(res.body.user.email).to.equal('jane@mail.com');
-        expect(res.body.user.username).to.equal('abbey3');
-        expect(res.body.user.role).to.equal('user');
-        expect(res.body.user.membership).to.equal('silver');
-        expect(res.body.user.passwordResetUrl).to.equal('uFUhdjHDJjGf');
+        expect(res.body.userData.firstName).to.equal('jane');
+        expect(res.body.userData.lastName).to.equal('ted');
+        expect(res.body.userData.email).to.equal('jane@mail.com');
+        expect(res.body.userData.username).to.equal('abbey3');
+        expect(res.body.userData.role).to.equal('user');
+        expect(res.body.userData.membership).to.equal('silver');
         done();
       });
     });
 
-    it('should not get user profile details if no token is provided',
+    it('should return no response if no authentication token',
     (done) => {
       request
       .get(`${userAPI}/${userId}`)
       .end((err, res) => {
-        expect(res.status).to.equal(403);
+        expect(res.status).to.equal(401);
         expect(res.body).to.have.property('message');
         expect(res.body.message).to
         .equal('You do not have the permission to access this page');
@@ -346,12 +277,64 @@ let userId;
       .end((err, res) => {
         expect(res.status).to.equal(200);
         expect(res.body).to.be.an('object');
-        expect(res.body.user).to.have.a.property('firstname');
-        expect(res.body.user).to.have.a.property('lastname');
-        expect(res.body.user).to.have.a.property('username');
-        expect(res.body.user.firstname).to.equal(mockdata.userEdit.firstname);
-        expect(res.body.user.lastname).to.equal(mockdata.userEdit.lastname);
+        expect(res.body.user.firstName).to.equal(mockdata.userEdit.firstName);
+        expect(res.body.user.lastName).to.equal(mockdata.userEdit.lastName);
         expect(res.body.user.username).to.equal(mockdata.userEdit.username);
+        done();
+      });
+    });
+
+    it('edits user password if user exists', (done) => {
+      request
+      .put(`${userAPI}/${userId}/newpassword`)
+      .set('Authorization', userToken)
+      .set('Content-Type', 'Application/json')
+      .send({
+        currentPassword: 'password',
+        newPassword: 'password'
+      })
+      .end((err, res) => {
+        expect(res.status).to.equal(200);
+        expect(res.body).to.be.an('object');
+        expect(res.body.message).to
+          .equal('Your password has been successfully changed')
+        done();
+      });
+    });
+
+    it('should not edit user password if currentpassword is wrong',
+    (done) => {
+      request
+      .put(`${userAPI}/${userId}/newpassword`)
+      .set('Authorization', userToken)
+      .set('Content-Type', 'Application/json')
+      .send({
+        currentPassword: 'wrongPassword',
+        newPassword: 'password'
+      })
+      .end((err, res) => {
+        expect(res.status).to.equal(401);
+        expect(res.body).to.be.an('object');
+        expect(res.body.message).to
+          .equal('The password you provided is incorrect')
+        done();
+      });
+    });
+
+    it('should not edit user password without authentication token',
+    (done) => {
+      request
+      .put(`${userAPI}/${userId}/newpassword`)
+      .set('Content-Type', 'Application/json')
+      .send({
+        currentPassword: 'wrongPassword',
+        newPassword: 'password'
+      })
+      .end((err, res) => {
+        expect(res.status).to.equal(401);
+        expect(res.body).to.be.an('object');
+        expect(res.body.message).to
+          .equal('You do not have the permission to access this page')
         done();
       });
     });
@@ -361,7 +344,7 @@ let userId;
 
     it('checks if new password is sent as body', (done) => {
       request
-      .put(`${api}/resetpassword/${generatedUrl}`)
+      .put(`${api}/resetpassword/uFUhdjHDJjdf`)
       .accept('Content-Type', 'Application/json')
       .set('Content-Type', 'Application/json')
       .send({password: ''})
@@ -376,7 +359,7 @@ let userId;
 
     it('checks if new password length is between 5 and 30', (done) => {
       request
-      .put(`${api}/resetpassword/${generatedUrl}`)
+      .put(`${api}/resetpassword/uFUhdjHDJjdf`)
       .set('Content-Type', 'application/json')
       .send({password: '123'})
       .end((err, res) => {
@@ -389,7 +372,7 @@ let userId;
       });
     });
 
-    it('should check if the given url is invalid', (done) => {
+    it('should check if the unique url is invalid', (done) => {
       request
       .put(`${api}/resetpassword/uFUhdDJjdg`)
       .set('Content-Type', 'Application/json')
@@ -403,7 +386,7 @@ let userId;
       });
     });
 
-    it('should reset the password', (done) => {
+    it('should reset the password using the link once', (done) => {
       request
       .put(`${api}/resetpassword/uFUhdjHDJjdf`)
       .set('Content-Type', 'Application/json')
@@ -417,7 +400,7 @@ let userId;
       });
     });
 
-    it('should not reset password twice', (done) => {
+    it('should not reset password using the same link ', (done) => {
       request
       .put(`${api}/resetpassword/uFUhdjHDJjdf`)
       .set('Content-Type', 'Application/json')
@@ -430,17 +413,6 @@ let userId;
         done();
       });
     });
-
-    it('should sigin a google user in', (done) => {
-      request
-      .put(`${api}/googleuser`)
-      .set('Content-Type', 'Application/json')
-      .send(mockdata.user1)
-      .end((err, res) => {
-        expect(res.status).to.equal(404);
-        done();
-      });
-    });
   });
 
   //***********************************//
@@ -448,7 +420,7 @@ let userId;
 //**********************************//
 
 describe('Password Reset > ', () => {
-  it('should return a message when passed an empty email', (done) => {
+  it('returns error message if password reset body is empty', (done) => {
     request
     .post(`${api}/resetpassword`)
     .accept('Content-Type', 'Application/json')
@@ -499,7 +471,7 @@ describe('Google User Login > ' , () => {
     .accept('Content-Type', 'Application/json')
     .send(mockdata.googleUser1)
     .end((err, res) => {
-        expect(res.status).to.equal(200);
+        expect(res.status).to.equal(201);
         expect(res.body).to.have.property('responseData');
         expect(res.body.responseData).to.have.property('token');
         expect(res.body.responseData).to.have.property('message');
@@ -515,12 +487,18 @@ describe('Google User Login > ' , () => {
       .accept('Content-Type', 'Application/json')
       .send(mockdata.user1)
       .end((err, res) => {
-          expect(res.status).to.equal(200);
-          expect(res.body).to.have.property('responseData');
-          expect(res.body.responseData).to.have.property('token');
-          expect(res.body.responseData).to.have.property('message');
-          expect(res.body.responseData).to.have.property('user');
-          expect(res.body.responseData.user).to.have.property('userId');
+        expect(res.status).to.equal(200);
+        expect(res.body).to.have.property('responseData');
+        expect(res.body.responseData).to.have.property('token');
+        expect(res.body.responseData).to.have.property('message');
+        expect(res.body.responseData).to.have.property('user');
+        expect(res.body.responseData.user).to.have.property('userId');
+        expect(res.body.responseData.user.username).to
+          .equal(mockdata.user1.username);
+          expect(res.body.responseData.user.userRole).to
+          .equal('user');
+          expect(res.body.responseData.user.imageUrl).to
+          .equal(null);
         done();
       });
     });

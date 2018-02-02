@@ -27,7 +27,7 @@ const fetchUserReducer = (state = {}, action) => {
       };
     case EDIT_IMAGE:
       return {
-        ...state, ...action.newImageUrl
+        ...state, imageUrl: action.newUserData
       };
     case EDIT_PASSWORD:
       return {

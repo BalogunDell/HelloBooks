@@ -43,12 +43,12 @@ let userId = 3;
         expect(res.status).to.equal(400);
         expect(res.body).to.have.property('message');
         expect(res.body.message)
-          .to.equal('Firstname is required');
+          .to.equal('First name is required');
         done();
       });
     });
 
-    it('should not register user if lastname is empty', (done) => {
+    it('should not register user if last name is empty', (done) => {
       request
       .post(`${userAPI}/signup`)
       .send('Accept', 'Application/json')
@@ -56,12 +56,12 @@ let userId = 3;
       .end((err, res) => {
         expect(res.status).to.equal(400);
         expect(res.body).to.have.property('message');
-        expect(res.body.message).to.equal('Lastname is required');
+        expect(res.body.message).to.equal('Last name is required');
         done();
       });
     });
 
-    it('should check if the length of lastname is less than 2', (done) => {
+    it('should check if the length of last name is less than 2', (done) => {
       request
       .post(`${userAPI}/signup`)
       .set('Content-Type', 'application/json')
@@ -69,7 +69,7 @@ let userId = 3;
       .end((err, res) => {
         expect(res.status).to.equal(400);
         expect(res.body).to.have.property('message');
-        expect(res.body.message).to.equal('Lastname is required');
+        expect(res.body.message).to.equal('Last name is required');
         done();
       });
     });
@@ -83,7 +83,7 @@ let userId = 3;
         expect(res.status).to.equal(400);
         expect(res.body).to.have.property('message');
         expect(res.body.message)
-          .to.equal('Lastname should be two or more characters');
+          .to.equal('Last name should be two or more characters');
         done();
       });
     });

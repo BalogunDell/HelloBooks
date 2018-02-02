@@ -55,7 +55,7 @@ export default (sequelize, DataTypes) => {
         }
       }
     },
-    userName: {
+    username: {
       type: DataTypes.STRING,
       allowNull: false,
       unique: {

@@ -37,9 +37,9 @@ export class Dashboard extends React.Component {
  * @returns {void}
  */
   componentWillMount() {
-    // this.props.getAllBooks();
-    this.props.getAllBorrowedBooks();
-    (getBooks) ? '' : 
+    this.props.getAllBooks()
+      .then(() => {})
+      .catch(() => {})
   }
 
 /**
@@ -53,7 +53,7 @@ export class Dashboard extends React.Component {
     return(
         <div className="admindashboard col s12 m12 l11 offset-l1">
           <SummaryTable/>
-          {/* <BooksList/> */}
+          <BooksList/>
         </div>
     );
   }

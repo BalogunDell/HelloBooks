@@ -7,21 +7,21 @@ import { shallow, mount, render , configure} from 'enzyme';
 import jestSnapshot from 'chai-jest-snapshot';
 import expect, { createSpy, spyOn, isSpy } from 'expect'
 
-import LoginForm from '../../client/src/components/Useraccess/Forms/LoginForm';
+import LoginForm from '../../../client/src/components/Useraccess/Forms/LoginForm';
 import { 
   Login,
   mapDispatchToProps,
   mapStateToProps
-} from '../../client/src/components/Useraccess/Login';
+} from '../../../client/src/components/Useraccess/Login';
 
 import {
   PasswordResetModal,
   dispatchToProps
-} from '../../client/src/components/Useraccess/Forms/PasswordResetModal';
+} from '../../../client/src/components/Useraccess/Forms/PasswordResetModal';
 import {
   userData,
   signupResponse
-} from './mocks/mockdata';
+} from '../mock/mockdata';
 import { PassThrough } from 'stream';
 
 jest.mock('react-router-dom');
@@ -76,7 +76,7 @@ describe('renders Login Form', () => {
     expect(wrapper.find('.resetPassBtn').length).toBe(1);
   });
 
-  it('renders three input fields of type text and password and submit respectively', () => {
+  it('renders three input fields', () => {
     expect(wrapper.find('input').length).toBe(3);
     expect(wrapper.find('input').at(0).props().type).toBe('text');
     expect(wrapper.find('input').at(1).props().type).toBe('password');
@@ -108,7 +108,8 @@ describe('Login Component', () => {
   }
   it('renders the login component', () => {
     const wrapper = shallow(<Login {...props}/>);
-    const handleLoginInputSpy = jest.spyOn(Login.prototype, 'handleLoginInput');
+    const handleLoginInputSpy = jest.spyOn(Login.prototype,
+      'handleLoginInput');
     shallow(<Login { ...props } onChange = {handleLoginInputSpy}/>)
     .instance().handleLoginInput(event);
     expect(handleLoginInputSpy).toHaveBeenCalledTimes(1);
@@ -238,16 +239,19 @@ describe('Password Reset Modal', () => {
 
 
   it('ensure that it has the handleInput method', () => {
-    const spyhandleInput = jest.spyOn(PasswordResetModal.prototype, 'handleInput');
+    const spyhandleInput = jest.spyOn(PasswordResetModal.prototype,
+      'handleInput');
     shallow(<PasswordResetModal {...minProps} onChange={spyhandleInput}/>)
     .instance().handleInput(event);
     expect(spyhandleInput).toHaveBeenCalledTimes(1);
   });
 
   it('ensure that it has the componentDidMount method', () => {
-    const spycomponentDidMount = jest.spyOn(PasswordResetModal.prototype, 'componentDidMount');
+    const spycomponentDidMount = jest.spyOn(PasswordResetModal.prototype,
+      'componentDidMount');
     const dispatch = jest.fn();
-    shallow(<PasswordResetModal {...minProps} componentDidMount={spycomponentDidMount}/>)
+    shallow(<PasswordResetModal {...minProps}
+      componentDidMount={spycomponentDidMount}/>)
     .instance().componentDidMount;
     expect(spycomponentDidMount).toHaveBeenCalledTimes(1);
     expect(dispatchToProps(dispatch).sendEmail).toBeTruthy();

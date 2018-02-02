@@ -6,7 +6,7 @@ import thunk from 'redux-thunk';
 import moxios from 'moxios';
 import axios from 'axios';
 import chai from 'chai';
-import * as mockData from './mocks/mockdata';
+import * as mockData from '../mock/mockdata';
 import {
   signup,
   signin,
@@ -17,12 +17,12 @@ import {
   newPasswordUrl,
   trending,
   googleAccess
-} from '../../client/src/utils/apiEndPoints.js';
+} from '../../../client/src/utils/apiEndPoints';
 
-import getUserInfo from '../../client/src/utils/getUserInfo';
+import getUserInfo from '../../../client/src/utils/getUserInfo';
 
 // Import mock local storage
-import mockLocalStorage from './mocks/mockDataStorage';
+import mockLocalStorage from '../mock/mockDataStorage';
 window.localStorage = mockLocalStorage;
 
 require('dotenv').config();
@@ -44,7 +44,7 @@ import {
   resetPassword,
   newGoogleAccessAction,
   newGoogleAccess
-} from '../../client/src/Actions/userAccessAction';
+} from '../../../client/src/Actions/userAccessAction';
 import {
   getAllBooks,
   loadAllbooks,
@@ -74,21 +74,47 @@ import {
   publishBook,
   trendingBooksAction,
   trendingBooks
-} from '../../client/src/Actions/booksAction';
+} from '../../../client/src/Actions/booksAction';
 import {
   fetchUserTrigger,
   editProfile,
   saveNewImageToDB,
-} from '../../client/src/Actions/userProfileAction';
+} from '../../../client/src/Actions/userProfileAction';
 import {
   createCategory,
   getCategories
-} from '../../client/src/Actions/categoryAction';
-import * as actionTypes from '../../client/src/Actions/actionTypes'
+} from '../../../client/src/Actions/categoryAction';
+import {
+  SAVE_PDF,
+  SAVE_IMAGE,
+  GET_CATEGORIES,
+  CREATE_CATEGORY,
+  CREATE_BOOK,
+  FETCTH_USER_BOOKS,
+  BORROW_BOOK,
+  FETCH_USER,
+  GET_ALL_BOOKS,
+  LOGIN,
+  ADD_USER,
+  EDIT_PASSWORD,
+  GOOGLE_ACCESS,
+  TRENDING_BOOKS,
+  RESET_PASS,
+  SEND_EMAIL,
+  EDIT_IMAGE,
+  EDIT_PROFILE,
+  ADMIN_GET_ALLBOOKS,
+  GET_BORROWED_BOOKS,
+  DELETE_BOOK,
+  MODIFY_BOOK,
+  EDIT_BOOK_ID,
+  GET_BOOK_ID,
+  RETURN_BOOK,
+} from '../../../client/src/Actions/actionTypes'
 
 import { expectation } from 'sinon';
-import { cloudinaryUrl } from '../../client/src/utils/cloudinaryKeys';
-import { userData } from './mocks/mockdata';
+import { cloudinaryUrl } from '../../../client/src/utils/cloudinaryKeys';
+import { userData } from '../mock/mockdata';
 
 
 const middleware = [thunk];
@@ -115,7 +141,7 @@ describe('THUNK FUNCTIONS', () => {
     });
 
     const expectedAction = {
-      type: actionTypes.ADD_USER,
+      type: ADD_USER,
       userSignupData:signupResponse
     };
     const store = mockStore({});
@@ -143,7 +169,7 @@ describe('THUNK FUNCTIONS', () => {
     });
 
     const expectedAction = {
-      type: actionTypes.LOGIN,
+      type: LOGIN,
       abbey:signinResponse
     };
 
@@ -170,7 +196,7 @@ describe('THUNK FUNCTIONS', () => {
     response: mockData.mocktrendingBooks
   })
       const expectedAction = [{
-        type: actionTypes.GET_ALL_BOOKS,
+        type: GET_ALL_BOOKS,
         data: mockData.mocktrendingBook
       }];
 
@@ -196,7 +222,7 @@ describe('THUNK FUNCTIONS', () => {
     });
 
     const expectedAction = {
-      type: actionTypes.SEND_EMAIL,
+      type: SEND_EMAIL,
       serverRes: resetPasswordResponse
     };
 
@@ -223,7 +249,7 @@ describe('THUNK FUNCTIONS', () => {
     });
 
     const expectedAction = {
-      type: actionTypes.RESET_PASS,
+      type: RESET_PASS,
       newPassword: serverRes
     };
 
@@ -238,7 +264,7 @@ describe('THUNK FUNCTIONS', () => {
   });
 
   it('should create a EDIT_IMAGE when users edit profile image', async (done) => {
-    const serverRes = mockData.profile;
+    const serverRes = mockData.updatedProfile;
     moxios.stubRequest(`${userProfile}/${getUserInfo().userId}`, {
       status: 201,
       response: serverRes
@@ -246,22 +272,22 @@ describe('THUNK FUNCTIONS', () => {
     
     // Expected response
     const expectedAction = {
-      type: actionTypes.EDIT_IMAGE,
-      newImageUrl: serverRes
+      type: EDIT_IMAGE,
+      newUserData: serverRes
     }
     const store = mockStore({});
     await store.dispatch(saveNewImageToDB(serverRes))
       .then(() => {
         const actions = store.getActions();
         expect(actions[0].type).to.equal(expectedAction.type);
-        expect(actions[0].newImageUrl).to.equal(expectedAction.newImageUrl.user);
-        expect(actions[0].newImageUrl.image).to.equal(expectedAction.newImageUrl.user.image);
+        expect(actions[0].newUserData).to.equal(expectedAction.newUserData.user);
+        expect(actions[0].newUserData.image).to.equal(expectedAction.newUserData.user.image);
       });
       done();
   });
 
   it('should create FETCH_USER when a user logs in', async (done) => {
-    const fetchedUser = mockData.profile.user;
+    const fetchedUser = mockData.userProfile.user;
 
     moxios.stubRequest(`${userProfile}/${getUserInfo().userId}`, {
       status: 200,
@@ -269,21 +295,26 @@ describe('THUNK FUNCTIONS', () => {
     });
 
     const expectedAction = {
-      type: actionTypes.FETCH_USER,
-      userId: fetchedUser
+      type: FETCH_USER,
+      payload: fetchedUser
     };
     const store = mockStore({});
     await store.dispatch(fetchUserTrigger())
       .then(() => {
         const actions = store.getActions();
         expect(actions[0].type).to.equal(expectedAction.type);
-        expect(actions[0].userId).to.equal(expectedAction.userId);
-        expect(actions[0].userId.firstname).to.equal(expectedAction.userId.firstname);
-        expect(actions[0].userId.lastname).to.equal(expectedAction.userId.lastname);
-        expect(actions[0].userId.email).to.equal(expectedAction.userId.email);
-        expect(actions[0].userId.username).to.equal(expectedAction.userId.username);
-        expect(actions[0].userId.image).to.equal(expectedAction.userId.image);
-        expect(actions[0].userId.firstname).to.equal(expectedAction.userId.firstname);
+        expect(actions[0].payload.firstName).to
+          .equal(expectedAction.payload.firstName);
+        expect(actions[0].payload.lastName).to
+          .equal(expectedAction.payload.lastName);
+        expect(actions[0].payload.email).to
+          .equal(expectedAction.payload.email);
+        expect(actions[0].payload.username).to
+          .equal(expectedAction.payload.username);
+        expect(actions[0].payload.imageUrl).to
+          .equal(expectedAction.payload.imageUrl);
+        expect(actions[0].payload.firstName).to
+          .equal(expectedAction.payload.firstName);
       });
       done();
   });
@@ -297,19 +328,27 @@ describe('THUNK FUNCTIONS', () => {
     });
 
     const expectedAction = {
-      type: actionTypes.BORROW_BOOK,
-      bookDetails: serverResponse 
+      type: BORROW_BOOK,
+      payload: serverResponse 
     };
     const store = mockStore({});
     await store.dispatch(borrowBook(serverResponse))
       .then(() => {
+        
         const actions = store.getActions();
         expect(actions[0].type).to.equal(expectedAction.type);
-        expect(actions[0].bookDetails).to.equal(expectedAction.bookDetails);
-        expect(actions[0].bookDetails).to.have.property('message');
-        expect(actions[0].bookDetails.message).to.equal(expectedAction.bookDetails.message);
-        expect(actions[0].bookDetails).to.have.property('returnDate');
-        expect(actions[0].bookDetails.returnDate).to.equal(expectedAction.bookDetails.returnDate);
+        expect(actions[0].payload.bookBorrowed.id).to
+          .equal(expectedAction.payload.bookBorrowed.id);
+        expect(actions[0].payload.bookBorrowed.returnDate).to
+          .equal(expectedAction.payload.bookBorrowed.returnDate);
+        expect(actions[0].payload.bookBorrowed.bookId).to
+          .equal(expectedAction.payload.bookBorrowed.bookId);
+        expect(actions[0].payload.bookBorrowed.userId).to
+          .equal(expectedAction.payload.bookBorrowed.userId);
+        expect(actions[0].payload.bookBorrowed.returnStatus).to
+          .equal(expectedAction.payload.bookBorrowed.returnStatus);
+        expect(actions[0].payload.bookBorrowed.book).to
+          .equal(expectedAction.payload.bookBorrowed.book);
       });
       done();
   });
@@ -322,31 +361,31 @@ describe('THUNK FUNCTIONS', () => {
       response: serverResponse
     })
     const expectedAction = {
-      type: actionTypes.FETCTH_USER_BOOKS,
+      type: FETCTH_USER_BOOKS,
       fetchedBooks: serverResponse
     };
     const store = mockStore({});
     await store.dispatch(getUserBooks(serverResponse))
       .then(() => {
         const actions = store.getActions();
+        console.log(actions[0])
         expect(actions[0].type).to.equal(expectedAction.type);
-        expect(actions[0].fetchedBooks).to.equal(expectedAction.fetchedBooks);
-        expect(actions[0].fetchedBooks).to.have.property('id');
-        expect(actions[0].fetchedBooks).to.have.property('userId');
-        expect(actions[0].fetchedBooks).to.have.property('bookId');
-        expect(actions[0].fetchedBooks).to.have.property('dateborrowed');
-        expect(actions[0].fetchedBooks).to.have.property('expectedreturndate');
-        expect(actions[0].fetchedBooks).to.have.property('returnstatus');
-        expect(actions[0].fetchedBooks).to.have.property('approvedreturn');
-        expect(actions[0].fetchedBooks).to.have.property('book');
-        expect(actions[0].fetchedBooks.id).to.equal(expectedAction.fetchedBooks.id);
-        expect(actions[0].fetchedBooks.userId).to.equal(expectedAction.fetchedBooks.userId);
-        expect(actions[0].fetchedBooks.bookId).to.equal(expectedAction.fetchedBooks.bookId);
-        expect(actions[0].fetchedBooks.dateborrowed).to.equal(expectedAction.fetchedBooks.dateborrowed);
-        expect(actions[0].fetchedBooks.expectedreturndate).to.equal(expectedAction.fetchedBooks.expectedreturndate);
-        expect(actions[0].fetchedBooks.returnstatus).to.equal(expectedAction.fetchedBooks.returnstatus);
-        expect(actions[0].fetchedBooks.approvedreturn).to.equal(expectedAction.fetchedBooks.approvedreturn);
-        expect(actions[0].fetchedBooks.book).to.equal(expectedAction.fetchedBooks.book);
+        expect(actions[0].fetchedBooks.response).to
+          .equal(expectedAction.fetchedBooks.response);
+        expect(actions[0].fetchedBooks.response.id).to
+          .equal(expectedAction.fetchedBooks.response.id);
+        expect(actions[0].fetchedBooks.response.userId).to
+          .equal(expectedAction.fetchedBooks.response.userId);
+        expect(actions[0].fetchedBooks.response.bookId).to
+          .equal(expectedAction.fetchedBooks.response.bookId);
+        expect(actions[0].fetchedBooks.response.dateborrowed).to
+          .equal(expectedAction.fetchedBooks.response.dateborrowed);
+        expect(actions[0].fetchedBooks.response.expectedreturndate).to
+          .equal(expectedAction.fetchedBooks.response.expectedreturndate);
+        expect(actions[0].fetchedBooks.response.returnstatus).to
+          .equal(expectedAction.fetchedBooks.response.returnstatus);
+        expect(actions[0].fetchedBooks.response.book).to
+          .equal(expectedAction.fetchedBooks.response.book);
       });
       done();
   });
@@ -365,7 +404,7 @@ describe('THUNK FUNCTIONS', () => {
     
 
     const expectedAction = {
-      type: actionTypes.RETURN_BOOK,
+      type: RETURN_BOOK,
       bookId: serverRes
     };
     const store = mockStore({});
@@ -388,7 +427,7 @@ describe('THUNK FUNCTIONS', () => {
     });
      
     const expectedAction = {
-      type: actionTypes.CREATE_BOOK,
+      type: CREATE_BOOK,
       bookData: serverRes
     };
     const store = mockStore({});
@@ -430,7 +469,7 @@ describe('THUNK FUNCTIONS', () => {
     });
      
     const expectedAction = {
-      type: actionTypes.CREATE_CATEGORY,
+      type: CREATE_CATEGORY,
       bookData: serverRes
     };
     const store = mockStore({});
@@ -454,7 +493,7 @@ describe('THUNK FUNCTIONS', () => {
     });
      
     const expectedAction = {
-      type: actionTypes.GET_CATEGORIES,
+      type: GET_CATEGORIES,
       fetchedCategories: serverRes
     };
     const store = mockStore({});
@@ -464,39 +503,6 @@ describe('THUNK FUNCTIONS', () => {
         expect(actions[0].type).to.equal('ET_CATEGORY');
         expect(actions[0].fetchedCategories)
           .to.equal(expectedAction.fetchedCategories.categories);
-      });
-      done();
-  });
-
-  it('should create EDIT PROFILE when user edits his profile', async (done) => {
-    
-    const serverRes = mockData.updatedProfile.user;
-    moxios.stubRequest(`${userProfile}/${serverRes.id}`, {
-      status: 201,
-      response: serverRes
-    });
-     
-    const expectedAction = {
-      type: actionTypes.EDIT_PROFILE,
-      newUserData: serverRes
-    };
-    const store = mockStore({});
-    await store.dispatch(editProfile(serverRes))
-      .then(() => {
-        const actions = store.getActions();
-        expect(actions[0].type).to.equal(expectedAction.type);
-        expect(actions[0].newUserData.id).to.equal(expectedAction.newUserData.id);
-        expect(actions[0].newUserData.firstname).to.equal(expectedAction.newUserData.firstname);
-        expect(actions[0].newUserData.lastname).to.equal(expectedAction.newUserData.lastname);
-        expect(actions[0].newUserData.username).to.equal(expectedAction.newUserData.username);
-        expect(actions[0].newUserData.email).to.equal(expectedAction.newUserData.email);
-        expect(actions[0].newUserData.membership).to.equal(expectedAction.newUserData.membership);
-        expect(actions[0].newUserData.role).to.equal(expectedAction.newUserData.role);
-        expect(actions[0].newUserData.image).to.equal(expectedAction.newUserData.image);
-        expect(actions[0].newUserData.passurl).to.equal(expectedAction.newUserData.passurl);
-        expect(actions[0].newUserData.password).to.equal(expectedAction.newUserData.password);
-        expect(actions[0].newUserData.createdAt).to.equal(expectedAction.newUserData.createdAt);
-        expect(actions[0].newUserData.updatedAt).to.equal(expectedAction.newUserData.updatedAt);
       });
       done();
   });
@@ -511,7 +517,7 @@ describe('THUNK FUNCTIONS', () => {
     });
      
     const expectedAction = {
-      type: actionTypes.DELETE_BOOK,
+      type: DELETE_BOOK,
       updatedBooks: serverRes
     };
     const store = mockStore({});
@@ -533,7 +539,7 @@ describe('THUNK FUNCTIONS', () => {
     });
      
     const expectedAction = {
-      type: actionTypes.GET_BORROWED_BOOKS,
+      type: GET_BORROWED_BOOKS,
       borrowedbooks: serverRes
     };
     const store = mockStore({});
@@ -549,7 +555,7 @@ describe('THUNK FUNCTIONS', () => {
         expect(actions[0].borrowedbooks[0]).to.have.property('bookId');
         expect(actions[0].borrowedbooks[0]).to.have.property('dateborrowed');
         expect(actions[0].borrowedbooks[0]).to.have.property('expectedreturndate');
-        expect(actions[0].borrowedbooks[0]).to.have.property('returnstatus');
+        expect(actions[0].borrowedbooks[0]).to.have.property('returnStatus');
         expect(actions[0].borrowedbooks[0]).to.have.property('approvedreturn');
         expect(actions[0].borrowedbooks[0]).to.have.property('book');
         expect(actions[0].borrowedbooks[0].book).to.equal(expectedAction.borrowedbooks.books[0].book);
@@ -582,7 +588,7 @@ describe('THUNK FUNCTIONS', () => {
     });
      
     const expectedAction = {
-      type: actionTypes.TRENDING_BOOKS,
+      type: TRENDING_BOOKS,
       books: serverRes
     };
     const store = mockStore({});
@@ -614,7 +620,7 @@ describe('THUNK FUNCTIONS', () => {
     });
 
     const expectedAction = {
-      type: actionTypes.GOOGLE_ACCESS,
+      type: GOOGLE_ACCESS,
       googleUserData: signinResponse
     };
 

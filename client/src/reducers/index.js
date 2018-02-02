@@ -10,7 +10,7 @@ const rootReducer = combineReducers({
   userProfile,
   books,
   loadedCategories,
-  uploadFiles
+  uploadFiles,
 });
 
 export default rootReducer;

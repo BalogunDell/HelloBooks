@@ -23,7 +23,6 @@ const LoginForm = ({
   handleLoginInput,
   loginHandler,
   googleLoginHandler,
-  loginError,
   isLoading,
   currentLocation }) => {
 
@@ -31,13 +30,12 @@ const LoginForm = ({
     const isLoadingText = <h5>Loading...</h5>
 
     // error display
-    const errorDisplay = <div className="center red-text">{loginError}</div>
 
     // check condition
     let showIsLoading = isLoading ?  <Loader/> : ''; 
 
     // set error status to empty if loader is displayed
-    let errorStatus = isLoading ? '' : errorDisplay;
+    let errorStatus = isLoading ? '' : null;
 
     
     return(
@@ -57,15 +55,14 @@ const LoginForm = ({
                     <div className="input-field s12">
                       <input 
                       type="text" 
-                      id="userName" 
-                      name="userName"
-                      value = {userData.userName}
+                      id="username" 
+                      name="username"
+                      value = {userData.username}
                       onChange={handleLoginInput}
                       className="validate"
                       required
                       />
                       <label 
-                      data-error={loginError}
                       data-success="">Username <span>*</span></label>
                     </div>
                   </div>
@@ -126,7 +123,6 @@ LoginForm.propTypes = {
  handleLoginInput: React.PropTypes.func.isRequired,
  googleLoginHandler: React.PropTypes.func.isRequired,
  userData: React.PropTypes.object.isRequired,
- loginError: React.PropTypes.string.isRequired,
  isLoading: React.PropTypes.bool.isRequired
 }
 

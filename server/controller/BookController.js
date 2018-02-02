@@ -52,7 +52,7 @@ class BookController {
     const { id } = req.params;
     findOneResource(borrowedBookModel,
       { where: {
-        bookId: id, returnstatus: false } })
+        bookId: id, returnStatus: false } })
       .then((response) => {
         if (response !== null) {
           return res.status(422).json({
@@ -98,8 +98,7 @@ class BookController {
     }
     }).then((response) => {
       res.status(200).json({ books: response });
-    }).catch((error) => {
-      console.log(error);
+    }).catch(() => {
       res.status(500).json({ message: 'Internal server error' });
     });
   }
@@ -173,7 +172,7 @@ class BookController {
       description: req.body.description,
       quantity: req.body.quantity,
       imageUrl: req.body.imageUrl,
-      pdfUrl: req.body.pdfUrl
+      PDFUrl: req.body.PDFUrl
     };
 
     findOneResource(bookModel, query)
@@ -191,9 +190,11 @@ class BookController {
                   message: 'Book modified successfully',
                   payload: response });
               })
-                .catch(() => res.status(500).json({
-                  message: 'Internal server error'
-                }));
+                .catch(() => {
+                  res.status(500).json({
+                    message: 'Internal server error'
+                  });
+                });
             }
           }).catch((error) => {
             const messageObject = errorMessages(error);
@@ -224,11 +225,11 @@ class BookController {
    * @returns {object} response payload
    */
   static borrowBook(req, res) {
-    const { bookId, userId, expectedreturndate } = req.body;
+    const { bookId, userId, expectedReturnDdate } = req.body;
     const payload = {
       bookId,
       userId,
-      expectedreturndate
+      expectedReturnDdate
     };
     borrowedBookModel.create(payload)
       .then((response) => {
@@ -238,7 +239,7 @@ class BookController {
             if (updateResponse) {
               res.status(201).json({
                 message: 'You have successfully borrowed this book',
-                returnDate: req.body.expectedreturndate,
+                returnDate: req.body.expectedReturnDdate,
                 bookBorrowed: response.dataValues });
             }
           })
@@ -269,14 +270,14 @@ class BookController {
     findOneResource(borrowedBookModel, { where: {
       userId: userIdInteger,
       bookId: bookIdInteger,
-      returnstatus: false } })
+      returnStatus: false } })
       .then((response) => {
         if (response === null) {
           res.status(404).json({
             message: 'This book is not in your latest borrow history' });
         } else {
           borrowedBookModel.update({
-            returnstatus: true },
+            returnStatus: true },
           { where: { id: response.dataValues.id } })
             .then((feedback) => {
               if (feedback) {
@@ -293,24 +294,11 @@ class BookController {
                           message: 'Book has been returned'
                         });
                       }
-                    }).catch(() => {
-                      res.status(500).json({
-                        message: 'Internal server error'
-                      });
                     });
-                  }).catch((error) => {
-                    const messageObject = errorMessages(error);
-                    switch (messageObject.type) {
-                      case 'validationError':
-                        res.status(400).json({
-                          message: messageObject.error
-                        });
-                        break;
-                      default:
-                        res.status(500).json({
-                          message: 'Internal server error'
-                        });
-                    }
+                  }).catch(() => {
+                    res.status(500).json({
+                      message: 'Internal server error'
+                    });
                   });
               }
             })
