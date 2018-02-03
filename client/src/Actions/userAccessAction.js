@@ -1,142 +1,201 @@
 import axios from 'axios';
-import * as types from './actionTypes';
-import * as apiRoutes from '../utils/apiEndPoints';
+import networkErrorReporter from '../utils/networkErrorReporter';
+import {
+  ADD_USER,
+  LOGIN,
+  GOOGLE_ACCESS,
+  RESET_PASS,
+  SEND_EMAIL
+} from './actionTypes';
+import {
+  signup,
+  signin,
+  newPasswordUrl,
+  googleAccess
+} from '../utils/apiEndPoints';
 
-
-// *********************************************************** //
-// DEFINE ACTION CREATOR AND MAKE API CALL FOR USER SIGNUP**** //
-// *********************************************************** //
 /**
- * @desc user signup action creator
  * @export userSignupSuccessAction
+ * 
+ * @description Defines userSignupSuccessAction action
+ * 
  * @param { object } userSignupData
+ * 
  * @returns { object } action type and payload => userSignupData
  */
-export function userSignupSuccessAction(userSignupData) {
-  return {
-    type: types.ADD_USER,
-    userSignupData
-  };
-}
+const userSignupSuccessAction = userSignupData => ({
+  type: ADD_USER,
+  userSignupData
+});
 
 /**
  * @export saveNewUser
+ * 
+ * @description Creates saveNewUser thunk action
+ * 
  * @param { object } userSignupData
- * @returns { object } action type and payload => userSignupData
+ * 
+ * @returns { object } action type and payload
  */
-export function saveNewUser(userSignupData) {
-  return (dispatch) => {
-    return axios.post(apiRoutes.signup, userSignupData)
-      .then((response) => {
-        localStorage.setItem('Access-Token', response.data.responseData.token); // eslint-disable-line
-        dispatch(userSignupSuccessAction(response.data.responseData));
-      })
-      .catch((errors) => {
-        throw (errors);
-      });
-  };
-}
+const saveNewUser = userSignupData => dispatch =>
+  axios.post(signup, userSignupData)
+    .then((response) => {
+      localStorage.setItem('Token', response.data.responseData.token);
+      dispatch(userSignupSuccessAction(response.data.responseData));
+    })
+    .catch((error) => {
+      networkErrorReporter(error);
+      throw (error);
+    });
 
-// *********************************************************** //
-// DEFINE ACTION CREATOR AND MAKE API CALL FOR USER SIGNIN**** //
-// *********************************************************** //
 /**
- * @desc user login action creator
  * @export userLoginSuccess
+ * 
+ * @description Defines userLoginSuccess action
+ * 
  * @param { object } loginData
- * @returns { object } action type and payload => loginData
+ * 
+ * @returns { object } action type and payload
  */
-export function userLoginSuccess(loginData) {
-  return {
-    type: types.LOGIN,
-    loginData
-  };
-}
+const userLoginSuccess = loginData => ({
+  type: LOGIN,
+  loginData
+});
 
 /**
  * @export userLogin
- * @param { object } loginData 
+ * 
+ * @description Creates userLogin thunk action
+ * 
+ * @param { object } loginData
+ * 
  * @returns { object } axios response
  */
-export function userLogin(loginData) {
-  return (dispatch) => {
-    return axios.post(apiRoutes.signin, loginData)
-      .then((response) => {
-        localStorage.setItem('Access-Token', response.data.responseData.token); // eslint-disable-line
-        dispatch(userLoginSuccess(response.data.responseData));
-      })
-      .catch((error) => {
-        throw (error);
-      });
-  };
-}
+const userLogin = loginData => dispatch =>
+  axios.post(signin, loginData)
+    .then((response) => {
+      localStorage.setItem('Token', response.data.responseData.token);
+      dispatch(userLoginSuccess(response.data.responseData));
+    })
+    .catch((error) => {
+      networkErrorReporter(error);
+      throw (error);
+    });
 
-
-// *********************************************************** //
-// DEFINE ACTION CREATOR AND MAKE API CALL FOR MAIL ACTIONS*** //
-// *********************************************************** //
 /**
  * @export sendEmailAction
- * @param { object } serverRes 
- * @returns { object } type of action and the 
- * payload sending reset password link
+ * 
+ * @description Defines sendEmailAction action
+ * 
+ * @param { object } serverResponse 
+ * 
+ * @returns { object } type of action and the payload
  */
-export function sendEmailAction(serverRes) {
-  return {
-    type: types.SEND_EMAIL,
-    serverRes
-  };
-}
+const sendEmailAction = serverResponse => ({
+  type: SEND_EMAIL,
+  serverResponse
+});
 
 /**
  * 
  * @export sendEmail
+ * 
+ * @description Creates sendEmailAction action
+ * 
  * @param { object } userEmail 
+ * 
  * @returns { object } response reset password link from the server
  */
-export function sendEmail(userEmail) {
-  return (dispatch) => {
-    return axios.post(`${apiRoutes.newPassword}`, userEmail)
-      .then((response) => {
-        dispatch(sendEmailAction(response.data));
-      })
-      .catch((error) => {
-        throw (error);
-      });
-  };
-}
+const sendEmail = userEmail => dispatch =>
+  axios.post(`${newPasswordUrl}`, userEmail)
+    .then((response) => {
+      dispatch(sendEmailAction(response.data));
+    })
+    .catch((error) => {
+      console.log(error);
+      networkErrorReporter(error);
+      throw (error);
+    });
 
-// *********************************************************** //
-// DEFINE ACTION CREATOR AND MAKE API CALL FOR RESET PASSWORD* //
-// *********************************************************** //
+
 /**
  * @export resetPasswordAction
+ * 
+ * @description Defines resetPasswordAction action
+ * 
  * @param { object } newPassword
  * @param { object } uniqueUrl
+ * 
  * @returns { object } type of action and payload
  */
-export function resetPasswordAction(newPassword) {
-  return {
-    type: types.RESET_PASS,
-    newPassword
-  };
-}
+const resetPasswordAction = newPassword => ({
+  type: RESET_PASS,
+  newPassword
+});
 
 /**
  * @export resetPassword
+ * 
+ * @description Creates resetPassword thunk action
+ * 
  * @param { object } newPassword
  * @param { object } uniqueUrl
+ * 
  * @returns { object } server response
  */
-export function resetPassword(newPassword, uniqueUrl) {
-  return (dispatch) => {
-    return axios.put(`${apiRoutes.newPassword}/${uniqueUrl}`, newPassword)
-      .then((response) => {
-        dispatch(resetPasswordAction(response.data));
-      })
-      .catch((error) => {
-        throw (error);
-      });
-  };
-}
+const resetPassword = (newPassword, uniqueUrl) => dispatch =>
+  axios.put(`${newPasswordUrl}/${uniqueUrl}`, newPassword)
+    .then((response) => {
+      dispatch(resetPasswordAction(response.data));
+    })
+    .catch((error) => {
+      networkErrorReporter(error);
+      throw (error);
+    });
 
+/**
+ * @export newGoogleAccessAction
+ * 
+ * @description Defines newGoogleAccessAction action
+ * 
+ * @param { object } googleUserData
+ * 
+ * @returns { object } type of action and payload
+ */
+const newGoogleAccessAction = googleUserData => ({
+  type: GOOGLE_ACCESS,
+  googleUserData
+});
+
+/**
+ * @export newGoogleAccess
+ * 
+ * @description Defines newGoogleAccess thunk action
+ * 
+ * @param { object } googleUserData
+ * 
+ * @returns { object } server response
+ */
+const newGoogleAccess = googleUserData => dispatch =>
+  axios.post(`${googleAccess}`, googleUserData)
+    .then((response) => {
+      localStorage.setItem('Token', response.data.responseData.token);
+      dispatch(newGoogleAccessAction(response.data));
+    })
+    .catch((error) => {
+      networkErrorReporter(error);
+      throw (error);
+    });
+
+export {
+  userSignupSuccessAction,
+  saveNewUser,
+  userLoginSuccess,
+  userLogin,
+  sendEmailAction,
+  sendEmail,
+  resetPasswordAction,
+  resetPassword,
+  newGoogleAccessAction,
+  newGoogleAccess
+};

@@ -1,78 +1,93 @@
 import axios from 'axios';
-
-import * as types from './actionTypes';
-import * as apiRoutes from '../utils/apiEndPoints';
 import getUserDetails from '../utils/getUserInfo';
+import networkErrorReporter from '../utils/networkErrorReporter';
 
+import {
+  CREATE_CATEGORY,
+  GET_CATEGORIES,
+} from './actionTypes';
 
-// ***************************************************************** //
-// **DEFINE ACTION CREATOR AND MAKE API CALL FOR CREATE CATEGORIES** //
-// ***************************************************************** //
-
-/**
- * @export createCategoryAction
- * @param { object } category 
- * @returns { object } action type and payload => category
- */
-export function createCategoryAction(category) {
-  return {
-    type: types.CREATE_CATEGORY,
-    category
-  };
-}
-
-/**
- * @export createCategory
- * @param { object } category 
- * @returns { object } axios response
- */
-export function createCategory(category) {
-  return (dispatch) => {
-    return axios.post(apiRoutes.newCategory,
-      category,
-      {
-        headers: { Authorization: getUserDetails().savedToken }
-      })
-      .then((response) => {
-        dispatch(createCategoryAction(response.data));
-      })
-      .catch((error) => {
-        throw (error);
-      });
-  };
-}
-
-// ***************************************************************** //
-// **DEFINE ACTION CREATOR AND MAKE API CALL FOR FETCH CATEGORIES** //
-// ***************************************************************** //
+import {
+  newCategory,
+  categories,
+} from '../utils/apiEndPoints';
 
 /**
  * @export getCategoriesAction
+ * 
+ * @description Defines getCategoriesAction action
+ * 
  * @param { object } fetchedCategories 
- * @returns { object } action type and payload => fetchedCategories
+ * 
+ * @returns { object } action type and payload
  */
-export function getCategoriesAction(fetchedCategories) {
-  return {
-    type: types.GET_CATEGORIES,
-    fetchedCategories
-  };
-}
+const getCategoriesAction = fetchedCategories => ({
+  type: GET_CATEGORIES,
+  fetchedCategories
+});
 
 /**
  * @export getCategories
+ * 
+ * @description Creates getCategories thunk action
+ * 
  * @returns { object } axios response
  */
-export function getCategories() {
-  return (dispatch) => {
-    return axios.get(apiRoutes.categories,
-      {
-        headers: { Authorization: getUserDetails().savedToken }
-      })
-      .then((response) => {
-        dispatch(getCategoriesAction(response.data.categories));
-      })
-      .catch((error) => {
-        throw (error);
-      });
-  };
-}
+const getCategories = () => dispatch =>
+  axios.get(categories, {
+    headers: { Authorization: getUserDetails().savedToken }
+  })
+    .then((response) => {
+      dispatch(getCategoriesAction(response.data.categories));
+    })
+    .catch((error) => {
+      networkErrorReporter(error);
+      throw (error);
+    });
+
+
+/**
+ * @export createCategoryAction
+ * 
+ * @description Defines createCategoryAction action
+ * 
+ * @param { object } category
+ * 
+ * @returns { object } action type and payload => category
+ */
+const createCategoryAction = category => ({
+  type: CREATE_CATEGORY,
+  category
+});
+
+/**
+ * @export createCategory
+ * 
+ * @description Creates createCategory thunk action
+ * 
+ * @param { object } category 
+ * 
+ * @returns { object } axios response
+ */
+const createCategory = category => dispatch =>
+  axios.post(newCategory,
+    category,
+    {
+      headers: { Authorization: getUserDetails().savedToken }
+    })
+    .then((response) => {
+      dispatch(createCategoryAction(response.data));
+    })
+    .catch((error) => {
+      networkErrorReporter(error);
+      throw (error);
+    });
+
+
+export {
+  createCategoryAction,
+  createCategory,
+  getCategoriesAction,
+  getCategories
+};
+

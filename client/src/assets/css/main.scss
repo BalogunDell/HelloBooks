@@ -1,15 +1,15 @@
 $font-stack:    Helvetica, sans-serif;
 $primary-color: black;
 $custom-color: #0F488A;
-@import '../../components/footer/footer.scss';
-@import '../../components/navbar/navbar.scss';
-@import '../../components/home/home.scss';
-@import '../../components/books/books.scss';
-@import '../../components/useraccess/useraccess.scss';
-@import '../../components/userprofile/userstyle.scss';
-@import '../../components/userprofile/Allbooks/Allbooks.scss';
-@import '../../components/about/about.css';
-@import '../../components/notFound/index.scss';
+@import '../../components/presentational/Footer/footer.scss';
+@import '../../components/presentational/Navbar/navbar.scss';
+@import '../../components/presentational/Home/home.scss';
+@import '../../components/presentational/Books/books.scss';
+@import '../../components/Useraccess/useraccess.scss';
+@import '../../components/presentational/userstyle.scss';
+@import '../../components/containers/Allbooks/Allbooks.scss';
+@import '../../components/presentational/About/about.css';
+@import '../../components/presentational/NotFound/index.scss';
 
 
 

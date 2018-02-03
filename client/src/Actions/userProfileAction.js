@@ -1,156 +1,203 @@
 import axios from 'axios';
-
-import * as types from '../Actions/actionTypes';
-import * as apiRoutes from '../utils/apiEndPoints';
-import * as cloudKeys from '../utils/cloudinaryKeys';
 import getUserDetails from '../utils/getUserInfo';
+import { userProfile } from '../utils/apiEndPoints';
+import networkErrorReporter from '../utils/networkErrorReporter';
 
+import {
+  FETCH_USER,
+  SAVE_IMAGE,
+  EDIT_PROFILE,
+  EDIT_IMAGE,
+  EDIT_PASSWORD
+} from '../Actions/actionTypes';
 
-// *********************************************** //
-// ******DEFINE ACTION CREATOR TO FETCH USER****** //
-// *********************************************** //
+import {
+  cloudinaryUrl,
+  cloudinaryPreset,
+  requestHeader
+} from '../utils/cloudinaryKeys';
 
 /**
  * @export fetchUser
- * @param { integer } userID 
+ * 
+ * @description Defines fetchUser action
+ * 
+ * @param { integer } payload
+ * 
  * @returns { object } returns action type and integer, user id
  */
-export function fetchUser(userID) {
-  return {
-    type: types.FETCH_USER,
-    userID
-  };
-}
+export const fetchUser = payload => ({
+  type: FETCH_USER,
+  payload
+});
 
 /**
- * 
- * 
  * @export fetchUserTrigger
+ * 
+ * @description Creates fetchUserTrigger thunk action
+ * 
  * @returns { object } axios response
  */
-export function fetchUserTrigger() {
-  return (dispatch) => {
-    return axios.get(`${apiRoutes.userProfile}/${getUserDetails().userId}`,
-      {
-        headers: { Authorization: getUserDetails().savedToken } })
-      .then((response) => {
-        dispatch(fetchUser(response.data));
-      }).catch((error) => {
-        throw (error);
-      });
-  };
-}
+export const fetchUserTrigger = () => dispatch =>
+  axios.get(`${userProfile}/${getUserDetails().userId}`,
+    {
+      headers: { Authorization: getUserDetails().savedToken } })
+    .then((response) => {
+      dispatch(fetchUser(response.data));
+    }).catch((error) => {
+      networkErrorReporter(error);
+      throw (error);
+    });
 
-
-// *********************************************** //
-// *DEFINE ACTION CREATOR FOR USER EDIT PROFILE**** //
-// ************************************************ //
 
 /**
- * @export
+ * @export editProfileAction
+ * 
+ * @description Defines editProfileAction action
+ * 
  * @param { object } newUserData 
+ * 
  * @returns { object } action type and newUserData objet
  */
-export function editProfileAction(newUserData) {
-  return {
-    type: types.EDIT_PROFILE,
-    newUserData
-  };
-}
+export const editProfileAction = newUserData => ({
+  type: EDIT_PROFILE,
+  newUserData
+});
 
 /**
  * 
  * @export editProfile function
+ * 
+ * @description Creates editProfile thunk action
+ * 
  * @param { object } newUserData 
+ * 
  * @returns { object } axios response
  */
-export function editProfile(newUserData) {
-  return (dispatch) => {
-    return axios.put(`${apiRoutes.userProfile}/${newUserData.id}`,
-      newUserData,
-      { headers: { Authorization: getUserDetails().savedToken } })
-      .then((response) => {
-        dispatch(editProfileAction(response.data));
-      })
-      .catch((error) => {
-        throw (error);
-      });
-  };
-}
+export const editProfile = newUserData => dispatch =>
+  axios.put(`${userProfile}/${getUserDetails().userId}`,
+    newUserData,
+    { headers: { Authorization: getUserDetails().savedToken } })
+    .then((response) => {
+      dispatch(editProfileAction(response.data));
+    })
+    .catch((error) => {
+      networkErrorReporter(error);
+      throw (error);
+    });
 
-// ****************************************************** //
-// *DEFINE ACTION CREATOR FOR USER EDIT PROFIL IMAGEE**** //
-// ****************************************************** //
+/**
+ * @export editPasswordAction
+ * 
+ * @description Defines editPasswordAction action
+ * 
+ * @param { object } payload 
+ * 
+ * @returns { object } action type and newUserData objet
+ */
+export const editPasswordAction = payload => ({
+  type: EDIT_PASSWORD,
+  payload
+});
 
+
+  /**
+ * 
+ * @export editPassword function
+ * 
+ * @description Defines editPassword thunk action
+ * 
+ * @param { object } payload  
+ * 
+ * @returns { object } axios response
+ */
+export const editPassword = payload => dispatch =>
+  axios.put(`${userProfile}/${getUserDetails().userId}/newpassword`,
+    payload,
+    { headers: { Authorization: getUserDetails().savedToken } })
+    .then((response) => {
+      dispatch(editPasswordAction(response.data));
+    })
+    .catch((error) => {
+      networkErrorReporter(error);
+      throw (error);
+    });
 
 /**
  * 
  * @export saveImage
+ * 
+ * @description Defines saveImage action
+ * 
  * @param { object } image 
+ * 
  * @returns { object } action type and payload (image)
  */
-export function saveImageToCloud(image) {
-  return {
-    type: types.SAVE_IMAGE,
-    image
-  };
-}
+export const saveImageToCloud = image => ({
+  type: SAVE_IMAGE,
+  image
+});
+
+
 /**
  * @export saveNewImage
+ * 
+ * @description Creates saveNewImage action
+ * 
  * @param { object } image 
+ * 
  * @returns { object } action type and newImage url (from cloudinary)
  */
-export function saveNewImage(image) {
+export const saveNewImage = (image) => {
   const formdata = new FormData();
   formdata.append('file', image);
-  formdata.append('upload_preset', cloudKeys.cloudinaryPreset);
-  return (dispatch) => {
-    return axios.post(cloudKeys.cloudinaryUrl, formdata,
-      { headers: { 'Content-Type': cloudKeys.requestHeader } })
-      .then((response) => {
-        dispatch(saveImageToCloud(response.data));
-      })
-      .catch((error) => {
-        throw (error);
-      });
-  };
-}
-
-
-// ****************************************************** //
-// *DEFINE ACTION CREATOR FOR USER EDIT PROFIL IMAGEE**** //
+  formdata.append('upload_preset', cloudinaryPreset);
+  return dispatch => axios.post(cloudinaryUrl, formdata,
+    { headers: { 'Content-Type': requestHeader } })
+    .then((response) => {
+      dispatch(saveImageToCloud(response.data));
+    })
+    .catch((error) => {
+      networkErrorReporter(error);
+      throw (error);
+    });
+};
 
 
 /**
- * @export
- * @param { object } newImage 
+ * @export saveImage
+ * 
+ * @description Defines saveImage action
+ * 
+ * @param { object } newUserData 
+ * 
  * @returns { object } action type and newImage url (from cloudinary)
  */
-export function saveImage(newImage) {
-  return {
-    type: types.EDIT_IMAGE,
-    newImageUrl: newImage
-  };
-}
+export const saveImage = newUserData => ({
+  type: EDIT_IMAGE,
+  newUserData
+});
 
 
 /**
  * @export saveNewImageToDB
- * @param { object } newImage 
+ * 
+ * @description Defines saveNewImageToDB thunk action
+ * 
+ * @param { object } newUserData
+ * 
  * @returns { object } action type and newImage url (from cloudinary)
  */
-export function saveNewImageToDB(newImage) {
-  return (dispatch) => {
-    return axios.put(`${apiRoutes.userProfile}/${getUserDetails().userId}`,
-      newImage, {
-        headers: { Authorization: getUserDetails().savedToken }
-      })
-      .then((response) => {
-        const newUrl = response.data.user;
-        dispatch(saveImage(newUrl));
-      })
-      .catch((error) => {
-        throw (error);
-      });
-  };
-}
+export const saveNewImageToDB = newUserData => dispatch => 
+  axios.put(`${userProfile}/${getUserDetails().userId}`,
+  newUserData, {
+      headers: { Authorization: getUserDetails().savedToken }
+    })
+    .then((response) => {
+      const newUrl = response.data.user;
+      dispatch(saveImage(newUrl));
+    })
+    .catch((error) => {
+      networkErrorReporter(error);
+      throw (error);
+    });

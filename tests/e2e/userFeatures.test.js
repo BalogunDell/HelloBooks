@@ -8,7 +8,7 @@
 
 
 // module.exports = {
-//   'It should display home page and ensure that all elements are available': (client) => {
+//   'It checks for home page elements': (client) => {
 //     client
 //       .url('http://localhost:3003')
 //       .waitForElementVisible('body', 3000)
@@ -38,39 +38,23 @@
 //       .pause(2000)
 //   },
 
-//   'It should display error message when no login details are provided': (client) => {
+//   'It should validate input on login': (client) => {
 //     client
 //       .url('http://localhost:3003/login')
 //       .waitForElementVisible('body', 2000)
 //       .assert.visible('div.home-bg')
 //       .pause(3000)
-//       .setValue('input[name=username]', '')
-//       .setValue('input[name=password]', '')
+//       .setValue('input[name=username]', 1)
+//       .setValue('input[name=password]', 'dsfdddccd')
 //       .click('#regBtn')
 //       .pause(3000)
 //       .waitForElementVisible('div.center.red-text', 3000)
 //       .assert.visible('div.center.red-text')
-//       .assert.containsText('div.center.red-text', 'Provide your username and password to login')
+//       .assert.containsText('div.center.red-text', 'Username should be two or more characters')
 //       .pause(2000)
 //   },
 
-//   'It should display error message when invalid login details are provided': (client) => {
-//     client
-//       .url('http://localhost:3003/login')
-//       .waitForElementVisible('body', 2000)
-//       .assert.visible('div.home-bg')
-//       .pause(3000)
-//       .setValue('input[name=username]', userLoginData.fakeData1.username)
-//       .setValue('input[name=password]', userLoginData.fakeData1.password)
-//       .click('#regBtn')
-//       .pause(3000)
-//       .waitForElementVisible('div.center.red-text', 3000)
-//       .assert.visible('div.center.red-text')
-//       .assert.containsText('div.center.red-text', 'Invalid username or password')
-//       .pause(2000)
-//   },
-
-//   'It should display error message when username is correct and password is wrong': (client) => {
+//   'It should check for invalid data': (client) => {
 //     client
 //       .url('http://localhost:3003/login')
 //       .waitForElementVisible('body', 2000)
@@ -100,7 +84,7 @@
       
 //   },
 
-//   'It should ensure that side nav renders all components and borrow a book': (client) => {
+//   'It ensures that side-nav renders and user borrows a book': (client) => {
 //     client
 //       .url('http://localhost:3003/user/books')
 //       .waitForElementVisible('body', 4000)
@@ -110,7 +94,7 @@
 //       .assert.visible('span.white-text.username.password')
 //       .assert.containsText('span.white-text.username.password', 'Password:*****')
 //       .assert.visible('span.white-text.email')
-//       .assert.containsText('span.white-text.email', 'Membership: bronze')
+//       .assert.containsText('span.white-text.email', 'Membership: silver')
 //       .assert.visible('div.col.s12.books-holder-title.center')
 //       .assert.visible('h1')
 //       .assert.containsText('h1', 'All Books')
@@ -122,11 +106,16 @@
 //       client.expect.element('h6').to.be.present;
 //       client.expect.element('strong').to.be.present;
 //       client.expect.element('div.dets').to.be.present;
-//       client.expect.element('img.responsive-img.center').to.have.attribute('src').which.contains(userNavImage);
-//       client.expect.element('a').to.have.attribute('href').which.contains('/user/profile');
-//       client.expect.element('a#secondLink').to.have.attribute('href').which.contains('/user/books');
-//       client.expect.element('a#thirdLink').to.have.attribute('href').which.contains('/user/history');
-//       client.expect.element('a#fourthLink').to.have.attribute('href').which.contains('/user/borrowedbooks');
+//       client.expect.element('img.responsive-img.center')
+//         .to.have.attribute('src').which.contains(userNavImage);
+//       client.expect.element('a').to.have.attribute('href')
+//         .which.contains('/user/profile');
+//       client.expect.element('a#secondLink')
+//         .to.have.attribute('href').which.contains('/user/books');
+//       client.expect.element('a#thirdLink')
+//         .to.have.attribute('href').which.contains('/user/history');
+//       client.expect.element('a#fourthLink')
+//         .to.have.attribute('href').which.contains('/user/borrowedbooks');
 //       client.click('a#bookdetail');
 //       client.assert.urlEquals('http://localhost:3003/user/bookdetails');
 //       client.assert.visible('img.responsive-img');
@@ -135,8 +124,6 @@
 //       client.assert.visible('button.btn.waves-teal.waves-effect');
 //       client.assert.containsText('button.btn.waves-teal.waves-effect', 'BORROW');
 //       client.click('.btn.waves-teal.waves-effect');
-//       // client.waitForElementVisible('div.toast.blue.rounded', 3000);
-//       // client.assert.visible('div.toast.blue.rounded');
 //       client.pause(3000);
 //   },
 
@@ -182,7 +169,7 @@
 //       client.pause(3000);
 //   },
 
-//   'It should edit user profile: username, lastname or firstname': (client) => {
+//   'It checks if edit profile works': (client) => {
 //     client
 //       .url('http://localhost:3003/user/profile')
 //       .waitForElementVisible('body', 4000)
@@ -202,52 +189,21 @@
 //       .pause(200)
 //       .clearValue('input[name=lastname]')
 //       .setValue('input[name=lastname]', userEditData.lastname)
-//       .pause(200)
-//       .clearValue('input[name=username]')
-//       .setValue('input[name=username]', userEditData.username)
 //       .pause(300)
 //       .click('#saveBtn')
 //       .pause(3000)
 //   },
 
-//   'It should render the history component and show the borrow history of user': (client) => {
+//   'It should render history component and logout': (client) => {
 //     client
-//       .url('http://localhost:3003/user/history')
+//       .url('http://localhost:3003/user/borrowedbooks')
 //       .waitForElementVisible('body', 3000)
 //       .assert.visible('h1')
-//       .assert.containsText('h1', 'Borrow History')
-//       .assert.visible('input.select-dropdown')
-//       .click('input.select-dropdown')
+//       .assert.containsText('h1', 'Recently Borrowed')
 //       .pause(3000)
-//       .assert.visible('option#pending')
-//       .assert.containsText('option#pending', 'Pending returns')
-//       .assert.visible('option#returned')
-//       .assert.containsText('option#returned','Returned books')
-//       .assert.visible('option#allbooks')
-//       .assert.containsText('option#allbooks', 'All books')
-//       .assert.visible('button.btn.btn-small.waves-effect.waves-teal.custom')
+//       .click('.custom')
 //       .pause(2000)
-//       .click('.btn.btn-small.waves-effect.waves-teal.custom')
-//       .waitForElementVisible('div.toast.blue.rounded', 3000)
-//       .assert.visible('div.toast.blue.rounded')
-//       .assert.containsText('div.toast.blue.rounded', 'Book has been successfully returned')
-//       .pause(3000)
-//       .click('input.select-dropdown')
-//       .click('#returned')
-//       .assert.visible('h6.right.custom-text')
-//       .pause(2000)
-      
+//       .click('.red-text')
+//       .assert.urlEquals('http://localhost:3003/login');  
 //   },
-
-//   'It should log user out of the application': (client) => {
-//     client
-//       .url('http://localhost:3003/user/books')
-//       .waitForElementVisible('body', 3000)
-//       .assert.visible('a.red-text')
-//       .pause(2000)
-//       .click('a.red-text')
-//       .assert.urlEquals('http://localhost:3003/login')
-//       .pause(2000)
-//       .end();
-//   }
 // }
