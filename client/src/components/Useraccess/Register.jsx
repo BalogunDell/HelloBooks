@@ -1,7 +1,7 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-
+import PropTypes from 'prop-types';
 import Navbar from '../presentational/Navbar/Navbar';
 import RegistrationForm from './Forms/RegistrationForm';
 import Background from '../presentational/Background/Background';
@@ -137,7 +137,7 @@ export const mapDispatchToProps = (dispatch) => {
 
 
 Register.propTypes = {
-  saveNewUser: React.PropTypes.func.isRequired
+  saveNewUser: PropTypes.func.isRequired
 };
 
 export default connect(mapStateToProps,mapDispatchToProps)(Register);

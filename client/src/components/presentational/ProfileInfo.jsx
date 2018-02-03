@@ -1,4 +1,5 @@
 import React from 'react';
+import PasswordUpdate from './PasswordUpdate';
 
 
 /**
@@ -9,10 +10,31 @@ import React from 'react';
  *
  * @returns {object} action creators
  */
-const ProfileInfo = ({userData, showInputHandler}) => {
+const ProfileInfo = ({
+  userData,
+  showInputHandler,
+  handleHideVisibility,
+  handleShowVisibility,
+  showPasswordUpdateInput,
+  handleChange,
+  handlePasswordUpdate,
+  passwordContainer
+}) => {
   return(
     <div className="change-password">
       <div>
+        {
+          showPasswordUpdateInput
+          ?
+            <PasswordUpdate
+            handleChange={handleChange}
+            handleHideVisibility={handleHideVisibility}
+            handlePasswordUpdate={handlePasswordUpdate}
+            userDetails={userData}
+            handleChange={handleChange}
+            passwordContainer={passwordContainer}
+          />
+        :
         <table>
           <thead>
             <tr>
@@ -43,9 +65,21 @@ const ProfileInfo = ({userData, showInputHandler}) => {
             <tr>
               <td id="passwordText">Password:</td>
               <td id="password">***</td>
+              <td>
+                  <a 
+                    onClick={handleShowVisibility}>
+                    <i
+                      className="material-icons"
+                      style={{cursor: 'pointer',
+                        background: '0F488A'}}>edit
+                    </i>
+                  </a>
+                </td>
+
             </tr>
           </tbody>
         </table>
+        }
       </div>
     </div>  
   );

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import LoaderText from '../presentational/Loader';
-
 import CreateCategoryModal from '../containers/CreateCategoryModal';
 
 /**
@@ -273,15 +273,15 @@ const CreateBookForm = ({
 }
 
 CreateBookForm.proptypes = {
-errorMessage: React.PropTypes.string,
-createBookHandler: React.PropTypes.func.isRequired,
-handleInput: React.PropTypes.func.isRequired,
-initialData: React.PropTypes.object.isRequired,
-loadedCategories: React.PropTypes.array.isRequired,
-imageUploadHandler: React.PropTypes.func.isRequired,
-errorStatus: React.PropTypes.bool,
-successStatus: React.PropTypes.bool,
-successMessage: React.PropTypes.string
+errorMessage: PropTypes.string,
+createBookHandler: PropTypes.func.isRequired,
+handleInput: PropTypes.func.isRequired,
+initialData: PropTypes.object.isRequired,
+loadedCategories: PropTypes.array.isRequired,
+imageUploadHandler: PropTypes.func.isRequired,
+errorStatus: PropTypes.bool,
+successStatus: PropTypes.bool,
+successMessage: PropTypes.string
 
 }
 

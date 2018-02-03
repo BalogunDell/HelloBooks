@@ -221,4 +221,5 @@ export function maptDispatchToProps(dispatch) {
   }
 }
 
-export default connect(mapStateToProps, maptDispatchToProps)(authenticate(BookDetails));
+export default connect(mapStateToProps, maptDispatchToProps)
+(authenticate(BookDetails));

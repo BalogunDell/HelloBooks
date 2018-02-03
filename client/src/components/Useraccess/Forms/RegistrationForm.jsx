@@ -1,5 +1,6 @@
 import React from 'react';
 import toastr from 'toastr';
+import PropTypes from 'prop-types';
 import { Link, Redirect } from 'react-router-dom';
 import Loading from '../../presentational/Loader';
 
@@ -156,10 +157,10 @@ export const RegistrationForm  = ({
   );
 }
 RegistrationForm.propTypes = {
-userData:React.PropTypes.object.isRequired,
-handleSubmit: React.PropTypes.func.isRequired,
-handleUserInput: React.PropTypes.func.isRequired,
-errorMessage: React.PropTypes.string.isRequired,
+userData: PropTypes.object.isRequired,
+handleSubmit: PropTypes.func.isRequired,
+handleUserInput: PropTypes.func.isRequired,
+errorMessage: PropTypes.string.isRequired,
 } 
 
 

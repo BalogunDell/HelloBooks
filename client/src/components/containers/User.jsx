@@ -24,7 +24,7 @@ import {
 } from '../presentational/UserNavLinks';
 import UserNav from '../presentational/Usernav';
 import authenticate from '../presentational/HOC/authenticate';
-import { fetchUserTrigger, editPassword } from '../../Actions/userProfileAction';
+import { fetchUserTrigger } from '../../Actions/userProfileAction';
 
 
 /**
@@ -45,8 +45,6 @@ export class User extends React.Component {
       redirect: false,
       userData: this.props.userData,
       dataReady: true,
-      showInput: false,
-      passwordContainer: { ...this.props.initialData },
       loading: false
     }
 
@@ -56,10 +54,6 @@ export class User extends React.Component {
     this.userId = '';
     this.userType='';
     this.handleLogout = this.handleLogout.bind(this);
-    this.handleShowVisibility = this.handleShowVisibility.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-    this.handlePasswordUpdate = this.handlePasswordUpdate.bind(this);
-    this.handleHideVisibility = this.handleHideVisibility.bind(this);
   }
 
 /**
@@ -72,93 +66,7 @@ export class User extends React.Component {
   handleLogout() {
     localStorage.clear();
   }
-
-
-/**
- * @description decides when to show the password edit form
- * 
- * @param {boolean} status of the form 
- *
- * @returns {object} action creators
- */
-handleShowVisibility(event) {
-  this.setState({
-    showInput: true
-  });
-}
-
-/**
- * @description decides when to show the password edit form
- * 
- * @param {boolean} status of the form 
- *
- * @returns {object} action creators
- */
-handleHideVisibility(event) {
-  this.setState({
-    showInput: false,
-    passwordContainer: {
-      currentPassword: '',
-      newPassword: ''
-      }
-  });
-}
-
-
-/**
- * @description handles inout change of the form
- * 
- * @param {boolean} event of the form 
- *
- * @returns {object} action creators
- */
-handleChange(event) {
-  event.preventDefault();
-  const field = event.target.name;
-  let temporaryPasswordContainer = { ...this.state.passwordContainer }
-  temporaryPasswordContainer[field] = event.target.value;
-  return this.setState({
-    passwordContainer: temporaryPasswordContainer,
-  });
-}
-
-
-
-/**
- * @description handles the password update
- * 
- * @param {boolean} event of the form 
- *
- * @returns {object} action creators
- */
-handlePasswordUpdate(event) {
-  event.preventDefault();
-  this.setState({
-    loading: true
-  });
-  this.props.editPassword(this.state.passwordContainer)
-    .then(() => {
-      this.setState({
-        loading: false,
-        showInput: false
-      });
-      Materialize.toast(
-        'Password has been successfully changed',
-        3000,
-        'blue rounded');
-        this.setState({
-          passwordContainer: {
-            currentPassword: '',
-            newPassword: ''
-          }
-        });
-    })
-    .catch(() => {
-    });
-}
   
-
-
  /**
   * @description componentWillMount 
   *
@@ -222,15 +130,15 @@ handlePasswordUpdate(event) {
        this.props.userProfile(this.userId).then(() => {
       })
       .catch(error => {
-        if(error) {
-        error.response.status === 403 || 500 ? this.setState({
-          isAuthenticated:false
-        })
-        :
-        this.setState({
-          isAuthenticated:false
-        });
-        }
+        // if(error) {
+        // error.response.status === 403 || 500 ? this.setState({
+        //   isAuthenticated:false
+        // })
+        // :
+        // this.setState({
+        //   isAuthenticated:false
+        // });
+        // }
       })
   });
   }
@@ -338,13 +246,11 @@ handlePasswordUpdate(event) {
  * @returns {object} action creators
  */
 const mapStateToProps = (state, ownProps) => {
-  let initialData = { currentPassword: '', newPassword: ''};
   return {
     isAuthenticated: state.userAccess.isAuthenticated,
     userDetails: state.userProfile,
     url: ownProps.match.path,
     currentToken: state.userAccess.userData,
-    initialData
   }
 }
 
@@ -361,7 +267,7 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     userProfile: (userId) => dispatch(fetchUserTrigger(userId)),
-    editPassword: (payload) => dispatch(editPassword(payload))
+    
   }
 }
 

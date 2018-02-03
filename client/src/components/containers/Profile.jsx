@@ -2,14 +2,16 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import { membershipIconCreator } from '../../utils/messages';
 import ProfileInfo from '../presentational/ProfileInfo';
 import ProfileUpdateForm from '..//containers/ProfileUpdateForm';
 import ImageModal from '../presentational/UpdateImageModal';
+import ProfileHeader from '../presentational/ProfileHeader';
 import {
   saveNewImage,
-  saveNewImageToDB
+  saveNewImageToDB,
+  editPassword
 } from '../../Actions/userProfileAction';
+import { fail } from 'assert';
 
 require('dotenv').config();
 
@@ -41,17 +43,20 @@ export class Profile extends React.Component {
       newImageUploadErrorMessage: '',
       disableUpdateBtn: false,
       preview: '',
-      defaultUserImage: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1510302773/default_image_yi56ca.jpg'
+      showPasswordUpdateInput: false,
+      passwordContainer: { ...this.props.initialData },
     }
 
     this.showProfile = this.showProfile.bind(this);
     this.hideChangeForm = this.hideChangeForm.bind(this);
     this.showInputHandler = this.showInputHandler.bind(this);
-    this.cancelEdit = this.cancelEdit.bind(this);
     this.handleImageEdit = this.handleImageEdit.bind(this);
     this.imageUploadHandler = this.imageUploadHandler.bind(this);
     this.cancelProfileEdit = this.cancelProfileEdit.bind(this);
-    
+    this.handleShowVisibility = this.handleShowVisibility.bind(this);
+    this.handlePasswordUpdate = this.handlePasswordUpdate.bind(this);
+    this.handleHideVisibility = this.handleHideVisibility.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
  /**
@@ -67,6 +72,42 @@ export class Profile extends React.Component {
     this.setState({viewProfile:true, editButton: false});
   } 
   
+  /**
+ * @description decides when to show the password edit form
+ * 
+ * @param {boolean} status of the form 
+ *
+ * @returns {object} action creators
+ */
+handleShowVisibility(event) {
+  this.setState({
+    showPasswordUpdateInput: true,
+    showInput: false,
+    editButton: true
+
+  });
+}
+
+/**
+ * @description decides when to show the password edit form
+ * 
+ * @param {boolean} status of the form 
+ *
+ * @returns {object} action creators
+ */
+handleHideVisibility(event) {
+  this.setState({
+    showPasswordUpdateInput: false,
+    showInput: false,
+    editButton: false,
+    passwordContainer: {
+      currentPassword: '',
+      newPassword: ''
+      }
+  });
+}
+
+
 /**
   * @method hideChangeForm
   *
@@ -95,31 +136,6 @@ export class Profile extends React.Component {
     const info = JSON.stringify(this.state.userData);
     localStorage.setItem('info', info);
   }
- 
-   /**
-   * @method cancelEdit
-   * 
-   * @description cancelEdit Handler
-   * 
-   * @returns a new state with cancelEditStatus set to false
-   * 
-   * @memberof profileUpdateForm
-   */
-  cancelEdit() {
-    this.setState({
-      viewProfile: true,
-      showInput: false,
-      editButton: false,
-      tempImageName: '',
-      loader: false,
-      imageHeight: 0,
-      imageWidth: 0,
-      preview: '',
-      newImageUploadError : false,
-      newImageUploadSuccessMessage: '',
-      disableUpdateBtn: false
-    });
-  }
 
   /**
    * @method cancelProfileEdit
@@ -136,6 +152,23 @@ export class Profile extends React.Component {
       showInput: false,
       editButton: false,
       loader: false,
+    });
+  }
+
+  /**
+ * @description handles inout change of the form
+ * 
+ * @param {boolean} event of the form 
+ *
+ * @returns {object} action creators
+ */
+  handleChange(event) {
+    event.preventDefault();
+    const field = event.target.name;
+    let temporaryPasswordContainer = { ...this.state.passwordContainer }
+    temporaryPasswordContainer[field] = event.target.value;
+    return this.setState({
+      passwordContainer: temporaryPasswordContainer,
     });
   }
 
@@ -177,6 +210,26 @@ export class Profile extends React.Component {
           });
         });
       })
+  }
+
+  /**
+ * @description handles the password update
+ * 
+ * @param {boolean} event of the form 
+ *
+ * @returns {object} action creators
+ */
+  handlePasswordUpdate(event) {
+    event.preventDefault();
+    this.props.editPassword(this.state.passwordContainer)
+      .then(() => {
+        Materialize.toast(
+          'Password has been successfully changed',
+          3000,
+          'blue rounded');
+      })
+      .catch(() => {
+      });
   }
 
   /**
@@ -265,49 +318,11 @@ export class Profile extends React.Component {
           <div className="profile-holder">
             <div className="details">
               {/* Profile image here */}
-              <div className="profile-image-holder">
-                <a href="#confirmationModal" className="modal-trigger">
-                { this.state.userData.image 
-                  ?
-                  <img
-                    src={this.state.userData.image} 
-                    className="responsive-img"
-                    id="image-target"
-                    alt=""/>
-                  :
-                  <img
-                    src={this.state.defaultUserImage}
-                    className="responsive-img"
-                    id="image-target"
-                    alt=""
-                  />
-                }
-                </a>
-              </div>
-              
-              <div className="userInfoDisplay">
-                <h4>{`${this.state.userData.firstName}
-                ${this.state.userData.lastName}`}
-                </h4>
-                <p>Joined: 
-                  {this.state.userData.createdAt} | {this.state.userData.email}
-                </p>
-                <p>Member level:
-                {membershipIconCreator(this.state.userData.membership 
-                  || 
-                  process.env.DEFAULT_MEMBERSHIP)} </p>
-                <div className="row">
-                  <div className="col s12 l12">
-                    {!this.state.viewProfile
-                    ?
-                    <button className="btn waves-teal waves-effect" 
-                      onClick={this.showProfile}>View Full Profile</button>
-                    :
-                    ''
-                    }
-                  </div>
-                </div>
-              </div>
+              <ProfileHeader
+                userData={this.state.userData}
+                viewProfile={this.state.viewProfile}
+                showProfile={this.showProfile}
+              />
 
               {this.state.viewProfile 
               ?
@@ -318,15 +333,22 @@ export class Profile extends React.Component {
                   showProfile = {this.showProfile}/>
                 :
                   <ProfileInfo userData={this.state.userData}
-                  showInput={this.state.showInput}
-                  showInputHandler={this.showInputHandler}/>
+                    showPasswordUpdateInput={this.state.showPasswordUpdateInput}
+                    showInputHandler={this.showInputHandler}
+                    handleShowVisibility = {this.handleShowVisibility}
+                    handleChange={this.handleChange}
+                    handleHideVisibility={this.handleHideVisibility}
+                    handlePasswordUpdate={this.handlePasswordUpdate}
+                    userDetails={this.state.userData}
+                    handleChange={this.handleChange}
+                    passwordContainer={this.state.passwordContainer}/>
                 }
                 {!this.state.editButton 
                 ?
                   <button 
-                    className="btn waves-ripple waves-effect modal-trigger" 
+                    className="btn waves-ripple waves-effect custom"
                     onClick={this.showInputHandler}
-                    id="editProfile">EDIT
+                    id="editProfile">EDIT PROFILE
                   </button>
                 : 
                   null
@@ -341,7 +363,7 @@ export class Profile extends React.Component {
         imageUploadHandler = {this.imageUploadHandler}
         loader ={this.state.loader}
         handleImageEdit={this.handleImageEdit}
-        cancelEdit = {this.cancelEdit}
+        cancelEdit = {this.cancelProfileEdit}
         preview = {this.state.preview}
         newImageUploadError= {this.state.newImageUploadError}
         newImageUploadSuccess = {this.state.newImageUploadSuccess}
@@ -363,10 +385,12 @@ export class Profile extends React.Component {
  * @returns {object} action creators
  */
 
-export const mapStateToProps = (state, ownProps) => {
+export const mapStateToProps = (state) => {
+  let initialData = { currentPassword: '', newPassword: ''};
   return {
     userProfile: state.userProfile,
-    newImageUrl: state.uploadedFiles
+    newImageUrl: state.uploadedFiles,
+    initialData
   }
 }
 
@@ -381,7 +405,8 @@ export const mapStateToProps = (state, ownProps) => {
 export const mapDispatchToProps = (dispatch) => {
   return {
     saveNewImage: (image) => dispatch(saveNewImage(image)),
-    saveNewImageToDB: (newimage) => dispatch(saveNewImageToDB(newimage))
+    saveNewImageToDB: (newimage) => dispatch(saveNewImageToDB(newimage)),
+    editPassword: (payload) => dispatch(editPassword(payload))
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Profile);

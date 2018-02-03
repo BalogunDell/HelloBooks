@@ -224,9 +224,8 @@ describe('Books Reducer', () => {
   it('should return a new state when RETURN BOOK action is dispatched', () => {
     const newState = booksReducer(initialState,
       returnBookAction({message: 'Book has been returned'}));
-    expect(newState.returnBookData).to.be.an('object');
-    expect(newState.returnBookData).to.have.property('message');
-    expect(newState.returnBookData.message).to.equal('Book has been returned');
+    expect(newState.returnBookData).to
+      .equal('Book has been returned');
   });
 
   it('should return a new state when EDIT BOOK action is dispatched', () => {

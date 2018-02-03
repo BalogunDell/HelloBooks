@@ -4,11 +4,12 @@
 }
 
 *.custom {
-  background-color: $custom-color
+  background-color: #0F488A;
+
 }
 
 *.custom:hover {
-  background-color: $custom-color
+  background-color: #0F488A
 }
 
 *.uploadImage {
@@ -60,6 +61,11 @@
   background: $custom-color;
   .user-view-bg {
     background: $custom-color;
+  }
+
+  .googleUserInfo {
+    font-size: 10px;
+    box-shadow: 0pc;
   }
 
   i {

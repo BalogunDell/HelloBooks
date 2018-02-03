@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Book from './Book';
 
 /**
@@ -18,7 +19,7 @@ const Books = (bookData, loading) => {
 };
 
 Books.proptypes = {
-  bookData: React.PropTypes.object
+  bookData: PropTypes.object
 }
 
   export default Books;

@@ -67,7 +67,10 @@ export class ProfileUpdateForm extends React.Component {
     this.setState({loader: true});
     this.props.updateProfile(this.state.userData)
     .then(() => {
-        Materialize.toast('Profile has been updated', 3000, 'blue rounded');
+        Materialize.toast(
+          'Profile has been updated',
+          3000,
+          'blue rounded');
         setTimeout(() => {
         }, 1000);
         
@@ -133,14 +136,14 @@ export class ProfileUpdateForm extends React.Component {
                 value= {this.state.userData.firstName}
                 onChange= {this.handleUserInput}
               />
-              <label data-error="Invalid input">Firstname
+              <label data-error="Invalid input">First name
                 <span>*</span>
               </label>
             </div>
 
             {/* Last name input  */}
             <div className="input-field col s6">
-              <label>Lastname
+              <label>Last name
                 <span>*</span>
               </label>
               <input 
@@ -216,7 +219,7 @@ export class ProfileUpdateForm extends React.Component {
           </div> 
           <div className="input-field col s12 m12 l6">
             <input type="submit"
-              className="btn waves-ripple waves-effect" 
+              className="btn waves-ripple waves-effect custom" 
               disabled={this.state.disable}
               id="saveBtn"
               value="Save"/>

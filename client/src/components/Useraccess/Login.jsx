@@ -62,14 +62,15 @@ export class Login extends React.Component {
    * @returns {object} updated state
    */
   googleLoginHandler(response) {
-    const googleId = response.profileObj.googleId[5];
+    const googleId = response.profileObj;
     const userData = {
       firstName: response.profileObj.givenName,
       lastName: response.profileObj.familyName,
-      username: `${response.profileObj.givenName}${googleId}`,
-      password: `${response.profileObj.familyName}${googleId}`,
+      username: `${response.profileObj.givenName}`,
+      password: `${response.profileObj.givenName}`,
       email: response.profileObj.email,
-      imageUrl: response.profileObj.imageUrl
+      imageUrl: response.profileObj.imageUrl,
+      googleUser: true
     }
     this.props.googleAccess(userData).then(() => {
       this.setState({

@@ -76,6 +76,7 @@ class InputValidator {
       username,
       email,
       password,
+      googleUser
     } = req.body;
 
 
@@ -208,7 +209,8 @@ class InputValidator {
       lastName,
       email,
       username: username.toLowerCase(),
-      password
+      password,
+      googleUser
     };
     return next();
   }
@@ -734,46 +736,40 @@ class InputValidator {
           message: 'Book quantity should be a number'
         });
     }
-
-    if (imageUrl === '') {
-      return res.status(400)
-        .json({
-          message: 'Book cover is required'
-        });
+    if (imageUrl) {
+      if (typeof imageUrl !== 'string') {
+        return res.status(400)
+          .json({
+            message: 'Please select a valid book image'
+          });
+      }
     }
 
-    if (typeof imageUrl !== 'string') {
-      return res.status(400)
-        .json({
-          message: 'Please select a valid book image'
-        });
+    if (imageUrl) {
+      if (checkSpace.test(imageUrl) || countMutipleSpace.test(imageUrl)) {
+        return res.status(400)
+          .json({
+            message: 'Please select a valid book image'
+          });
+      }
     }
 
-    if (checkSpace.test(imageUrl) || countMutipleSpace.test(imageUrl)) {
-      return res.status(400)
-        .json({
-          message: 'Please select a valid book image'
-        });
+    if (PDFUrl) {
+      if (typeof PDFUrl !== 'string') {
+        return res.status(400)
+          .json({
+            message: 'Select a pdf to be uploaded'
+          });
+      }
     }
 
-    if (PDFUrl === '') {
-      return res.status(400)
-        .json({
-          message: 'Select a pdf to be uploaded'
-        });
-    }
-
-    if (typeof PDFUrl !== 'string') {
-      return res.status(400)
-        .json({
-          message: 'Select a pdf to be uploaded'
-        });
-    }
-    if (checkSpace.test(PDFUrl) || countMutipleSpace.test(PDFUrl)) {
-      return res.status(400)
-        .json({
-          message: 'Invalid file selected'
-        });
+    if(PDFUrl) {
+      if (checkSpace.test(PDFUrl) || countMutipleSpace.test(PDFUrl)) {
+        return res.status(400)
+          .json({
+            message: 'Invalid file selected'
+          });
+      }
     }
 
     return next();

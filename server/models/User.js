@@ -108,6 +108,11 @@ export default (sequelize, DataTypes) => {
     passwordResetUrl: {
       type: DataTypes.STRING,
       allowNull: true
+    },
+    googleUser: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false
     }
   }, {
     classMethods: {

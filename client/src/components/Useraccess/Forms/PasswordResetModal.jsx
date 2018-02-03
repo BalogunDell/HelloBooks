@@ -59,24 +59,22 @@ export class PasswordResetModal extends React.Component {
       
       this.props.sendEmail({email: this.state.email})
       .then(() => {
-        this.setState({ disableBtn: true});
-        message.innerHTML = `A password reset link has been sent to ${this.state.email}`;
-        message.className="green-text center-align";
+        Materialize.toast(
+          `A password reset link has been sent to your email`,
+        3200,
+        'blue rounded');
+
         setTimeout(() => {
           $('.modal').modal('close');
-        }, 3000);
+          this.setState({
+            disableBtn: true,
+            email: ''
+          });
+        }, 2500);
+
       })
       .catch((error) => {
-        if (error.response.status === 501) {
-          message.innerHTML ="Ooops! Something went wrong, the server could not process your request at this time. Please try again.";
-          message.className="red-text center-align";
-          this.setState({ error: false, disableBtn: false});
-          return;
-        } else {
-            message.innerHTML = error.response.data.message;
-            message.className="red-text center-align";
-            this.setState({ disableBtn: false});
-        }
+        this.setState({ disableBtn: false});
       })
     }
   }

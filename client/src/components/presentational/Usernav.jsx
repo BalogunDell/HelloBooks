@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link, Redirect} from 'react-router-dom';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 /**
@@ -31,12 +32,6 @@ const UserNav = ({
   path,
   userDetails,
   handleLogout,
-  handleHideVisibility,
-  handleShowVisibility,
-  showInput,
-  passwordContainer,
-  handleChange,
-  handlePasswordUpdate
 }) => {
   return(
     <div>
@@ -114,57 +109,8 @@ const UserNav = ({
           <div className="user-view">
             <div className="background user-view-bg">
             </div>
-
-            { 
-              showInput ?
-              <div>
-                  <form 
-                    onSubmit={handlePasswordUpdate}
-                    id="changePassword"
-                    >
-                    <h6 className="center white-text">Change Password</h6>
-                    <input
-                      type="password"
-                      placeholder="Enter your current password"
-                      name="currentPassword"
-                      onChange={handleChange}
-                      required
-                      minLength="6"
-                      className="white-text"
-                      value={passwordContainer.currentPassword}
-                    />
-                    <input
-                      type="password"
-                      name="newPassword"
-                      value={passwordContainer.newPassword}
-                      onChange={handleChange}
-                      className="white-text"
-                      required
-                      minLength="6"
-                      placeholder="Enter your new password"
-                    />
-
-                    <input
-                      type="submit"
-                      value = "submit"
-                      className="btn black-text white"
-                    />
-
-                    <a
-                      className="btn white-text red"
-                      onClick={handleHideVisibility}>Cancel
-                    </a>
-                  </form>
-              </div>
-            :
+              
             <div>
-              <h6 
-                className="white-text username password">Password:*****
-                <a 
-                  onClick={handleShowVisibility}>
-                  <i className="material-icons editPass">edit</i>
-                </a>
-              </h6>
             <h6 
               className="white-text username">Username: {userDetails.username}
             </h6>
@@ -177,7 +123,6 @@ const UserNav = ({
             ''
             }
             </div>
-            }
           </div>
         </li>
         <li>
@@ -201,9 +146,9 @@ const UserNav = ({
 }
 
 UserNav.propTypes = {
-  navLinks:React.PropTypes.array.isRequired,
-  linkIcons:React.PropTypes.array.isRequired,
-  path:React.PropTypes.string.isRequired,
-  userDetails:React.PropTypes.object.isRequired
+  navLinks: PropTypes.array.isRequired,
+  linkIcons: PropTypes.array.isRequired,
+  path: PropTypes.string.isRequired,
+  userDetails: PropTypes.object.isRequired
 }
 export default UserNav;

@@ -404,14 +404,15 @@ describe('THUNK FUNCTIONS', () => {
 
     const expectedAction = {
       type: RETURN_BOOK,
-      bookId: serverRes
+      payload: serverRes
     };
     const store = mockStore({});
     await store.dispatch(returnBook({bookId: 3}))
       .then(() => {
         const actions = store.getActions();
         expect(actions[0].type).to.equal(expectedAction.type);
-        expect(actions[0].bookId).to.equal(expectedAction.bookId.message);
+        expect(actions[0].payload.message).to
+          .equal(expectedAction.payload.message);
       });
       done();
   });

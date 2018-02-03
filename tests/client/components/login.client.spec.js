@@ -69,7 +69,7 @@ describe('renders Login Form', () => {
 
   it('renders css classes on div and the length of div', () => {
     expect(wrapper.find('.user-login-form').length).toBe(1);
-    expect(wrapper.find('div').length).toBe(16);
+    expect(wrapper.find('div').length).toBe(15);
     expect(wrapper.find('.form-holder').length).toBe(1);
     expect(wrapper.find('.form-header').length).toBe(1);
     expect(wrapper.find('.user-form').length).toBe(1);

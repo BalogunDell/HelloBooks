@@ -289,7 +289,7 @@ describe('Single Book component', () => {
       }
     }
     const wrapper = shallow(<Book {...props}/>);
-    expect(wrapper.find('div').length).toBe(6);
+    expect(wrapper.find('div').length).toBe(11);
     expect(wrapper.find('.books-holder-title').length).toBe(1);
   });
 });

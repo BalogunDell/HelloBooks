@@ -42,6 +42,7 @@ class UserController {
             userId: user.id,
             userRole: user.role,
             imageUrl: user.imageUrl,
+            googleUser: user.googleUser
           }
         }
         });
@@ -90,7 +91,8 @@ class UserController {
               username: response.dataValues.username,
               userId: response.dataValues.id,
               userRole: response.dataValues.role,
-              imageUrl: response.dataValues.imageUrl
+              imageUrl: response.dataValues.imageUrl,
+              googleUser: response.dataValues.googleUser
             } };
           return res.status(200).json({ responseData });
         }
@@ -130,7 +132,8 @@ class UserController {
               username: user.username,
               userId: user.id,
               userRole: user.role,
-              imageUrl: user.imageUrl
+              imageUrl: user.imageUrl,
+              googleUser: user.googleUser
             }
           };
           return res.status(200).json({ responseData });
@@ -307,6 +310,7 @@ class UserController {
             username: user.username,
             imageUrl: user.imageUrl,
             membership: user.membership,
+            googleUser: user.googleUser,
             role: user.role,
             createdAt: user.createdAt
           };

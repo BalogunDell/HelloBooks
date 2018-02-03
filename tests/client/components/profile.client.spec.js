@@ -18,7 +18,7 @@ import {
  } from '../../../client/src/components/containers/ProfileUpdateForm';
 import UpdateImageModal from '../../../client/src/components/presentational/UpdateImageModal';
 
-import { profile, categories, mockBooks } from '../mock/mockdata';
+import { profile, categories, mockBooks, userProfile } from '../mock/mockdata';
 import mockStorage from '../mock/mockDataStorage';
 
 window.localStorage = mockStorage;
@@ -26,19 +26,14 @@ window.localStorage = mockStorage;
 jest.mock('react-router-dom');
 
 configure({ adapter: new Adapter() });
-// Configure Juery for test 
 global.$ = global.jQuery = $;
-
-// Configure file reader
 global.FileReader = () => ({
   readAsDataURL: () => {}
 });
-
 global.JSON = {
   parse: () => {},
   stringify: () => {}
 }
-
 global.Materialize = {
   Materialize: () => {}
 }
@@ -107,13 +102,6 @@ describe('Profile, updateImageModal and profileUpdateForm components', () => {
     const spy = jest.spyOn(Profile.prototype, 'hideChangeForm');
     shallow(<Profile {...props} hideChangeForm = {spy}/>)
     .instance().hideChangeForm(event);
-    expect(spy).toHaveBeenCalledTimes(1);
-  });
-
-  it('test the method: cancelEdit', () => {
-    const spy = jest.spyOn(Profile.prototype, 'cancelEdit');
-    shallow(<Profile {...props} cancelEdit = {spy}/>)
-    .instance().cancelEdit(event);
     expect(spy).toHaveBeenCalledTimes(1);
   });
 
@@ -259,4 +247,4 @@ describe('Profile Info Component', () => {
   it('should render without crashing', () => {
     const wrapper = shallow(<ProfileInfo {...props}/>)
   });
-})
+});

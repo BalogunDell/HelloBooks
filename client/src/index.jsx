@@ -3,13 +3,11 @@ import { render } from 'react-dom';
 import 'jquery';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import configStore from './store/configStore';
 
-import './assets/materialize/css/materialize.min.css'
+import configStore from './store/configStore';
 import './assets/materialize/js/materialize.min.js'
 import './assets/css/main.scss';
 import './assets/main.js';
-
 import Main from './components/containers/Main';
 import Home from './components/presentational/Home/Home';
 import Login from './components/Useraccess/Login';
@@ -23,7 +21,6 @@ import BookDetails from './components/containers/BookDetails';
 import ResetPassword from './components/Useraccess/ResetPassword';
 import About from './components/presentational/About/About';
 import NotFound from './components/presentational/NotFound/NotFound';
-
 import { loadAllbooks } from './Actions/booksAction';
 import authenticate from '../src/components/presentational/HOC/authenticate';
 

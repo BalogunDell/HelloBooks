@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import LoaderText from '../presentational/Loader';
 
 
@@ -121,15 +122,15 @@ const UpdateImageModal = ({
 }
 
 UpdateImageModal.propTypes = {
-  imageUploadHandler:React.PropTypes.func,
-  handleImageEdit: React.PropTypes.func,
-  cancelEdit: React.PropTypes.func,
-  loader: React.PropTypes.bool,
-  newImageUploadError: React.PropTypes.bool,
-  newImageUploadSuccess: React.PropTypes.bool,
-  newImageUploadErrorMessage: React.PropTypes.string,
-  newImageUploadSuccessMessage: React.PropTypes.string,
-  disableUpdateBtn: React.PropTypes.bool
+  imageUploadHandler: PropTypes.func,
+  handleImageEdit: PropTypes.func,
+  cancelEdit: PropTypes.func,
+  loader: PropTypes.bool,
+  newImageUploadError: PropTypes.bool,
+  newImageUploadSuccess: PropTypes.bool,
+  newImageUploadErrorMessage: PropTypes.string,
+  newImageUploadSuccessMessage: PropTypes.string,
+  disableUpdateBtn: PropTypes.bool
 }
 
 export default UpdateImageModal;

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import 'jquery';
+import PropTypes from 'prop-types';
 import GoogleLogin from 'react-google-login';
 import PasswordResetModal from './PasswordResetModal';
 import Loader from '../../presentational/Loader';
@@ -113,10 +113,10 @@ const LoginForm = ({
   }
 
 LoginForm.propTypes = {
- handleLoginInput: React.PropTypes.func.isRequired,
- googleLoginHandler: React.PropTypes.func.isRequired,
- userData: React.PropTypes.object.isRequired,
- isLoading: React.PropTypes.bool.isRequired
+ handleLoginInput: PropTypes.func.isRequired,
+ googleLoginHandler: PropTypes.func.isRequired,
+ userData: PropTypes.object.isRequired,
+ isLoading: PropTypes.bool.isRequired
 }
 
 export default LoginForm;

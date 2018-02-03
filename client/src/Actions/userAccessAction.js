@@ -112,6 +112,7 @@ const sendEmail = userEmail => dispatch =>
       dispatch(sendEmailAction(response.data));
     })
     .catch((error) => {
+      console.log(error);
       networkErrorReporter(error);
       throw (error);
     });

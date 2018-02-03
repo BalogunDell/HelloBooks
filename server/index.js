@@ -9,10 +9,10 @@ import SSLRedirect from 'heroku-ssl-redirect';
 
 
 
-// import webpackMiddleware from 'webpack-dev-middleware';
-// import webpack from 'webpack';
+import webpackMiddleware from 'webpack-dev-middleware';
+import webpack from 'webpack';
 
-// import webpackDevConfig from '../webpack.dev.config';
+import webpackDevConfig from '../webpack.dev.config';
 
 
 
@@ -41,9 +41,9 @@ app.use('/api/v1/', appRouter);
 
 
 
-// if (process.env.NODE_ENV === 'development') {
-//   app.use(webpackMiddleware(webpack(webpackDevConfig)));
-// }
+if (process.env.NODE_ENV === 'development') {
+  app.use(webpackMiddleware(webpack(webpackDevConfig)));
+}
 
 
 

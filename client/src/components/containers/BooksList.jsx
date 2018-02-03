@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import 'jquery';
 
 import ConfirmationModal from '../presentational/ConfirmationModal';
 import {
@@ -108,7 +109,9 @@ export class BooksList extends React.Component {
         showAll: false
       });
     } else if (this.state.selectedValue === 'pendingreturn') {
-      this.setState({ fetchedborrowedbooks: this.state.borrowedBooksFilterable });
+      this.setState({ 
+        fetchedborrowedbooks: this.state.borrowedBooksFilterable
+      });
       const unreturned = this.state.borrowedBooksFilterable
         .filter(book => book.returnStatus === false);
       this.setState({ fetchedborrowedbooks: unreturned,
