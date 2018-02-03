@@ -4,7 +4,7 @@ import Loader from '../../presentational/Loader';
 import { sendEmail } from '../../../Actions/userAccessAction';
 
 /**
- * PasswordResetModal
+ * @description PasswordResetModal
  * 
  * @class PasswordResetModal
  * 
@@ -26,7 +26,7 @@ export class PasswordResetModal extends React.Component {
   }
 
   /**
-   * User input handler - handleInput
+   * @description User input handler - handleInput
    * 
    * @param { object } event 
    * 
@@ -39,7 +39,7 @@ export class PasswordResetModal extends React.Component {
   }
 
   /**
-   * Reset password handler - handleSubmit
+   * @description Reset password handler - handleSubmit
    * 
    * @param { object } event 
    * 
@@ -48,10 +48,8 @@ export class PasswordResetModal extends React.Component {
    * @returns { object } updated state and success message 
    */
   handleSubmit(event) {
-     // prevent button default action
      event.preventDefault();
      message.innerHTML = ``;
-    // validate input
     this.setState({  disableBtn: true});
     if(this.state.email === "") {
       message.innerHTML = `Your email is needed to reset your password`;
@@ -59,7 +57,6 @@ export class PasswordResetModal extends React.Component {
       this.setState({ disableBtn: false});
     } else {
       
-      //Make API call
       this.props.sendEmail({email: this.state.email})
       .then(() => {
         this.setState({ disableBtn: true});
@@ -85,7 +82,7 @@ export class PasswordResetModal extends React.Component {
   }
 
   /**
-   * Cancel Password Reset - cancelPassReset
+   * @description Cancel Password Reset - cancelPassReset
    * 
    * @memberof PasswordResetModal
    * 
@@ -99,7 +96,7 @@ export class PasswordResetModal extends React.Component {
   }
 
   /**
-   * Lifecycle hook - componentDidMount
+   * @description Lifecycle hook - componentDidMount
    * 
    * @memberof PasswordResetModal
    * 
@@ -120,7 +117,7 @@ export class PasswordResetModal extends React.Component {
   }
 
   /**
-   * React render method - render
+   * @description React render method - render
    * 
    * @memberof PasswordResetModal
    * 
@@ -178,6 +175,13 @@ export class PasswordResetModal extends React.Component {
 
 }
 
+/**
+ * @description Redux connect parameter - dispatchToProps
+ * 
+ * @param {function} dispatch
+ * 
+ * @returns {object} mapped dispatch 
+*/
 export const dispatchToProps = (dispatch) => {
   return {
     sendEmail: (email) => dispatch(sendEmail(email))

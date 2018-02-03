@@ -11,6 +11,16 @@ import {
   TRENDING_BOOKS,
 } from '../Actions/actionTypes';
 
+/**
+ * @export getAllBooks
+ * 
+ * @description Defines getAllBooks reducer
+ * 
+ * @param { object } state inital state
+ * @param { object } action action type and payload
+ * 
+ * @returns { object } action performed and payload of the action
+ */
 const getAllBooks = (state = {}, action) => {
   switch (action.type) {
     case GET_ALL_BOOKS:
@@ -34,7 +44,7 @@ const getAllBooks = (state = {}, action) => {
       };
     case RETURN_BOOK:
       return {
-        ...state, returnBookData: action.bookId
+        ...state, returnBookData: action.payload.message
       };
     case GET_BOOK_ID:
       return {
@@ -42,6 +52,9 @@ const getAllBooks = (state = {}, action) => {
       };
     case MODIFY_BOOK: {
       const newBookArray = [];
+      if (state.books === undefined) {
+        return state;
+      }
       state.books.map((book) => {
         if (book.id === action.bookData.id) {
           newBookArray.push(action.bookData);

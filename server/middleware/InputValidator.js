@@ -3,11 +3,10 @@ import validateEmail from './validateEmail';
 
 
 /**
+ * @class InputValidator
  * 
- * @param { object } req - Request object
- * @param { object } res - Response object
+ * @classdesc this class validates input from users
  * 
- * @returns { object } - returns an object
  */
 class InputValidator {
 /** 
@@ -80,7 +79,6 @@ class InputValidator {
     } = req.body;
 
 
-    // Validate firstName
     if (!firstName) {
       return res.status(400)
         .json({
@@ -108,7 +106,7 @@ class InputValidator {
           message: 'First name should only contain alphabets'
         });
     }
-    // Validate lastName
+
     
     if (!lastName) {
       return res.status(400)
@@ -136,7 +134,7 @@ class InputValidator {
         });
     }
 
-    // Validate username
+
     if (!username) {
       return res.status(400)
         .json({
@@ -163,7 +161,7 @@ class InputValidator {
         });
     }
 
-    // Validate password
+
     if (!password) {
       return res.status(400)
         .json({
@@ -184,7 +182,7 @@ class InputValidator {
         });
     }
 
-    // Validate Email
+
     if (!email) {
       return res.status(400)
         .json({
@@ -227,7 +225,7 @@ class InputValidator {
   static resetPassEmailVerifer(req, res, next) {
     const { email } = req.body;
 
-    // Verify if there is an email
+
     if (!email) {
       return res.status(400)
         .json({
@@ -270,7 +268,8 @@ class InputValidator {
       res.status(400).json({ 
         message: 'Password should not be less than 5 characters' });
     } else {
-      const hashPassword = bcrypt.hashSync(newPassword, bcrypt.genSaltSync(10));
+      const hashPassword = bcrypt.hashSync(newPassword,
+        bcrypt.genSaltSync(10));
       req.body.password = hashPassword;
       req.body.passwordResetUrl = resetUrl;
       next();
@@ -303,7 +302,7 @@ class InputValidator {
     const checkSpace = /(\s){1}/;
     const countMutipleSpace = /(\s){2}/;
     const numberCheck = /((\d)+)/g;
-    // Validate ISBN
+
     if (isbn === '' || !isbn) {
       return res.status(400)
         .json({
@@ -325,7 +324,7 @@ class InputValidator {
         });
     }
 
-    // Validate Author
+
     if (author === '') {
       return res.status(400)
         .json({
@@ -353,7 +352,7 @@ class InputValidator {
         });
     }
 
-    // Validate title
+
     if (title === '') {
       return res.status(400)
         .json({
@@ -377,7 +376,7 @@ class InputValidator {
         });
     }
 
-    // Validate pages
+
     if (pages === '') {
       return res.status(400)
         .json({
@@ -392,7 +391,7 @@ class InputValidator {
         });
     }
 
-    // Validate pages
+
     if (year === '') {
       return res.status(400)
         .json({
@@ -406,7 +405,7 @@ class InputValidator {
         });
     }
 
-    // categoryId
+
     if (categoryId === '') {
       return res.status(400)
         .json({
@@ -434,7 +433,7 @@ class InputValidator {
         });
     }
 
-    //  Validate descriptipn
+
     if (description === '') {
       return res.status(400)
         .json({
@@ -448,7 +447,7 @@ class InputValidator {
         });
     }
 
-    //  Validate quantity
+
     if (quantity === '') {
       return res.status(400)
         .json({
@@ -463,7 +462,7 @@ class InputValidator {
         });
     }
 
-    //  Validate imageUrl
+
     if (imageUrl === '') {
       return res.status(400)
         .json({
@@ -485,7 +484,7 @@ class InputValidator {
         });
     }
 
-    //  Validate pdfUrl
+
     if (PDFUrl === '') {
       return res.status(400)
         .json({
@@ -592,7 +591,7 @@ class InputValidator {
     const checkSpace = /(\s){1}/;
     const countMutipleSpace = /(\s){2}/;
     const numberCheck = /((\d)+)/g;
-    // Validate ISBN
+
     if (isbn) {
       return res.status(400)
         .json({
@@ -600,7 +599,7 @@ class InputValidator {
         });
     }
 
-    // Validate Author
+
     if (author === '') {
       return res.status(400)
         .json({
@@ -628,7 +627,7 @@ class InputValidator {
         });
     }
 
-    // Validate title
+
     if (title === '') {
       return res.status(400)
         .json({
@@ -652,7 +651,7 @@ class InputValidator {
         });
     }
 
-    // Validate pages
+
     if (pages === '') {
       return res.status(400)
         .json({
@@ -667,7 +666,7 @@ class InputValidator {
         });
     }
 
-    // Validate pages
+
     if (year === '') {
       return res.status(400)
         .json({
@@ -681,7 +680,7 @@ class InputValidator {
         });
     }
 
-    // categoryId
+
     if (categoryId === '') {
       return res.status(400)
         .json({
@@ -709,7 +708,6 @@ class InputValidator {
         });
     }
 
-    //  Validate descriptipn
     if (description === '') {
       return res.status(400)
         .json({
@@ -723,7 +721,6 @@ class InputValidator {
         });
     }
 
-    //  Validate quantity
     if (quantity === '') {
       return res.status(400)
         .json({
@@ -738,7 +735,6 @@ class InputValidator {
         });
     }
 
-    //  Validate imageUrl
     if (imageUrl === '') {
       return res.status(400)
         .json({
@@ -760,7 +756,6 @@ class InputValidator {
         });
     }
 
-    //  Validate pdfUrl
     if (PDFUrl === '') {
       return res.status(400)
         .json({

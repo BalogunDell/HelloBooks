@@ -1,13 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Spinner from '../presentational/Loader';
 
 import {
   createCategory,
   getCategories } from '../../Actions/categoryAction';
+import CategoryModal from '../presentational/CategoryModal';
 
 /**
- * Create Category Modal component
+ * @description Create Category Modal component
  *
  * @class CreateCategoryModal
  *
@@ -33,7 +33,8 @@ export class CreateCategoryModal extends React.Component {
     this.loaderText = <h6 className="green-text">Creating category...</h6>
   }
 
-  /** Handles user input - handleInput
+ /** 
+  * @description Handles user input - handleInput
   *
   * @param {object} event
   *
@@ -43,7 +44,8 @@ export class CreateCategoryModal extends React.Component {
     this.setState({newCategory: event.target.value});
   }
 
-  /** Closes the modal - closeModal
+ /** 
+  * @description Closes the modal - closeModal
   *
   * @param {object} event
   *
@@ -61,7 +63,9 @@ export class CreateCategoryModal extends React.Component {
     });
   }
 
-  /** Saves category - saveCategory
+ /** 
+  * 
+  * @description Saves category - saveCategory
   *
   * @param {object} event
   *
@@ -74,7 +78,6 @@ export class CreateCategoryModal extends React.Component {
     .then(() => {
 
       this.props.getCategories().then(() => {
-        // Get the updated categories
       this.setState({
         loader:false, 
         newCategoryError: '', 
@@ -113,7 +116,9 @@ export class CreateCategoryModal extends React.Component {
     });
   }
   
-  /** React render method  - saveCategory
+ /** 
+  * 
+  * @description React render method  - saveCategory
   *  
   * @param {object} event
   *
@@ -122,82 +127,19 @@ export class CreateCategoryModal extends React.Component {
   render() {
     return (
       <div className="modal" id="addCategory">
-        <div className="container">
-          <div className="row">
-            <h5 className="center">Add New Category</h5>
-          </div>
-          <div className="row">
-            <div className="col s12 m12 l6 offset-l3">
-              <div className="modal-content">
-                <form onSubmit={this.saveCategory}>
-                  <div className="row">
-                    <div className="input-field">
-                      <input 
-                        type="text" name="newCategory" 
-                        value={this.state.newCategory}
-                        onChange={this.handleInput}
-                        className="validate"
-                        required
-                        />
-                      <label 
-                        htmlFor="isbn"
-                        data-error=""
-                        data-success="">New Category<span>*</span></label>
-                    </div>
-                  </div>
-      
-                  <div className="row">
-                    <div className="center">
-                      
-                      { this.state.loader ? 
-                      <div>
-                      <Spinner/>
-                      {this.loaderText}
-                      </div>
-                      : null }
-                      
-                      { this.state.newCategoryErrorStatus
-                      ?
-                        <div className="red-text">
-                          {this.state.newCategoryError}
-                        </div>
-                      :
-                        null
-                      }
-
-                      {this.state.newCategorySuccessStatus
-                      ?
-                        <div className="green-text">
-                          {this.state.newCategorySuccess}
-                        </div>
-                      :
-                      null
-                      }
-                      
-                    </div>
-                  </div>
-
-                  <div className="row">
-                    <div className="input-field center">
-                      <input type="submit" 
-                        className="btn waves-effect waves-teal" 
-                        disabled={this.state.disableSubmit}/>
-                    </div>
-                  </div>
-                </form>
-              </div>
-
-              <div className="modal-footer">
-                <div className="input-field center">
-                  <button
-                    className="btn waves-effect waves-teal red modal-action modal-close"
-                    onClick ={this.closeModal}>Close
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <CategoryModal
+          saveCategory={this.saveCategory}
+          newCategory={this.state.newCategory}
+          handleInput={this.handleInput}
+          loader={this.state.loader}
+          loaderText={this.loaderText}
+          newCategoryErrorStatus={this.state.newCategoryErrorStatus}
+          newCategoryError={this.state.newCategoryError}
+          newCategorySuccessStatus={this.state.newCategorySuccessStatus}
+          newCategorySuccess={this.state.newCategorySuccess}
+          disableSubmit={this.state.disableSubmit}
+          closeModal={this.closeModal}
+        />
       </div>
     );
   }
@@ -215,4 +157,5 @@ export const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CreateCategoryModal);
+export default connect(mapStateToProps, mapDispatchToProps)
+(CreateCategoryModal);

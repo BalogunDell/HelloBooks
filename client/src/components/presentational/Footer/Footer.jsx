@@ -2,7 +2,7 @@ import React from 'react';
 
 /**
  * 
- * Renders the Footer component
+ * @description Renders the Footer component
  * 
  * @returns {JSX} JSX representation of DOM
  */

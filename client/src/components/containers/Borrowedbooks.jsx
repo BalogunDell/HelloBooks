@@ -8,7 +8,7 @@ import {
 import UserBooks from '../presentational/UserBooks';
 
 /**
- * Borrowed Books component
+ * @description Borrowed Books component
  *
  * @class BorrowedBooks
  *
@@ -29,7 +29,7 @@ export class BorrowedBooks extends React.Component {
   }
 
   /**
-   * return book handler
+   * @description return book handler
    *
    * @memberof BorrowedBooks
    *
@@ -55,7 +55,7 @@ export class BorrowedBooks extends React.Component {
   }
 
   /**
-   * pdf file upload method
+   * @description PDF file upload method
    *
    * @memberof BorrowedBooks
    *
@@ -77,7 +77,7 @@ export class BorrowedBooks extends React.Component {
   }
 
   /**
-   * pdf file upload method
+   * @description PDF file upload method
    *
    * @memberof BorrowedBooks
    *
@@ -97,7 +97,7 @@ export class BorrowedBooks extends React.Component {
   }
 
   /**
-   * react render method
+   * @description react render method
    *
    * @memberof BorrowedBooks
    *
@@ -125,14 +125,13 @@ export class BorrowedBooks extends React.Component {
   }
 }
 
- /**
- *  HOC - Redux Connect method parameter
- *
- * @param {Object} state
- *
- * @returns {object} store state
- */
-
+/**
+ * @description Redux connect parameter - mapStateToProps
+ * 
+ * @param {object} state
+ * 
+ * @returns {object} mapped state 
+*/
 export const mapStateToProps = (state) => {
   return {
     fetchedBooks: state.books,
@@ -140,12 +139,12 @@ export const mapStateToProps = (state) => {
 }
 
 /**
- *  HOC - Redux Connect method parameter
- *
- * @param {Object} dispatch
- *
- * @returns {object} action creators
- */
+ * @description Redux connect parameter - mapDispatchToProps
+ * 
+ * @param {function} dispatch
+ * 
+ * @returns {object} mapped dispatch 
+*/
 export const mapDispatchToProps = (dispatch) => {
   return {
     getUserBooks: (userId) => dispatch(getUserBooks(userId)),

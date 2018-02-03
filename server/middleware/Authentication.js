@@ -1,8 +1,6 @@
 
 import model from '../models';
-import {
-  findOneResource,
-} from '../utils/queryFinder';
+import { findOneResource } from '../utils/queryFinder';
 import Helper from './Helper';
 
 require('dotenv').config();
@@ -10,9 +8,9 @@ require('dotenv').config();
 const userModel = model.User;
 
 /**
- * @class authentication
+ * @class Authentication
  * 
- * @classdesc creates an authentication class
+ * @classdesc creates an Authentication class used as middleware
  */
 class Authentication {
   /**

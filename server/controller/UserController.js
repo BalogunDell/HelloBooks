@@ -15,12 +15,11 @@ require('dotenv').config();
 const userModel = model.User;
 const borrowedBookModel = model.BorrowedBook;
 const bookModel = model.Book;
- 
 
 /**
- * @class User
+ * @class UserController
  * 
- * @classdesc creates a class User
+ * @classdesc creates a UserController class that handles users actions
  */
 class UserController {
   /**
@@ -389,7 +388,7 @@ class UserController {
    * @param { object } req requet object
    * @param { object } res response object
    * 
-   * @returns {object} edited user profile
+   * @returns { object } edited user profile
    */
   static editPassword(req, res) {
     const {
@@ -402,7 +401,8 @@ class UserController {
       .then((response) => {
         const { password } = response.dataValues;
         if (password && bcrypt.compareSync(currentPassword, password)) {
-          const hashedPassword = bcrypt.hashSync(newPassword, bcrypt.genSaltSync(10));
+          const hashedPassword = bcrypt.hashSync(newPassword,
+            bcrypt.genSaltSync(10));
           userModel.update({ password: hashedPassword },
             { where: {
               id: userId

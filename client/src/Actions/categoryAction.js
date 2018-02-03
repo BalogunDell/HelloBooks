@@ -15,6 +15,8 @@ import {
 /**
  * @export getCategoriesAction
  * 
+ * @description Defines getCategoriesAction action
+ * 
  * @param { object } fetchedCategories 
  * 
  * @returns { object } action type and payload
@@ -26,6 +28,8 @@ const getCategoriesAction = fetchedCategories => ({
 
 /**
  * @export getCategories
+ * 
+ * @description Creates getCategories thunk action
  * 
  * @returns { object } axios response
  */
@@ -45,7 +49,9 @@ const getCategories = () => dispatch =>
 /**
  * @export createCategoryAction
  * 
- * @param { object } category 
+ * @description Defines createCategoryAction action
+ * 
+ * @param { object } category
  * 
  * @returns { object } action type and payload => category
  */
@@ -56,6 +62,8 @@ const createCategoryAction = category => ({
 
 /**
  * @export createCategory
+ * 
+ * @description Creates createCategory thunk action
  * 
  * @param { object } category 
  * 

@@ -6,6 +6,8 @@ import {
 /**
  * @export createCategoryReducer
  * 
+ * @description Defines createCategoryReducer
+ * 
  * @param { object } state initial state
  * @param { object } action action performed
  * 

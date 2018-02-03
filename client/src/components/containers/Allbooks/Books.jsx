@@ -3,15 +3,12 @@ import { Redirect, Link } from 'react-router-dom';
 import Loader from '../../presentational/Loader';
 
 /**
- * Books
+ * @description Books component
+ * 
  * @param {boolean} loadingBooks
- * 
  * @param {array} books
- * 
  * @param {number} getBookId
- * 
  * @param {string} bookAvailabilityMessage
- * 
  * @param {boolean} noProps
  * 
  * @return {JSX} JSX representation of DOM

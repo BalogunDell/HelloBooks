@@ -4,9 +4,10 @@ import thunk from 'redux-thunk';
 import rootReducer from '../reducers/index';
 
 /**
+ * @description configStore configures the store
  * 
+ * @param {any} initialState
  * 
- * @param {any} initialState 
  * @returns { object } configured store
  */
 const configStore = (initialState) => {

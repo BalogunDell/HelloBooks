@@ -2,7 +2,7 @@ import React from 'react';
 
 
 /**
- *  ProfileInfo -  Renders profile information
+ *  @description ProfileInfo -  Renders profile information
  *
  * @param {Object} - userData
  * @param {function} -  showInputHandler

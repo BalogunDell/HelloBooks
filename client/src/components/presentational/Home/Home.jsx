@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 /**
  * Home Component
  * 
- * Renders the Home component
+ * @description Renders the Home component
  * 
  * @returns {JSX} JSX representation of DOM
  */

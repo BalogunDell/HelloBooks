@@ -12,7 +12,7 @@ import {
   newGoogleAccess} from '../../Actions/userAccessAction'; 
 
 /**
- * Login component
+ * @description Login component
  *
  * @class Login
  *
@@ -39,7 +39,7 @@ export class Login extends React.Component {
 
 
   /**
-   * handleLoginInput
+   * @description handleLoginInput
    *
    * @memberof Login
    *
@@ -55,7 +55,7 @@ export class Login extends React.Component {
   }
 
   /**
-   * googleLoginHandler
+   * @description googleLoginHandler
    *
    * @memberof Login
    *
@@ -76,12 +76,14 @@ export class Login extends React.Component {
         isLoading: false,
         isAuthenticated: true
       });
+    }).catch(() => {
+      isLoading: false
     })
   }
 
 
   /**
-   * loginHandler
+   * @description loginHandler
    *
    * @memberof Login
    *
@@ -101,7 +103,7 @@ export class Login extends React.Component {
   }
   
   /**
-   * React Lifecycle method
+   * @description React Lifecycle method
    *
    * @memberof Login
    *
@@ -114,7 +116,7 @@ export class Login extends React.Component {
 
     if(this.props.googleAuth.isAuthenticated
       &&
-      localStorage.getItem('Access-Token')) {
+      localStorage.getItem('Token')) {
       this.setState({
         isAuthenticated: true
       });
@@ -123,7 +125,7 @@ export class Login extends React.Component {
 
 
   /**
-   * React render method
+   * @description React render method
    *
    * @memberof Login
    *
@@ -151,7 +153,7 @@ export class Login extends React.Component {
 
 
 /**
- * Redux Connect parameter
+ * @description Redux Connect parameter
  *
  * @returns {object} mapped state from redux store
  */
@@ -167,7 +169,7 @@ export const mapStateToProps = (state, ownProps) => {
 }
 
 /**
- * Redux Connect parameter
+ * @description Redux Connect parameter
  *
  * @returns {object} mapped state from redux store
  */

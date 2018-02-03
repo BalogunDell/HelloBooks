@@ -35,7 +35,7 @@ export class Main extends React.Component {
   }
 
   /**
-  * React Lifecycle hook - componentDidMount
+  * @description React Lifecycle hook - componentDidMount
   *
   * @returns {object} - Updated state
   *
@@ -54,11 +54,11 @@ export class Main extends React.Component {
   }
 
   /** 
-  * React Lifecycle hook - componentWillReceiveProps
+  * @description React Lifecycle hook - componentWillReceiveProps
   * 
-  * @param {object}      - nextProps
+  * @param {object} nextProps
   *
-  * @returns {object}    - Updated state
+  * @returns {object} Updated state
   *
   *@memberof Main
   */
@@ -74,7 +74,7 @@ export class Main extends React.Component {
   }
 
   /**
-   * React method - render
+   * @description React method - render
    * 
    * @returns {JSX} JSX representation of DOM
    * 
@@ -103,7 +103,7 @@ export class Main extends React.Component {
 
 
 /**
- * Redux Connect parameter - mapStateToProps
+ * @description Redux Connect parameter - mapStateToProps
  * 
  * @param {object} state - state of the store
  * 
@@ -116,7 +116,7 @@ export const mapStateToProps = (state) => {
 }
 
 /**
- * Redux Connect parameter  - mapDispatchToProps
+ * @description Redux Connect parameter  - mapDispatchToProps
  * 
  * @param {object} dispatch - dispatches actions
  * 

@@ -3,7 +3,7 @@ import Book from './Book';
 
 /**
  * 
- * Renders the Book component
+ * @description Renders the Book component
  * 
  * @returns {JSX} JSX representation of DOM
  */

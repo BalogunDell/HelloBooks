@@ -1,12 +1,10 @@
 /**
- * @description return categories with id and category type
+ * @description reports network error on API call failure
  * 
- * @param {array} categories
- * @param {array} desiredCategoryId
+ * @param {array} error
  * 
- * @returns {array} filtered category
+ * @returns {any } Materialize toast
 */
-
 const networkErrorReporter = (error) => {
   const errorMessage = error.response
     ? error.response.data.message

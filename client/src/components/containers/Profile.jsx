@@ -13,10 +13,12 @@ import {
 
 require('dotenv').config();
 
-/**
- * @export Profile
- * 
+/** 
  * @class Profile to show user details
+ * 
+ * @description Renders the Profile component
+ * 
+ * @export Profile
  * 
  * @extends {React.Component}
  */
@@ -55,6 +57,8 @@ export class Profile extends React.Component {
  /**
   * @method showProfile
   * 
+  * @description showProfile Handler
+  *
   * @returns {object} updated state
   *
   * @memberof Profile
@@ -65,6 +69,8 @@ export class Profile extends React.Component {
   
 /**
   * @method hideChangeForm
+  *
+  * @description hideChangeForm Handler
   * 
   * @returns {object} updated state
   *
@@ -78,6 +84,8 @@ export class Profile extends React.Component {
   /**
   * @method showInputHandler
   * 
+  * @description showInputHandler Handler
+  *
   * @returns {object} updated state
   *
   * @memberof Profile
@@ -91,7 +99,9 @@ export class Profile extends React.Component {
    /**
    * @method cancelEdit
    * 
-   *  @returns a new state with cancelEditStatus set to false
+   * @description cancelEdit Handler
+   * 
+   * @returns a new state with cancelEditStatus set to false
    * 
    * @memberof profileUpdateForm
    */
@@ -114,7 +124,9 @@ export class Profile extends React.Component {
   /**
    * @method cancelProfileEdit
    * 
-   *  @returns a new state with cancelEditStatus set to false
+   * @description cancelProfileEdit Handler
+   * 
+   * @returns a new state with cancelEditStatus set to false
    * 
    * @memberof profileUpdateForm
    */
@@ -130,6 +142,8 @@ export class Profile extends React.Component {
 
    /**
    * @method handleImageEdit
+   * 
+   * @description handleImageEdit Handler
    * 
    *  @returns {object} a new state with cancelEditStatus set to false
    * 
@@ -152,7 +166,6 @@ export class Profile extends React.Component {
             'Profile image has been updated',
             3000,
             'blue rounded');
-          // Close modal afer message has been displayed
         })
         .catch((error) => {
           this.setState({ 
@@ -167,6 +180,8 @@ export class Profile extends React.Component {
   }
 
   /**
+   * 
+   * @description imageUploadHandler Handler
    * 
    * @param {object} event
    * 
@@ -205,7 +220,7 @@ export class Profile extends React.Component {
 
   /**
    * 
-   * React lifecycle hook - componentDidMount
+   * @description React lifecycle hook - componentDidMount
    * 
    * @memberof profileUpdateForm
    */
@@ -217,7 +232,7 @@ export class Profile extends React.Component {
 
   /**
    * 
-   * React lifecycle hook - componentWillReceiveProps
+   * @description React lifecycle hook - componentWillReceiveProps
    * 
    * @param {object} nextProps
    * 
@@ -233,7 +248,7 @@ export class Profile extends React.Component {
 
    /**
    * 
-   * React render method - render
+   * @description React render method - render
    * 
    * @memberof profileUpdateForm
    * 
@@ -341,7 +356,7 @@ export class Profile extends React.Component {
 }
 
  /**
- *  HOC - Redux Connect method parameter
+ * @description HOC - Redux Connect method parameter
  *
  * @param {Object} state
  *
@@ -357,7 +372,7 @@ export const mapStateToProps = (state, ownProps) => {
 
 
  /**
- *  HOC - Redux Connect method parameter
+ * @description HOC - Redux Connect method parameter
  *
  * @param {Object} dispatch
  *

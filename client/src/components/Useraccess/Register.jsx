@@ -10,7 +10,7 @@ import { saveNewUser } from '../../Actions/userAccessAction';
 
 
 /**
- * renders Register Component
+ * @description renders Register Component
  * 
  * @class Register
  * 
@@ -32,7 +32,7 @@ export class Register extends React.Component {
 
   
   /**
-   * User input hander - handleUserInput 
+   * @description User input hander - handleUserInput 
    * 
    * @param {object} event 
    * 
@@ -47,7 +47,7 @@ export class Register extends React.Component {
     }
 
   /**
-   * User input hander - handleUserInput 
+   * @description User input hander - handleUserInput 
    * 
    * @param {object} event 
    * 
@@ -75,7 +75,7 @@ export class Register extends React.Component {
   }
   
   /**
-   * React render method - render 
+   * @description React render method - render 
    * 
    * @returns {JSX} JSX representation of DOM
    */
@@ -100,7 +100,7 @@ export class Register extends React.Component {
 
 
 /**
- * Redux Connect parameter
+ * @description Redux Connect parameter
  * 
  * @param {object} state
  * 
@@ -123,7 +123,7 @@ export const mapStateToProps = (state) => {
 
 
 /**
- * Redux Connect parameter
+ * @description Redux Connect parameter
  * 
  * @param {Function} dispatch
  * 

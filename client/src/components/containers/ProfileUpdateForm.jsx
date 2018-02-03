@@ -9,6 +9,8 @@ import Loader from '../presentational/Loader';
  * 
  * @class profileUpdateForm
  * 
+ * @description profileUpdateForm for user profile update
+ * 
  * @extends {React.Component}
  * 
  * @classdesc Creates form for profile edit
@@ -31,6 +33,9 @@ export class ProfileUpdateForm extends React.Component {
   }
 
   /**
+   * @member handleUserInput
+   * 
+   * @description handleUserInput Handler
    * 
    * @param {object} event
    * 
@@ -46,6 +51,17 @@ export class ProfileUpdateForm extends React.Component {
   }
 
 
+  /**
+   * @member handleProfileUpdate
+   * 
+   * @description handleProfileUpdate Handler
+   * 
+   * @param {object} event
+   * 
+   * @returns {object} updated state
+   * 
+   * @memberof ProfileUpdateForm
+   */
   handleProfileUpdate(event) {
     event.preventDefault();
     this.setState({loader: true});
@@ -65,7 +81,7 @@ export class ProfileUpdateForm extends React.Component {
   }
 
   /**
-   * React lifecycle method - componentWillMount
+   * @description React lifecycle method - componentWillMount
    * 
    * @memberof ProfileUpdateForm
    * 
@@ -77,7 +93,7 @@ export class ProfileUpdateForm extends React.Component {
   }
 
   /**
-   * React lifecycle method - componentWillMount
+   * @description React lifecycle method - componentWillMount
    * 
    * @memberof ProfileUpdateForm
    * 
@@ -89,6 +105,13 @@ export class ProfileUpdateForm extends React.Component {
     });
   }
 
+  /**
+   * @description React render method - render
+   * 
+   * @memberof ProfileUpdateForm
+   * 
+   * @returns {JSX} JSX representation of DOM
+  */
   render() {
     const {cancelEdit} = this.props;
     return(

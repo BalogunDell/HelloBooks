@@ -10,7 +10,7 @@ import Books from '../../containers/Allbooks/Books';
 import authenticate from '../../presentational/HOC/authenticate'
 
 /**
- * Renders All books
+ * @description Renders All books
  * 
  * @class Allbooks
  * 
@@ -26,13 +26,12 @@ export class Allbooks extends React.Component {
       bookAvailabilityMessage: ''
     }
 
-    // Bind getBookId to this
     this.getBookId = this.getBookId.bind(this);
   }
 
 
   /**
-   * Gets id of book clicked - getBookId
+   * @description Gets id of book clicked - getBookId
    * 
    * @param {object} event
    * 
@@ -48,7 +47,7 @@ export class Allbooks extends React.Component {
   }
 
   /**
-   * React lifecycle hook - componentDidMount
+   * @description React lifecycle hook - componentDidMount
    * 
    * @memberof Allbooks
    * 
@@ -69,7 +68,7 @@ export class Allbooks extends React.Component {
   }
 
   /**
-   * React lifecycle hook - componentWillReceiveProps
+   * @description React lifecycle hook - componentWillReceiveProps
    * 
    * @param {object} nextProps
    * 
@@ -91,7 +90,7 @@ export class Allbooks extends React.Component {
   }
 
   /**
-   * React render method - render
+   * @description React render method - render
    * 
    * @memberof Allbooks
    * 
@@ -118,7 +117,14 @@ export class Allbooks extends React.Component {
   }
 }
 
-export const mapStateToProps = (state, ownProps) => {
+/**
+ * @description Redux connect parameter - mapStateToProps
+ * 
+ * @param {object} state
+ * 
+ * @returns {object} mapped state 
+*/
+export const mapStateToProps = (state) => {
   return {
     retrievedBooks: state.books.books,
     currentBookId: state.books.currentBookId
@@ -126,6 +132,13 @@ export const mapStateToProps = (state, ownProps) => {
   }
 }
 
+/**
+ * @description Redux connect parameter - mapDispatchToProps
+ * 
+ * @param {function} dispatch
+ * 
+ * @returns {object} mapped dispatch 
+*/
 export const mapDispatchToProps = (dispatch) => {
   return {
     loadAllbooks: () => dispatch(loadAllbooks()),

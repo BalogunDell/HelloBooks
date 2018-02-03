@@ -8,6 +8,8 @@ import Helper from '../middleware/Helper';
 const appRouter = express.Router();
 
 /**
+* @description This is the entry point of the API
+* 
 * @param  {string} '/api/v1/'
 * @param  {object} req - request object
 * @param  {object} res - response object
@@ -21,6 +23,8 @@ appRouter.get('/', (req, res) => {
 
 
 /**
+* @description This route allow users signup 
+*  
 * @param  {string} '/api/v1/users/signup'
 * @param  {method} signupValidator
 * @param  {method} signup
@@ -30,6 +34,8 @@ appRouter.post('/users/signup',
   UserController.signup);
 
 /**
+* @description This route allow users signin
+* 
 * @param  {string} '/api/v1/users/signin'
 * @param  {method} loginValidator
 * @param  {method} signin
@@ -40,6 +46,8 @@ appRouter.post('/users/signin',
 
 
 /**
+* @description This route allow admin create new and fetch existing categories
+*
 * @param  {string} '/api/v1/newcategory'
 * @param  {method} checkCategoryPayload
 * @param  {method} verifyAdmin
@@ -55,6 +63,8 @@ appRouter.route('/categories')
     BookController.getCategories);
 
 /**
+* @description This route allow users request for password reset link 
+*
 * @param  {string} '/api/v1/resetpassword'
 * @param  {method} resetPassEmailVerifer
 * @param  {method} generateResetPassUrl
@@ -64,6 +74,8 @@ appRouter.post('/resetpassword',
   UserController.generateResetPassUrl);
 
 /**
+* @description This route allow users reset their password
+*
 * @param  {string} '/api/v1/resetpassword/:resetUrl'
 * @param  {method} resetPassVerifier
 * @param  {method} verifyUrl
@@ -75,6 +87,8 @@ appRouter.put('/resetpassword/:resetUrl',
   UserController.resetPassword);
 
 /**
+* @description This route allow admin to create and fetch books in the database
+* 
 * @param  {string} '/api/v1/books/'
 * @param  {method} confirmLibraryAccess
 * @param  {method} getBooks
@@ -91,6 +105,8 @@ appRouter.route('/books')
     BookController.addBook);
 
 /**
+* @description This route allow admin to fetch all borrowed books
+* 
 * @param  {string} '/api/v1/books/borrowedbooks'
 * @param  {method} verifyAdmin
 * @param  {method} getBorrowedBooks
@@ -100,6 +116,8 @@ appRouter.get('/books/borrowedbooks',
   BookController.getBorrowedBooks);
 
 /**
+* @description Route allows admin modify a book, delete a book and get a book
+* 
 * @param  {string} '/api/v1/books/:id'
 * @param  {method} editBookVerifier
 * @param  {method} verifyAdmin
@@ -126,6 +144,8 @@ appRouter.route('/books/:id')
     BookController.deleteBook);
 
 /**
+* @description Uers can borrow, return and get all their books using this
+* 
 * @param  {string} '/api/v1//users/:userId/book'
 * @param  {method} verifyBookId
 * @param  {method} verifyUser
@@ -152,6 +172,8 @@ appRouter.route('/users/:userId/books')
     BookController.returnBook);
 
 /**
+* @description This route allow users fetch and edit their profile details
+* 
 * @param  {string} '/api/v1/users/:userId/'
 * @param  {method} verifyUser
 * @param  {method} profilePage
@@ -167,6 +189,8 @@ appRouter.route('/users/:userId/')
 
 
 /**
+* @description This route handles change of password by users
+* 
 * @param  {string} '/api/v1/users/:userId/newpassword'
 * @param  {method} verifyUser
 * @param  {method} editPassword
@@ -179,6 +203,8 @@ appRouter.put('/users/:userId/newpassword',
 
 
 /**
+* @description This route fetches all trending books in the library
+*
 * @param  {string} '/api/v1/trendingbooks'
 * @param  {method} fetchTrendingBooks
 */ 
@@ -187,6 +213,8 @@ appRouter.get('/trendingbooks',
 );
 
 /**
+* @description This route handles google login
+* 
 * @param  {string} '/api/v1/googleuser'
 * @param  {method} newGoogleAccess
 */ 
@@ -194,6 +222,11 @@ appRouter.post('/googleuser',
   InputValidator.signupValidator,
   UserController.newGoogleAccess);
 
+/**
+* @description This route every invalid route
+* 
+* @param  {string} '/api/v1/invalidroutes'
+*/ 
 
 appRouter.route('*')
   .post((req, res) => {

@@ -11,7 +11,7 @@ import CreateBookForm from '../presentational/CreateBookForm';
 
 
 /**
- * CreateBook
+ * @description CreateBook
  * 
  * @class CreateBook
  * 
@@ -49,7 +49,7 @@ export class CreateBook extends React.Component {
 
 
   /**
-   * React lifecycle hook - componentDidMount
+   * @description React lifecycle hook - componentDidMount
    * 
    * @memberof CreateBook
    * 
@@ -66,7 +66,7 @@ export class CreateBook extends React.Component {
 
   
   /**
-   * React lifecycle hook - componentWillReceiveProps
+   * @description React lifecycle hook - componentWillReceiveProps
    * 
    * @param {object} nextProps
    * 
@@ -75,7 +75,6 @@ export class CreateBook extends React.Component {
    * @returns {object} updated state
    */
   componentWillReceiveProps(nextProps) {
-    console.log(nextProps);
     if(nextProps.imageUrl) {
       this.setState({bookData: {
         ...this.state.bookData,
@@ -98,7 +97,7 @@ export class CreateBook extends React.Component {
 
   
   /**
-   * Handles user input - handleInput
+   * @description Handles user input - handleInput
    * 
    * @param {object} event
    * 
@@ -148,7 +147,7 @@ export class CreateBook extends React.Component {
 }
 
   /**
-   * Handles book creation - createBookHandler
+   * @description Handles book creation - createBookHandler
    * 
    * @param {object} event
    * 
@@ -230,7 +229,7 @@ export class CreateBook extends React.Component {
   }
 
   /**
-   * Handles image upload - imageUploadHandler
+   * @description Handles image upload - imageUploadHandler
    * 
    * @param {object} event
    * 
@@ -258,7 +257,7 @@ export class CreateBook extends React.Component {
   }
 
    /**
-   * Handles image upload - fileUploadHandler
+   * @description Handles image upload - fileUploadHandler
    * 
    * @param {object} event
    * 
@@ -283,14 +282,13 @@ export class CreateBook extends React.Component {
   }
 
   /**
-   * React render method - render
+   * @description React render method - render
    * 
    * @memberof CreateBook
    * 
    * @returns {JSX} JSX representation of DOM
    */
   render() {
-    console.log(this.props.imageUrl)
     return(
       <div>
         {
@@ -324,7 +322,7 @@ export class CreateBook extends React.Component {
 
 
 /**
- * Redux connect parameter - mapStateToProps
+ * @description Redux connect parameter - mapStateToProps
  * 
  * @param {object} state
  * 
@@ -353,7 +351,7 @@ export const mapStateToProps = (state) => {
 }
 
 /**
- * Redux connect parameter - mapDispatchToProps
+ * @description Redux connect parameter - mapDispatchToProps
  * 
  * @param {object} dispatch
  * 

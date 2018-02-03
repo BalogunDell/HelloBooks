@@ -17,9 +17,9 @@ const borrowedBookModel = model.BorrowedBook;
 const bookModel = model.Book;
 
 /**
- * @class authentication
+ * @class Helper
  * 
- * @classdesc creates an authentication class
+ * @classdesc creates an Helper class which is used as a middleware
  */
 class Helper {
 /** 

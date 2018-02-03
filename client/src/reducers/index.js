@@ -5,6 +5,13 @@ import userProfile from './userProfileReducer';
 import loadedCategories from './categoryReducer';
 import uploadFiles from './uploadReducer';
 
+/**
+ * @export rootReducer
+ * 
+ * @description Defines root reducer for store
+ * 
+ * @returns { object } type of action and payload
+ */
 const rootReducer = combineReducers({
   userAccess,
   userProfile,

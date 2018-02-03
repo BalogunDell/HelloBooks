@@ -1,4 +1,5 @@
 /**
+ * @description This method returns error messages from sequelize 
  * 
  * @param { object } error  - sequelize generated errors
  * 

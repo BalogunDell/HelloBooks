@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 /**
- * Renders User books
+ * @description Renders User books
  * 
  * @param {object} allUserBooks
  * @param {Function} handleReturn

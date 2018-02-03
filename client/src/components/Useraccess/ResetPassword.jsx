@@ -36,12 +36,13 @@ class ResetPassword extends React.Component {
   }
 
   /**
+   * @description handleInput Handler
    * 
-   * @param { object } event 
+   * @param {object} event 
    * 
    * @memberof ResetPassword
    * 
-   * @returns { object } new state for new password and confirm new password 
+   * @returns {object} new state for new password and confirm new password 
    */
   handleInput(event) {
    const name = event.target.name;
@@ -50,8 +51,9 @@ class ResetPassword extends React.Component {
   
 
   /**
+   * @description handleSubmit Handler
    * 
-   * @param { object } event 
+   * @param {object} event 
    * 
    * @memberof ResetPassword
    * 
@@ -108,7 +110,7 @@ class ResetPassword extends React.Component {
 
   /**
    * 
-   * React Lifecycle hook - componentWillMount
+   * @description React Lifecycle hook - componentWillMount
    * 
    * @memberof ResetPassword
    * 
@@ -130,7 +132,7 @@ class ResetPassword extends React.Component {
 
   /**
    * 
-   * React render method - componentWillMount
+   * @description React render method - componentWillMount
    * 
    * @memberof ResetPassword
    * 
@@ -212,7 +214,7 @@ class ResetPassword extends React.Component {
 }
 
 /**
- * Redux connect parameter - mapStateToProps
+ * @description Redux connect parameter - mapStateToProps
  * 
  * @param {object} state
  * @param {object} ownProps
@@ -226,7 +228,7 @@ const mapStateToProps = (state, ownProps) => {
 }
 
 /**
- * Redux connect parameter - mapStateToProps
+ * @description Redux connect parameter - mapStateToProps
  * 
  * @param {object} dipatch
  * 

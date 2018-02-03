@@ -4,7 +4,7 @@ import Background from '../../presentational/Background/Background';
 
 /**
  * 
- * Renders the NotFound component
+ * @description Renders the NotFound component
  * 
  * @returns {JSX} JSX representation of DOM
  */

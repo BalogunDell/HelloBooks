@@ -11,9 +11,9 @@ const categoryModel = model.Category;
 const borrowedBookModel = model.BorrowedBook;
 
 /**
- * @class Book
+ * @class BookController
  * 
- * @classdesc Creates a Book class
+ * @classdesc Creates a BookController class
  */
 class BookController {
   /**
@@ -78,7 +78,9 @@ class BookController {
                 });
             });
         }).catch(() => {
-          return res.status(500).json({ message: 'Internal service error' });
+          return res.status(500).json({
+            message: 'Internal service error'
+          });
         });
       });
   }
@@ -177,7 +179,7 @@ class BookController {
 
     findOneResource(bookModel, query)
       .then((book) => {
-        if (!book) return res.status(404).json({ message: 'Book not found' });
+        if (!book) return res.status(404).json({message: 'Book not found' });
         book.update(bookData)
           .then((updated) => {
             if (updated) {
@@ -372,7 +374,7 @@ class BookController {
   }
 
   /**
-   * @description This method fetches the last 4 upload books as trending books
+   * @description Fetches the last 4 upload books as trending books
    * 
    * @param { object } req request object
    * @param { object } res response object

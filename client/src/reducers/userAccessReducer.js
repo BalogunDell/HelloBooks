@@ -10,6 +10,8 @@ import {
  * 
  * @export userAccessReducer
  * 
+ * @description Defines userAccessReducer
+ * 
  * @param { object } state inital state
  * 
  * @param { object } action action type and payload

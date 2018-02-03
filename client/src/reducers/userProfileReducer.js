@@ -6,9 +6,9 @@ import {
 } from '../Actions/actionTypes';
 
 /**
- * 
- * 
  * @export fetchUserReducer
+ * 
+ * @description Defines fetchUserReducer
  * 
  * @param { object } state inital state
  * @param { object } action action type and payload

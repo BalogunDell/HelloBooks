@@ -12,7 +12,7 @@ import {
 import LoaderText from '../presentational/Loader';
 
 /**
- * Edit Book component
+ * @description Edit Book component
  *
  * @class EditBook
  *
@@ -46,7 +46,7 @@ export class EditBook extends React.Component {
   }
 
   /**
-   * input handler
+   * @description input handler
    *
    * @memberof EditBook
    *
@@ -58,27 +58,38 @@ export class EditBook extends React.Component {
     let name = event.target.name;
     let tempHolder =  {...this.state.book};
     tempHolder[name] = event.target.value
-    if(event.target.name == 'categoryId') {
-      this.setState({
-        book:tempHolder,
-        selectedCategoryId: parseInt(event.target.value, 10)
-      });
-      const result = getCategory(this.state.loadedCategories,
-        parseInt(event.target.value, 10));
+    switch(name) {
+      case 'categoryId':
+        this.setState({
+          book:tempHolder,
+          selectedCategoryId: parseInt(event.target.value, 10)
+        });
+        const result = getCategory(this.state.loadedCategories,
+          parseInt(event.target.value, 10));
 
-      this.setState({
-        book: {...this.state.book,
-          categoryId: parseInt(event.target.value, 10),
-          Category: result[0]
-        }});
-    } else {
-      this.setState({ book:tempHolder });
+        this.setState({
+          book: {...this.state.book,
+            categoryId: parseInt(event.target.value, 10),
+            Category: result[0]
+          }});
+        break;
+      case 'year':
+        tempHolder[name] = parseInt(event.target.value, 10);
+        return this.setState({ book:tempHolder });
+      case 'pages':
+        tempHolder[name] = parseInt(event.target.value, 10);
+        return this.setState({ book:tempHolder });
       
+       case 'quantity':
+        tempHolder[name] = parseInt(event.target.value, 10);
+        return this.setState({ book:tempHolder });
+      default: 
+        return this.setState({ book:tempHolder });
     }
   }
 
    /**
-   * profile update handler
+   * @description profile update handler
    *
    * @memberof EditBook
    *
@@ -88,11 +99,37 @@ export class EditBook extends React.Component {
    */
   handleUpdate(event) {
     event.preventDefault();
+
+    const {
+      id,
+      author,
+      pages,
+      year,
+      quantity,
+      imageUrl,
+      PDFUrl,
+      description,
+      title,
+      categoryId
+    } = this.state.book
+
+    const modifiedBookData = {
+      id,
+      author,
+      pages,
+      year,
+      quantity,
+      imageUrl,
+      PDFUrl,
+      description,
+      title,
+      categoryId
+    }
     this.setState({loader: true,
       error: '',
       errorStatus: false })
     if((!this.state.tempImageName) && (!this.state.tempFileName)) {
-      this.props.modifyBook(this.state.book).then(() => {
+      this.props.modifyBook(modifiedBookData).then(() => {
         this.setState({loader: false,  
           errorStatus: false})
           setTimeout(()=>{
@@ -133,7 +170,7 @@ export class EditBook extends React.Component {
                 disableBtn: false });
               this.props.saveImageToCloudinary(this.state.tempImageName)
                 .then(() => {
-                  this.props.modifyBook(this.state.book)
+                  this.props.modifyBook(modifiedBookData)
 
                   .then(() => {
                     this.setState({loader: false,  
@@ -162,7 +199,7 @@ export class EditBook extends React.Component {
             } else {
               this.props.savePdfToCloudinary(this.state.tempFileName)
               .then(() => {
-                this.props.modifyBook(this.state.book)                
+                this.props.modifyBook(modifiedBookData)                
                 .then(() => {
                   this.setState({loader: false,  
                     errorStatus: false})
@@ -212,8 +249,8 @@ export class EditBook extends React.Component {
                     this.props.savePdfToCloudinary(this.state.tempFileName)
                     .then(() => {
 
-                      if(this.state.book.pdfUrl) {
-                          this.props.modifyBook(this.state.book).then(() => {
+                      if(this.state.book.PDFUrl) {
+                          this.props.modifyBook(modifiedBookData).then(() => {
                             this.setState({loader: false,
                               disableBtn:true,
                               errorStatus:false,
@@ -239,14 +276,13 @@ export class EditBook extends React.Component {
                     })
                   }
                 })
-                }
-            
+                }   
             }
         }
   }
 
  /**
-   * react lifecycle method
+   * @description react lifecycle method
    *
    * @memberof EditBook
    *
@@ -262,7 +298,7 @@ export class EditBook extends React.Component {
   }
 
   /**
-   * react lifecycle method
+   * @description react lifecycle method
    *
    * @memberof EditBook
    *
@@ -277,7 +313,7 @@ export class EditBook extends React.Component {
   }
 
   /**
-   * react lifecycle method
+   * @description react lifecycle method
    *
    * @memberof EditBook
    *
@@ -300,17 +336,17 @@ export class EditBook extends React.Component {
     });
     } else {
     }
-    if(nextProps.pdfUrl) {
+    if(nextProps.PDFUrl) {
       this.setState({book: {
         ...this.state.book,
-        pdfUrl: nextProps.pdfUrl.secure_url
+        PDF: nextProps.PDFUrl.secure_url
       }
     });
     }  
   }
 
   /**
-   * image upload handler
+   * @description image upload handler
    *
    * @memberof EditBook
    *
@@ -339,7 +375,7 @@ export class EditBook extends React.Component {
   }
 
   /**
-   * pdf file upload method
+   * @description PDF file upload method
    *
    * @memberof EditBook
    *
@@ -363,7 +399,7 @@ export class EditBook extends React.Component {
 }
 
   /**
-   * react render method
+   * @description react render method
    *
    * @memberof EditBook
    *
@@ -390,31 +426,31 @@ export class EditBook extends React.Component {
   }
 }
 
- /**
-   *  HOC - Redux Connect method parameter
-   *
-   * @param {Object} state
-   *
-   * @returns {object} store state
-   */
+/**
+ * @description HOC - Redux Connect method parameter
+ *
+ * @param {Object} state
+ *
+ * @returns {object} store state
+ */
 const stateToProps = (state) => {
   return {
     getBookToEdit: state.books.editBookID,
     books: state.books.books,
     loadedCategories: state.loadedCategories.categories,
     imageUrl: state.uploadFiles.imageUrl,
-    pdfUrl: state.uploadFiles.pdfUrl
+    PDFUrl: state.uploadFiles.PDFUrl
 
   }
 }
 
- /**
-   *  HOC - Redux Connect method parameter
-   *
-   * @param {Object} dispatch
-   *
-   * @returns {object} action creators
-   */
+/**
+ *  @description HOC - Redux Connect method parameter
+ *
+ * @param {Object} dispatch
+ *
+ * @returns {object} action creators
+ */
 const dispatchToProps = (dispatch) => {
   return {
     getCategories: () => dispatch(getCategories()),

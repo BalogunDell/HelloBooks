@@ -4,10 +4,19 @@ import CreateCategoryModal from '../containers/CreateCategoryModal';
 import Loader from '../presentational/Loader';
 
 /**
- * renders forgot password form
+ * @description renders forgot password form
  *
  * @param {Object} props
- *
+ * @param handleUpdate,
+ * @param book,
+ * @param handleEditInput,
+ * @param loadedCategories,
+ * @param imageUploadHandler,
+ * @param fileUploadHandler,
+ * @param error,
+ * @param errorStatus,
+ * @param loader,
+ * @param selectedCategoryId
  * @returns {JSX}  JSX representation of commponent
  */
 const EditBookForm = ({

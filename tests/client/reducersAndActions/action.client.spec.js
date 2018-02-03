@@ -368,7 +368,6 @@ describe('THUNK FUNCTIONS', () => {
     await store.dispatch(getUserBooks(serverResponse))
       .then(() => {
         const actions = store.getActions();
-        console.log(actions[0])
         expect(actions[0].type).to.equal(expectedAction.type);
         expect(actions[0].fetchedBooks.response).to
           .equal(expectedAction.fetchedBooks.response);

@@ -13,9 +13,9 @@ import {
 import UserBooks from '../presentational/UserBooks';
 
 /**
-  * @class BooksList
+ * @class BooksList
  * 
- *  @export BooksList Component
+ * @export BooksList Component
  * 
  * @extends {React.Component}
  */
@@ -60,7 +60,7 @@ export class BooksList extends React.Component {
   }
 
   /**
- * handleBookEdit
+ * @description handleBookEdit
  * 
  * @param {object} event 
  * 
@@ -74,12 +74,13 @@ export class BooksList extends React.Component {
     localStorage.setItem('index', JSON.stringify(filteredBook));
     this.props.getAdminEditBookId(filteredBook);
   }
-  /**
- * handleSelectChange
+
+/**
+ * @description handleSelectChange
  * 
  * @param {object} event
  * 
- * @returns event value
+ * @returns {object} updated state
  */
   handleSelectChange(event) {
     this.setState({ selectedValue: event.target.value });
@@ -120,8 +121,8 @@ export class BooksList extends React.Component {
     }
   }
 
-  /**
- * handleBookDelete
+/**
+ * @description handleBookDelete
  * 
  * @param { object } event 
  * 
@@ -134,10 +135,10 @@ export class BooksList extends React.Component {
     });
   }
 
-  /**
- * handleDeleteCancel
+/**
+ * @description handleDeleteCancel
  * 
- * @return { object } component state
+ * @return {object} component state
  */
   handleDeleteCancel() {
     this.setState({
@@ -200,7 +201,7 @@ export class BooksList extends React.Component {
   }
 
   /**
- * componentDidMount
+ * @description componentDidMount
  * 
  * @memberof BooksList
  * 
@@ -221,7 +222,7 @@ export class BooksList extends React.Component {
  }
 
   /**
- * componentWillReceiveProps
+ * @description componentWillReceiveProps
  * 
  * @param {object} nextProps
  * 
@@ -244,11 +245,11 @@ export class BooksList extends React.Component {
   }
 
 /**
- * Render method 
+ * @description Render method 
  * 
  * @memberof BooksList
  * 
- * @returns {JSX}
+ * @returns {JSX} JSX representation of DOM
  */
 render() {
   return(
@@ -297,11 +298,25 @@ render() {
 }
 }
 
+/**
+ * @description Redux connect parameter - mapStateToProps
+ * 
+ * @param {object} state
+ * 
+ * @returns {object} mapped state 
+*/
 export const stateToProps = state => ({
   loadAllbooks: state.books.books,
   borrowedBooks: state.allborrowedbooks
 });
 
+/**
+ * @description Redux connect parameter - mapDispatchToProps
+ * 
+ * @param {function} dispatch
+ * 
+ * @returns {object} mapped dispatch 
+*/
 export const dispatchToProps = dispatch => ({
   getAdminEditBookId: id => dispatch(getAdminEditBookId(id)),
   deleteBook: id => dispatch(deleteBook(id)),

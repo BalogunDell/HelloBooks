@@ -11,7 +11,7 @@ import authenticate from '../presentational/HOC/authenticate';
 
 
 /**
- * History component
+ * @description History component
  *
  * @class History
  *
@@ -30,7 +30,7 @@ export class History extends React.Component {
   }
 
 /**
- * React Lifecycle hook -  componentWillReceiveProps
+ * @description React Lifecycle hook -  componentWillReceiveProps
  *
  * @param {object} nextProps
  *
@@ -45,7 +45,7 @@ export class History extends React.Component {
 }
 
 /**
- * React Lifecycle hook -  componentDidMount
+ * @description React Lifecycle hook -  componentDidMount
  *
  * @returns {object} updated state
  */
@@ -62,7 +62,7 @@ export class History extends React.Component {
   }
 
 /**
- * React method -  render
+ * @description React method -  render
  *
  * @returns {JSX} JSX representation of DOM
  */
@@ -100,7 +100,7 @@ export class History extends React.Component {
 }
 
 /**
- *  HOC - Redux Connect method parameter
+ * @description HOC - Redux Connect method parameter
  *
  * @param {Object} state
  *
@@ -113,7 +113,7 @@ export const mapStateToProps = (state) => {
 }
 
 /**
- *  HOC - Redux Connect method parameter
+ * @description HOC - Redux Connect method parameter
  *
  * @param {Object} dispatch
  *
@@ -124,4 +124,5 @@ export const mapDispatchToProps = (dispatch) => {
     getUserBooks: (userId) => dispatch(getUserBooks(userId)),
   }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(authenticate(History));
+export default connect(mapStateToProps, mapDispatchToProps)
+(authenticate(History));

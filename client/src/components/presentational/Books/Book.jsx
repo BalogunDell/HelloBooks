@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Loader from '../../presentational/Loader';
 
 /**	
-	* Rneders the Book component
+	* @description Rneders the Book component
 	*
 	* @param  {object} bookData
 	*

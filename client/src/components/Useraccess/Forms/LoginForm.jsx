@@ -8,7 +8,7 @@ import Loader from '../../presentational/Loader';
 require('dotenv').config();
 
 /**
- * renders Form
+ * @description renders Form
  *
  * @param {object} userData
  * @param {Function} handleLoginInput
@@ -26,18 +26,11 @@ const LoginForm = ({
   isLoading,
   currentLocation }) => {
 
-    // loader
     const isLoadingText = <h5>Loading...</h5>
 
-    // error display
-
-    // check condition
-    let showIsLoading = isLoading ?  <Loader/> : ''; 
-
-    // set error status to empty if loader is displayed
+    let showIsLoading = isLoading ?  <Loader/> : '';
     let errorStatus = isLoading ? '' : null;
 
-    
     return(
         <div className="user-login-form">
           <div className="col s12 m6 offset-m3 valing-wrapper">

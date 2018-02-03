@@ -4,7 +4,7 @@ import Navbar from '../../presentational/Navbar/Navbar';
 import Background from '../../presentational/Background/Background';
 
 /**
- * Renders about component
+ * @description Renders about component
  * 
  * @returns {JSX} JSX representation of DOM
  */

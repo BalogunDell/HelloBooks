@@ -10,7 +10,7 @@ import {
 
 
 /**
- * Dashboard
+ * @description Dashboard component
  * 
  * @class Dashboard
  * 
@@ -30,7 +30,7 @@ export class Dashboard extends React.Component {
   }
 
 /**
- * React lifecycle hook - componentDidMount
+ * @description React lifecycle hook - componentDidMount
  * 
  * @memberof Dashboard
  * 
@@ -43,7 +43,7 @@ export class Dashboard extends React.Component {
   }
 
 /**
- * React render method - render
+ * @description React render method - render
  * 
  * @memberof Dashboard
  * 
@@ -60,7 +60,7 @@ export class Dashboard extends React.Component {
 }
 
 /**
- * Redux connect parameter - dispatchToProps
+ * @description Redux connect parameter - dispatchToProps
  * 
  * @returns {object} dispatched actions
  */

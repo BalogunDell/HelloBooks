@@ -3,6 +3,15 @@ import {
   SAVE_PDF,
 } from '../Actions/actionTypes';
 
+/**
+ * 
+ * @description Defines reducer for uploads
+ * 
+ * @param {object} state
+ * @param {object} action
+ * 
+ * @returns {object} new state
+ */
 const uploadReducer = (state = {}, action) => {
   switch (action.type) {
     case SAVE_IMAGE:
@@ -11,7 +20,7 @@ const uploadReducer = (state = {}, action) => {
       };
     case SAVE_PDF:
       return {
-        ...state, PDFUrl: action.pdf
+        ...state, PDFUrl: action.PDF
       };
     default:
       return state;

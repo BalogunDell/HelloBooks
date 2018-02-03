@@ -5,16 +5,16 @@ import LoaderText from '../presentational/Loader';
 /**
  *  ProfileInfo -  Renders profile information
  *
- * @param {function} - imageUploadHandler
- * @param {function} - handleImageEdit
- * @param {function} - cancelEdit
- * @param {boolean} - loader
- * @param {string} - newImageUploadError
- * @param {boolean} - newImageUploadSuccess
- * @param {string} - newImageUploadErrorMessage
- * @param {string} - newImageUploadSuccessMessage
- * @param {function} - disableUpdateBtn
- * @param {string} -  preview
+ * @param {function} imageUploadHandler
+ * @param {function} handleImageEdit
+ * @param {function} cancelEdit
+ * @param {boolean} loader
+ * @param {string} newImageUploadError
+ * @param {boolean} newImageUploadSuccess
+ * @param {string} newImageUploadErrorMessage
+ * @param {string} newImageUploadSuccessMessage
+ * @param {function} disableUpdateBtn
+ * @param {string} preview
  *
  * @returns {object} action creators
  */

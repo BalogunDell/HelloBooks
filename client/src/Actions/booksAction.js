@@ -33,6 +33,8 @@ import {
 /**
  * @export getAllBooks
  * 
+ * @description Defines getAllBooks action
+ * 
  * @param {object} books 
  * 
  * @returns {object} Action type and payload
@@ -43,7 +45,9 @@ export const getAllBooks = books => ({
 });
 
 /**
-  * @description Request to the API to load all books
+  * @export loadAllbooks
+  * 
+  * @description Creates loadAllbooks thunk action
   *
   * @param  {object} recipeDetails the recipe details to be saved
   *
@@ -58,12 +62,15 @@ export const loadAllbooks = () => dispatch =>
       networkErrorReporter(error);
       throw (error);
     });
+
 /**
  * @export getBookId
  * 
+ * @description Defines getBookId action
+ * 
  * @param {object} bookId 
  * 
- * @returns {object} action type and booido
+ * @returns {object} action type and bookId
  */
 export const getBookId = bookId => ({
   type: GET_BOOK_ID,
@@ -73,6 +80,8 @@ export const getBookId = bookId => ({
 
 /**
  * @export borrowBookAction
+ * 
+ * @description Defines borrowBookAction action
  * 
  * @param {object} payload 
  * 
@@ -86,6 +95,8 @@ export const borrowBookAction = payload => ({
 
 /**
  * @export borrowBook
+ * 
+ * @description Creates borrowBook action
  * 
  * @param {object} payload 
  * 
@@ -107,6 +118,8 @@ export const borrowBook = payload => dispatch =>
 /**
  * @export userBooks
  * 
+ * @description Defines userBooks action
+ * 
  * @param {object} fetchedBooks
  * 
  * @returns {object} Action Type and fetched books 
@@ -118,6 +131,8 @@ export const userBooks = fetchedBooks => ({
 
 /**
  * @export getUserBooks
+ * 
+ * @description Creates getUserBooks thunk action
  * 
  * @param {object} getUserBooks
  * 
@@ -137,19 +152,23 @@ export const getUserBooks = () => dispatch =>
     });
 
 /**
- *  @export returnBookAction
+ * @export returnBookAction
  * 
- * @param {object} bookId
+ * @description Defines returnBookAction action
+ * 
+ * @param {object} payload
  * 
  * @returns {object} Action Type and bookId 
  */
-export const returnBookAction = bookId => ({
+export const returnBookAction = payload => ({
   type: RETURN_BOOK,
-  bookId
+  payload
 });
 
 /**
  * @export returnBook
+ * 
+ * @description Creates returnBook thunk action
  * 
  * @param {object} bookId
  * 
@@ -160,7 +179,7 @@ export const returnBook = bookId => dispatch =>
     bookId,
     { headers: { Authorization: getUserDetails().savedToken } })
     .then((response) => {
-      dispatch(returnBookAction(response.data.message));
+      dispatch(returnBookAction(response.data));
     })
     .catch((error) => {
       networkErrorReporter(error);
@@ -170,6 +189,8 @@ export const returnBook = bookId => dispatch =>
 
 /**
  * @export createBookAction
+ * 
+ * @description Defines createBookAction
  * 
  * @param {object} bookData
  * 
@@ -184,44 +205,51 @@ export const createBookAction = bookData => ({
 /**
  * @export createBook
  * 
+ * @description Creates createBook thunk action
+ * 
  * @param {object} bookData
  * 
  * @returns {object} axios response
  */
-export const createBook = bookData => dispatch => axios.post(`${userbooks}`,
-  bookData, {
-    headers: { Authorization: getUserDetails().savedToken } })
-  .then((response) => {
-    dispatch(createBookAction(response.data));
-  })
-  .catch((error) => {
-    networkErrorReporter(error);
-    throw (error);
-  });
+export const createBook = bookData => dispatch =>
+  axios.post(`${userbooks}`,
+    bookData, {
+      headers: { Authorization: getUserDetails().savedToken } })
+    .then((response) => {
+      dispatch(createBookAction(response.data));
+    })
+    .catch((error) => {
+      networkErrorReporter(error);
+      throw (error);
+    });
 
 /**
  * @export savePdf
  * 
- * @param { object } pdf
+ * @description Defines savePdf action
+ * 
+ * @param { object } PDF
  * 
  * @returns { object } t
  */
-export const savePdf = pdf => ({
+export const savePdf = PDF => ({
   type: SAVE_PDF,
-  pdf
+  PDF
 });
 
 /**
  * @export savePdfToCloudinary
  * 
- * @param { object } pdf  File to save oo devlopr fa
+ * @description Creates savePdfToCloudinary thunk action
+ * 
+ * @param { object } PDF  File to save oo devlopr fa
  * 
  * @returns { object } axios responsee
  */
 
-export const savePdfToCloudinary = (pdf) => {
+export const savePdfToCloudinary = (PDF) => {
   const formData = new FormData();
-  formData.append('file', pdf);
+  formData.append('file', PDF);
   formData.append('upload_preset', cloudinaryPreset);
   return dispatch => axios.post(cloudinaryUrl,
     formData, {
@@ -239,6 +267,8 @@ export const savePdfToCloudinary = (pdf) => {
  * 
  * @export saveImage
  * 
+ * @description Creates saveImage action with type and image as payload
+ * 
  * @param { object } image 
  * 
  * @returns { object } action type and payload (image)
@@ -252,6 +282,8 @@ export const saveImage = image => ({
  * 
  * @export saveImageToCloudinary
  * 
+ * @description Creates saveImage thunk action
+ * 
  * @param { object } image 
  * 
  * @returns { object } axios response
@@ -261,22 +293,25 @@ export const saveImageToCloudinary = (image) => {
   formData.append('file', image);
   formData.append('upload_preset', cloudinaryPreset);
 
-  return dispatch => axios.post('https://api.cloudinary.com/v1_1/djvjxp2am/upload',
-    formData, {
-      headers: { 'Content-Type': requestHeader } })
-    .then((response) => {
-      dispatch(saveImage(response.data));
-    })
-    .catch((error) => {
-      networkErrorReporter(error);
-      throw (error);
-    });
+  return dispatch =>
+    axios.post('https://api.cloudinary.com/v1_1/djvjxp2am/upload',
+      formData, {
+        headers: { 'Content-Type': requestHeader } })
+      .then((response) => {
+        dispatch(saveImage(response.data));
+      })
+      .catch((error) => {
+        networkErrorReporter(error);
+        throw (error);
+      });
 };
 
 
 /**
  * 
  * @export getAdminEditBookId
+ * 
+ * @description Defines getAdminEditBookId action
  * 
  * @param { object } bookId
  * 
@@ -291,9 +326,11 @@ export const getAdminEditBookId = bookId => ({
  * 
  * @export modifyBookAction
  * 
+ * @description Defines modifyBookAction action
+ * 
  * @param { object } bookData
  *  
- * @returns { object } action type and payload => bookData
+ * @returns { object } action type and bookData as payload
  */
 export const modifyBookAction = bookData => ({
   type: MODIFY_BOOK,
@@ -303,6 +340,8 @@ export const modifyBookAction = bookData => ({
 /**
  * 
  * @export modifyBook
+ * 
+ * @description Creates modifyBook thunk action
  * 
  * @param { object } bookData 
  * 
@@ -326,9 +365,11 @@ export const modifyBook = (bookData) => {
  * 
  * @export deleteBookAction
  * 
+ * @description Defines deleteBookAction action type and deletedBook
+ * 
  * @param { integer } deletedBook
  * 
- * @returns { object } action type and bookId
+ * @returns { object } action type and deletedBook
  */
 export const deleteBookAction = deletedBook => ({
   type: DELETE_BOOK,
@@ -337,6 +378,8 @@ export const deleteBookAction = deletedBook => ({
 
 /**
  * @export deleteBook
+ * 
+ * @description Creates deleteBook thunk action
  * 
  * @param { integer } bookId
  * 
@@ -357,6 +400,8 @@ export const deleteBook = bookId => dispatch =>
 /**
  * @export getborrowedbooksAction
  * 
+ * @description Defines getborrowedbooksAction action
+ * 
  * @param { object } borrowedbooks
  * 
  * @returns { object } action type and borrowedbooks
@@ -367,7 +412,9 @@ export const getborrowedbooksAction = borrowedbooks => ({
 });
 
 /**
- * @export getAllBorrowedBooks method
+ * @export getAllBorrowedBooks
+ * 
+ * @description Creates getAllBorrowedBooks thunk action
  * 
  * @returns { object } action type and borrowedbooks
  */
@@ -382,7 +429,11 @@ export const getAllBorrowedBooks = () => dispatch =>
       networkErrorReporter(error);
       throw (error);
     });
+
 /**
+ * @export trendingBooksAction
+ * 
+ * @description Defines trendingBooksAction action
  * 
  * @param { object } books
  * 
@@ -394,6 +445,10 @@ export const trendingBooksAction = books => ({
 });
 
 /**
+  * 
+  * @export trendingBooks
+  *
+  * @description Creates trendingBooks thunk action
   * 
   * @param { books } books
   *

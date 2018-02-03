@@ -14,6 +14,12 @@ import {
 } from '../../utils/messages';
 import authenticate from '../presentational/HOC/authenticate';
 
+/**
+ * @description BookDetails component
+ * 
+ * @class BookDEtails
+ * 
+ */
 export class BookDetails extends React.Component {
   constructor(props){
     super(props);
@@ -35,6 +41,13 @@ export class BookDetails extends React.Component {
 
 }
 
+/**
+ * @method handleBorrow
+ * 
+ * @description handleBorrow
+ * 
+ * @return {object} updated state
+ */
   handleBorrow(){
     this.setState({processingRequest: true})
     this.props.borrowBook({bookId:this.state.currentBookId})
@@ -58,6 +71,13 @@ export class BookDetails extends React.Component {
     });
   }
 
+/**
+ * @method componentWillMount
+ * 
+ * @description React lifecycle hook
+ * 
+ * @return {object} updated state
+ */
   componentWillMount() {
 
     this.setState({dataReady:true,
@@ -81,6 +101,13 @@ export class BookDetails extends React.Component {
     
   }
 
+/**
+ * @method componentDidMount
+ * 
+ * @description React lifecycle hook
+ * 
+ * @return {object} updated state
+ */  
   componentDidMount() {
     if(getUserDetails().userType === 'admin') {
       this.setState({ isAdmin: true });
@@ -89,6 +116,13 @@ export class BookDetails extends React.Component {
     }
   }
 
+  /**
+   * @method componentWillReceiveProps
+   * 
+   * @description React lifecycle hook
+   * 
+   * @return {object} updated state
+   */
   componentWillReceiveProps(nextProps) {
     if(nextProps.fetchedUserbooks.response) {
       this.setState({
@@ -114,7 +148,13 @@ export class BookDetails extends React.Component {
   }
 
 
-
+  /**
+   * @method render
+   * 
+   * @description React method render
+   * 
+   * @return {JSX} JSX representation of the DOM
+   */
   render() {
     const processing = <h6 className="center">Processing Request...</h6>
     let showError = this.state.processingRequest ? processing : null
@@ -143,7 +183,6 @@ export class BookDetails extends React.Component {
           borrowSuccessStatus = {this.state.borrowSuccessStatus}
           />
 
-          {/* ERROR OR SUCCESS MESSAGE HERE */}
           {showError}
           {success}
           {failure}
@@ -152,8 +191,14 @@ export class BookDetails extends React.Component {
   }
 } 
 
-
-export function mapStateToProps (state, ownProps) {
+/**
+ * @description Redux connect parameter - mapStateToProps
+ * 
+ * @param {object} state
+ * 
+ * @returns {object} mapped state 
+*/
+export function mapStateToProps (state) {
   return {
     fetchedUserbooks: state.books.fetchedBooks,
     allbooks: state.books.books,
@@ -162,6 +207,13 @@ export function mapStateToProps (state, ownProps) {
   }
 }
 
+/**
+ * @description Redux connect parameter - mapDispatchToProps
+ * 
+ * @param {function} dispatch
+ * 
+ * @returns {object} mapped dispatch 
+*/
 export function maptDispatchToProps(dispatch) {
   return {
     borrowBook: (bookDetails) => dispatch(borrowBook(bookDetails)),

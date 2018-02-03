@@ -3,7 +3,7 @@ import { Link, Redirect} from 'react-router-dom';
 import { connect } from 'react-redux';
 
 /**
- *  UserNav - renders use navigation
+ *  @description UserNav - renders use navigation
  *
  * @param {string} userType
  * @param {object} navLinks

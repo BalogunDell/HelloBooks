@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 /**
  * 
- * Renders the Navbar component
+ * @description\ Renders the Navbar component
  * 
  * @returns {JSX} JSX representation of DOM
  */

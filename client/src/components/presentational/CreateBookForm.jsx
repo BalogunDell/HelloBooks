@@ -4,6 +4,26 @@ import LoaderText from '../presentational/Loader';
 
 import CreateCategoryModal from '../containers/CreateCategoryModal';
 
+/**
+ * @description CreateBookForm component
+ *
+ * @param {boolean} disableBtn
+ * @param {boolean} showHiddenBtns
+ * @param {boolean} loader
+ * @param {string} errorMessage
+ * @param {boolean} successStatus
+ * @param {boolean} errorStatus
+ * @param {string} successMessage
+ * @param {function} createBookHandler
+ * @param {function} handleInput
+ * @param {object} initialData
+ * @param {function} createCategory
+ * @param {array} loadedCategories
+ * @param {function} imageUploadHandler
+ * @param {function} fileUploadHandler
+ * 
+ * @returns {JSX}
+*/
 const CreateBookForm = ({
   disableBtn,
   showHiddenBtns,

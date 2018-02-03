@@ -20,6 +20,8 @@ import {
 /**
  * @export fetchUser
  * 
+ * @description Defines fetchUser action
+ * 
  * @param { integer } payload
  * 
  * @returns { object } returns action type and integer, user id
@@ -31,6 +33,8 @@ export const fetchUser = payload => ({
 
 /**
  * @export fetchUserTrigger
+ * 
+ * @description Creates fetchUserTrigger thunk action
  * 
  * @returns { object } axios response
  */
@@ -49,6 +53,8 @@ export const fetchUserTrigger = () => dispatch =>
 /**
  * @export editProfileAction
  * 
+ * @description Defines editProfileAction action
+ * 
  * @param { object } newUserData 
  * 
  * @returns { object } action type and newUserData objet
@@ -61,6 +67,8 @@ export const editProfileAction = newUserData => ({
 /**
  * 
  * @export editProfile function
+ * 
+ * @description Creates editProfile thunk action
  * 
  * @param { object } newUserData 
  * 
@@ -81,6 +89,8 @@ export const editProfile = newUserData => dispatch =>
 /**
  * @export editPasswordAction
  * 
+ * @description Defines editPasswordAction action
+ * 
  * @param { object } payload 
  * 
  * @returns { object } action type and newUserData objet
@@ -94,6 +104,8 @@ export const editPasswordAction = payload => ({
   /**
  * 
  * @export editPassword function
+ * 
+ * @description Defines editPassword thunk action
  * 
  * @param { object } payload  
  * 
@@ -115,6 +127,8 @@ export const editPassword = payload => dispatch =>
  * 
  * @export saveImage
  * 
+ * @description Defines saveImage action
+ * 
  * @param { object } image 
  * 
  * @returns { object } action type and payload (image)
@@ -127,6 +141,8 @@ export const saveImageToCloud = image => ({
 
 /**
  * @export saveNewImage
+ * 
+ * @description Creates saveNewImage action
  * 
  * @param { object } image 
  * 
@@ -151,6 +167,8 @@ export const saveNewImage = (image) => {
 /**
  * @export saveImage
  * 
+ * @description Defines saveImage action
+ * 
  * @param { object } newUserData 
  * 
  * @returns { object } action type and newImage url (from cloudinary)
@@ -163,6 +181,8 @@ export const saveImage = newUserData => ({
 
 /**
  * @export saveNewImageToDB
+ * 
+ * @description Defines saveNewImageToDB thunk action
  * 
  * @param { object } newUserData
  * 

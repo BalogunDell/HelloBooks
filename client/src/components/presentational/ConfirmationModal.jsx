@@ -1,6 +1,20 @@
 import React from 'react';
 import LoaderText from '../presentational/Loader';
 
+/**
+ * @description deleteErrorStatus component
+ *
+ * @param {function} deleteBookTrigger
+ * @param {string} successMessage
+ * @param {boolean} errorMessage
+ * @param {boolean} loader
+ * @param {boolean} disabled
+ * @param {string} deleteErrorSuccess
+ * @param {function} handleDeleteCancel
+ * @param {boolean} deleteErrorStatus
+ * 
+ * @returns {JSX}
+*/
 const ConfirmationModal = ({
   deleteErrorStatus,
   handleDeleteCancel,

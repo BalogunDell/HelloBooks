@@ -18,19 +18,19 @@ class Background extends React.Component {
   }
 
 /**
- * React lifecycle hook - componentWillMount
+ * @description React lifecycle hook - componentWillMount
  * 
  * @returns {object} updated state
  */
   componentWillMount() {
-    if(localStorage.getItem('Access-Token') != null) {
+    if(localStorage.getItem('Token') != null) {
       return this.setState({ redirect: true });
     }
     return this.setState({ redirect: false });
   }
 
 /**
- * React lifecycle hook - componentDidMount
+ * @description React lifecycle hook - componentDidMount
  * 
  * @returns {void}
  */
@@ -41,7 +41,7 @@ class Background extends React.Component {
   }
 
  /**
- * React render method - render
+ * @description xReact render method - render
  * 
  * @returns {JSX} JSX representation of DOM
  */ 

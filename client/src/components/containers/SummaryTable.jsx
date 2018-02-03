@@ -1,7 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-
+/**
+ * @class SummaryTable
+ * 
+ * @description SummaryTable for admin dashboard
+ * 
+ * @extends {Component}
+ */
 export class SummaryTable extends React.Component {
   constructor(props){
     super(props);
@@ -14,7 +20,15 @@ export class SummaryTable extends React.Component {
     borrowed: []
   }
 }
-
+  /**
+ * @description React lifecycle hook - componentWillReceiveProps
+ * 
+ * @param {object} nextProps
+ * 
+ * @memberof SummaryTable
+ * 
+ * @returns {object} updated state
+*/
   componentWillReceiveProps(nextProps){
     if(nextProps.allbooks) {
       if(this.state.books !== nextProps.allbooks) {
@@ -37,7 +51,13 @@ export class SummaryTable extends React.Component {
     }
   }
 
-
+  /**
+   * @description React render method - render
+   * 
+   * @memberof SummaryTable
+   * 
+   * @returns {JSX} JSX representation of DOM
+  */
   render() {
     return(
       <div>
@@ -76,6 +96,13 @@ export class SummaryTable extends React.Component {
   } 
 }
 
+/**
+ * @description Redux connect parameter - stateToProps
+ * 
+ * @param {object} state
+ * 
+ * @returns {object} mapped state 
+*/
 export const stateToProps = (state) => {
   return {
     allbooks: state.books.books,

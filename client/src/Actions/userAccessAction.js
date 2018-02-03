@@ -17,6 +17,8 @@ import {
 /**
  * @export userSignupSuccessAction
  * 
+ * @description Defines userSignupSuccessAction action
+ * 
  * @param { object } userSignupData
  * 
  * @returns { object } action type and payload => userSignupData
@@ -29,6 +31,8 @@ const userSignupSuccessAction = userSignupData => ({
 /**
  * @export saveNewUser
  * 
+ * @description Creates saveNewUser thunk action
+ * 
  * @param { object } userSignupData
  * 
  * @returns { object } action type and payload
@@ -36,7 +40,7 @@ const userSignupSuccessAction = userSignupData => ({
 const saveNewUser = userSignupData => dispatch =>
   axios.post(signup, userSignupData)
     .then((response) => {
-      localStorage.setItem('Access-Token', response.data.responseData.token);
+      localStorage.setItem('Token', response.data.responseData.token);
       dispatch(userSignupSuccessAction(response.data.responseData));
     })
     .catch((error) => {
@@ -46,6 +50,8 @@ const saveNewUser = userSignupData => dispatch =>
 
 /**
  * @export userLoginSuccess
+ * 
+ * @description Defines userLoginSuccess action
  * 
  * @param { object } loginData
  * 
@@ -59,6 +65,8 @@ const userLoginSuccess = loginData => ({
 /**
  * @export userLogin
  * 
+ * @description Creates userLogin thunk action
+ * 
  * @param { object } loginData
  * 
  * @returns { object } axios response
@@ -66,7 +74,7 @@ const userLoginSuccess = loginData => ({
 const userLogin = loginData => dispatch =>
   axios.post(signin, loginData)
     .then((response) => {
-      localStorage.setItem('Access-Token', response.data.responseData.token);
+      localStorage.setItem('Token', response.data.responseData.token);
       dispatch(userLoginSuccess(response.data.responseData));
     })
     .catch((error) => {
@@ -76,6 +84,8 @@ const userLogin = loginData => dispatch =>
 
 /**
  * @export sendEmailAction
+ * 
+ * @description Defines sendEmailAction action
  * 
  * @param { object } serverResponse 
  * 
@@ -89,6 +99,8 @@ const sendEmailAction = serverResponse => ({
 /**
  * 
  * @export sendEmail
+ * 
+ * @description Creates sendEmailAction action
  * 
  * @param { object } userEmail 
  * 
@@ -108,6 +120,8 @@ const sendEmail = userEmail => dispatch =>
 /**
  * @export resetPasswordAction
  * 
+ * @description Defines resetPasswordAction action
+ * 
  * @param { object } newPassword
  * @param { object } uniqueUrl
  * 
@@ -121,8 +135,9 @@ const resetPasswordAction = newPassword => ({
 /**
  * @export resetPassword
  * 
- * @param { object } newPassword
+ * @description Creates resetPassword thunk action
  * 
+ * @param { object } newPassword
  * @param { object } uniqueUrl
  * 
  * @returns { object } server response
@@ -140,6 +155,8 @@ const resetPassword = (newPassword, uniqueUrl) => dispatch =>
 /**
  * @export newGoogleAccessAction
  * 
+ * @description Defines newGoogleAccessAction action
+ * 
  * @param { object } googleUserData
  * 
  * @returns { object } type of action and payload
@@ -152,6 +169,8 @@ const newGoogleAccessAction = googleUserData => ({
 /**
  * @export newGoogleAccess
  * 
+ * @description Defines newGoogleAccess thunk action
+ * 
  * @param { object } googleUserData
  * 
  * @returns { object } server response
@@ -159,7 +178,7 @@ const newGoogleAccessAction = googleUserData => ({
 const newGoogleAccess = googleUserData => dispatch =>
   axios.post(`${googleAccess}`, googleUserData)
     .then((response) => {
-      localStorage.setItem('Access-Token', response.data.responseData.token);
+      localStorage.setItem('Token', response.data.responseData.token);
       dispatch(newGoogleAccessAction(response.data));
     })
     .catch((error) => {

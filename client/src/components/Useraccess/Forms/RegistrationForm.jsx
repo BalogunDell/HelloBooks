@@ -4,7 +4,7 @@ import { Link, Redirect } from 'react-router-dom';
 import Loading from '../../presentational/Loader';
 
 /**
- * RegistrationForm 
+ * @description RegistrationForm 
  * 
  * @param {object} userData 
  * @param {Function} handleSubmit

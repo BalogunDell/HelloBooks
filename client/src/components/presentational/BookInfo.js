@@ -1,11 +1,19 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
 
-  /**
-   * Renders book info - BookInfo
-   * 
-   * @returns {JSX} JSX representation of DOM
-  */
+/**
+ * @description Renders book info - BookInfo
+ * 
+ * @param {object} book
+ * @param {boolean} isAdmin
+ * @param {boolean} disableBtn
+ * @param {function} handleBorrow
+ * @param {string}  borrowedMessage
+ * @param {boolean} borrowErrorStatus
+ * @param {string} borrowSuccessStatus
+ * 
+ *  @returns {JSX} JSX representation of DOM
+*/
 const BookInfo = ({
   book,
   isAdmin,

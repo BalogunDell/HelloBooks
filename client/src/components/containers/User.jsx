@@ -28,10 +28,11 @@ import { fetchUserTrigger, editPassword } from '../../Actions/userProfileAction'
 
 
 /**
+ * @class User
+ * 
+ * @description Render Uaer component
  * 
  * @export User
- * 
- * @class User
  * 
  * @extends {React.Component}
  */
@@ -158,14 +159,16 @@ handlePasswordUpdate(event) {
   
 
 
-  /**
-  *  componentWillMount 
+ /**
+  * @description componentWillMount 
+  *
+  * @memberof User
   * 
-  *@returns (object)
+  * @returns (object)
   *
   */
   componentWillMount(){
-    if(localStorage.getItem('Access-Token') === null) {
+    if(localStorage.getItem('Token') === null) {
       return this.setState({isAuthenticated: false});
     }
     
@@ -181,11 +184,13 @@ handlePasswordUpdate(event) {
   }
 
   /**
-  *  componentWillReceiveProps 
+  * @description componentWillReceiveProps 
   *
   * @param {object} nextprops
+  *
+  * @memberof User
   * 
-  *@returns (object)
+  * @returns (object)
   *
   */
   componentWillReceiveProps(nextprops) {
@@ -197,10 +202,12 @@ handlePasswordUpdate(event) {
      }
     }
 
-  /**
-  *  componentDidMount 
+ /**
+  * @description componentDidMount
+  *
+  * @memberof User
   * 
-  *@returns {object}
+  * @returns {object}
   *
   */
   componentDidMount() {
@@ -229,9 +236,11 @@ handlePasswordUpdate(event) {
   }
 
 /**
- * Render 
+ * @description Render
  * 
- *@returns {JSX} JSX representation of DOM
+ * @memberof User
+ * 
+ * @returns {JSX} JSX representation of DOM
  *
  */
   render() {

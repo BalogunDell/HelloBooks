@@ -1,5 +1,9 @@
 import React from 'react';
-
+/**
+ * @description renders forgot password form
+ * 
+ * @returns {JSX}  JSX representation of commponent
+ */
 const Loader = () => {
   return (
     <div className="preloader-wrapper small active">
