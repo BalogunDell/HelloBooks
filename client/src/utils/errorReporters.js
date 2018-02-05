@@ -12,13 +12,13 @@ export const actionErrorReporter = (error) => {
         error.response.data.message,
         5000,
         'red rounded');
-      return true;
+      return;
     case 403:
       Materialize.toast(
         error.response.data.message,
         5000,
         'red rounded');
-      return true;
+      return;
     default:
       Materialize.toast(
         error.response.data.message,
@@ -37,11 +37,10 @@ export const actionErrorReporter = (error) => {
  * @returns { booelean } Materialize toast
 */
 export const networkErrorReporter = (error) => {
- const message = error.response
-    ?
-    null
-    :
-    'It appears like you are offline. Please check your connection';
-
-  return Materialize.toast(message, 5000, 'red rounded');
+  if (!error.response) {
+    return Materialize.toast(
+      'It appears like you are offline. Please check your connection',
+      5000,
+      'red rounded');
+  }
 };

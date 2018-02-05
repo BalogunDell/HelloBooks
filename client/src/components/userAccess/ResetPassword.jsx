@@ -6,6 +6,7 @@ import Navbar from '../presentational/Navbar/Navbar';
 import Background from '../presentational/Background/Background';
 import Loader from '../presentational/Loader';
 import { resetPassword } from '../../actions/userAccessAction';
+import clearStorage from '../../utils/clearStorage'
 
 
 
@@ -74,7 +75,7 @@ class ResetPassword extends React.Component {
       this.setState({
         loader: false,
         errorStatus: true,
-        errorMessage: 'All fields are required',
+        errorMessage: '',
         successMessage: '',
         successStatus: false,
         disableSubmitBtn: false});
@@ -117,17 +118,31 @@ class ResetPassword extends React.Component {
    * @returns { object } updated state 
    */
   componentDidMount() {
-    this.props.saveNewPassword(null, this.props.url)
-    .then((response)=> {
+    // this.props.saveNewPassword(null, this.props.url)
+    // .then((response)=> {
 
-    })
-    .catch((error) => {
-      if(error.response.status === 401) {
-        this.setState({ redirectOnExpiredUrl: true})
-      }
-    });
+    // })
+    // .catch((error) => {
+    //   if(error.response.status === 401) {
+    //     this.setState({ redirectOnExpiredUrl: true})
+    //   }
+    // });
   }
 
+
+  /**
+   * 
+   * @description React Lifecycle hook - componentWillMount
+   * 
+   * @memberof ResetPassword
+   * 
+   * @returns { object } updated state 
+   */
+  componentWillMount() {
+    if(this.props.currentPath == '/resetpassword') {
+      return clearStorage();
+    }
+  }
 
 
   /**
@@ -223,7 +238,8 @@ class ResetPassword extends React.Component {
  */
 const mapStateToProps = (state, ownProps) => {
   return {
-    url: ownProps.match.params.uniqueUrl
+    url: ownProps.match.params.uniqueUrl,
+    currentPath: ownProps.match.path
   }
 }
 

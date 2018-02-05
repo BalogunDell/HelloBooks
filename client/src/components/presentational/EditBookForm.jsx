@@ -190,7 +190,7 @@ return (
                         <i className="material-icons">add_a_photo</i>
                       </span>
                       <input type="file" 
-                      name="image" 
+                      name="imageUrl" 
                       id="bookImage" 
                       accept=".jpg" 
                       onChange={imageUploadHandler}/>
@@ -212,7 +212,7 @@ return (
                         <i className="material-icons">file_upload</i>
                       </span>
                       <input
-                      type="file" name="pdf" 
+                      type="file" name="PDFUrl" 
                       id="bookImage" 
                       accept=".pdf" 
                       onChange={fileUploadHandler}/>

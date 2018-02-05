@@ -239,7 +239,7 @@ let generatedUrl= 'uFUhdjHDJjdf';
         expect(res.status).to.equal(400);
         expect(res.body).to.have.property('message');
         expect(res.body.message).to
-        .equal('Book year can only be 4 digits or less');
+        .equal('Book year can only be 4 digits');
         done();
       });
     });

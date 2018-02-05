@@ -80,7 +80,7 @@ const createCategory = category => dispatch =>
       dispatch(createCategoryAction(response.data));
     })
     .catch((error) => {
-      if (error.response.status === 401 || 403) {
+      if (error.response.status === 401 || error.response.status === 403) {
         dispatch(errorAction(true));
         error.logout = true;
       } else {

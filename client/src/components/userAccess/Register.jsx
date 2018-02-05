@@ -112,7 +112,8 @@ export const mapStateToProps = (state) => {
     firstName: '',
     lastName: '',
     email: '',
-    password: ''
+    password: '',
+    confirmPassword:''
   };
   return {
     initialUserData: initialUserData,

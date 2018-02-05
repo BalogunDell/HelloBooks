@@ -101,35 +101,12 @@ export class EditBook extends React.Component {
   handleUpdate(event) {
     event.preventDefault();
 
-    const {
-      id,
-      author,
-      pages,
-      year,
-      quantity,
-      imageUrl,
-      PDFUrl,
-      description,
-      title,
-      categoryId
-    } = this.state.book
-
-    const modifiedBookData = {
-      id,
-      author,
-      pages,
-      year,
-      quantity,
-      imageUrl,
-      PDFUrl,
-      description,
-      title,
-      categoryId
-    }
     this.setState({loader: true,
       error: '',
       errorStatus: false })
     if((!this.state.tempImageName) && (!this.state.tempFileName)) {
+      const modifiedBookData = {...this.state.book};
+      delete modifiedBookData['isbn'];
       this.props.modifyBook(modifiedBookData).then(() => {
         this.setState({loader: false,  
           errorStatus: false})
@@ -173,8 +150,10 @@ export class EditBook extends React.Component {
                 disableBtn: false });
               this.props.saveImageToCloudinary(this.state.tempImageName)
                 .then(() => {
+                  if(this.state.book.imageUrl) {
+                  const modifiedBookData = {...this.state.book};
+                  delete modifiedBookData['isbn'];
                   this.props.modifyBook(modifiedBookData)
-
                   .then(() => {
                     this.setState({loader: false,  
                       errorStatus: false})
@@ -186,7 +165,7 @@ export class EditBook extends React.Component {
                       3000,
                       'blue rounded');
                   })
-                 
+                }
                 })
               }
         }
@@ -202,6 +181,9 @@ export class EditBook extends React.Component {
             } else {
               this.props.savePDFToCloudinary(this.state.tempFileName)
               .then(() => {
+                if(this.state.book.PDFUrl) {
+                  const modifiedBookData = {...this.state.book};
+                  delete modifiedBookData['isbn'];
                 this.props.modifyBook(modifiedBookData)                
                 .then(() => {
                   this.setState({loader: false,  
@@ -214,6 +196,7 @@ export class EditBook extends React.Component {
                       3000,
                       'blue rounded'); 
                 })
+              }
               })
             }
       } else {
@@ -253,6 +236,8 @@ export class EditBook extends React.Component {
                     .then(() => {
 
                       if(this.state.book.PDFUrl) {
+                        const modifiedBookData = {...this.state.book};
+                        delete modifiedBookData['isbn'];
                           this.props.modifyBook(modifiedBookData).then(() => {
                             this.setState({loader: false,
                               disableBtn:true,
@@ -334,7 +319,6 @@ export class EditBook extends React.Component {
        loadedCategories: nextProps.loadedCategories
       });
     }
-
     if(nextProps.imageUrl) {
       this.setState({book: {
         ...this.state.book,
@@ -346,7 +330,7 @@ export class EditBook extends React.Component {
     if(nextProps.PDFUrl) {
       this.setState({book: {
         ...this.state.book,
-        PDF: nextProps.PDFUrl.secure_url
+        PDFUrl: nextProps.PDFUrl.secure_url
       }
     });
     }
@@ -463,7 +447,7 @@ const dispatchToProps = (dispatch) => {
     getCategories: () => dispatch(getCategories()),
     modifyBook: (bookData) => dispatch(modifyBook(bookData)),
     saveImageToCloudinary: (image) => dispatch(saveImageToCloudinary(image)),
-    savePDFToCloudinary: (pdf) => dispatch(savePDFToCloudinary(pdf))
+    savePDFToCloudinary: (PDF) => dispatch(savePDFToCloudinary(PDF))
   }
 }
 

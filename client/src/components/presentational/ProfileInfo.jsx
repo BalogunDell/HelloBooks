@@ -14,6 +14,7 @@ import PasswordUpdate from './PasswordUpdate';
  * @param {function} handlePasswordUpdate
  * @param {function} passwordContainer
  * @param {function} cancelEdit
+ * @param {function} resetPassword
  *
  * @returns {object} action creators
  */
@@ -26,7 +27,8 @@ const ProfileInfo = ({
   handleChange,
   handlePasswordUpdate,
   passwordContainer,
-  cancelEdit
+  cancelEdit,
+  resetPassword
 }) => {
   return(
     <div className="change-password">
@@ -41,6 +43,7 @@ const ProfileInfo = ({
               userDetails={userData}
               passwordContainer={passwordContainer}
               cancelEdit = {cancelEdit}
+              resetPassword={resetPassword}
           />
         :
         <table>

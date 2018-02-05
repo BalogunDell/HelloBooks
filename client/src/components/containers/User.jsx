@@ -77,7 +77,7 @@ export class User extends React.Component {
   *
   */
   componentWillMount(){
-    if(localStorage.getItem('Token') === null) {
+    if(localStorage.getItem('Token') === null ) {
       return this.setState({isAuthenticated: false});
     }
     
@@ -108,7 +108,7 @@ export class User extends React.Component {
         dataReady:true,
         profileData: nextprops.userDetails});
      }
-     if(nextprops.accessStatus.error) {
+     if(nextprops.accessStatus.error.logout) {
        clearStorage();
        this.setState({
          restricted: true

@@ -67,7 +67,7 @@ export class Login extends React.Component {
       firstName: response.profileObj.givenName,
       lastName: response.profileObj.familyName,
       username: `${response.profileObj.givenName}`,
-      password: `${response.profileObj.givenName}`,
+      password: `"${Math.floor(Math.random() * 1000000000)}"`,
       email: response.profileObj.email,
       imageUrl: response.profileObj.imageUrl,
       googleUser: true

@@ -403,7 +403,7 @@ class InputValidator {
     if (year.toString().length !== 4) {
       return res.status(400)
         .json({
-          message: 'Book year can only be 4 digits or less'
+          message: 'Book year can only be 4 digits'
         });
     }
 
@@ -678,7 +678,7 @@ class InputValidator {
     if (year.toString().length !== 4) {
       return res.status(400)
         .json({
-          message: 'Book year can only be 4 digits or less'
+          message: 'Book year can only be 4 digits'
         });
     }
 

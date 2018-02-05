@@ -11,7 +11,6 @@ import { Redirect } from 'react-router-dom';
 class Background extends React.Component {
   constructor(props){
     super(props);
-
     this.state = {
       redirect: false
     }
@@ -23,10 +22,15 @@ class Background extends React.Component {
  * @returns {object} updated state
  */
   componentWillMount() {
-    if(localStorage.getItem('Token') != null) {
-      return this.setState({ redirect: true });
+    const currentLocation = window.location.pathname;
+    const token = localStorage.getItem('Token');
+    if(token != null
+    &&
+    currentLocation.match('/resetpassword/uniqueUrl')) {
+      localStorage.clear();
+      return this.setState({ redirect: false });
     }
-    return this.setState({ redirect: false });
+    return this.setState({ redirect: false })
   }
 
 /**
@@ -60,4 +64,5 @@ class Background extends React.Component {
     );
   }
 }
+
 export default Background;

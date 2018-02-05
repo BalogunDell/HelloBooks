@@ -220,7 +220,8 @@ class UserController {
     { fields: ['password'] })
       .then(() => {
         userModel.update({
-          passwordResetUrl: ''
+          passwordResetUrl: '',
+          googleUser: false
         }, { where: {
           passwordResetUrl: resetUrl
         }
@@ -403,13 +404,18 @@ class UserController {
 
     findOneResourceById(userModel, userId)
       .then((response) => {
-        const { password } = response.dataValues;
+        const { password, googleUser } = response.dataValues;
+        if (googleUser) {
+          return res.status().json({
+            message: 'We noticed you used your google account to login, please use the reset password on the login page'
+          });
+        }
         if (password && bcrypt.compareSync(currentPassword, password)) {
           const hashedPassword = bcrypt.hashSync(newPassword,
             bcrypt.genSaltSync(10));
           userModel.update({
-            password: hashedPassword,
-            googleUser: false },
+            password: hashedPassword
+          },
           { where: {
             id: userId
           },
@@ -420,7 +426,7 @@ class UserController {
             });
           });
         } else {
-          res.status(401).json({
+          res.status(400).json({
             message: 'The password you provided is incorrect'
           });
         }

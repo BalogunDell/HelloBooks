@@ -156,12 +156,6 @@ export const RegistrationForm  = ({
   </div>
   );
 }
-RegistrationForm.propTypes = {
-userData: PropTypes.object.isRequired,
-handleSubmit: PropTypes.func.isRequired,
-handleUserInput: PropTypes.func.isRequired,
-errorMessage: PropTypes.string.isRequired,
-} 
 
 
 export default RegistrationForm;

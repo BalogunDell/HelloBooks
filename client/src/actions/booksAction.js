@@ -61,7 +61,7 @@ export const loadAllbooks = () => dispatch =>
       dispatch(getAllBooks(response.data));
     }).catch((error) => {
       networkErrorReporter(error);
-      if (error.response.status === 401 || 403) {
+      if (error.response.status === 401 || error.response.status === 403) {
         dispatch(errorAction(true));
         error.logout = true;
       } else {
@@ -120,7 +120,7 @@ export const borrowBook = payload => dispatch =>
     })
     .catch((error) => {
       networkErrorReporter(error);
-      if (error.response.status === 401 || 403) {
+      if (error.response.status === 401 || error.response.status === 403) {
         dispatch(errorAction(true));
         error.logout = true;
       } else {
@@ -162,7 +162,7 @@ export const getUserBooks = () => dispatch =>
     })
     .catch((error) => {
       networkErrorReporter(error);
-      if (error.response.status === 401 || 403) {
+      if (error.response.status === 401 || error.response.status === 403) {
         dispatch(errorAction(true));
         error.logout = true;
       } else {
@@ -203,7 +203,7 @@ export const returnBook = bookId => dispatch =>
     })
     .catch((error) => {
       networkErrorReporter(error);
-      if (error.response.status === 401 || 403) {
+      if (error.response.status === 401 || error.response.status === 403) {
         dispatch(errorAction(true));
         error.logout = true;
       } else {
@@ -246,7 +246,7 @@ export const createBook = bookData => dispatch =>
     })
     .catch((error) => {
       networkErrorReporter(error);
-      if (error.response.status === 401 || 403) {
+      if (error.response.status === 401 || error.response.status === 403) {
         dispatch(errorAction(true));
         error.logout = true;
       } else {
@@ -391,7 +391,7 @@ export const modifyBook = (bookData) => {
     })
     .catch((error) => {
       networkErrorReporter(error);
-      if (error.response.status === 401 || 403) {
+      if (error.response.status === 401 || error.response.status === 403) {
         dispatch(errorAction(true));
         error.logout = true;
       } else {
@@ -433,7 +433,7 @@ export const deleteBook = bookId => dispatch =>
       dispatch(deleteBookAction(response.data));
     })
     .catch((error) => {
-      if (error.response.status === 401 || 403) {
+      if (error.response.status === 401 || error.response.status === 403) {
         networkErrorReporter(error);
         dispatch(errorAction(true));
         error.logout = true;
@@ -472,7 +472,7 @@ export const getAllBorrowedBooks = () => dispatch =>
       dispatch(getborrowedbooksAction(response.data.books));
     })
     .catch((error) => {
-      if (error.response.status === 401 || 403) {
+      if (error.response.status === 401 || error.response.status === 403) {
         networkErrorReporter(error);
         dispatch(errorAction(true));
         error.logout = true;

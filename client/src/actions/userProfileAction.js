@@ -132,7 +132,7 @@ export const editPassword = payload => dispatch =>
     })
     .catch((error) => {
       networkErrorReporter(error);
-      if (error.response.status === 401 || 403) {
+      if (error.response.status === 401 || error.response.status === 403) {
         dispatch(errorAction(true));
         error.logout = true;
       } else {
@@ -218,7 +218,7 @@ export const saveNewImageToDB = newUserData => dispatch =>
     })
     .catch((error) => {
       networkErrorReporter(error);
-      if (error.response.status === 401 || 403) {
+      if (error.response.status === 401 || error.response.status === 403) {
         dispatch(errorAction(true));
         error.logout = true;
       } else {

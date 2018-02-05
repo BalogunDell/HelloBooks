@@ -11,6 +11,7 @@ import {
   saveNewImageToDB,
   editPassword
 } from '../../actions/userProfileAction';
+import { sendEmail } from '../../actions/userAccessAction';
 import { fail } from 'assert';
 
 require('dotenv').config();
@@ -161,7 +162,7 @@ handleHideVisibility(event) {
       tempImageName: '',
       preview: '',
       newImageUploadErrorMessage: '',
-      disableUpdateBtn: false
+      disableUpdateBtn: false,
     });
   }
 
@@ -237,8 +238,10 @@ handleHideVisibility(event) {
           'blue rounded');
           this.setState({
             showPasswordUpdateInput: false,
+            viewProfile: true,
+            showInput: false,
           });
-          this.cancelProfileEdit();
+          this.handleHideVisibility();
       })
       .catch(() => {
       });
@@ -364,7 +367,8 @@ handleHideVisibility(event) {
                     userDetails={this.state.userData}
                     handleChange={this.handleChange}
                     passwordContainer={this.state.passwordContainer}
-                    cancelEdit = {this.cancelProfileEdit}/>
+                    cancelEdit = {this.cancelProfileEdit}
+                    resetPassword={this.props.sendEmail}/>
                 }
                 {!this.state.editButton 
                 ?
@@ -429,7 +433,8 @@ export const mapDispatchToProps = (dispatch) => {
   return {
     saveNewImage: (image) => dispatch(saveNewImage(image)),
     saveNewImageToDB: (newimage) => dispatch(saveNewImageToDB(newimage)),
-    editPassword: (payload) => dispatch(editPassword(payload))
+    editPassword: (payload) => dispatch(editPassword(payload)),
+    sendEmail: (email) => dispatch(sendEmail(email))
   }
 }
 export default connect(
