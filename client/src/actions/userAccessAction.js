@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { actionErrorReporter } from '../utils/errorReporters';
+import { actionErrorReporter, networkErrorReporter } from '../utils/errorReporters';
 import errorAction from '../actions/errorAction';
 import {
   ADD_USER,
@@ -47,6 +47,7 @@ const saveNewUser = userSignupData => dispatch =>
       dispatch(userSignupSuccessAction(response.data.responseData));
     })
     .catch((error) => {
+      networkErrorReporter(error);
       actionErrorReporter(error);
       throw (error);
     });
@@ -82,6 +83,7 @@ const userLogin = loginData => dispatch =>
       dispatch(userLoginSuccess(response.data.responseData));
     })
     .catch((error) => {
+      networkErrorReporter(error);
       actionErrorReporter(error);
       throw (error);
     });
@@ -116,6 +118,7 @@ const sendEmail = userEmail => dispatch =>
       dispatch(sendEmailAction(response.data));
     })
     .catch((error) => {
+      networkErrorReporter(error);
       actionErrorReporter(error);
       throw (error);
     });
@@ -152,6 +155,7 @@ const resetPassword = (newPassword, uniqueUrl) => dispatch =>
       dispatch(resetPasswordAction(response.data));
     })
     .catch((error) => {
+      networkErrorReporter(error);
       actionErrorReporter(error);
       throw (error);
     });
@@ -186,6 +190,7 @@ const newGoogleAccess = googleUserData => dispatch =>
       dispatch(newGoogleAccessAction(response.data));
     })
     .catch((error) => {
+      networkErrorReporter(error);
       actionErrorReporter(error);
       throw (error);
     });

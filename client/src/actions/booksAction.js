@@ -1,6 +1,6 @@
 import axios from 'axios';
 import getUserDetails from '../utils/getUserInfo';
-import { actionErrorReporter } from '../utils/errorReporters';
+import { actionErrorReporter, networkErrorReporter } from '../utils/errorReporters';
 import errorAction from './errorAction';
 
 import {
@@ -60,12 +60,14 @@ export const loadAllbooks = () => dispatch =>
     .then((response) => {
       dispatch(getAllBooks(response.data));
     }).catch((error) => {
+      networkErrorReporter(error);
       if (error.response.status === 401 || 403) {
         dispatch(errorAction(true));
         error.logout = true;
       } else {
         actionErrorReporter(error);
       }
+      
       throw (error);
     });
 
@@ -117,6 +119,7 @@ export const borrowBook = payload => dispatch =>
       dispatch(borrowBookAction(response.data));
     })
     .catch((error) => {
+      networkErrorReporter(error);
       if (error.response.status === 401 || 403) {
         dispatch(errorAction(true));
         error.logout = true;
@@ -158,6 +161,7 @@ export const getUserBooks = () => dispatch =>
       dispatch(userBooks(response.data));
     })
     .catch((error) => {
+      networkErrorReporter(error);
       if (error.response.status === 401 || 403) {
         dispatch(errorAction(true));
         error.logout = true;
@@ -198,6 +202,7 @@ export const returnBook = bookId => dispatch =>
       dispatch(returnBookAction(response.data));
     })
     .catch((error) => {
+      networkErrorReporter(error);
       if (error.response.status === 401 || 403) {
         dispatch(errorAction(true));
         error.logout = true;
@@ -240,6 +245,7 @@ export const createBook = bookData => dispatch =>
       dispatch(createBookAction(response.data));
     })
     .catch((error) => {
+      networkErrorReporter(error);
       if (error.response.status === 401 || 403) {
         dispatch(errorAction(true));
         error.logout = true;
@@ -284,6 +290,7 @@ export const savePDFToCloudinary = (PDF) => {
       dispatch(savePDF(response.data));
     })
     .catch((error) => {
+      networkErrorReporter(error);
       actionErrorReporter(error);
       throw (error);
     });
@@ -328,6 +335,7 @@ export const saveImageToCloudinary = (image) => {
       })
       .catch((error) => {
         actionErrorReporter(error);
+        networkErrorReporter(error);
         throw (error);
       });
 };
@@ -382,6 +390,7 @@ export const modifyBook = (bookData) => {
       dispatch(modifyBookAction(response.data.payload));
     })
     .catch((error) => {
+      networkErrorReporter(error);
       if (error.response.status === 401 || 403) {
         dispatch(errorAction(true));
         error.logout = true;
@@ -425,6 +434,7 @@ export const deleteBook = bookId => dispatch =>
     })
     .catch((error) => {
       if (error.response.status === 401 || 403) {
+        networkErrorReporter(error);
         dispatch(errorAction(true));
         error.logout = true;
       } else {
@@ -463,6 +473,7 @@ export const getAllBorrowedBooks = () => dispatch =>
     })
     .catch((error) => {
       if (error.response.status === 401 || 403) {
+        networkErrorReporter(error);
         dispatch(errorAction(true));
         error.logout = true;
       } else {
@@ -500,6 +511,7 @@ export const trendingBooks = () => dispatch => axios.get(trending)
     dispatch(trendingBooksAction(response.data));
   })
   .catch((error) => {
+    networkErrorReporter(error);
     actionErrorReporter(error);
     throw (error);
   });

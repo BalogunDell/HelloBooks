@@ -11,6 +11,7 @@ import {
   mapDispatchToProps
 } from '../../../client/src/components/containers/Profile';
 import ProfileInfo from '../../../client/src/components/presentational/ProfileInfo';
+import UpdateForm from '../../../client/src/components/presentational/UpdateForm';
 import { 
   ProfileUpdateForm,
   dispatchToProps,
@@ -195,11 +196,11 @@ describe('Profile Update Form', () => {
     disable: false,
     handleUserInput: jest.fn(),
     handleProfileUpdate: jest.fn(() => Promise.resolve()),
-    updateProfile: jest.fn(() => Promise.resolve())
+    editProfile: jest.fn(() => Promise.resolve())
   }
   const wrapper = shallow(<ProfileUpdateForm {...props}/>)
   it('should render the Profile Update Form successfully', () => {
-    expect(wrapper.find('div').length).toBe(10);
+    expect(wrapper.find('div').length).toBe(1);
   });
 
   it('should test the method: handleUserInput', () => {
@@ -232,7 +233,7 @@ describe('Profile Update Form', () => {
 
   it('should test the method: dispatchToProps', () => {
     const dispatch = jest.fn();
-    expect(dispatchToProps(dispatch).updateProfile).toBeTruthy();
+    expect(dispatchToProps(dispatch).editProfile).toBeTruthy();
   });
 
   it('should test the method: stateToProps', () => {
@@ -252,5 +253,25 @@ describe('Profile Info Component', () => {
   }
   it('should render without crashing', () => {
     const wrapper = shallow(<ProfileInfo {...props}/>)
+  });
+});
+
+describe('Update Form', () => {
+  const props = {
+  handleProfileUpdate: jest.fn(),
+  userData: profile,
+  handleUserInput: jest.fn(),
+  errorMessage:'',
+  errorStatus: false,
+  loader: true,
+  successStatus: false,
+  successMessage: '',
+  disable: true,
+  cancelEdit: jest.fn(),
+}
+  const wrapper = shallow(<UpdateForm {...props}/>)
+  it('renders without crashing', () => {
+    expect(wrapper.find('div').length).toEqual(9);
+    expect(wrapper.find('input').length).toEqual(5);
   });
 });

@@ -41,7 +41,8 @@ const Books = ({
                 <div className="book-holder-prot" key= {book.id}>
                   {/* Book title  */}
                   <div className="item book-title center">
-                    <h6><strong>{book.title}</strong></h6>
+                    <h6 id={(book.title).split(' ')[0]} key= {book.id}
+                    ><strong>{book.title}</strong></h6>
                   </div>
 
                   {/* Book image  */}

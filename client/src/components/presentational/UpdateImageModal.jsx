@@ -121,16 +121,4 @@ const UpdateImageModal = ({
 );
 }
 
-UpdateImageModal.propTypes = {
-  imageUploadHandler: PropTypes.func,
-  handleImageEdit: PropTypes.func,
-  cancelEdit: PropTypes.func,
-  loader: PropTypes.bool,
-  newImageUploadError: PropTypes.bool,
-  newImageUploadSuccess: PropTypes.bool,
-  newImageUploadErrorMessage: PropTypes.string,
-  newImageUploadSuccessMessage: PropTypes.string,
-  disableUpdateBtn: PropTypes.bool
-}
-
 export default UpdateImageModal;

@@ -90,6 +90,7 @@ const UserBooks = ({
                     <button className="btn btn-small waves-effect waves-teal custom" 
                       value={book.bookId}
                       data-id={id}
+                      id="returnBook"
                       onClick={handleReturn}>Return
                   </button>
                   </td>

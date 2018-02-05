@@ -191,12 +191,7 @@ class BookController {
                 res.status(200).json({
                   message: 'Book modified successfully',
                   payload: response });
-              })
-                .catch(() => {
-                  res.status(500).json({
-                    message: 'Internal server error'
-                  });
-                });
+              });
             }
           }).catch((error) => {
             const messageObject = errorMessages(error);
@@ -239,16 +234,11 @@ class BookController {
           { where: { id: response.dataValues.bookId } })
           .then((updateResponse) => {
             if (updateResponse) {
-              res.status(201).json({
+              return res.status(201).json({
                 message: 'You have successfully borrowed this book',
                 returnDate: expectedReturnDate,
                 bookBorrowed: response.dataValues });
             }
-          })
-          .catch(() => {
-            res.status(500).json({
-              message: 'Internal server error'
-            });
           });
       })
       .catch(() => {
@@ -296,10 +286,6 @@ class BookController {
                           message: 'Book has been returned'
                         });
                       }
-                    });
-                  }).catch(() => {
-                    res.status(500).json({
-                      message: 'Internal server error'
                     });
                   });
               }

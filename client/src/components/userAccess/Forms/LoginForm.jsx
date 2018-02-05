@@ -88,7 +88,7 @@ const LoginForm = ({
                       <input 
                         type="submit"
                         className="btn waves-effect waves-teal"
-                        id="regBtn"
+                        id="loginBtn"
                         value="Signin"/>
                     </div>
                   </div>
@@ -96,6 +96,7 @@ const LoginForm = ({
                 <h5><span>or</span></h5>
                    <div className="row">
                     <GoogleLogin
+                      id="googleLogin"
                       clientId = {process.env.GOOGLE_CLIENT_ID}
                       buttonText = 'Signin with Google'
                       onSuccess = {googleLoginHandler}

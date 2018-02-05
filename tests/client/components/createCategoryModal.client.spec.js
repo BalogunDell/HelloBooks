@@ -54,13 +54,6 @@ describe('Create Category', () => {
       loaderText: '',
       createCategory: jest.fn(() => Promise.resolve())
   }
-  it('renders the create category form without crashing', () => {
-    expect(wrapper.find('#addCategory').length).toBe(1);
-    expect(wrapper.find('.modal-footer').length).toBe(1);
-    expect(wrapper.find('div').length).toBe(14);
-    expect(wrapper.find('h5').length).toBe(1);
-    expect(wrapper.find('input').length).toBe(2);  
-  });
 
   it('ensure that it has the method: handleInput', () => {
     const spyHandleInput = jest.spyOn(CreateCategoryModal.prototype,

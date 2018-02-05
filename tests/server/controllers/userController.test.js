@@ -321,6 +321,22 @@ let userId;
       });
     });
 
+    it('should not edit user password if no request body',
+    (done) => {
+      request
+      .put(`${userAPI}/${userId}/password`)
+      .set('Authorization', userToken)
+      .set('Content-Type', 'Application/json')
+      .send()
+      .end((err, res) => {
+        expect(res.status).to.equal(400);
+        expect(res.body).to.be.an('object');
+        expect(res.body.message).to
+          .equal('Please type your current password and the new password')
+        done();
+      });
+    });
+
     it('should not edit user password without authentication token',
     (done) => {
       request

@@ -37,6 +37,7 @@ import {
   sendEmail,
   resetPassword,
   newGoogleAccess
+
 } from '../../../client/src/actions/userAccessAction';
 
 import {
@@ -44,10 +45,12 @@ import {
   ADD_USER,
   RESET_PASS,
   SEND_EMAIL,
-  GOOGLE_ACCESS
+  GOOGLE_ACCESS,
+  ERROR
 
 } from '../../../client/src/actions/actionTypes'
 
+import errorAction from '../../../client/src/actions/errorAction'
 import { expectation } from 'sinon';
 import { userData, googlesigninMock } from '../mock/mockdata';
 
@@ -74,8 +77,8 @@ describe('User Access actions', () => {
     });
 
     const expectedAction = {
-      type: ADD_USER,
-      userSignupData:signupResponse
+      type: ADD_USER || ERROR,
+      userSignupData:signupResponse || {status: false}
     };
     const store = mockStore({});
     await store.dispatch(saveNewUser())

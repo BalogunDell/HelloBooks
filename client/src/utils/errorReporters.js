@@ -36,13 +36,12 @@ export const actionErrorReporter = (error) => {
  * 
  * @returns { booelean } Materialize toast
 */
-export const componentErrorReporter = (error) => {
-  switch (error.response.status) {
-    case 401:
-      return true;
-    case 403:
-      return true;
-    default:
-      return false;
-  }
+export const networkErrorReporter = (error) => {
+ const message = error.response
+    ?
+    null
+    :
+    'It appears like you are offline. Please check your connection';
+
+  return Materialize.toast(message, 5000, 'red rounded');
 };

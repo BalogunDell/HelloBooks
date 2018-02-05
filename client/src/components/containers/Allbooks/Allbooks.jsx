@@ -89,11 +89,6 @@ export class Allbooks extends React.Component {
   */
   render() {
     return(
-      <div>
-        { this.state.restricted
-        ?
-        <Redirect to= '/login'/>
-        :
         <div>
           <div className="row">
             <div className="col s12 books-holder-title center">
@@ -106,8 +101,6 @@ export class Allbooks extends React.Component {
             bookAvailabilityMessage = {this.state.bookAvailabilityMessage}
             />
       </div>
-        }
-    </div>
     );
   }
 }

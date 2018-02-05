@@ -29,7 +29,7 @@ return (<div>
       </div>
       
       <div className="userInfoDisplay">
-        <h4>{`${userData.firstName}
+        <h4 id="fullname">{`${userData.firstName}
         ${userData.lastName}`}
         </h4>
         <p>Joined: 
@@ -43,7 +43,8 @@ return (<div>
           <div className="col s12 l12">
             {!viewProfile
             ?
-            <button className="btn waves-teal waves-effect custom" 
+            <button className="btn waves-teal waves-effect custom"
+              id="viewProfile"
               onClick={showProfile}>View Full Profile</button>
             :
             ''

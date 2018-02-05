@@ -1,7 +1,7 @@
 import axios from 'axios';
 import getUserDetails from '../utils/getUserInfo';
 import { userProfile } from '../utils/apiEndPoints';
-import { actionErrorReporter } from '../utils/errorReporters';
+import { actionErrorReporter, networkErrorReporter } from '../utils/errorReporters';
 import errorAction from './errorAction';
 import {
   FETCH_USER,
@@ -45,6 +45,7 @@ export const fetchUserTrigger = () => dispatch =>
     .then((response) => {
       dispatch(fetchUser(response.data));
     }).catch((error) => {
+      networkErrorReporter(error);
       if (error.response.status === 401 || 403) {
         dispatch(errorAction(true));
         error.logout = true;
@@ -87,6 +88,7 @@ export const editProfile = newUserData => dispatch =>
       dispatch(editProfileAction(response.data));
     })
     .catch((error) => {
+      networkErrorReporter(error);
       if (error.response.status === 401 || 403) {
         dispatch(errorAction(true));
         error.logout = true;
@@ -129,6 +131,7 @@ export const editPassword = payload => dispatch =>
       dispatch(editPasswordAction(response.data));
     })
     .catch((error) => {
+      networkErrorReporter(error);
       if (error.response.status === 401 || 403) {
         dispatch(errorAction(true));
         error.logout = true;
@@ -173,6 +176,7 @@ export const saveNewImage = (image) => {
       dispatch(saveImageToCloud(response.data));
     })
     .catch((error) => {
+      networkErrorReporter(error);
       actionErrorReporter(error);
       throw (error);
     });
@@ -213,6 +217,7 @@ export const saveNewImageToDB = newUserData => dispatch =>
       dispatch(saveImage(newUrl));
     })
     .catch((error) => {
+      networkErrorReporter(error);
       if (error.response.status === 401 || 403) {
         dispatch(errorAction(true));
         error.logout = true;

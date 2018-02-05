@@ -318,7 +318,7 @@ class UserController {
         }
         return res.status(404).json({ message: 'User not found' });
       })
-      .catch((error) => {
+      .catch(() => {
         res.status(500).json({ message: 'Internal server error' });
       });
   }
@@ -417,10 +417,6 @@ class UserController {
           }).then(() => {
             res.status(200).json({
               message: 'Your password has been successfully changed'
-            });
-          }).catch(() => {
-            res.status(500).json({
-              message: 'Internal server error'
             });
           });
         } else {

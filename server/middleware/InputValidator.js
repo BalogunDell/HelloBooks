@@ -868,12 +868,6 @@ class InputValidator {
           message: 'Please type your current password and the new password'
         });
     }
-    if (currentPassword === '' || newPassword === '') {
-      return res.status(400)
-        .json({
-          message: 'Field cannot be empty'
-        });
-    }
 
     if (currentPassword.length < 5 || newPassword.length < 5) {
       return res.status(400)

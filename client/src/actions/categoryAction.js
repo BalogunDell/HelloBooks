@@ -1,6 +1,6 @@
 import axios from 'axios';
 import getUserDetails from '../utils/getUserInfo';
-import { actionErrorReporter } from '../utils/errorReporters';
+import { actionErrorReporter, networkErrorReporter } from '../utils/errorReporters';
 import errorAction from './errorAction';
 import {
   CREATE_CATEGORY,
@@ -41,6 +41,7 @@ const getCategories = () => dispatch =>
       dispatch(getCategoriesAction(response.data.categories));
     })
     .catch((error) => {
+      networkErrorReporter(error);
       actionErrorReporter(error);
       throw (error);
     });
@@ -83,6 +84,7 @@ const createCategory = category => dispatch =>
         dispatch(errorAction(true));
         error.logout = true;
       } else {
+        networkErrorReporter(error);
         actionErrorReporter(error);
       }
       throw (error);
