@@ -191,11 +191,11 @@ appRouter.route('/users/:userId/')
 /**
 * @description This route handles change of password by users
 * 
-* @param  {string} '/api/v1/users/:userId/newpassword'
+* @param  {string} '/api/v1/users/:userId/password'
 * @param  {method} verifyUser
 * @param  {method} editPassword
 */ 
-appRouter.put('/users/:userId/newpassword',
+appRouter.put('/users/:userId/password',
   InputValidator.editPasswordVerifier,
   Authentication.verifyUser,
   UserController.editPassword

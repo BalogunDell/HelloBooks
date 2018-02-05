@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { editProfile } from '../../Actions/userProfileAction';
-import Loader from '../presentational/Loader';
+import { editProfile } from '../../actions/userProfileAction';
+import UpdateForm from '../presentational/UpdateForm';
 
 
 /**
@@ -26,6 +26,7 @@ export class ProfileUpdateForm extends React.Component {
       successStatus: false,
       successMessage: '',
       disable: false,
+      restricted: false
     }
 
     this.handleUserInput = this.handleUserInput.bind(this);
@@ -63,10 +64,15 @@ export class ProfileUpdateForm extends React.Component {
    * @memberof ProfileUpdateForm
    */
   handleProfileUpdate(event) {
+    this.setState({
+      loader: true
+    });
     event.preventDefault();
-    this.setState({loader: true});
-    this.props.updateProfile(this.state.userData)
+    this.props.editProfile(this.state.userData)
     .then(() => {
+      this.setState({
+        loader: false
+      });
         Materialize.toast(
           'Profile has been updated',
           3000,
@@ -74,12 +80,15 @@ export class ProfileUpdateForm extends React.Component {
         setTimeout(() => {
         }, 1000);
         
+        this.props.cancelEdit();
     })
-    .catch(error => {
-      this.setState({
+    .catch((error) => {
+      if(!error.logout) {
+      return this.setState({
         errorStatus: true,
         disable: false,
         loader: false});
+      }
     });
   }
 
@@ -123,111 +132,20 @@ export class ProfileUpdateForm extends React.Component {
         ?
         <h3>Loading profile data...</h3>
         :
-        <form onSubmit={this.handleProfileUpdate}>
-          <div className="row">
-            <div className="input-field col s6">
-              <input 
-                type="text" 
-                required
-                minLength="2"
-                id="firstName" 
-                name="firstName"
-                className="validate"
-                value= {this.state.userData.firstName}
-                onChange= {this.handleUserInput}
-              />
-              <label data-error="Invalid input">First name
-                <span>*</span>
-              </label>
-            </div>
-
-            {/* Last name input  */}
-            <div className="input-field col s6">
-              <label>Last name
-                <span>*</span>
-              </label>
-              <input 
-                type="text" 
-                id="lastName" 
-                required
-                minLength="2"
-                name="lastName" 
-                value= {this.state.userData.lastName} 
-                onChange= {this.handleUserInput}
-              />
-            </div>
-          </div>
-
-          {/* Email input  */}
-          <div className="row">
-              <div className="input-field col s12">
-                <input 
-                  type="text" 
-                  id="username" 
-                  name="username" 
-                  className="validate" 
-                  required
-                  value = {this.state.userData.username}
-                  onChange= {this.handleUserInput}
-                />
-                <label 
-                  htmlFor="username" 
-                  data-error="Invalid email" 
-                  data-success="">Username
-                    <span>*</span>
-                </label>
-              </div>  
-            </div>
-            <div className="row">
-              { 
-                this.state.errorStatus 
-                ?
-                  <h6 className="red-text center">
-                    {this.state.errorMessage}
-                  </h6>
-                : 
-                null
-              }
-
-              { 
-                this.state.loader 
-                ?
-                  <Loader/>
-                : 
-                null
-              }
-
-              { 
-                this.state.successStatus 
-                ?
-                  <h6 className="green-text center">
-                  {this.state.successMessage}
-                  </h6>
-                : 
-                null
-              }
-            </div>
-
-            {/* Email input  */}
-         <div className="row">  
-          <div className="input-field col s12 m12 l6">
-            <input type="button" 
-              className="btn waves-ripple waves-effect red" 
-              onClick={cancelEdit}
-              id= "cancelEdit"
-              value="Cancel"/>
-          </div> 
-          <div className="input-field col s12 m12 l6">
-            <input type="submit"
-              className="btn waves-ripple waves-effect custom" 
-              disabled={this.state.disable}
-              id="saveBtn"
-              value="Save"/>
-          </div> 
-        </div>
-        </form>
+        <UpdateForm
+          handleProfileUpdate={this.handleProfileUpdate} 
+          userData={this.state.userData}
+          handleUserInput={this.handleUserInput}
+          errorMessage={this.state.errorMessage}
+          errorStatus={this.state.errorStatus}
+          loader={this.state.loader}
+          successStatus={this.state.successStatus}
+          successMessage={this.state.successMessage}
+          disable={this.state.disable}
+          cancelEdit={cancelEdit}
+        />
       }
-      </div>  
+      </div>
     );
   }
 }
@@ -235,14 +153,17 @@ export class ProfileUpdateForm extends React.Component {
 
 export const stateToProps = (state, ownProps) => {
   return {
-    newUserDetails: state.userProfile.data
+    newUserDetails: state.userProfile.data,
   }
 }
 
 export const dispatchToProps = (dispatch) => {
   return {
-    updateProfile: (newData) => dispatch(editProfile(newData))
+    editProfile: (newData) => dispatch(editProfile(newData))
   }
 } 
 
-export default connect(stateToProps, dispatchToProps)(ProfileUpdateForm);
+export default connect(
+  stateToProps,
+  dispatchToProps)
+  (ProfileUpdateForm);

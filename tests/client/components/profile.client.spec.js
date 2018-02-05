@@ -128,7 +128,10 @@ describe('Profile, updateImageModal and profileUpdateForm components', () => {
   it('test the method: componentWillReceiveProps', () => {
     const spy = jest.spyOn(Profile.prototype, 'componentWillReceiveProps');
     const nextProps = {
-      userProfile: profile
+      userProfile: profile,
+      newImageUrl: {
+        ImageUrl: 'dfaddsadsfadfdf'
+      }
     }
     shallow(<Profile {...props} componentWillReceiveProps = {spy}/>)
     .instance().componentWillReceiveProps(nextProps);
@@ -137,7 +140,10 @@ describe('Profile, updateImageModal and profileUpdateForm components', () => {
   it('test the method: componentWillReceiveProps', () => {
     const spy = jest.spyOn(Profile.prototype, 'componentWillReceiveProps');
     const nextProps = {
-      userProfile: ''
+      userProfile: '',
+      newImageUrl: {
+        ImageUrl: ''
+      }
     }
     shallow(<Profile {...props} componentWillReceiveProps = {spy}/>)
     .instance().componentWillReceiveProps(nextProps);

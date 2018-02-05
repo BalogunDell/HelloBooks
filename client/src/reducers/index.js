@@ -4,6 +4,7 @@ import books from './booksReducer';
 import userProfile from './userProfileReducer';
 import loadedCategories from './categoryReducer';
 import uploadFiles from './uploadReducer';
+import accessStatus from './errorReducer';
 
 /**
  * @export rootReducer
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
   books,
   loadedCategories,
   uploadFiles,
+  accessStatus
 });
 
 export default rootReducer;

@@ -511,7 +511,7 @@ userTestRegistration: {
     quantity: 56,
     categoryId: 5,
     visibility: true,
-    imageUrlUrl: 'https:/ /res.cloudina  ry.com/djvjx p2am/imageUrl/upload/v1507295978/book8_yy9efp.jpg',
+    imageUrl: 'https:/ /res.cloudina  ry.com/djvjx p2am/imageUrl/upload/v1507295978/book8_yy9efp.jpg',
     PDFUrl: 'https://res.cloudinary.com/djvjxp2am/imageUrl/upload/v1507295978/book8_yy9efp.jpg',
   },
 
@@ -821,7 +821,7 @@ userTestRegistration: {
     imageUrl: 'imageUrls/andela.jpg'
   },
 
-  userID: {
+  userId: {
     userId: 1
   }
 

@@ -55,7 +55,7 @@ class InputValidator {
     }
     req.body = {
       username: username.toLowerCase(),
-      password
+      password: password.toLowerCase()
     };
     return next();
   }
@@ -209,7 +209,7 @@ class InputValidator {
       lastName,
       email,
       username: username.toLowerCase(),
-      password,
+      password: password.toLowerCase(),
       googleUser
     };
     return next();

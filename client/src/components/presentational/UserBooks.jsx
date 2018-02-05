@@ -20,16 +20,15 @@ const UserBooks = ({
 	handleBookDelete,
 	handleBookEdit
   }) => {
-	
 	let books = [];
 		!borrowedBooks ? books = allUserBooks : books = borrowedBooks
 		allUserBooks ? books = allUserBooks : books = borrowedBooks;
 		allBooks ? books = allBooks : null;
-	const bookLength = books.length;
+  const bookLength = books.length;
 	
   return (
     <div className= "styledUserBooksTable">
-      <table className="centered">
+        <table className="centered">
         <thead>
           {
               allBooks 
@@ -134,7 +133,7 @@ const UserBooks = ({
             }
         </tbody>
       </table>
-    </div>
+  </div>
 	);
 }
 

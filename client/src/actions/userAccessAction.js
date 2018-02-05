@@ -1,11 +1,12 @@
 import axios from 'axios';
-import networkErrorReporter from '../utils/networkErrorReporter';
+import { actionErrorReporter } from '../utils/errorReporters';
+import errorAction from '../actions/errorAction';
 import {
   ADD_USER,
   LOGIN,
   GOOGLE_ACCESS,
   RESET_PASS,
-  SEND_EMAIL
+  SEND_EMAIL,
 } from './actionTypes';
 import {
   signup,
@@ -13,6 +14,7 @@ import {
   newPasswordUrl,
   googleAccess
 } from '../utils/apiEndPoints';
+
 
 /**
  * @export userSignupSuccessAction
@@ -40,11 +42,12 @@ const userSignupSuccessAction = userSignupData => ({
 const saveNewUser = userSignupData => dispatch =>
   axios.post(signup, userSignupData)
     .then((response) => {
+      dispatch(errorAction(false));
       localStorage.setItem('Token', response.data.responseData.token);
       dispatch(userSignupSuccessAction(response.data.responseData));
     })
     .catch((error) => {
-      networkErrorReporter(error);
+      actionErrorReporter(error);
       throw (error);
     });
 
@@ -74,11 +77,12 @@ const userLoginSuccess = loginData => ({
 const userLogin = loginData => dispatch =>
   axios.post(signin, loginData)
     .then((response) => {
+      dispatch(errorAction(false));
       localStorage.setItem('Token', response.data.responseData.token);
       dispatch(userLoginSuccess(response.data.responseData));
     })
     .catch((error) => {
-      networkErrorReporter(error);
+      actionErrorReporter(error);
       throw (error);
     });
 
@@ -112,8 +116,7 @@ const sendEmail = userEmail => dispatch =>
       dispatch(sendEmailAction(response.data));
     })
     .catch((error) => {
-      console.log(error);
-      networkErrorReporter(error);
+      actionErrorReporter(error);
       throw (error);
     });
 
@@ -149,7 +152,7 @@ const resetPassword = (newPassword, uniqueUrl) => dispatch =>
       dispatch(resetPasswordAction(response.data));
     })
     .catch((error) => {
-      networkErrorReporter(error);
+      actionErrorReporter(error);
       throw (error);
     });
 
@@ -183,7 +186,7 @@ const newGoogleAccess = googleUserData => dispatch =>
       dispatch(newGoogleAccessAction(response.data));
     })
     .catch((error) => {
-      networkErrorReporter(error);
+      actionErrorReporter(error);
       throw (error);
     });
 

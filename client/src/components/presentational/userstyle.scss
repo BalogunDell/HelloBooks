@@ -207,11 +207,16 @@
 
     .profile-image-holder {
       max-width: 100px;
+      max-height: 100px;
       margin: 0 auto;
       top: -55px;
       left: 0;
       right: 0;
       position: absolute;
+
+      #image-target {
+        max-height: 150px;
+      }
 
       a {
         cursor: pointer;

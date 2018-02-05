@@ -1,18 +1,17 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import getUserDetails from '../../utils/getUserInfo';
 import BookInfo from '../presentational/BookInfo';
 import {
   userBooks,
   borrowBook
-} from '../../Actions/booksAction';
+} from '../../actions/booksAction';
 import {
   successMessage,
   failureMessage,
   membershipIconCreator
 } from '../../utils/messages';
-import authenticate from '../presentational/HOC/authenticate';
 
 /**
  * @description BookDetails component
@@ -34,7 +33,8 @@ export class BookDetails extends React.Component {
       processingRequest: false,
       borrowSuccessStatus: false,
       borrowedMessage: '',
-      isAdmin: false
+      isAdmin: false,
+      restricted: false
     }
 
     this.handleBorrow = this.handleBorrow.bind(this);
@@ -162,31 +162,40 @@ export class BookDetails extends React.Component {
     let failure = this.state.borrowErrorStatus ? '' : null
 
     return (
-      
-      this.state.dataReady 
-      ? 
-      <h4 className="center">Loading book details...</h4> 
-      :
-        <div className="row">
+      <div>
+        { this.state.restricted
+        ?
+          <Redirect to="/login"/>
+        :
+      <div>
+        { this.state.dataReady 
+        ? 
+        <h4 className="center">Loading book details...</h4> 
+        :
           <div className="row">
-            <div className="col s12 m12 l6 offset-3 center">
-              <h3 className="center">Book Details</h3>
+            <div className="row">
+              <div className="col s12 m12 l6 offset-3 center">
+                <h3 className="center">Book Details</h3>
+              </div>
             </div>
-          </div>
-          <BookInfo
-          book = {this.state.book}
-          isAdmin = {this.state.isAdmin}
-          disableBtn = {this.state.disableBtn}
-          handleBorrow = {this.handleBorrow}
-          borrowedMessage= {this.state.borrowedMessage}
-          borrowErrorStatus = {this.state.borrowErrorStatus}
-          borrowSuccessStatus = {this.state.borrowSuccessStatus}
-          />
+            <BookInfo
+            book = {this.state.book}
+            isAdmin = {this.state.isAdmin}
+            disableBtn = {this.state.disableBtn}
+            handleBorrow = {this.handleBorrow}
+            borrowedMessage= {this.state.borrowedMessage}
+            borrowErrorStatus = {this.state.borrowErrorStatus}
+            borrowSuccessStatus = {this.state.borrowSuccessStatus}
+            />
 
-          {showError}
-          {success}
-          {failure}
+            {showError}
+            {success}
+            {failure}
+          </div>
+        }
         </div>
+        }
+      </div>
       )
   }
 } 
@@ -202,8 +211,7 @@ export function mapStateToProps (state) {
   return {
     fetchedUserbooks: state.books.fetchedBooks,
     allbooks: state.books.books,
-    currentBookId: state.books.currentBookId
-
+    currentBookId: state.books.currentBookId,
   }
 }
 
@@ -214,12 +222,14 @@ export function mapStateToProps (state) {
  * 
  * @returns {object} mapped dispatch 
 */
-export function maptDispatchToProps(dispatch) {
+export const maptDispatchToProps = (dispatch) => {
   return {
     borrowBook: (bookDetails) => dispatch(borrowBook(bookDetails)),
     userBooks: () => dispatch(getUserBooks())
   }
 }
 
-export default connect(mapStateToProps, maptDispatchToProps)
-(authenticate(BookDetails));
+export default connect(
+  mapStateToProps,
+  maptDispatchToProps)
+  (BookDetails);

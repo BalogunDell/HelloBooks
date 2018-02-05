@@ -1,12 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import $ from 'jquery';
 import SummaryTable from '../containers/SummaryTable';
 import BooksList from '../containers/BooksList';
 import { 
   loadAllbooks,
   getAllBorrowedBooks
-} from '../../Actions/booksAction';
+} from '../../actions/booksAction';
 
 
 /**
@@ -36,11 +37,12 @@ export class Dashboard extends React.Component {
  * 
  * @returns {void}
  */
-  componentWillMount() {
+  componentDidMount() {
     this.props.getAllBooks()
       .then(() => {})
       .catch(() => {})
   }
+
 
 /**
  * @description React render method - render
@@ -72,4 +74,7 @@ export const dispatchToProps = (dispatch) => {
 } 
 
 
-export default connect(null, dispatchToProps)(Dashboard);
+export default connect(
+  null,
+  dispatchToProps)
+  (Dashboard);

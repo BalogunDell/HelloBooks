@@ -1,15 +1,15 @@
 import axios from 'axios';
 import getUserDetails from '../utils/getUserInfo';
 import { userProfile } from '../utils/apiEndPoints';
-import networkErrorReporter from '../utils/networkErrorReporter';
-
+import { actionErrorReporter } from '../utils/errorReporters';
+import errorAction from './errorAction';
 import {
   FETCH_USER,
   SAVE_IMAGE,
   EDIT_PROFILE,
   EDIT_IMAGE,
   EDIT_PASSWORD
-} from '../Actions/actionTypes';
+} from '../actions/actionTypes';
 
 import {
   cloudinaryUrl,
@@ -45,7 +45,12 @@ export const fetchUserTrigger = () => dispatch =>
     .then((response) => {
       dispatch(fetchUser(response.data));
     }).catch((error) => {
-      networkErrorReporter(error);
+      if (error.response.status === 401 || 403) {
+        dispatch(errorAction(true));
+        error.logout = true;
+      } else {
+        actionErrorReporter(error);
+      }
       throw (error);
     });
 
@@ -82,7 +87,12 @@ export const editProfile = newUserData => dispatch =>
       dispatch(editProfileAction(response.data));
     })
     .catch((error) => {
-      networkErrorReporter(error);
+      if (error.response.status === 401 || 403) {
+        dispatch(errorAction(true));
+        error.logout = true;
+      } else {
+        actionErrorReporter(error);
+      }
       throw (error);
     });
 
@@ -112,14 +122,19 @@ export const editPasswordAction = payload => ({
  * @returns { object } axios response
  */
 export const editPassword = payload => dispatch =>
-  axios.put(`${userProfile}/${getUserDetails().userId}/newpassword`,
+  axios.put(`${userProfile}/${getUserDetails().userId}/password`,
     payload,
     { headers: { Authorization: getUserDetails().savedToken } })
     .then((response) => {
       dispatch(editPasswordAction(response.data));
     })
     .catch((error) => {
-      networkErrorReporter(error);
+      if (error.response.status === 401 || 403) {
+        dispatch(errorAction(true));
+        error.logout = true;
+      } else {
+        actionErrorReporter(error);
+      }
       throw (error);
     });
 
@@ -158,7 +173,7 @@ export const saveNewImage = (image) => {
       dispatch(saveImageToCloud(response.data));
     })
     .catch((error) => {
-      networkErrorReporter(error);
+      actionErrorReporter(error);
       throw (error);
     });
 };
@@ -190,7 +205,7 @@ export const saveImage = newUserData => ({
  */
 export const saveNewImageToDB = newUserData => dispatch => 
   axios.put(`${userProfile}/${getUserDetails().userId}`,
-  newUserData, {
+    newUserData, {
       headers: { Authorization: getUserDetails().savedToken }
     })
     .then((response) => {
@@ -198,6 +213,11 @@ export const saveNewImageToDB = newUserData => dispatch =>
       dispatch(saveImage(newUrl));
     })
     .catch((error) => {
-      networkErrorReporter(error);
+      if (error.response.status === 401 || 403) {
+        dispatch(errorAction(true));
+        error.logout = true;
+      } else {
+        actionErrorReporter(error);
+      }
       throw (error);
     });

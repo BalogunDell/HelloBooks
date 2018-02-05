@@ -7,17 +7,17 @@ import { shallow, mount, render , configure} from 'enzyme';
 import jestSnapshot from 'chai-jest-snapshot';
 import expect, { createSpy, spyOn, isSpy } from 'expect'
 
-import LoginForm from '../../../client/src/components/Useraccess/Forms/LoginForm';
+import LoginForm from '../../../client/src/components/userAccess/Forms/LoginForm';
 import { 
   Login,
   mapDispatchToProps,
   mapStateToProps
-} from '../../../client/src/components/Useraccess/Login';
+} from '../../../client/src/components/userAccess/Login';
 
 import {
   PasswordResetModal,
   dispatchToProps
-} from '../../../client/src/components/Useraccess/Forms/PasswordResetModal';
+} from '../../../client/src/components/userAccess/Forms/PasswordResetModal';
 import {
   userData,
   signupResponse

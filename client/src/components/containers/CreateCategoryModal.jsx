@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import {
   createCategory,
-  getCategories } from '../../Actions/categoryAction';
+  getCategories } from '../../actions/categoryAction';
 import CategoryModal from '../presentational/CategoryModal';
 
 /**
@@ -157,5 +157,7 @@ export const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)
-(CreateCategoryModal);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps)
+  (CreateCategoryModal);

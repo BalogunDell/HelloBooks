@@ -13,7 +13,6 @@ import Navbar from '../../../client/src/components/presentational/Navbar/Navbar'
 import { publishedBooksSample } from '../mock/mockdata';
 import mockStorage from '../mock/mockDataStorage';
 
-jest.mock('../../../client/src/components/presentational/HOC/authenticate.jsx');
 jest.mock('react-router-dom');
 
 configure({ adapter: new Adapter() });

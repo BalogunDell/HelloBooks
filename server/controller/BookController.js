@@ -179,7 +179,7 @@ class BookController {
 
     findOneResource(bookModel, query)
       .then((book) => {
-        if (!book) return res.status(404).json({message: 'Book not found' });
+        if (!book) return res.status(404).json({ message: 'Book not found' });
         book.update(bookData)
           .then((updated) => {
             if (updated) {
@@ -227,11 +227,11 @@ class BookController {
    * @returns {object} response payload
    */
   static borrowBook(req, res) {
-    const { bookId, userId, expectedReturnDdate } = req.body;
+    const { bookId, userId, expectedReturnDate } = req.body;
     const payload = {
       bookId,
       userId,
-      expectedReturnDdate
+      expectedReturnDate
     };
     borrowedBookModel.create(payload)
       .then((response) => {
@@ -241,7 +241,7 @@ class BookController {
             if (updateResponse) {
               res.status(201).json({
                 message: 'You have successfully borrowed this book',
-                returnDate: req.body.expectedReturnDdate,
+                returnDate: expectedReturnDate,
                 bookBorrowed: response.dataValues });
             }
           })

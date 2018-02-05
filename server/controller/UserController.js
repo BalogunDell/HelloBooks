@@ -318,7 +318,7 @@ class UserController {
         }
         return res.status(404).json({ message: 'User not found' });
       })
-      .catch(() => {
+      .catch((error) => {
         res.status(500).json({ message: 'Internal server error' });
       });
   }
@@ -398,7 +398,7 @@ class UserController {
     const {
       currentPassword,
       newPassword } = req.body;
-    const fieldToUpdate = ['password'];
+    const fieldToUpdate = ['password', 'googleUser'];
     const { userId } = req.body;
 
     findOneResourceById(userModel, userId)
@@ -407,12 +407,14 @@ class UserController {
         if (password && bcrypt.compareSync(currentPassword, password)) {
           const hashedPassword = bcrypt.hashSync(newPassword,
             bcrypt.genSaltSync(10));
-          userModel.update({ password: hashedPassword },
-            { where: {
-              id: userId
-            },
-            fieldToUpdate
-            }).then(() => {
+          userModel.update({
+            password: hashedPassword,
+            googleUser: false },
+          { where: {
+            id: userId
+          },
+          fieldToUpdate
+          }).then(() => {
             res.status(200).json({
               message: 'Your password has been successfully changed'
             });

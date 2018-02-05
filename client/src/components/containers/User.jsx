@@ -13,6 +13,7 @@ import Borrowedbooks from '../containers/Borrowedbooks';
 import Profile from '../containers/Profile';
 import AdminDashboard from '../containers/Dashboard';
 import CreateBook from '../containers/CreateBook';
+import clearStorage from '../../utils/clearStorage';
 import EditBook from '../containers/EditBook';
 import {
   userLinks,
@@ -23,8 +24,8 @@ import {
   adminLinkText
 } from '../presentational/UserNavLinks';
 import UserNav from '../presentational/Usernav';
-import authenticate from '../presentational/HOC/authenticate';
-import { fetchUserTrigger } from '../../Actions/userProfileAction';
+import { fetchUserTrigger } from '../../actions/userProfileAction';
+import errorAction from '../../actions/errorAction';
 
 
 /**
@@ -102,11 +103,16 @@ export class User extends React.Component {
   *
   */
   componentWillReceiveProps(nextprops) {
-    
      if (nextprops.userDetails) {
       this.setState({
         dataReady:true,
         profileData: nextprops.userDetails});
+     }
+     if(nextprops.accessStatus.error) {
+       clearStorage();
+       this.setState({
+         restricted: true
+       })
      }
     }
 
@@ -125,20 +131,10 @@ export class User extends React.Component {
     closeOnClick: true,
     menuWidth: 260,
     });
-
-
        this.props.userProfile(this.userId).then(() => {
       })
-      .catch(error => {
-        // if(error) {
-        // error.response.status === 403 || 500 ? this.setState({
-        //   isAuthenticated:false
-        // })
-        // :
-        // this.setState({
-        //   isAuthenticated:false
-        // });
-        // }
+      .catch(() => {
+       
       })
   });
   }
@@ -153,6 +149,12 @@ export class User extends React.Component {
  */
   render() {
     return (
+
+      <div>
+        {this.state.restricted
+        ?
+        <Redirect to ="/login"/>
+      :
       !this.state.isAuthenticated
         ? <Redirect to="/login"/>
         : !this.state.dataReady
@@ -183,7 +185,7 @@ export class User extends React.Component {
                 <div className="content-display">
                   <Route 
                     path="/user/profile"
-                    component={authenticate(Profile)}
+                    component={Profile}
                   />
                   <Route
                     path="/user/books" render={() => (<Allbooks
@@ -191,15 +193,15 @@ export class User extends React.Component {
                     />  
                   <Route
                     path="/user/bookdetails"
-                    render={() => <BookDetails book_id = {this.state.book_id}/>}
+                    render={() => <BookDetails bookId = {this.state.bookId}/>}
                   />
                   <Route
                     path="/user/history"
-                    render ={()=> <UserHistory userID = {this.userID}/>}
+                    render ={()=> <UserHistory userId = {this.userId}/>}
                   /> 
                   <Route 
                     path="/user/borrowedbooks"
-                    render={() => <Borrowedbooks userID ={this.userID}/> }
+                    render={() => <Borrowedbooks userId ={this.userId}/> }
                   />
                 </div>
               :
@@ -220,7 +222,7 @@ export class User extends React.Component {
                   /> 
                   <Route
                     path="/user/bookdetails"
-                    render={() => <BookDetails book_id = {this.state.book_id}/>}
+                    render={() => <BookDetails bookId = {this.state.bookId}/>}
                   />
                   <Route
                     path="/user/editbook"
@@ -231,6 +233,8 @@ export class User extends React.Component {
               </div>
             </div>
           </div>
+        }
+        </div>
     );
   }
 }
@@ -251,6 +255,7 @@ const mapStateToProps = (state, ownProps) => {
     userDetails: state.userProfile,
     url: ownProps.match.path,
     currentToken: state.userAccess.userData,
+    accessStatus: state.accessStatus
   }
 }
 
@@ -266,9 +271,12 @@ const mapStateToProps = (state, ownProps) => {
  */
 const mapDispatchToProps = (dispatch) => {
   return {
-    userProfile: (userId) => dispatch(fetchUserTrigger(userId)),
+    userProfile: (userId) => dispatch(fetchUserTrigger(userId))
     
   }
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(User);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps)
+  (User);

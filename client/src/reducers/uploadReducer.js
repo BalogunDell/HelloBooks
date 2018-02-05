@@ -1,7 +1,7 @@
 import {
   SAVE_IMAGE,
   SAVE_PDF,
-} from '../Actions/actionTypes';
+} from '../actions/actionTypes';
 
 /**
  * 

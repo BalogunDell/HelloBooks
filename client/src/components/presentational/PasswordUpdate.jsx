@@ -14,7 +14,8 @@ const PasswordUpdate = ({
   handlePasswordUpdate,
   userDetails,
   handleChange,
-  passwordContainer
+  passwordContainer,
+  handleShowVisibility,
 }) => {
   return <div>
         <form 
@@ -25,7 +26,8 @@ const PasswordUpdate = ({
             // <hr/>
               <p className="googleUserInfo">
                 We noticed you logged in using your google account.
-               To change your password, use your <b>first name </b>as your 
+               To change your password for the first time, 
+               use your <b>first name </b>as your 
                   <b> current password.</b>
               </p>
             //  <hr/>

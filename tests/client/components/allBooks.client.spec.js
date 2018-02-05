@@ -7,7 +7,6 @@ import { shallow, mount, render , configure} from 'enzyme';
 import jestSnapshot from 'chai-jest-snapshot';
 import expect, { createSpy, spyOn, isSpy } from 'expect'
 import mockStorage from '../mock/mockDataStorage';
-import authenticate from '../../../client/src/components/presentational/HOC/authenticate';
 import { 
     Allbooks,
     mapStateToProps,
@@ -65,8 +64,10 @@ describe('All Books', () => {
   });
 
   it('should test componentDidMount method', () => {
-    const componentDidMountSpy = jest.spyOn(Allbooks.prototype, 'componentDidMount');
-    shallow(<Allbooks {...minProps} componentDidMount={componentDidMountSpy}/>)
+    const componentDidMountSpy = jest.spyOn(Allbooks.prototype,
+      'componentDidMount');
+    shallow(<Allbooks {...minProps}
+      componentDidMount={componentDidMountSpy}/>)
     .instance().componentDidMount;
     expect(componentDidMountSpy).toHaveBeenCalledTimes(1);
   });
@@ -75,8 +76,10 @@ describe('All Books', () => {
       const nextProps = {
           retrievedBooks: []
       }
-    const componentWillReceivePropsSpy = jest.spyOn(Allbooks.prototype, 'componentWillReceiveProps');
-    shallow(<Allbooks {...minProps} componentWillReceiveProps={componentWillReceivePropsSpy}/>)
+    const componentWillReceivePropsSpy = jest.spyOn(Allbooks.prototype, 
+      'componentWillReceiveProps');
+    shallow(<Allbooks {...minProps}
+      componentWillReceiveProps={componentWillReceivePropsSpy}/>)
     .instance().componentWillReceiveProps(nextProps);
     expect(componentWillReceivePropsSpy).toHaveBeenCalledTimes(1);
   });

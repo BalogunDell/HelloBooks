@@ -5,9 +5,8 @@ import $ from 'jquery';
 import {
   getUserBooks,
   returnBook
-} from '../../Actions/booksAction';
+} from '../../actions/booksAction';
 import UserBooks from '../presentational/UserBooks';
-import authenticate from '../presentational/HOC/authenticate';
 
 
 /**
@@ -22,10 +21,11 @@ export class History extends React.Component {
     super(props);
 
     this.state = {
-      userId: this.props.userID,
+      userId: this.props.userId,
       loading: false,
       allUserBooks: [],
       allbooks: false,
+      restricted: false
     }
   }
 
@@ -37,9 +37,10 @@ export class History extends React.Component {
  * @returns {object} updated state
  */
   componentWillReceiveProps(nextProps) {
-    if(nextProps.fetchedBooks.response) {
-      this.setState({loading: false, 
-        allUserBooks: nextProps.fetchedBooks.response,
+    if(nextProps.fetchedBooks) {
+      this.setState({
+        loading: false, 
+        allUserBooks: nextProps.fetchedBooks
       });
   }
 }
@@ -50,14 +51,11 @@ export class History extends React.Component {
  * @returns {object} updated state
  */
   componentDidMount() {
-    this.setState({loading: true})    
-    this.props.getUserBooks(this.state.userId).then(() => {
-      this.setState({loading:false})
+    this.props.getUserBooks(this.state.userId)
+    .then(() => {
     })
     .catch((error) => {
-      this.setState({
-        loading: false
-      })
+
     });
   }
 
@@ -69,18 +67,15 @@ export class History extends React.Component {
   render() {
     return(
       <div>
-        {/* Row for header  */}
         <div className="row">
           <div className="col s12 books-holder-title center">
             <h1>Borrow History</h1>
           </div>
         </div>
-      
-        {/* Row for books  */}
         
         <div className="row borrowHistory">
           <div className="col s12 m12 l11 offset-l1">
-            {this.state.loading 
+            {this.state.allbooks.length === 0 
               ?
                 <h3>Loading books...</h3>
               :
@@ -124,5 +119,7 @@ export const mapDispatchToProps = (dispatch) => {
     getUserBooks: (userId) => dispatch(getUserBooks(userId)),
   }
 }
-export default connect(mapStateToProps, mapDispatchToProps)
-(authenticate(History));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps)
+  (History);

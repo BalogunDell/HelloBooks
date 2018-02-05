@@ -111,7 +111,7 @@ let userId;
       .set('Content-Type', 'application/json')
       .send({bookId: 5})
       .end((err, res) => {
-        expect(res.status).to.equal(401);
+        expect(res.status).to.equal(422);
         expect(res.body).to.have.property('message');
         expect(res.body.message).to
         .equal('You have either exhausted your book limit or you still have this book with you');
@@ -286,7 +286,7 @@ let userId;
 
     it('edits user password if user exists', (done) => {
       request
-      .put(`${userAPI}/${userId}/newpassword`)
+      .put(`${userAPI}/${userId}/password`)
       .set('Authorization', userToken)
       .set('Content-Type', 'Application/json')
       .send({
@@ -305,7 +305,7 @@ let userId;
     it('should not edit user password if currentpassword is wrong',
     (done) => {
       request
-      .put(`${userAPI}/${userId}/newpassword`)
+      .put(`${userAPI}/${userId}/password`)
       .set('Authorization', userToken)
       .set('Content-Type', 'Application/json')
       .send({
@@ -324,7 +324,7 @@ let userId;
     it('should not edit user password without authentication token',
     (done) => {
       request
-      .put(`${userAPI}/${userId}/newpassword`)
+      .put(`${userAPI}/${userId}/password`)
       .set('Content-Type', 'Application/json')
       .send({
         currentPassword: 'wrongPassword',

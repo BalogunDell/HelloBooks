@@ -81,7 +81,7 @@ class Helper {
           req.body = Helper.composeRequest(req);
           next();
         } else {
-          res.status(401).json({
+          res.status(422).json({
             message: 'You have either exhausted your book limit or you still have this book with you'
           });
         }
@@ -94,6 +94,7 @@ class Helper {
 
   /**
    * @description This method composes a request to be used in another route
+   *
    * @param { object} req - request object
    * @param { object} res - response object
    * 
@@ -102,14 +103,15 @@ class Helper {
   static composeRequest(req, res) {
     const { bookId } = req.body;
     if (!bookId) return res.status(400).json({ message: 'Provide a book id' });
-    const body = {
+    const bookInformation = {
       bookId: req.body.bookId,
       userId: req.body.userId,
-      expectedReturnDdate: moment()
-        .add(util[req.membership.toLowerCase()].limit, 'days')
+      expectedReturnDate: moment()
+        .add(util[req.membership.toLowerCase()].days, 'days')
         .format('YYYY-MM-DD')
     };
-    return body;
+    req.body = bookInformation;
+    return req.body;
   }
 
   /**
@@ -130,7 +132,7 @@ class Helper {
       email,
       membership,
       role
-    }, secret, { expiresIn: '24hr' });
+    }, secret, { expiresIn: '24h' });
 
     return token;
   }
@@ -144,7 +146,15 @@ class Helper {
    * @returns { object }  - decoded token
    */
   static decodeToken(token) {
-    return jwt.verify(token, secret);
+    return new Promise((resolve, reject) => {
+      jwt.verify(token, secret, (err, decoded) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(decoded);
+        }
+      });
+    });
   }
 
   /**
@@ -192,7 +202,7 @@ class Helper {
    * @param { string } userEmail  - email destination
    * @param { string } passwordUrl - generated url
    * 
-   * @returns { Function } sendMail method
+   * @returns { function } sendMail method
    */
   static generateMail(userEmail, passwordUrl) {
     const mailCourier = nodeMailer.createTransport({

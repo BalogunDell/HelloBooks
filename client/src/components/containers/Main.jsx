@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { trendingBooks } from '../../Actions/booksAction';
+import { trendingBooks } from '../../actions/booksAction';
 
 // import components
 import Navbar from '../presentational/Navbar/Navbar';
@@ -127,4 +127,7 @@ export const mapDispatchToProps = (dispatch) => {
     trendingBooks: () => dispatch(trendingBooks())
   }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(Main);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps)
+  (Main);

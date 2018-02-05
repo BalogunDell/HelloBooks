@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import Navbar from '../presentational/Navbar/Navbar';
 import Background from '../presentational/Background/Background';
 import Loader from '../presentational/Loader';
-import { resetPassword } from '../../Actions/userAccessAction';
+import { resetPassword } from '../../actions/userAccessAction';
 
 
 

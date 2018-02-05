@@ -14,14 +14,13 @@ import Loader from '../../presentational/Loader';
  * @return {JSX} JSX representation of DOM
  */
 const Books = ({
-  loadingBooks,
   books,
   getBookId,
   bookAvailabilityMessage
 }) => {
   return (
     <div>
-      { loadingBooks ? 
+      { books.length ===0 ? 
         <div>
           <h5 className="center"><Loader/></h5>
           <br/>

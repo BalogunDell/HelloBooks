@@ -30,18 +30,29 @@ class Authentication {
       res.status(401).json({
         message: 'You do not have the permission to access this page' });
     } else {
-      const decoded = Helper.decodeToken(authorization);
-      if (!decoded) {
-        return res.status(401).json({
-          message: 'You do not have the permission to access this page'
+      Helper.decodeToken(authorization)
+        .then((decoded) => {
+          if (!decoded) {
+            return res.status(401).json({
+              message: 'You do not have the permission to access this page'
+            });
+          }
+          if (decoded.role !== process.env.ACCESS_GRANTOR) {
+            return res.status(403).json({
+              message: 'You do not have the permission to access this page'
+            });
+          }
+          return next();
+        })
+        .catch((err) => {
+          const { name } = err;
+      
+          if (name === 'TokenExpiredError') {
+            res.status(401).json({
+              message: 'Session Expired!'
+            });
+          }
         });
-      }
-      if (decoded.role !== process.env.ACCESS_GRANTOR) {
-        return res.status(403).json({
-          message: 'You do not have the permission to access this page'
-        });
-      }
-      return next();
     }
   }
 
@@ -56,7 +67,7 @@ class Authentication {
    * 
    * @returns { object } - modified body object
    */
-  static verifyUser(req, res, next) {
+  static async verifyUser(req, res, next) {
     const { authorization } = req.headers;
     const { userId } = req.params;
     if (!authorization) {
@@ -64,27 +75,38 @@ class Authentication {
         message: 'You do not have the permission to access this page'
       });
     }
-    const decoded = Helper.decodeToken(authorization);
-    if (parseInt(userId, 10) !== decoded.id) {
-      return res.status(403).json({
-        message: 'You do not have the permission to access this page'
+    Helper.decodeToken(authorization)
+      .then((decoded) => {
+        if (parseInt(userId, 10) !== decoded.id) {
+          return res.status(403).json({
+            message: 'You do not have the permission to access this page'
+          });
+        }
+        findOneResource(userModel, { where:
+          { email: decoded.email,
+            id: decoded.id,
+            role: decoded.role }
+        }).then((user) => {
+          if (user) {
+            req.body.userId = decoded.id;
+            req.membership = decoded.membership;
+            return next();
+          }
+        }).catch(() => {
+          res.status(401).json({
+            message: 'You do not have the permission to access this page'
+          });
+        });
+      })
+      .catch((err) => {
+        const { name } = err;
+
+        if (name === 'TokenExpiredError') {
+          res.status(401).json({
+            message: 'Session Expired!'
+          });
+        }
       });
-    }
-    findOneResource(userModel, { where:
-      { email: decoded.email,
-        id: decoded.id,
-        role: decoded.role }
-    }).then((user) => {
-      if (user) {
-        req.body.userId = decoded.id;
-        req.membership = decoded.membership;
-        return next();
-      }
-    }).catch(() => {
-      res.status(500).json({
-        message: 'Internal server error'
-      });
-    });
   }
   /**
    * @description This method verifies if the given url is valid
@@ -135,23 +157,34 @@ class Authentication {
       return res.status(401).json({
         message: 'Only logged in users can see all books' });
     }
-    const decoded = Helper.decodeToken(authorization);
-    if (!decoded) {
-      return res.status(401).json({
-        message: 'Your token is either invalid or it has expired' });
-    }
-    findOneResource(userModel, { where: { id: decoded.id } })
-      .then((reply) => {
-        if (reply.dataValues.id === decoded.id) {
-          return next();
+    Helper.decodeToken(authorization)
+      .then((decoded) => {
+        if (!decoded) {
+          return res.status(401).json({
+            message: 'Your token is either invalid or it has expired' });
         }
-      }).catch(() => {
-        return res.status(401).json({
-          message: 'Only logged in users can see all books' });
-      }).catch(() => {
-        res.status(500).json({
-          message: 'Internal server error'
-        });
+        findOneResource(userModel, { where: { id: decoded.id } })
+          .then((reply) => {
+            if (reply.dataValues.id === decoded.id) {
+              return next();
+            }
+          }).catch(() => {
+            return res.status(401).json({
+              message: 'Only logged in users can see all books' });
+          }).catch(() => {
+            res.status(500).json({
+              message: 'Internal server error'
+            });
+          });
+      })
+      .catch((err) => {
+        const { name } = err;
+
+        if (name === 'TokenExpiredError') {
+          res.status(401).json({
+            message: 'Session Expired!'
+          });
+        }
       });
   }
 }

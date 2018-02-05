@@ -10,10 +10,10 @@ const ProfileHeader = ({
 return (<div>
       <div className="profile-image-holder">
         <a href="#confirmationModal" className="modal-trigger">
-        { userData.image 
+        { userData.imageUrl
           ?
           <img
-            src={userData.image} 
+            src={userData.imageUrl} 
             className="responsive-img"
             id="image-target"
             alt=""/>

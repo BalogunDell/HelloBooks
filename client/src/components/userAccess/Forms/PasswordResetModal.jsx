@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Loader from '../../presentational/Loader';
-import { sendEmail } from '../../../Actions/userAccessAction';
+import { sendEmail } from '../../../actions/userAccessAction';
 
 /**
  * @description PasswordResetModal

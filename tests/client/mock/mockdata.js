@@ -223,22 +223,42 @@ export const mockBooks = {
 export const signupResponse = {
   responseData: {
       message: "User created",
-      username: "example123",
-      userID: 4,
-      userRole: "user",
-      image: null,
-      token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZW1haWwiOiJleGFtcGxlQGV4YW1wbGUuY29tIiwibWVtYmVyc2hpcCI6ImJyb256ZSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNTEzMDg4MjEyLCJleHAiOjE1MTMxNzQ2MTJ9.BQK6ITUrUwPqxhGpy1YYwSfQmQjbBJhgzC0rB1XGJjE"
-  }
+      token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZW1haWwiOiJleGFtcGxlQGV4YW1wbGUuY29tIiwibWVtYmVyc2hpcCI6ImJyb256ZSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNTEzMDg4MjEyLCJleHAiOjE1MTMxNzQ2MTJ9.BQK6ITUrUwPqxhGpy1YYwSfQmQjbBJhgzC0rB1XGJjE",
+      user: {
+        username: "example123",
+        userId: 4,
+        userRole: "user",
+        image: null,
+        googleUser: false
+      }
+    }
 }
 
 export const signinMockData = {
   responseData: {
       message: "signed in",
-      token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiZW1haWwiOiJkZWxpZ2h0ZWRkZWxsQGdtYWlsLmNvbSIsIm1lbWJlcnNoaXAiOiJicm9uemUiLCJyb2xlIjoidXNlciIsImlhdCI6MTUxMzgxNjI3MywiZXhwIjoxNTEzOTAyNjczfQ.CtLzu3Wvd5kzWkdEDGtQzjYi866PWKcNWBQwrtHrML8",
-      username: "Test1",
-      userID: 6,
-      userRole: "user",
-      image: null
+      token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZW1haWwiOiJleGFtcGxlQGV4YW1wbGUuY29tIiwibWVtYmVyc2hpcCI6ImJyb256ZSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNTEzMDg4MjEyLCJleHAiOjE1MTMxNzQ2MTJ9.BQK6ITUrUwPqxhGpy1YYwSfQmQjbBJhgzC0rB1XGJjE",
+      user: {
+        username: "example123",
+        userId: 4,
+        userRole: "user",
+        image: null,
+        googleUser: false
+      }
+  }
+}
+
+export const googlesigninMock = {
+  responseData: {
+      message: "signed in",
+      token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZW1haWwiOiJleGFtcGxlQGV4YW1wbGUuY29tIiwibWVtYmVyc2hpcCI6ImJyb256ZSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNTEzMDg4MjEyLCJleHAiOjE1MTMxNzQ2MTJ9.BQK6ITUrUwPqxhGpy1YYwSfQmQjbBJhgzC0rB1XGJjE",
+      user: {
+        username: "example123",
+        userId: 4,
+        userRole: "user",
+        image: null,
+        googleUser: true
+      }
   }
 }
 
@@ -491,7 +511,7 @@ export const publishedBooksSample = [
 
 
 export const publishedBooksSample2 = {
-  data: [
+  payload: [
     {
       id: 4,
       isbn: "#453576",
@@ -517,7 +537,7 @@ export const publishedBooksSample2 = {
 
 export const createdBookResponse = {
   message: "Book created",
-  data: {
+  payload: {
       visibility: true,
       id: 8,
       isbn: "#437765",
@@ -584,7 +604,7 @@ export const saveImagerResponse = {
     placeholder: false,
     url: 'http://res.cloudinary.com/djvjxp2am/image/upload/v1515674221/sample.pdf',
     secure_url: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1515674221/sample.pdf',
-    original_filename: 'sample.pdf'
+    original_filename: 'sample.jpg'
   }
 }
 

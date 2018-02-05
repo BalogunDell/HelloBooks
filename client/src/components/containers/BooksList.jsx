@@ -10,7 +10,7 @@ import {
   deleteBook,
   getAllBorrowedBooks
 
-} from '../../Actions/booksAction';
+} from '../../actions/booksAction';
 import UserBooks from '../presentational/UserBooks';
 
 /**
@@ -326,4 +326,7 @@ export const dispatchToProps = dispatch => ({
   getAllBorrowedBooks: () => dispatch(getAllBorrowedBooks())
 });
 
-export default connect(stateToProps, dispatchToProps)(BooksList);
+export default connect(
+  stateToProps,
+  dispatchToProps)
+  (BooksList);

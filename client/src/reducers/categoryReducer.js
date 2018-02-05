@@ -1,7 +1,7 @@
 import {
   CREATE_CATEGORY,
   GET_CATEGORIES,
-} from '../Actions/actionTypes';
+} from '../actions/actionTypes';
 
 /**
  * @export createCategoryReducer

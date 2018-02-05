@@ -109,4 +109,7 @@ export const stateToProps = (state) => {
     borrowedBooks: state.books.allborrowedbooks
   }
 }
-export default connect(stateToProps, null)(SummaryTable);
+export default connect(
+  stateToProps,
+  null)
+  (SummaryTable);

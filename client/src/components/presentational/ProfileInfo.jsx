@@ -5,8 +5,15 @@ import PasswordUpdate from './PasswordUpdate';
 /**
  *  @description ProfileInfo -  Renders profile information
  *
- * @param {Object} - userData
- * @param {function} -  showInputHandler
+ * @param {Object} userData
+ * @param {function} showInputHandler
+ * @param {function} handleHideVisibility
+ * @param {function} handleShowVisibility
+ * @param {function} showPasswordUpdateInput
+ * @param {function} handleChange
+ * @param {function} handlePasswordUpdate
+ * @param {function} passwordContainer
+ * @param {function} cancelEdit
  *
  * @returns {object} action creators
  */
@@ -18,7 +25,8 @@ const ProfileInfo = ({
   showPasswordUpdateInput,
   handleChange,
   handlePasswordUpdate,
-  passwordContainer
+  passwordContainer,
+  cancelEdit
 }) => {
   return(
     <div className="change-password">
@@ -27,12 +35,12 @@ const ProfileInfo = ({
           showPasswordUpdateInput
           ?
             <PasswordUpdate
-            handleChange={handleChange}
-            handleHideVisibility={handleHideVisibility}
-            handlePasswordUpdate={handlePasswordUpdate}
-            userDetails={userData}
-            handleChange={handleChange}
-            passwordContainer={passwordContainer}
+              handleChange={handleChange}
+              handleHideVisibility={handleHideVisibility}
+              handlePasswordUpdate={handlePasswordUpdate}
+              userDetails={userData}
+              passwordContainer={passwordContainer}
+              cancelEdit = {cancelEdit}
           />
         :
         <table>

@@ -87,7 +87,7 @@ describe('Edit Books Component,', () => {
     getCategories: jest.fn(() => Promise.resolve()),
     modifyBook: jest.fn(() => Promise.resolve()),
     saveImageToCloudinary: jest.fn(() => Promise.resolve()),
-    savePdfToCloudinary: jest.fn(() => Promise.resolve()),
+    savePDFToCloudinary: jest.fn(() => Promise.resolve()),
     handleEditInput: jest.fn(),
     handleUpdate: jest.fn(),
     imageUploadHandler: jest.fn(),

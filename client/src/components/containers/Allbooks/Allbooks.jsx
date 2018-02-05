@@ -1,13 +1,12 @@
 import React from 'react';
-import { Link, Route } from 'react-router-dom';
+import { Link, Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import {
   loadAllbooks,
   getBookId
-} from '../../../Actions/booksAction';
+} from '../../../actions/booksAction';
 import Loader from '../../presentational/Loader';
 import Books from '../../containers/Allbooks/Books';
-import authenticate from '../../presentational/HOC/authenticate'
 
 /**
  * @description Renders All books
@@ -22,8 +21,7 @@ export class Allbooks extends React.Component {
 
     this.state = {
       books: [],
-      loadingBooks: false,
-      bookAvailabilityMessage: ''
+      bookAvailabilityMessage: '',
     }
 
     this.getBookId = this.getBookId.bind(this);
@@ -54,16 +52,10 @@ export class Allbooks extends React.Component {
    * @returns {object} updated state
   */
   componentDidMount() {
-    this.setState({ loadingBooks: true });
-    // Fetch all books
     this.props.loadAllbooks()
       .then(() => {
-        this.setState({ loadingBooks: false });
       })
-      .catch(() => {
-        this.setState({
-          loadingBooks: false
-        });
+      .catch((error) => {
       });
   }
 
@@ -84,7 +76,6 @@ export class Allbooks extends React.Component {
         });
       } 
       return this.setState({
-        loadingBooks: false,
         books: nextProps.retrievedBooks});
     }
   }
@@ -98,21 +89,25 @@ export class Allbooks extends React.Component {
   */
   render() {
     return(
-      
       <div>
-        {/* Row for header  */}
-        <div className="row">
-          <div className="col s12 books-holder-title center">
-            <h1>All Books</h1>
+        { this.state.restricted
+        ?
+        <Redirect to= '/login'/>
+        :
+        <div>
+          <div className="row">
+            <div className="col s12 books-holder-title center">
+              <h1>All Books</h1>
+            </div>
           </div>
-        </div>
-        <Books
-          loadingBooks={this.state.loadingBooks}
-          books={this.state.books}
-          getBookId={this.getBookId}
-          bookAvailabilityMessage = {this.state.bookAvailabilityMessage}
-        />
+          <Books
+            books={this.state.books}
+            getBookId={this.getBookId}
+            bookAvailabilityMessage = {this.state.bookAvailabilityMessage}
+            />
       </div>
+        }
+    </div>
     );
   }
 }
@@ -127,7 +122,7 @@ export class Allbooks extends React.Component {
 export const mapStateToProps = (state) => {
   return {
     retrievedBooks: state.books.books,
-    currentBookId: state.books.currentBookId
+    currentBookId: state.books.currentBookId,
     
   }
 }
@@ -146,5 +141,7 @@ export const mapDispatchToProps = (dispatch) => {
   }
 }
 
-  export default connect(mapStateToProps,
-    mapDispatchToProps)(authenticate(Allbooks));
+  export default connect(
+    mapStateToProps,
+    mapDispatchToProps)
+    (Allbooks);

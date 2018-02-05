@@ -8,7 +8,7 @@ import jestSnapshot from 'chai-jest-snapshot';
 import expect, { createSpy, spyOn, isSpy } from 'expect'
 import Notfound from '../../../client/src/components/presentational/NotFound/NotFound';
 
-jest.mock('../../../client/src/components/Useraccess/Forms/PasswordResetModal.jsx');
+jest.mock('../../../client/src/components/userAccess/Forms/PasswordResetModal.jsx');
 jest.mock('react-router-dom');
 
 

@@ -10,7 +10,7 @@ import {
   saveNewImage,
   saveNewImageToDB,
   editPassword
-} from '../../Actions/userProfileAction';
+} from '../../actions/userProfileAction';
 import { fail } from 'assert';
 
 require('dotenv').config();
@@ -69,7 +69,10 @@ export class Profile extends React.Component {
   * @memberof Profile
   */
  showProfile() {
-    this.setState({viewProfile:true, editButton: false});
+    this.setState({
+      viewProfile:true,
+      editButton: false
+    });
   } 
   
   /**
@@ -132,7 +135,9 @@ handleHideVisibility(event) {
   * @memberof Profile
   */
   showInputHandler() {
-    this.setState({showInput: true, editButton: true,});
+    this.setState({
+      showInput: true,
+      editButton: true,});
     const info = JSON.stringify(this.state.userData);
     localStorage.setItem('info', info);
   }
@@ -147,11 +152,16 @@ handleHideVisibility(event) {
    * @memberof profileUpdateForm
    */
   cancelProfileEdit() {
+    document.getElementById('imageEdit').reset();
     this.setState({
       viewProfile: true,
       showInput: false,
       editButton: false,
       loader: false,
+      tempImageName: '',
+      preview: '',
+      newImageUploadErrorMessage: '',
+      disableUpdateBtn: false
     });
   }
 
@@ -189,10 +199,6 @@ handleHideVisibility(event) {
     });
     this.props.saveNewImage(this.state.tempImageName)
     .then(() => {
-      this.setState({
-        userData: { 
-          ...this.state.userData, 
-          imageUrl: this.props.newImageUrl } });
       this.props.saveNewImageToDB(this.state.userData)
         .then(() => {
           Materialize.toast(
@@ -201,6 +207,7 @@ handleHideVisibility(event) {
             'blue rounded');
         })
         .catch((error) => {
+          if(!error.logout) {
           this.setState({ 
             loader: false,
             newImageUploadError: true,
@@ -208,8 +215,9 @@ handleHideVisibility(event) {
             newImageUploadSuccessMessage: '',
             tempImageName: ''
           });
-        });
-      })
+        }
+      });
+    })
   }
 
   /**
@@ -224,9 +232,13 @@ handleHideVisibility(event) {
     this.props.editPassword(this.state.passwordContainer)
       .then(() => {
         Materialize.toast(
-          'Password has been successfully changed',
+          'Password has been changed successfully',
           3000,
           'blue rounded');
+          this.setState({
+            showPasswordUpdateInput: false,
+          });
+          this.cancelProfileEdit();
       })
       .catch(() => {
       });
@@ -262,7 +274,9 @@ handleHideVisibility(event) {
               
               
           } else {
-            this.setState({ newImageUploadError: true, disableUpdateBtn: true,
+            this.setState({ 
+              newImageUploadError: true, 
+              disableUpdateBtn: true,
             newImageUploadErrorMessage: 'Only portraits are allowed.' });
           }
         }
@@ -296,6 +310,14 @@ handleHideVisibility(event) {
       this.setState({ userData: nextProps.userProfile });
     } else {
       this.state.userData.length === 0;
+    }
+
+    if(nextProps.newImageUrl.imageUrl) {
+      this.setState({
+        userData: { 
+          ...this.state.userData, 
+          imageUrl: nextProps.newImageUrl.imageUrl.secure_url }
+        });
     }
   }
 
@@ -341,7 +363,8 @@ handleHideVisibility(event) {
                     handlePasswordUpdate={this.handlePasswordUpdate}
                     userDetails={this.state.userData}
                     handleChange={this.handleChange}
-                    passwordContainer={this.state.passwordContainer}/>
+                    passwordContainer={this.state.passwordContainer}
+                    cancelEdit = {this.cancelProfileEdit}/>
                 }
                 {!this.state.editButton 
                 ?
@@ -389,7 +412,7 @@ export const mapStateToProps = (state) => {
   let initialData = { currentPassword: '', newPassword: ''};
   return {
     userProfile: state.userProfile,
-    newImageUrl: state.uploadedFiles,
+    newImageUrl: state.uploadFiles,
     initialData
   }
 }
@@ -409,4 +432,7 @@ export const mapDispatchToProps = (dispatch) => {
     editPassword: (payload) => dispatch(editPassword(payload))
   }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(Profile);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps)
+  (Profile);

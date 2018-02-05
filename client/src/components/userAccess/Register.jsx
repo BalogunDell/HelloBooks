@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import Navbar from '../presentational/Navbar/Navbar';
 import RegistrationForm from './Forms/RegistrationForm';
 import Background from '../presentational/Background/Background';
-import { saveNewUser } from '../../Actions/userAccessAction';
+import { saveNewUser } from '../../actions/userAccessAction';
 
 
 

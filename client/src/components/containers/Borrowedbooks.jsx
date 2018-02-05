@@ -1,10 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
-
+import { Redirect } from 'react-router-dom';
+import clearStorage from '../../utils/clearStorage';
 import { 
   getUserBooks,
   getBookId,
-  returnBook } from '../../Actions/booksAction';
+  returnBook } from '../../actions/booksAction';
 import UserBooks from '../presentational/UserBooks';
 
 /**
@@ -19,10 +20,10 @@ export class BorrowedBooks extends React.Component {
     super(props);
 
     this.state = {
-      userId: this.props.userID,
-      loading: false,
+      userId: this.props.userId,
       borrowedBooks: [],
-      tableHeader: 'Books with you'
+      tableHeader: 'Books with you',
+      restricted: false
     }
 
     this.handleReturn = this.handleReturn.bind(this);
@@ -62,17 +63,10 @@ export class BorrowedBooks extends React.Component {
    * @returns {object} updated state
    */
   componentDidMount() {
-    this.setState({loading: true });
     this.props.getUserBooks(this.state.userId)
       .then(() => {
-        this.setState({
-          loading: false
-        });
       })
       .catch((error) => {
-        this.setState({
-          loading: false
-        });
       })
   }
 
@@ -152,4 +146,7 @@ export const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(BorrowedBooks);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps)
+  (BorrowedBooks);

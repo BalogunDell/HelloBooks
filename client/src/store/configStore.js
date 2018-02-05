@@ -1,7 +1,7 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 
-import rootReducer from '../reducers/index';
+import reducers from '../reducers/';
 
 /**
  * @description configStore configures the store
@@ -12,10 +12,12 @@ import rootReducer from '../reducers/index';
  */
 const configStore = (initialState) => {
   return createStore(
-    rootReducer,
+    reducers,
     initialState,
     compose(applyMiddleware(thunk),
-      window.devToolsExtension && process.env.NODE_ENV === 'development' ? window.devToolsExtension() : f => f),
+      window.devToolsExtension && process.env.NODE_ENV === 'development'
+        ?
+        window.devToolsExtension() : f => f),
   );
 };
 

@@ -39,14 +39,9 @@ app.use(SSLRedirect());
 app.use('/api/v1/', appRouter);
 
 
-
-
 if (process.env.NODE_ENV === 'development') {
   app.use(webpackMiddleware(webpack(webpackDevConfig)));
 }
-
-
-
 
 /**
  * @description This serves the bundle file in the dist folder

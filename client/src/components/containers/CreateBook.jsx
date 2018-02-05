@@ -4,9 +4,9 @@ import { Redirect } from 'react-router-dom';
 import {
   createBook,
   saveImageToCloudinary,
-  savePdfToCloudinary
-} from '../../Actions/booksAction';
-import { getCategories } from '../../Actions/categoryAction';
+  savePDFToCloudinary
+} from '../../actions/booksAction';
+import { getCategories } from '../../actions/categoryAction';
 import CreateBookForm from '../presentational/CreateBookForm';
 
 
@@ -36,7 +36,8 @@ export class CreateBook extends React.Component {
       tempImageName: '',
       tempFileName: '',
       tempFileSize: 0,
-      redirect: false
+      redirect: false,
+      restricted: false
 
       }
 
@@ -191,7 +192,7 @@ export class CreateBook extends React.Component {
         this.props.saveImageToCloudinary(this.state.tempImageName)
         .then(()=> {
           if(this.state.bookData.imageUrl) {
-            this.props.savePdfToCloudinary(this.state.tempFileName)
+            this.props.savePDFToCloudinary(this.state.tempFileName)
             .then(() =>{
               if(this.state.bookData.PDFUrl) {
                   this.props.createBook(this.state.bookData).then(() => {
@@ -215,12 +216,14 @@ export class CreateBook extends React.Component {
             
                   })
                   .catch(error => {
+                  if(!error.logout) {
                     this.setState({
                       loader: false,
                       successStatus:false,
                       errorStatus:true,
                       disableBtn:true });
-                  })
+                  }
+                  });
               }
             }).catch(() => {})
           }
@@ -269,7 +272,9 @@ export class CreateBook extends React.Component {
     event.preventDefault();
     let fileInput = event.target.files[0];
     let fileReader = new FileReader();
-    this.setState({ tempFileName: fileInput, tempFileSize: fileInput.size});
+    this.setState({
+      tempFileName: fileInput,
+      tempFileSize: fileInput.size});
     if(fileInput) {
     fileReader.onload = () => {
       const newUpload = new File([''], fileInput.name);
@@ -291,27 +296,27 @@ export class CreateBook extends React.Component {
   render() {
     return(
       <div>
-        {
+          {
             this.state.redirect
           ?
           <Redirect to="/user/dashboard"/>
           :
           <div className="container">
-                <div>
-                  <CreateBookForm handleInput = {this.handleInput}
-                  createBookHandler = {this.createBookHandler}
-                  initialData = {this.state.bookData}
-                  loadedCategories = {this.state.loadedCategories}
-                  imageUploadHandler = {this.imageUploadHandler}
-                  fileUploadHandler={this.fileUploadHandler}
-                  errorMessage= {this.state.errorMessage}
-                  successMessage= {this.state.successMessage}
-                  loader={this.state.loader}
-                  successStatus ={this.state.successStatus}
-                  errorStatus = {this.state.errorStatus}
-                  showHiddinBtns={this.state.showHiddinBtns}
-                  disableBtn= {this.disableBtn}/>
-                </div>
+            <div>
+              <CreateBookForm handleInput = {this.handleInput}
+              createBookHandler = {this.createBookHandler}
+              initialData = {this.state.bookData}
+              loadedCategories = {this.state.loadedCategories}
+              imageUploadHandler = {this.imageUploadHandler}
+              fileUploadHandler={this.fileUploadHandler}
+              errorMessage= {this.state.errorMessage}
+              successMessage= {this.state.successMessage}
+              loader={this.state.loader}
+              successStatus ={this.state.successStatus}
+              errorStatus = {this.state.errorStatus}
+              showHiddinBtns={this.state.showHiddinBtns}
+              disableBtn= {this.disableBtn}/>
+            </div>
 
             </div>
         }
@@ -346,7 +351,7 @@ export const mapStateToProps = (state) => {
     initialData,
     loadedCategories: state.loadedCategories.categories,
     imageUrl: state.uploadFiles.imageUrl,
-    PDFUrl: state.uploadFiles.PDFUrl
+    PDFUrl: state.uploadFiles.PDFUrl,
   }
 }
 
@@ -362,8 +367,11 @@ export const mapDispatchToProps = (dispatch) => {
     createBook: data => dispatch(createBook(data)),
     getCategories: () => dispatch(getCategories()),
     saveImageToCloudinary: (image) => dispatch(saveImageToCloudinary(image)),
-    savePdfToCloudinary: (pdf) => dispatch(savePdfToCloudinary(pdf))
+    savePDFToCloudinary: (PDF) => dispatch(savePDFToCloudinary(PDF))
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CreateBook);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps)
+  (CreateBook);

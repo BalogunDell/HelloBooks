@@ -57,7 +57,7 @@ describe('renders Create Book Component and create category', () => {
     createBook: jest.fn(() => Promise.resolve()),
     getCategories: jest.fn(() => Promise.resolve()),
     saveImageToCloudinary: jest.fn(() => Promise.resolve()),
-    savePdfToCloudinary: jest.fn(() => Promise.resolve())
+    savePDFToCloudinary: jest.fn(() => Promise.resolve())
   }
   const wrapper = shallow(<CreateBook {...minProps}/>);
   it('renders css classes on div and the length of div', () => {
@@ -234,7 +234,7 @@ describe('renders Create Book Component and create category', () => {
     expect(mapDispatchToProps(dispatch).createBook).toBeTruthy();
     expect(mapDispatchToProps(dispatch).getCategories).toBeTruthy();
     expect(mapDispatchToProps(dispatch).saveImageToCloudinary).toBeTruthy();
-    expect(mapDispatchToProps(dispatch).savePdfToCloudinary).toBeTruthy();
+    expect(mapDispatchToProps(dispatch).savePDFToCloudinary).toBeTruthy();
   });
 
   it('ensures that mapStateToProps dispatches the specified actions', () => {

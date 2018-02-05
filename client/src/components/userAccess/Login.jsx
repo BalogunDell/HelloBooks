@@ -9,7 +9,7 @@ import LoginForm from './Forms/LoginForm';
 import Background from '../presentational/Background/Background';
 import { 
   userLogin,
-  newGoogleAccess} from '../../Actions/userAccessAction'; 
+  newGoogleAccess} from '../../actions/userAccessAction'; 
 
 /**
  * @description Login component

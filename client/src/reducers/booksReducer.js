@@ -9,7 +9,7 @@ import {
   DELETE_BOOK,
   GET_BORROWED_BOOKS,
   TRENDING_BOOKS,
-} from '../Actions/actionTypes';
+} from '../actions/actionTypes';
 
 /**
  * @export getAllBooks
@@ -42,10 +42,11 @@ const getAllBooks = (state = {}, action) => {
       return {
         ...state, createbook: action.bookData
       };
-    case RETURN_BOOK:
+    case RETURN_BOOK: {
       return {
         ...state, returnBookData: action.payload.message
       };
+    }
     case GET_BOOK_ID:
       return {
         ...state, currentBookId: action.bookId

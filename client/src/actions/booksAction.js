@@ -1,6 +1,7 @@
 import axios from 'axios';
 import getUserDetails from '../utils/getUserInfo';
-import networkErrorReporter from '../utils/networkErrorReporter';
+import { actionErrorReporter } from '../utils/errorReporters';
+import errorAction from './errorAction';
 
 import {
   GET_ALL_BOOKS,
@@ -59,7 +60,12 @@ export const loadAllbooks = () => dispatch =>
     .then((response) => {
       dispatch(getAllBooks(response.data));
     }).catch((error) => {
-      networkErrorReporter(error);
+      if (error.response.status === 401 || 403) {
+        dispatch(errorAction(true));
+        error.logout = true;
+      } else {
+        actionErrorReporter(error);
+      }
       throw (error);
     });
 
@@ -111,7 +117,12 @@ export const borrowBook = payload => dispatch =>
       dispatch(borrowBookAction(response.data));
     })
     .catch((error) => {
-      networkErrorReporter(error);
+      if (error.response.status === 401 || 403) {
+        dispatch(errorAction(true));
+        error.logout = true;
+      } else {
+        actionErrorReporter(error);
+      }
       throw (error);
     });
 
@@ -147,7 +158,12 @@ export const getUserBooks = () => dispatch =>
       dispatch(userBooks(response.data));
     })
     .catch((error) => {
-      networkErrorReporter(error);
+      if (error.response.status === 401 || 403) {
+        dispatch(errorAction(true));
+        error.logout = true;
+      } else {
+        actionErrorReporter(error);
+      }
       throw (error);
     });
 
@@ -182,7 +198,12 @@ export const returnBook = bookId => dispatch =>
       dispatch(returnBookAction(response.data));
     })
     .catch((error) => {
-      networkErrorReporter(error);
+      if (error.response.status === 401 || 403) {
+        dispatch(errorAction(true));
+        error.logout = true;
+      } else {
+        actionErrorReporter(error);
+      }
       throw (error);
     });
 
@@ -219,35 +240,40 @@ export const createBook = bookData => dispatch =>
       dispatch(createBookAction(response.data));
     })
     .catch((error) => {
-      networkErrorReporter(error);
+      if (error.response.status === 401 || 403) {
+        dispatch(errorAction(true));
+        error.logout = true;
+      } else {
+        actionErrorReporter(error);
+      }
       throw (error);
     });
 
 /**
- * @export savePdf
+ * @export savePDF
  * 
- * @description Defines savePdf action
+ * @description Defines savePDF action
  * 
  * @param { object } PDF
  * 
  * @returns { object } t
  */
-export const savePdf = PDF => ({
+export const savePDF = PDF => ({
   type: SAVE_PDF,
   PDF
 });
 
 /**
- * @export savePdfToCloudinary
+ * @export savePDFToCloudinary
  * 
- * @description Creates savePdfToCloudinary thunk action
+ * @description Creates savePDFToCloudinary thunk action
  * 
  * @param { object } PDF  File to save oo devlopr fa
  * 
  * @returns { object } axios responsee
  */
 
-export const savePdfToCloudinary = (PDF) => {
+export const savePDFToCloudinary = (PDF) => {
   const formData = new FormData();
   formData.append('file', PDF);
   formData.append('upload_preset', cloudinaryPreset);
@@ -255,10 +281,10 @@ export const savePdfToCloudinary = (PDF) => {
     formData, {
       headers: { 'Content-Type': requestHeader } })
     .then((response) => {
-      dispatch(savePdf(response.data));
+      dispatch(savePDF(response.data));
     })
     .catch((error) => {
-      networkErrorReporter(error);
+      actionErrorReporter(error);
       throw (error);
     });
 };
@@ -301,7 +327,7 @@ export const saveImageToCloudinary = (image) => {
         dispatch(saveImage(response.data));
       })
       .catch((error) => {
-        networkErrorReporter(error);
+        actionErrorReporter(error);
         throw (error);
       });
 };
@@ -356,8 +382,13 @@ export const modifyBook = (bookData) => {
       dispatch(modifyBookAction(response.data.payload));
     })
     .catch((error) => {
-      networkErrorReporter(error);
-      throw (error);
+      if (error.response.status === 401 || 403) {
+        dispatch(errorAction(true));
+        error.logout = true;
+      } else {
+        actionErrorReporter(error);
+      }
+      throw error;
     });
 };
 
@@ -393,7 +424,12 @@ export const deleteBook = bookId => dispatch =>
       dispatch(deleteBookAction(response.data));
     })
     .catch((error) => {
-      networkErrorReporter(error);
+      if (error.response.status === 401 || 403) {
+        dispatch(errorAction(true));
+        error.logout = true;
+      } else {
+        actionErrorReporter(error);
+      }
       throw (error);
     });
 
@@ -426,7 +462,12 @@ export const getAllBorrowedBooks = () => dispatch =>
       dispatch(getborrowedbooksAction(response.data.books));
     })
     .catch((error) => {
-      networkErrorReporter(error);
+      if (error.response.status === 401 || 403) {
+        dispatch(errorAction(true));
+        error.logout = true;
+      } else {
+        actionErrorReporter(error);
+      }
       throw (error);
     });
 
@@ -459,7 +500,7 @@ export const trendingBooks = () => dispatch => axios.get(trending)
     dispatch(trendingBooksAction(response.data));
   })
   .catch((error) => {
-    networkErrorReporter(error);
+    actionErrorReporter(error);
     throw (error);
   });
 

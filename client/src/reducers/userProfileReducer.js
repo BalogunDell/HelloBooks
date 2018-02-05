@@ -3,7 +3,7 @@ import {
   EDIT_PROFILE,
   EDIT_IMAGE,
   EDIT_PASSWORD
-} from '../Actions/actionTypes';
+} from '../actions/actionTypes';
 
 /**
  * @export fetchUserReducer
@@ -27,7 +27,7 @@ const fetchUserReducer = (state = {}, action) => {
       };
     case EDIT_IMAGE:
       return {
-        ...state, imageUrl: action.newUserData
+        ...state, imageUrl: action.newUserData.imageUrl
       };
     case EDIT_PASSWORD:
       return {

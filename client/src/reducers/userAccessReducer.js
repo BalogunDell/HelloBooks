@@ -3,8 +3,8 @@ import {
   LOGIN,
   SEND_EMAIL,
   GOOGLE_ACCESS,
-  RESET_PASS
-} from '../Actions/actionTypes';
+  RESET_PASS,
+} from '../actions/actionTypes';
 
 /**
  * 
@@ -19,6 +19,7 @@ import {
  * @returns { object } action performed and payload of the action
  */
 export default function userAccessReducer(state = {}, action) {
+  
   switch (action.type) {
     case ADD_USER:
       return {

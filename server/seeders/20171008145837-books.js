@@ -26,8 +26,8 @@ module.exports = {
         quantity: 2,
         categoryId: 6,
         visibility: true,
-        imageUrl: 'http://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book22_ase4mm.jpg',
-        PDFUrl: 'http://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book22_ase4mm.jpg',
+        imageUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book22_ase4mm.jpg',
+        PDFUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book22_ase4mm.jpg',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -41,8 +41,8 @@ module.exports = {
         quantity: 32,
         visibility: true,
         categoryId: 3,
-        imageUrl: 'http://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book5_zyqyv1.jpg',
-        PDFUrl: 'http://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book5_zyqyv1.jpg',
+        imageUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book5_zyqyv1.jpg',
+        PDFUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295978/book5_zyqyv1.jpg',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -71,8 +71,8 @@ module.exports = {
         quantity: 5,
         categoryId: 5,
         visibility: true,
-        imageUrl: 'http://res.cloudinary.com/djvjxp2am/image/upload/v1507295977/book3_thj6nk.jpg',
-        PDFUrl: 'http://res.cloudinary.com/djvjxp2am/image/upload/v1507295977/book3_thj6nk.jpg',
+        imageUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295977/book3_thj6nk.jpg',
+        PDFUrl: 'https://res.cloudinary.com/djvjxp2am/image/upload/v1507295977/book3_thj6nk.jpg',
         createdAt: new Date(),
         updatedAt: new Date()
       },

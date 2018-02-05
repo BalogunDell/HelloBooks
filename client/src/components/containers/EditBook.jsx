@@ -2,14 +2,15 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect, Link } from 'react-router-dom';
 import EditBookForm from '../presentational/EditBookForm';
-import { getCategories } from '../../Actions/categoryAction';
+import { getCategories } from '../../actions/categoryAction';
 import getCategory from '../../utils/getCategory';
 import {
   modifyBook,
   saveImageToCloudinary,
-  savePdfToCloudinary
-} from '../../Actions/booksAction';
+  savePDFToCloudinary
+} from '../../actions/booksAction';
 import LoaderText from '../presentational/Loader';
+import clearStorage from '../../utils/clearStorage';
 
 /**
  * @description Edit Book component
@@ -36,7 +37,7 @@ export class EditBook extends React.Component {
       redirect: false,
       errorStatus: false,
       bookIndex : 0,
-      selectedCategoryId: 0
+      selectedCategoryId: 0,
     }
 
     this.handleEditInput = this.handleEditInput.bind(this);
@@ -142,9 +143,11 @@ export class EditBook extends React.Component {
           );
         })
         .catch(error => {
-          this.setState({loader: false, 
-            errorStatus: true,
-          redirect:false})
+          if(!error.logout) {
+            this.setState({loader: false, 
+              errorStatus: true,
+            redirect:false})
+          }
         });
 
     } else if((this.state.tempImageName) && (!this.state.tempFileName)) {
@@ -197,7 +200,7 @@ export class EditBook extends React.Component {
               errorStatus: true,
               disableBtn:false });
             } else {
-              this.props.savePdfToCloudinary(this.state.tempFileName)
+              this.props.savePDFToCloudinary(this.state.tempFileName)
               .then(() => {
                 this.props.modifyBook(modifiedBookData)                
                 .then(() => {
@@ -246,7 +249,7 @@ export class EditBook extends React.Component {
                     errorStatus: false,
                     disableBtn:true });
                   if(this.state.book.imageUrl) {
-                    this.props.savePdfToCloudinary(this.state.tempFileName)
+                    this.props.savePDFToCloudinary(this.state.tempFileName)
                     .then(() => {
 
                       if(this.state.book.PDFUrl) {
@@ -266,11 +269,13 @@ export class EditBook extends React.Component {
                     
                           })
                           .catch(error => {
+                          if(!error.logout) {
                             this.setState({
                               loader: false,
                               errorStatus:true,
                               disableBtn:true
                             });
+                          }
                           });
                       }
                     })
@@ -309,7 +314,9 @@ export class EditBook extends React.Component {
       Materialize.updateTextFields();
       $('.modal').modal();
     });
-    this.props.getCategories();
+    this.props.getCategories()
+      .then(() => {})
+      .catch(() =>{})
   }
 
   /**
@@ -342,7 +349,7 @@ export class EditBook extends React.Component {
         PDF: nextProps.PDFUrl.secure_url
       }
     });
-    }  
+    }
   }
 
   /**
@@ -439,7 +446,7 @@ const stateToProps = (state) => {
     books: state.books.books,
     loadedCategories: state.loadedCategories.categories,
     imageUrl: state.uploadFiles.imageUrl,
-    PDFUrl: state.uploadFiles.PDFUrl
+    PDFUrl: state.uploadFiles.PDFUrl,
 
   }
 }
@@ -456,8 +463,11 @@ const dispatchToProps = (dispatch) => {
     getCategories: () => dispatch(getCategories()),
     modifyBook: (bookData) => dispatch(modifyBook(bookData)),
     saveImageToCloudinary: (image) => dispatch(saveImageToCloudinary(image)),
-    savePdfToCloudinary: (pdf) => dispatch(savePdfToCloudinary(pdf))
+    savePDFToCloudinary: (pdf) => dispatch(savePDFToCloudinary(pdf))
   }
 }
 
-export default connect(stateToProps, dispatchToProps)(EditBook);
+export default connect(
+  stateToProps,
+  dispatchToProps)
+  (EditBook);
