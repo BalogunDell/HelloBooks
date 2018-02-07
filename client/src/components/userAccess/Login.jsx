@@ -62,6 +62,13 @@ export class Login extends React.Component {
    * @returns {object} updated state
    */
   googleLoginHandler(response) {
+    if(response.error) {
+      return Materialize.toast(
+        'Something went wrong, please try again',
+        3000,
+        'red rounded'
+      );
+    }
     const googleId = response.profileObj;
     const userData = {
       firstName: response.profileObj.givenName,
@@ -77,9 +84,9 @@ export class Login extends React.Component {
         isLoading: false,
         isAuthenticated: true
       });
-    }).catch(() => {
-      isLoading: false
-    })
+    }).catch((error) => {
+
+    });
   }
 
 
