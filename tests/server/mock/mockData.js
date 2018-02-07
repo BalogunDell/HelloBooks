@@ -23,6 +23,7 @@ userTestRegistration: {
     email: 'jane5@mail.com',
     username: 'abbey',
     password: 'abbey2',
+    googleUser: true
   },
 
   user1InvalidDataFirstname: {

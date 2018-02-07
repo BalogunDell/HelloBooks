@@ -29,9 +29,6 @@ describe('Url Generator Function > ', () => {
         expect(decoded.membership).to.equal(user.membership)
         expect(decoded.role).to.equal(user.role)
       })
-      .catch((error) => {
-
-      });
     });
   });
 

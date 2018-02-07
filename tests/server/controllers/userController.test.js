@@ -37,6 +37,18 @@ let userId;
       }); 
     });
 
+    it('should fetch user books' , (done) => {
+      request
+      .get(`${api}`)
+      .end((err, res) => {
+        expect(res.status).to.equal(200);
+        expect(res.body).to.have.property('message');
+        expect(res.body.message).to.equal('Welcome to library api');
+        done();
+      });
+    });
+
+
     it('should log admin in to get a token', (done) => {
       request
       .post(`${userAPI}/signin`)
@@ -49,42 +61,6 @@ let userId;
         adminToken=res.body.responseData.token;
         done();
       }); 
-    });
-
-    it('should fetch user books' , (done) => {
-      request
-      .get(`${userAPI}/${userId}/books`)
-      .set('Authorization', userToken)
-      .end((err, res) => {
-        expect(res.status).to.equal(200);
-        expect(res.body.response).to.be.an('array');
-        expect(res.body.response).to.be.empty;
-        done();
-      });
-    });
-
-    it('should fetch user books' , (done) => {
-      request
-      .get(`${api}`)
-      .end((err, res) => {
-        expect(res.status).to.equal(200);
-        expect(res.body).to.have.property('message');
-        expect(res.body.message).to.equal('Welcome to library api');
-        done();
-      });
-    });
-
-    it('should fetch books returned by users', (done) => {
-      request
-      .get(`${userAPI}/${userId}/books?returned=true`)
-      .set('Authorization', userToken)
-      .set('Content-Type', 'application/json')
-      .end((err, res) => {
-        expect(res.status).to.equal(200);
-        expect(res.body.response).to.be.an('array');
-        expect(res.body.response).to.be.empty;
-        done();
-      })
     });
 
 
@@ -104,6 +80,44 @@ let userId;
       });
     });
     
+    it('should fetch user books'
+    , (done) => {
+      request
+      .get(`${userAPI}/${userId}/books`)
+      .set('Authorization', userToken)
+      .end((err, res) => {
+        expect(res.status).to.equal(200);
+        expect(res.body.response).to.be.an('array');
+        expect(res.body.response[0].bookId).to.equal(5);
+        expect(res.body.response[0].userId).to.equal(userId);
+        expect(res.body.response[0].dateBorrowed).to.equal('2018-02-07');
+        expect(res.body.response[0].expectedReturnDate).to.equal('2018-02-12');
+        expect(res.body.response[0].returnStatus).to.equal(false);
+        expect(res.body.response[0].Book.isbn).to
+          .equal('#111115');
+        expect(res.body.response[0].Book.pages).to
+          .equal(300);
+        expect(res.body.response[0].Book.author).to
+          .equal('Tom Cruise');
+        expect(res.body.response[0].Book.year).to
+          .equal(2017);
+        expect(res.body.response[0].Book.description).to
+          .equal('the books does this and that');
+        expect(res.body.response[0].Book.quantity).to
+          .equal(3);
+        expect(res.body.response[0].Book.categoryId).to
+          .equal(5);
+        expect(res.body.response[0].Book.imageUrl).to
+          .equal('https://res.cloudinary.com/djvjxp2am/image/upload/v1507295977/book3_thj6nk.jpg');
+        expect(res.body.response[0].Book.imageUrl).to
+          .equal('https://res.cloudinary.com/djvjxp2am/image/upload/v1507295977/book3_thj6nk.jpg');
+        expect(res.body.response[0].Book.PDFUrl).to
+          .equal('https://res.cloudinary.com/djvjxp2am/image/upload/v1507295977/book3_thj6nk.jpg');
+        done();
+      });
+    });
+
+
     it('should not allow user borrow the same book', (done) => {
       request
       .post(`${userAPI}/${userId}/books`)
@@ -155,10 +169,32 @@ let userId;
       .set('Content-type', 'application/json')
       .end((err, res) => {
         expect(res.status).to.equal(200);
-        expect(res.body).to.have.property('response');
         expect(res.body.response).to.be.an('array');
-        const fetchedBooks = res.body.response.length
-        expect(fetchedBooks).to.not.equal(0);    
+        expect(res.body.response[0].bookId).to.equal(5);
+        expect(res.body.response[0].userId).to.equal(userId);
+        expect(res.body.response[0].dateBorrowed).to.equal('2018-02-07');
+        expect(res.body.response[0].expectedReturnDate).to.equal('2018-02-12');
+        expect(res.body.response[0].returnStatus).to.equal(false);
+        expect(res.body.response[0].Book.isbn).to
+          .equal('#111115');
+        expect(res.body.response[0].Book.pages).to
+          .equal(300);
+        expect(res.body.response[0].Book.author).to
+          .equal('Tom Cruise');
+        expect(res.body.response[0].Book.year).to
+          .equal(2017);
+        expect(res.body.response[0].Book.description).to
+          .equal('the books does this and that');
+        expect(res.body.response[0].Book.quantity).to
+          .equal(3);
+        expect(res.body.response[0].Book.categoryId).to
+          .equal(5);
+        expect(res.body.response[0].Book.imageUrl).to
+          .equal('https://res.cloudinary.com/djvjxp2am/image/upload/v1507295977/book3_thj6nk.jpg');
+        expect(res.body.response[0].Book.imageUrl).to
+          .equal('https://res.cloudinary.com/djvjxp2am/image/upload/v1507295977/book3_thj6nk.jpg');
+        expect(res.body.response[0].Book.PDFUrl).to
+          .equal('https://res.cloudinary.com/djvjxp2am/image/upload/v1507295977/book3_thj6nk.jpg');
         done();
       })
     });
@@ -192,6 +228,43 @@ let userId;
       })
     });
     
+    it('should fetch books returned by users', (done) => {
+      request
+      .get(`${userAPI}/${userId}/books?returned=true`)
+      .set('Authorization', userToken)
+      .set('Content-Type', 'application/json')
+      .end((err, res) => {
+        expect(res.status).to.equal(200);
+        expect(res.body.response).to.be.an('array');
+        expect(res.body.response[0].bookId).to.equal(5);
+        expect(res.body.response[0].userId).to.equal(userId);
+        expect(res.body.response[0].dateBorrowed).to.equal('2018-02-07');
+        expect(res.body.response[0].expectedReturnDate).to.equal('2018-02-12');
+        expect(res.body.response[0].returnStatus).to.equal(true);
+        expect(res.body.response[0].Book.isbn).to
+          .equal('#111115');
+        expect(res.body.response[0].Book.pages).to
+          .equal(300);
+        expect(res.body.response[0].Book.author).to
+          .equal('Tom Cruise');
+        expect(res.body.response[0].Book.year).to
+          .equal(2017);
+        expect(res.body.response[0].Book.description).to
+          .equal('the books does this and that');
+        expect(res.body.response[0].Book.quantity).to
+          .equal(4);
+        expect(res.body.response[0].Book.categoryId).to
+          .equal(5);
+        expect(res.body.response[0].Book.imageUrl).to
+          .equal('https://res.cloudinary.com/djvjxp2am/image/upload/v1507295977/book3_thj6nk.jpg');
+        expect(res.body.response[0].Book.imageUrl).to
+          .equal('https://res.cloudinary.com/djvjxp2am/image/upload/v1507295977/book3_thj6nk.jpg');
+        expect(res.body.response[0].Book.PDFUrl).to
+          .equal('https://res.cloudinary.com/djvjxp2am/image/upload/v1507295977/book3_thj6nk.jpg');
+        done();
+      })
+    });
+
 
     it('should check if a non existing book was borrowed by user', (done) => {
       request
@@ -220,21 +293,6 @@ let userId;
         expect(res.body).to.be.an('object');
         expect(res.body.message).to.
         equal('Please provide a valid book id');
-        done();
-      })
-    });
-
-    it('should fetch books returned by users', (done) => {
-      request
-      .get(`${userAPI}/${userId}/books?returned=true`)
-      .set('Authorization', userToken)
-      .set('Content-Type', 'Application/json')
-      .end((err, res) => {
-        expect(res.status).to.equal(200);
-        expect(res.body).to.have.property('response');
-        expect(res.body.response).to.be.an('array');
-        expect(res.body.response[0].userId).to.equal(userId);
-        expect(res.body.response[0].bookId).to.equal(5);
         done();
       })
     });
@@ -490,9 +548,15 @@ describe('Google User Login > ' , () => {
         expect(res.status).to.equal(201);
         expect(res.body).to.have.property('responseData');
         expect(res.body.responseData).to.have.property('token');
-        expect(res.body.responseData).to.have.property('message');
-        expect(res.body.responseData).to.have.property('user');
-        expect(res.body.responseData.user).to.have.property('userId');
+        expect(res.body.responseData.message).to.equal('User created');
+        expect(res.body.responseData.user.username).to
+          .equal(mockData.googleUser1.username);
+        expect(res.body.responseData.user.userRole).to
+          .equal('user');
+         expect(res.body.responseData.user.imageUrl).to
+          .equal(null);
+        expect(res.body.responseData.user.googleUser).to
+          .equal(true);
       done();
     });
   });
@@ -506,15 +570,15 @@ describe('Google User Login > ' , () => {
         expect(res.status).to.equal(200);
         expect(res.body).to.have.property('responseData');
         expect(res.body.responseData).to.have.property('token');
-        expect(res.body.responseData).to.have.property('message');
-        expect(res.body.responseData).to.have.property('user');
-        expect(res.body.responseData.user).to.have.property('userId');
+        expect(res.body.responseData.message).to.equal('signed in');
         expect(res.body.responseData.user.username).to
-          .equal(mockdata.user1.username);
-          expect(res.body.responseData.user.userRole).to
+          .equal(mockData.googleUser1.username);
+        expect(res.body.responseData.user.userRole).to
           .equal('user');
-          expect(res.body.responseData.user.imageUrl).to
+         expect(res.body.responseData.user.imageUrl).to
           .equal(null);
+        expect(res.body.responseData.user.googleUser).to
+          .equal(true);
         done();
       });
     });

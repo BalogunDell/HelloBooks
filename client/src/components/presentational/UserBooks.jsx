@@ -65,7 +65,8 @@ const UserBooks = ({
             books.map((book, id) =>
               book.Book
               ?
-                <tr key={id}>
+                <tr 
+                key={id}>
                   <td>
                     <img src={book.Book.imageUrl} alt="Book cover"/></td>
                   <td>{book.Book.title}</td>

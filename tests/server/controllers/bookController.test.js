@@ -153,6 +153,7 @@ let generatedUrl= 'uFUhdjHDJjdf';
       .end((err, res) => {
         expect(res.status).to.equal(404);
         expect(res.body).to.have.property('message');
+        expect(res.body.message).to.equal('Book not found');
         done();
       });
     });
@@ -366,12 +367,16 @@ let generatedUrl= 'uFUhdjHDJjdf';
         .end((err, res) => {
           expect(res.status).to.equal(201);
           expect(res.body).to.be.an('object');
-          expect(res.body).to.have.property('message');
-          expect(res.body).to.have.property('returnDate');
-          expect(res.body).to.have.property('bookBorrowed');
           expect(res.body.message).to.equal('You have successfully borrowed this book');
           expect(res.body.bookBorrowed.userId).to.equal(2);
           expect(res.body.bookBorrowed.bookId).to.equal(5);
+          expect(res.body.returnDate).to.equal('2018-02-17');
+          expect(res.body.bookBorrowed.dateBorrowed).to
+            .equal('2018-02-07');
+          expect(res.body.bookBorrowed.returnStatus).to
+            .equal(false);
+          expect(res.body.bookBorrowed.expectedReturnDate).to
+            .equal('2018-02-17');
           done();
         });
       });
@@ -401,6 +406,32 @@ let generatedUrl= 'uFUhdjHDJjdf';
         expect(res.body.books).to.be.an('array');
         const resultLength = res.body.books.length;
         expect(resultLength).to.equal(1);
+        expect(res.body.books[0].userId).to.equal(userId)
+        expect(res.body.books[0].dateBorrowed).to
+          .equal('2018-02-07')
+        expect(res.body.books[0].expectedReturnDate).to.equal('2018-02-17')
+        expect(res.body.books[0].returnStatus).to.equal(false)
+        expect(res.body.books[0].Book).to.be.an('object');
+        expect(res.body.books[0].Book.isbn).to
+          .equal('#111115');
+        expect(res.body.books[0].Book.pages).to
+          .equal(300);
+        expect(res.body.books[0].Book.author).to
+          .equal('Tom Cruise');
+        expect(res.body.books[0].Book.year).to
+          .equal(2017);
+        expect(res.body.books[0].Book.description).to
+          .equal('the books does this and that');
+        expect(res.body.books[0].Book.quantity).to
+          .equal(4);
+        expect(res.body.books[0].Book.categoryId).to
+          .equal(5);
+        expect(res.body.books[0].Book.imageUrl).to
+          .equal('https://res.cloudinary.com/djvjxp2am/image/upload/v1507295977/book3_thj6nk.jpg');
+        expect(res.body.books[0].Book.imageUrl).to
+          .equal('https://res.cloudinary.com/djvjxp2am/image/upload/v1507295977/book3_thj6nk.jpg');
+        expect(res.body.books[0].Book.PDFUrl).to
+          .equal('https://res.cloudinary.com/djvjxp2am/image/upload/v1507295977/book3_thj6nk.jpg');
         done();
       });
     });
@@ -415,14 +446,34 @@ let generatedUrl= 'uFUhdjHDJjdf';
         expect(res.body.books).to.be.an('array');
         const resultLength = res.body.books.length;
         expect(resultLength).to.equal(6);
+        expect(res.body.books[4].isbn).to
+          .equal('#111113');
+        expect(res.body.books[4].pages).to
+          .equal(100);
+        expect(res.body.books[4].author).to
+          .equal('Nelson Brook');
+        expect(res.body.books[4].year).to
+          .equal(2000);
+        expect(res.body.books[4].title).to
+          .equal('React for Beginners');
+        expect(res.body.books[4].quantity).to
+          .equal(300);
+        expect(res.body.books[4].categoryId).to
+          .equal(5);
+        expect(res.body.books[4].description).to
+          .equal('the books does this and that');
+        expect(res.body.books[4].imageUrl).to
+          .equal('https://res.cloudinary.com/djvjxp2am/imageUrl/upload/v1507295978/book8_yy9efp.jpg');
+        expect(res.body.books[4].PDFUrl).to
+          .equal('https://res.cloudinary.com/djvjxp2am/imageUrl/upload/v1507295978/book8_yy9efp.jpg');
+        expect(res.body.books[4].Category.category).to
+          .equal('Comic');
         done();
       });
     });
   });
 
   describe('Create category:', () => {
-
-
     it('should log admin in to get a token', (done) => {
         request
           .post(`${userAPI}/signin`)
@@ -446,7 +497,14 @@ let generatedUrl= 'uFUhdjHDJjdf';
         expect(res.body).to.be.an('object');
         expect(res.body.categories).to.be.an('array');
         const fetchedCategoryLength = res.body.categories.length;
-        expect(fetchedCategoryLength).to.equal(6)
+        expect(fetchedCategoryLength).to.equal(6);
+        expect(res.body.categories[0].category).to.equal('Health');
+        expect(res.body.categories[1].category).to.equal('Education');
+        expect(res.body.categories[2].category).to.equal('Social');
+        expect(res.body.categories[3].category).to.equal('Programming');
+        expect(res.body.categories[4].category).to.equal('Comic');
+        expect(res.body.categories[5].category).to.equal('Business');
+
         done();
       });
     })
@@ -491,6 +549,7 @@ let generatedUrl= 'uFUhdjHDJjdf';
           expect(res.status).to.equal(201);
           expect(res.body).to.have.property('message');
           expect(res.body.message).to.equal('Category created');
+          expect(res.body.payload[6].category).to.equal('category');
         }
         done();
       });

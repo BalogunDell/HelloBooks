@@ -18,9 +18,11 @@ module.exports = {
       .assert.visible('p')
       .assert.containsText('p', hompageIntro)
       .assert.visible('a.btn.waves-effect.waves-ripple.about')
-      .assert.containsText('a.btn.waves-effect.waves-ripple.about', 'GET TO KNOW MORE')
+      .assert.containsText('a.btn.waves-effect.waves-ripple.about',
+      'GET TO KNOW MORE')
       .assert.visible('a.btn.waves-effect.waves-ripple.signup')
-      .assert.containsText('a.btn.waves-effect.waves-ripple.signup', 'SIGNUP')
+      .assert.containsText('a.btn.waves-effect.waves-ripple.signup',
+      'SIGNUP')
       .pause(2000)
       .waitForElementVisible('div.container.home-books', 3000)
       .assert.visible('div.container.home-books')
@@ -43,7 +45,8 @@ module.exports = {
       .pause(3000)
       .waitForElementVisible('div.toast.red.rounded', 3000)
       .assert.visible('div.toast.red.rounded')
-      .assert.containsText('div.toast.red.rounded', 'Username should be two or more characters')
+      .assert.containsText('div.toast.red.rounded',
+      'Username should be two or more characters')
       .pause(2000)
   },
 
@@ -59,7 +62,8 @@ module.exports = {
       .pause(3000)
       .waitForElementVisible('div.toast.red.rounded', 3000)
       .assert.visible('div.toast.red.rounded')
-      .assert.containsText('div.toast.red.rounded', 'Invalid username or password')
+      .assert.containsText('div.toast.red.rounded',
+      'Invalid username or password')
       .pause(2000)
   },
 
@@ -74,6 +78,37 @@ module.exports = {
       .click('#loginBtn')
       .pause(3000)
       .assert.urlEquals('http://localhost:3003/user/books')
+        .waitForElementVisible('body', 4000)
+        .assert.visible('#userprofile')
+        .assert.visible('h5#hellobooksTitle')
+        .assert.containsText('h5#hellobooksTitle', 'HELLO BOOKS')
+        .waitForElementVisible('img.responsive-img.center', 3000)
+        .assert.visible('img.responsive-img.center')
+        .assert.visible('a#firstLink')
+        .assert.visible('a#secondLink')
+        .assert.visible('a#thirdLink')
+        .assert.visible('div.col.s12.books-holder-title.center')
+        .assert.visible('h1')
+        .assert.containsText('h1', 'All Books')
+        .waitForElementVisible('div.books-holder.center', 3000)
+        .waitForElementVisible('button#bookdetail', 3000)
+        .assert.visible('div.books-holder.center');
+        client.expect.element('div.book-holder-prot').to.be.present;
+        client.expect.element('div.item.book-title.center').to.be.present;
+        client.expect.element('h6').to.be.present;
+        client.expect.element('strong').to.be.present;
+        client.expect.element('div.dets').to.be.present;
+        client.expect.element('img.responsive-img.center')
+        .to.have.attribute('src').which.contains(userNavImage);
+        client.expect.element('a#firstLink')
+         .to.have.attribute('href').which.contains('/user/profile');
+        client.expect.element('a#secondLink').to.have.attribute('href')
+          .which.contains('/user/books');
+        client.expect.element('a#thirdLink')
+          .to.have.attribute('href').which.contains('/user/history');
+        client.expect.element('a#fourthLink')
+          .to.have.attribute('href').which.contains('/user/borrowedbooks');
+          client.click('button#bookdetail');
       
   },
 
@@ -83,14 +118,15 @@ module.exports = {
       .waitForElementVisible('body', 4000)
       .assert.visible('#userprofile')
       .assert.visible('h5#hellobooksTitle')
-      .assert.containsText('h5#hellobooksTitle', 'HELLO BOOKS')
+      .assert.containsText('h5#hellobooksTitle',
+      'HELLO BOOKS')
       .assert.visible('h6.white-text.username')
       .assert.visible('h6.white-text.email')
       .assert.visible('div.col.s12.books-holder-title.center')
       .assert.visible('h1')
       .assert.containsText('h1', 'All Books')
       .waitForElementVisible('div.books-holder.center', 3000)
-      .waitForElementVisible('a#bookdetail', 3000)
+      .waitForElementVisible('button#bookdetail', 3000)
       .assert.visible('div.books-holder.center');
       client.expect.element('div.book-holder-prot').to.be.present;
       client.expect.element('div.item.book-title.center').to.be.present;
@@ -107,7 +143,7 @@ module.exports = {
         .to.have.attribute('href').which.contains('/user/history');
       client.expect.element('a#fourthLink')
         .to.have.attribute('href').which.contains('/user/borrowedbooks');
-      client.click('a#bookdetail');
+      client.click('button#bookdetail');
       client.assert.urlEquals('http://localhost:3003/user/bookdetails');
       client.assert.visible('img.responsive-img');
       client.assert.visible('div.bookInfo');
@@ -116,21 +152,23 @@ module.exports = {
       client.assert.containsText('button.btn.waves-teal.waves-effect', 
         'BORROW');
       client.click('.btn.waves-teal.waves-effect');
-      client.assert.visible('div.toast.blue.rounded')
-      client.assert.containsText('You have successfully borrowed this book')
+      client.waitForElementVisible('div.toast.blue.rounded', 5000);
+      client.assert.visible('div.toast.blue.rounded');
+      client.assert.containsText('div.toast.blue.rounded',
+      'You have successfully borrowed this book');
+      client.waitForElementNotPresent('div.toast.blue.rounded', 5000);
+      client.assert.elementPresent('tr:nth-child(1)');
   },
 
   'Users can view their profile': (client) => {
     client
       .url('http://localhost:3003/user/profile')
       .waitForElementVisible('body', 4000)
-    //   .waitForElementVisible('div.userInfoDisplay', 5000)
-    //   .assert.visible('div.userInfoDisplay')
       .assert.visible('p')
-      .assert.visible('btn.waves-teal.waves-effect.custom')
-      .assert.containsText('btn.waves-teal.waves-effect.custom',
+      .assert.visible('button.btn.waves-teal.waves-effect.custom')
+      .assert.containsText('button.btn.waves-teal.waves-effect.custom',
       'VIEW FULL PROFILE')
-      .click('btn.waves-teal.waves-effect.custom')
+      .click('button.btn.waves-teal.waves-effect.custom')
       .pause(4000)
       .assert.visible('div.change-password')
       .assert.visible('table')
@@ -168,8 +206,12 @@ module.exports = {
       .waitForElementVisible('body', 3000)
       .assert.visible('h1')
       .assert.containsText('h1', 'Recently Borrowed')
-      .pause(3000)
-      .click('.custom')
+      .assert.visible('div.styledUserBooksTable')
+      .assert.visible('table.centered')
+      .pause(2000)
+      .waitForElementVisible('tr:nth-child(1)', 5000)
+      .assert.containsText('tr:nth-child(1) td:nth-child(2)',
+      'React for Beginners')
       .pause(2000)
   },
 
@@ -185,6 +227,9 @@ module.exports = {
       .waitForElementVisible('div.toast.blue.rounded', 4009)
       .assert.visible('div.toast.blue.rounded')
       .assert.containsText('Book has been successfully returned')
+      .waitForElementVisible('tr:nth-child(1)', 5000)
+      .assert.containsText('tr:nth-child(1) td:nth-child(1)',
+      'There are no books here')
       .pause(2000)
   },
 
