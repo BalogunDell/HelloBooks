@@ -44,12 +44,11 @@ const {
         .assert.visible('input#username')
         .assert.visible('input#password')
         .assert.visible('input#loginBtn')
-        .waitForElementVisible('button#googleLogin')
-        .assert.visible('googleLogin')
         .pause(2000)
     },
   
-    'It should validate admin login credentials': (client) => {
+    'It should validate admin login credentials when admin tries to login':
+    (client) => {
       client
         .url('http://localhost:3003/login')
         .waitForElementVisible('body', 2000)
@@ -92,7 +91,7 @@ const {
         .assert.visible('h1')
         .assert.containsText('h1', 'All Books')
         .waitForElementVisible('div.books-holder.center', 3000)
-        .waitForElementVisible('a#bookdetail', 3000)
+        .waitForElementVisible('button#bookdetail', 3000)
         .assert.visible('div.books-holder.center');
         client.expect.element('div.book-holder-prot').to.be.present;
         client.expect.element('div.item.book-title.center').to.be.present;
@@ -107,7 +106,7 @@ const {
           .which.contains('/user/books');
         client.expect.element('a#thirdLink')
           .to.have.attribute('href').which.contains('/user/upload');
-          client.click('a#bookdetail');
+          client.click('button#bookdetail');
       },
 
       'Admin can view book details,': (client) => { 
@@ -115,6 +114,25 @@ const {
         client.assert.visible('img.responsive-img');
         client.assert.visible('div.bookInfo');
         client.assert.visible('p');
+        client.waitForElementVisible('img.responsive-img', 4000);
+        client.assert.visible('img.responsive-img');
+        client.assert.visible('th#bookTitle');
+        client.assert.containsText('th#bookTitle', 'React for Beginners');
+        client.assert.visible('td#bookAuthor');
+        client.assert.containsText('td#bookAuthor', 'Nelson Brook');
+        client.assert.visible('td#bookCategory');
+        client.assert.containsText('td#bookCategory', 'Health');
+        client.assert.visible('td#bookIsbn');
+        client.assert.containsText('td#bookIsbn', '#111111');
+        client.assert.visible('td#bookYear');
+        client.assert.containsText('td#bookYear', 2010);
+        client.assert.visible('td#bookPages');
+        client.assert.containsText('td#bookPages', 1080);
+        client.assert.visible('td#bookQuantity');
+        client.assert.containsText('td#bookQuantity', 3);
+        client.assert.visible('p#bookDescription');
+        client.assert.containsText('p#bookDescription',
+        'the books does this and that');
         client.assert.visible('a.btn.waves-teal.waves-effect');
         client.assert.containsText('a.btn.waves-teal.waves-effect', 'BACK');
         client.pause(3000);
@@ -155,9 +173,27 @@ const {
         .waitForElementPresent('#editBook', 3000)
         .click('#editBook')
         .waitForElementVisible('body', 3000)
-        .assert.visible('div.#React')
-        .assert.visible('h6#React')
-        .assert.containsText('strong', 'End to end test')
+        .url('http://localhost:3003/user/dashboard')
+        .waitForElementVisible('body', 3000)
+        .assert.visible('h4.center')
+        .assert.containsText('h4.center', 'ADMIN DASHBOARD')
+        .waitForElementVisible('table.summary-table', 3000)
+        .assert.visible('table.summary-table')
+        .assert.visible('thead')
+        .assert.visible('th')
+        .assert.containsText('th', 'SUMMARY')
+        .pause(3000)
+        .assert.visible('td#totalBooksText')
+        .assert.containsText('td#totalBooksText', 'Total Books in Library')
+        .assert.visible('td#returnedBooksText')
+        .assert.containsText('td#returnedBooksText', 'Books Returned')
+        .assert.visible('td#pendingBooksText')
+        .assert.containsText('td#pendingBooksText', 'Pending Return')
+        .assert.visible('td#totalBooks')
+        .assert.visible('a.modal-trigger')
+        .waitForElementVisible('tr:nth-child(1)', 5000)
+        .assert.containsText('tr:nth-child(1) td:nth-child(3)',
+        'React for Beginners')
         .pause(5000)
     },
     'Admin can delete a book': (client) => {
@@ -191,6 +227,9 @@ const {
         .assert.visible('h6')
         .assert.visible('h6', 'Are you sure you want to delete this book?')
         .click('.btn.green')
+        .pause(5000)
+        .waitForElementNotPresent('#deleted', 5000)
+        .assert.elementNotPresent('tr:nth-child(1)')
         .pause(5000)
     },
     'Admin can logout': (client) => {
