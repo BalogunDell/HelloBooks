@@ -37,7 +37,7 @@ const BookInfo = ({
             <table>
               <thead>
                 <tr>
-                  <th>
+                  <th id="bookTitle">
                       {book.title} 
                   </th>
                 </tr>
@@ -46,32 +46,32 @@ const BookInfo = ({
               <tbody>
                 <tr>
                   <td>Author</td>
-                    <td>{book.author}</td> 
+                    <td id="bookAuthor">{book.author}</td> 
                 </tr>
 
                 <tr>
                   <td>Category</td>
-                    <td>{book.Category.category}</td> 
+                    <td id="bookCategory">{book.Category.category}</td> 
                 </tr>
 
                 <tr>
                   <td>ISBN</td>
-                    <td>{book.isbn}</td> 
+                    <td id="bookIsbn">{book.isbn}</td> 
                 </tr>
 
                 <tr>
                   <td>Year</td>
-                    <td>{book.year}</td> 
+                    <td id="bookYear">{book.year}</td> 
                 </tr>
 
                 <tr>
                   <td>Pages</td>
-                    <td>{book.pages}</td> 
+                    <td id="bookPages">{book.pages}</td> 
                 </tr>
 
                 <tr>
                   <td>Quantity Available</td>
-                    <td>{book.quantity}</td> 
+                    <td id="bookQuantity">{book.quantity}</td> 
                 </tr>
               </tbody>
             </table>
@@ -80,7 +80,7 @@ const BookInfo = ({
           <hr/>
 
             <div>
-                <p>{book.description}</p> 
+                <p id="bookDescription">{book.description}</p> 
             </div>
 
           <hr/>
@@ -98,6 +98,7 @@ const BookInfo = ({
                       </Link>
                       :
                       <button
+                        id="borrowButton"
                         className="btn waves-teal waves-effect" 
                         onClick={handleBorrow}
                         disabled={disableBtn}>BORROW

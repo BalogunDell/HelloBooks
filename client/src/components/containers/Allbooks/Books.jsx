@@ -57,8 +57,9 @@ const Books = ({
 
                   {/* Book details  */}
                   <div className="dets">
-                    <Link to={`/user/bookdetails`} id="bookdetail">
+                    <Link to={`/user/bookdetails`}>
                       <button 
+                        id="bookdetail"
                         type="button"
                         value={book.id}
                         className="btn waves-effect waves-teal"

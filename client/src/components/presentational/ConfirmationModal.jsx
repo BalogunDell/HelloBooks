@@ -24,7 +24,8 @@ const ConfirmationModal = ({
   errorMessage,
   successMessage,
   deleteBookTrigger}) => {
-  const SuccessMessage = <h6>Book has been successfully deleted</h6>
+  const SuccessMessage = <h6 id="deleted">Book has been successfully deleted
+  </h6>
   const question = <h6>Are you sure you want to delete this book?</h6>
   deleteErrorSuccess ? successMessage : question
   return (
