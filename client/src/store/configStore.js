@@ -1,22 +1,24 @@
 import { createStore, applyMiddleware, compose } from 'redux';
-import reduxImmutableStateInvariant from 'redux-immutable-state-invariant';
 import thunk from 'redux-thunk';
 
-import rootReducer from '../reducers/index';
+import reducers from '../reducers/';
 
 /**
+ * @description configStore configures the store
  * 
+ * @param {any} initialState
  * 
- * @param {any} initialState 
  * @returns { object } configured store
  */
-function configStore(initialState) {
-  const combineEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose; //eslint-disable-line
+const configStore = (initialState) => {
   return createStore(
-    rootReducer,
+    reducers,
     initialState,
-    combineEnhancers(applyMiddleware(thunk, reduxImmutableStateInvariant()))
+    compose(applyMiddleware(thunk),
+      window.devToolsExtension && process.env.NODE_ENV === 'development'
+        ?
+        window.devToolsExtension() : f => f),
   );
-}
+};
 
 export default configStore;

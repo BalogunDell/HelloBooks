@@ -1,61 +1,87 @@
-import * as types from '../Actions/actionTypes';
+import {
+  GET_ALL_BOOKS,
+  BORROW_BOOK,
+  FETCTH_USER_BOOKS,
+  CREATE_BOOK,
+  RETURN_BOOK,
+  GET_BOOK_ID,
+  MODIFY_BOOK,
+  DELETE_BOOK,
+  GET_BORROWED_BOOKS,
+  TRENDING_BOOKS,
+} from '../actions/actionTypes';
 
+/**
+ * @export getAllBooks
+ * 
+ * @description Defines getAllBooks reducer
+ * 
+ * @param { object } state inital state
+ * @param { object } action action type and payload
+ * 
+ * @returns { object } action performed and payload of the action
+ */
 const getAllBooks = (state = {}, action) => {
   switch (action.type) {
-    case types.GET_ALL_BOOKS:
+    case GET_ALL_BOOKS:
       return {
         ...state, books: action.books.books
       };
-    case types.BORROW_BOOK:
+    case BORROW_BOOK:
       return {
         ...state,
-        bookid: action.bookDetails
+        fetchedBooks: [action.payload.bookBorrowed]
       };
 
-    case types.FETCTH_USER_BOOKS:
+    case FETCTH_USER_BOOKS:
       return {
         ...state,
-        fetchedBooks: action.fetchedBooks
+        fetchedBooks: action.fetchedBooks.response
       };
-    case types.CREATE_BOOK:
+    case CREATE_BOOK:
       return {
         ...state, createbook: action.bookData
       };
-    case types.RETURN_BOOK:
+    case RETURN_BOOK: {
       return {
-        ...state, returnBookData: action.bookid
+        ...state, returnBookData: action.payload.message
       };
-    case types.GET_BOOK_ID:
+    }
+    case GET_BOOK_ID:
       return {
-        ...state, currentBookId: action.bookid
+        ...state, currentBookId: action.bookId
       };
-    case types.EDIT_BOOK_ID:
+    case MODIFY_BOOK: {
+      const newBookArray = [];
+      if (state.books === undefined) {
+        return state;
+      }
+      state.books.map((book) => {
+        if (book.id === action.bookData.id) {
+          newBookArray.push(action.bookData);
+        } else {
+          newBookArray.push(book);
+        }
+      });
       return {
-        ...state, editBookID: action.bookid
-      };
-    case types.MODIFY_BOOK:
+        ...state, books: newBookArray };
+    }
+    case DELETE_BOOK: {
+      const remainingBooks = state.books.filter((book) => {
+        return book.id !== parseInt(action.deletedBook.bookId, 10);
+      });
       return {
-        ...state, modifiedBook: action.bookData
+        ...state, books: remainingBooks
       };
-    case types.DELETE_BOOK:
-      return {
-        ...state, updatedBooks: action.updatedBooks
-      };
-    case types.GET_BORROWED_BOOKS:
+    }
+    case GET_BORROWED_BOOKS:
       return {
         ...state, allborrowedbooks: action.borrowedbooks
       };
-    case types.ADMIN_GET_ALLBOOKS:
+
+    case TRENDING_BOOKS:
       return {
-        ...state, unpublishedbooks: action.unpublishedbooks
-      };
-    case types.PUBLISH_BOOK:
-      return {
-        ...state, publishedBook: action.bookData
-      };
-    case types.TRENDING_BOOKS:
-      return {
-        ...state, trendingBooks: action.books
+        ...state, books: action.books.trendingBooks
       };
     default:
       return state;

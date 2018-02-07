@@ -2,39 +2,42 @@ const bcrypt = require('bcrypt');
 
 module.exports = {
   up(queryInterface) {
-    return queryInterface.bulkInsert('users', [
+    return queryInterface.bulkInsert('Users', [
       {
-        firstname: 'admin',
-        lastname: 'admin',
+        firstName: 'admin',
+        lastName: 'admin',
         email: 'admin@mail.com',
-        username: 'adminUsername12',
+        username: 'adminusername',
         password: bcrypt.hashSync('password', bcrypt.genSaltSync(10)),
         role: 'admin',
         membership: '',
+        imageUrl: '',
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
-        firstname: 'john',
-        lastname: 'doe',
+        firstName: 'john',
+        lastName: 'doe',
         email: 'john@mail.com',
         username: 'abbey2',
         password: bcrypt.hashSync('password', bcrypt.genSaltSync(10)),
         role: 'user',
         membership: 'gold',
-        passurl: 'uFUhdjHDJjdf',
+        imageUrl: '',
+        passwordResetUrl: 'uFUhdjHDJjdf',
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
-        firstname: 'jane',
-        lastname: 'ted',
+        firstName: 'jane',
+        lastName: 'ted',
         email: 'jane@mail.com',
         username: 'abbey3',
         password: bcrypt.hashSync('password', bcrypt.genSaltSync(10)),
         role: 'user',
         membership: 'silver',
-        passurl: 'uFUhdjHDJjGf',
+        imageUrl: '',
+        passwordResetUrl: 'uFUhdjHDJjGf',
         createdAt: new Date(),
         updatedAt: new Date()
       }
@@ -42,6 +45,6 @@ module.exports = {
   },
 
   down(queryInterface) {
-    return queryInterface.bulkDelete('users', null, {});
+    return queryInterface.bulkDelete('Users', null, {});
   }
 };

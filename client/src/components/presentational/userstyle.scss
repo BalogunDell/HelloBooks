@@ -1,0 +1,522 @@
+*h3 {
+  margin: 0;
+  padding: 0;
+}
+
+*.custom {
+  background-color: #0F488A;
+
+}
+
+*.custom:hover {
+  background-color: #0F488A
+}
+
+*.uploadImage {
+  .btn {
+    width: 50%;
+  }
+}
+.toggle-nav {
+  cursor: pointer
+}
+
+#userprofile {
+
+  .user-view {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap; 
+  }
+
+  li a {
+    padding: 0;
+    margin: 0;
+    transition: 0.5s;
+  }
+
+  li:hover a {
+    font-size: 13px;
+    background-color: rgba(0, 0, 0, 0.4);
+  }
+
+  li a.active {
+    background-color: rgba(0, 0, 0, 0.4);
+  }
+
+  .settings {
+    border-top: 1px solid white;
+    border-bottom: 1px solid white;
+    margin-top: 35px;
+    background-color: rgba(0, 0, 0, 0.4);
+    height: 50px;   
+
+    
+    i {
+      margin-top: 20px;
+    }
+  }
+
+  
+  background: $custom-color;
+  .user-view-bg {
+    background: $custom-color;
+  }
+
+  .googleUserInfo {
+    font-size: 10px;
+    box-shadow: 0pc;
+  }
+
+  i {
+    color: white;
+    margin-left:20px;
+    font-size: 20px;
+    cursor: pointer;
+    transition: font-size 0.5s;
+  }
+
+  i:hover{
+    font-size: 15px;
+  }
+
+  a {
+     color: white;
+  }
+
+  img {
+    margin: auto;
+  }
+
+  #dashboard {
+    text-align: center;
+  }
+}
+
+.content-display {
+    margin: auto;
+    width: 100%;
+    margin: auto;
+  }
+
+  .userDashboard {
+    margin-top: 3%;
+    display: flex;
+    -webkit-display: flex;
+    flex-direction: row;
+    -webkit-flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+
+    div {
+      max-width: 300px;
+      margin-bottom:3%;
+    }
+  }
+
+
+  img {
+      max-height: 300px;
+    }
+  
+  table {
+    td, th {
+    padding: 5px 5px;
+  }
+
+  .btn, .btn:hover {
+    background-color: $custom-color
+  }
+}
+
+.successMessage {
+    margin-top: 5%;
+    margin: auto;
+    // background:rgba(0, 0, 0, 0.2);
+    max-height: 300px;
+    max-width: 400px;
+    font-size: 20px;
+    padding: 20px;
+    color: green;
+    border-radius: 10px;
+
+    img {
+      max-height: 120px;
+    }
+  }
+
+  .failureMessage {
+    margin-top: 5%;
+    margin: auto;
+    // background:rgba(0, 0, 0, 0.2);
+    max-height: 300px;
+    max-width: 400px;
+    font-size: 20px;
+    padding: 20px;
+    color: red;
+    border-radius: 10px;
+
+    img {
+      max-height: 120px;
+    }
+  }
+
+  .filter-table {
+    margin-bottom: 4%;
+    height:5px;
+  }
+
+  table {
+    .btn {
+        max-width: 100%;
+        text-transform: uppercase;   
+    }
+  }
+
+  .profile {
+    margin-top:10%;
+
+    .btn {
+      width:60%;
+      font-size: 12px;
+    }
+    
+    .profile-holder {
+      max-width: 580px;
+      margin: auto;
+      box-shadow: 0 6px 12px 0 rgba(0,0,0,0.08) !important;
+      border-radius: 5px;
+      padding-top: 40px;
+      position: relative;
+      margin-top: 10px;
+      padding-bottom: 50px;
+      transition: height 2s;
+      -webkit-transition: height 2s;
+    }
+
+    .details {
+    max-width: 394px;
+    margin: auto;
+    margin-top: 20px;
+    text-align: center;
+
+    .userInfoDisplay {
+      margin-top: 50px;
+    }
+
+    .profile-image-holder {
+      max-width: 100px;
+      max-height: 100px;
+      margin: 0 auto;
+      top: -55px;
+      left: 0;
+      right: 0;
+      position: absolute;
+
+      #image-target {
+        max-height: 150px;
+      }
+
+      a {
+        cursor: pointer;
+        color: black !important;
+        font-size: 10px;
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+
+      img {
+        max-height: 300px;
+        max-width: auto;
+        border-radius: 50%;
+      }
+
+      .change-image-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-color: rgba(0, 0, 0, 0.6);
+        width: 100px;
+        height: 100px;
+        text-align: center;
+        word-wrap: break-word;
+        color: white;
+        display: block;
+
+        i {
+          margin-top: 30%;
+        }
+
+        h6 {
+          padding: 0;
+          margin: 0;
+          font-size: 13px;
+        }
+      }
+    }
+
+    table {
+     margin: auto;
+    }
+    .change-password {
+      max-width: 300px;
+      margin: auto;
+      margin-top: 30px;
+
+
+      form {
+        input {
+          height: 40px;
+        }
+      }
+      .btn {
+        width: 80%;
+      }
+    }
+  }
+}
+
+.admindashboard {
+  margin-bottom: 100px;
+
+  .bookslist {
+    table {
+      max-width: 100%;
+    }
+    th {
+      background-color: $custom-color;
+      color:white;
+    }
+
+    td {
+      button {
+        background-color: transparent;
+        border: none;
+      }
+    }
+
+    img {
+      max-height: 50px;
+      max-width: 50px;
+    }
+
+    i {
+      cursor: pointer;
+    }
+  }
+
+  table {
+    max-width: 450px;
+  }
+
+  .selectFilter {
+    margin-top: 6%;
+    max-width: 250px;
+
+    label {
+      font-size:18px;
+      font-weight: bold;
+      color: black
+    }
+  }
+
+}
+
+.createBookForm {
+  max-width: 580px;
+  margin: auto;
+  box-shadow: 0 6px 12px 0 rgba(0,0,0,0.08) !important;
+  border-radius: 5px;
+  padding-top: 2px;
+  margin-top: 5px;
+  padding-bottom: 50px;
+  transition: height 2s;
+  -webkit-transition: height 2s;
+
+  .create-book {
+    margin: 0 auto;
+    max-width: 400px;
+  }
+  .create-form {
+    max-width: 300px;
+    margin: 0 auto;
+  }
+
+  form {
+
+    *.row {
+      margin-bottom: 0;
+    }
+
+      label {
+        span {
+        color: red;
+      }
+    }
+  
+    #newCategory {
+      color: black;
+      font-size: 10px;
+      float: right;
+      cursor: pointer;
+      color: $custom-color
+    }
+
+     #newCategory:hover {
+      text-decoration: underline;
+    }
+
+    input {
+      height: 50px;
+    }
+    textarea {
+      padding: 0;
+    }
+    .btn {
+      font-size: 13px;
+      span {
+        color:white;
+      }
+    }
+
+    .submitBtn {
+        width: 100%;
+        border: none;
+        color: white;
+        text-align: center;
+    }
+  }
+}
+
+#confirmationModal {
+  margin: auto;
+
+  #imageEdit {
+
+    #imageSelector {
+      .btn {
+        width: 50%;
+      }
+    }
+  }
+
+  .btn {
+    width: 100%;
+  }
+
+  .selectedImagePreview {
+    width: 140px;
+  }
+
+  .selectedImagePreview img{
+    margin-top: 30px;
+    max-height: 200px;
+    max-width: auto;
+    border-radius: 50%;
+  }
+
+}
+
+.unpublished {
+
+  img {
+    max-height: 50px;
+    max-width: 50px;
+  }
+
+  .btn {
+    max-width: 100%;
+  }
+
+  table {
+    max-width: 800px;
+
+    th {
+      background-color: $custom-color;
+      color: white;
+    }
+    td {
+      word-wrap: break-word;
+    }
+  }
+}
+
+.styledUserBooksTable {
+
+  table {
+    border: 1px solid #ccc;
+    border-collapse: collapse;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    table-layout: fixed;
+  }
+  table tr {
+    border: 1px solid #ddd;
+    padding: .35em;
+  }
+  table th,
+  table td {
+    padding: .625em;
+    text-align: center;
+  }
+  table th {
+    font-size: .85em;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    background: $custom-color;
+    color: white
+  }
+  @media screen and (max-width: 600px) {
+    table {
+      border: 0;
+    }
+    table caption {
+      font-size: 1.3em;
+    }
+    table thead {
+      border: none;
+      clip: rect(0 0 0 0);
+      height: 1px;
+      margin: -1px;
+      overflow: hidden;
+      padding: 0;
+      position: absolute;
+      width: 1px;
+    }
+    table tr {
+      border-bottom: 3px solid #ddd;
+      display: block;
+      margin-bottom: .625em;
+    }
+    table td {
+      border-bottom: 1px solid #ddd;
+      display: block;
+      font-size: .8em;
+      text-align: right;
+    }
+
+    table td img {
+      max-height: 70px;
+      max-width: 50px;
+    }
+    table td:before {
+  
+      content: attr(data-label);
+      float: left;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+    table td:last-child {
+      border-bottom: 0;
+    }
+  }
+}
+
+.regulate-size {
+ max-height: 60px;
+ max-width: 50px;
+}

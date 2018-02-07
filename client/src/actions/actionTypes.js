@@ -1,0 +1,27 @@
+
+export const ADD_USER = 'ADD_USER';
+export const LOGIN = 'LOGIN';
+export const GET_ALL_BOOKS = 'GET_ALL_BOOKS';
+export const FETCH_USER = 'FETCH_USER';
+export const BORROW_BOOK = 'BORROW-BOOK';
+export const FETCTH_USER_BOOKS = 'FETCTH_USER_BOOKS';
+export const CREATE_BOOK = 'CREATE_BOOK';
+export const CREATE_CATEGORY = 'CREATE_CATEGORY';
+export const GET_CATEGORIES = 'ET_CATEGORY';
+export const SAVE_IMAGE = 'SAVE_IMAGE';
+export const SAVE_PDF = 'SAVE_PDF';
+export const RETURN_BOOK = 'RETURN_BOOK';
+export const GET_BOOK_ID = 'GET_BOOK_ID';
+export const EDIT_BOOK_ID = 'EDIT_BOOK_ID';
+export const MODIFY_BOOK = 'MODIFY_BOOK';
+export const DELETE_BOOK = 'DELETE_BOOK';
+export const GET_BORROWED_BOOKS = 'GET_BORROWED_BOOKS';
+export const ADMIN_GET_ALLBOOKS = 'ADMIN_GET_ALLBOOKS';
+export const EDIT_PROFILE = 'EDIT_PROFILE';
+export const EDIT_IMAGE = 'EDIT_IMAGE';
+export const SEND_EMAIL = 'SEND_EMAIL';
+export const RESET_PASS = 'RESET_PASS';
+export const TRENDING_BOOKS = 'TRENDING_BOOKS';
+export const GOOGLE_ACCESS = 'GOOGLE_ACCESS';
+export const EDIT_PASSWORD = 'EDIT_PASSWORD';
+export const ERROR = 'ERROR';

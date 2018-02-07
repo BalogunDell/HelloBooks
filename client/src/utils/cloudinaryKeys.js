@@ -1,3 +1,11 @@
-export const cloudinaryUrl = process.env.CLOUD_URL;
-export const cloudinaryPreset = process.env.CLOUD_KEY;
-export const requestHeader = 'application/x-www-form-urlencoded';
+require('dotenv').config();
+
+const cloudinaryUrl = process.env.CLOUD_URL;
+const cloudinaryPreset = process.env.CLOUD_KEY;
+const requestHeader = 'application/x-www-form-urlencoded';
+
+export {
+  cloudinaryUrl,
+  cloudinaryPreset,
+  requestHeader
+};

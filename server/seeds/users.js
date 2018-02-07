@@ -2,41 +2,41 @@ import faker from 'faker';
 
 const users = [
   {
-    firstname: 'admin',
-    lastname: 'admin',
-    username: 'adminUsername12',
+    firstName: 'admin',
+    lastName: 'admin',
+    username: 'adminusername',
     email: 'admin@mail.com',
     password: 'password',
     role: 'admin',
     membership: '',
-    passurl: 'uFUhdjHDJjdt',
+    passwordResetUrl: 'uFUhdjHDJjdt',
   },
   {
-    firstname: 'david',
-    lastname: 'brook',
+    firstName: 'david',
+    lastName: 'brook',
     email: 'david@mail.com',
-    username: 'username22',
+    username: 'username',
     password: 'password',
     role: 'user',
     membership: 'bronze',
-    passurl: 'uFUhdjHDJjdg',
+    passwordResetUrl: 'uFUhdjHDJjdg',
   },
   {
-    firstname: 'daniel',
-    lastname: 'doe',
+    firstName: 'daniel',
+    lastName: 'doe',
     email: 'daniel@mail.com',
     username: 'username32',
     password: 'password',
     role: 'user',
     membership: 'silver',
-    passurl: 'uFUhdjHDJjdf'
+    passwordResetUrl: 'uFUhdjHDJjdf'
   },
 ];
 
 const invalidUsers = [
   {
-    firstname: faker.firstname,
-    lastname: '',
+    firstName: faker.firstName,
+    lastName: '',
     email: 'admin@hellobooks.com',
     password: 'password',
     role: 'admin',
@@ -45,8 +45,8 @@ const invalidUsers = [
     updatedAt: new Date()
   },
   {
-    firstname: 'john',
-    lastname: 'brook',
+    firstName: 'john',
+    lastName: 'brook',
     email: 'john@hellobooks.com',
     password: 'password',
     role: 'user',
@@ -55,8 +55,8 @@ const invalidUsers = [
     updatedAt: new Date()
   },
   {
-    firstname: 'jane',
-    lastname: 'doe',
+    firstName: 'jane',
+    lastName: 'doe',
     email: 'jane@hellobooks.com',
     password: 'password',
     role: 'user',
@@ -65,8 +65,8 @@ const invalidUsers = [
     updatedAt: new Date()
   },
   {
-    firstname: 'mike',
-    lastname: 'tyson',
+    firstName: 'mike',
+    lastName: 'tyson',
     email: 'mike@hellobooks.com',
     password: 'password',
     role: 'user',
